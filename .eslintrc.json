@@ -1,0 +1,66 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": { "jsx": true },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "react", "@tanstack/query", "prettier"],
+  "rules": {
+    "import/extensions": [
+      "error", // "error": 이 규칙을 위반하면 오류로 처리
+      "ignorePackages", // "ignorePackages": 패키지 모듈을 가져올 때는 확장자를 검사하지 않음
+      { "js": "never", "jsx": "never", "ts": "never", "tsx": "never" } // JavaScript 및 TypeScript 파일의 확장자를 생략하도록 설정
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      // devDependencies 예외: 특정 파일 패턴에 대해 devDependencies에서 가져오는 것을 허용
+      { "devDependencies": ["**/*.test.tsx", "**/*.test.ts"] }
+    ],
+    // JSX를 사용할 때 React를 반드시 import하지 않아도 됨
+    "react/react-in-jsx-scope": "off",
+    // JSX 코드를 .jsx와 .tsx 파일에서만 사용할 수 있도록 제한
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".jsx", ".tsx"] }
+    ],
+    // 함수형 컴포넌트를 화살표 함수나 함수 선언으로 정의할 수 있도록 지정
+    "react/function-component-definition": [
+      "error",
+      { "namedComponents": ["arrow-function", "function-declaration"] }
+    ],
+    // Prettier 규칙: 줄 끝 형식을 자동으로 감지하여 설정
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+  },
+  "settings": {
+    // React 버전을 자동으로 감지하도록 설정
+    "react": {
+      "version": "detect"
+    },
+    // TypeScript 파일에 대한 parser를 설정
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    // import/resolver 설정: TypeScript 파일의 확장자를 생략할 수 있도록 설정
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}

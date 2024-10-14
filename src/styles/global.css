@@ -1,0 +1,14 @@
+/*
+@font-face {
+  font-family: ;
+  src: url();
+}
+*/
+
+:root {
+  /* 스크롤바 비표시 */
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
