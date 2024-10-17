@@ -4,17 +4,30 @@ const colors = {
 };
 
 const typography = {
-  h1: `
-    font-size: 60px;
+  H1: `
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: normal;
+  `,
+  H2: `
+    font-size: 1rem;
     font-weight: 600;
+    line-height: normal;
   `,
-  h2: `
-    font-size: 50px;
-    font-weight: 500;
+  Caption: `
+    font-size: 0.75rem;
+    font-weight: 300;
+    line-height: normal;
   `,
-  b1: `
-    font-size: 18px;
-    font-weight: 400;
+  B1: `
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: normal;
+  `,
+  B2: `
+    font-size: 0.75rem;
+    font-weight: 300;
+    line-height: normal;
   `,
 };
 

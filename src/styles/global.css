@@ -1,11 +1,9 @@
-/*
-@font-face {
-  font-family: ;
-  src: url();
+* {
+  font-family: Pretendard;
 }
-*/
-
 :root {
+  font-family: Pretendard;
+
   /* 스크롤바 비표시 */
   -ms-overflow-style: none;
 }
