@@ -1,3 +1,5 @@
+import { DefaultTheme } from 'styled-components';
+
 const colors = {
   1: '#D1FD57',
   2: '#6761FE',
@@ -31,6 +33,7 @@ const fonts = {
   B2: font({ size: 0.75, weight: 300, lineHeight: 'normal' }),
 };
 
-const theme = { colors, typography };
+export type ColorsTypes = typeof colors;
+export type FontsTypes = typeof fonts;
 
-export default theme;
+export const theme: DefaultTheme = { colors, fonts };
