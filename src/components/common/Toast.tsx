@@ -29,11 +29,11 @@ const List = styled.section`
 `;
 
 const Item = styled.article`
-  min-width: 260px;
-  padding: 4px 15px;
+  min-width: 16.25rem;
+  padding: 0.25rem 0.9375rem;
 
-  border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 0.25rem;
 
   color: white;
   text-align: center;
