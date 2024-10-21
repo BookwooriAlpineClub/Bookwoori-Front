@@ -20,7 +20,7 @@ const Toast = () => {
 
 export default Toast;
 
-const List = styled.div`
+const List = styled.section`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -28,7 +28,7 @@ const List = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const Item = styled.div`
+const Item = styled.article`
   min-width: 260px;
   padding: 4px 15px;
 
