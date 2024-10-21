@@ -65,7 +65,7 @@ const Background = styled.div`
   width: 100svw;
   height: 100svh;
 
-  background-color: rgba(15, 16, 21, 0.4); // 추후 수정: theme 변수 사용할 것
+  background-color: rgba(15, 16, 21, 0.4); // 추후 수정: theme.colors
 `;
 const Layout = styled.section`
   // 추후 수정: 디자인 작업 중
