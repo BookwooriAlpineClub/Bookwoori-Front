@@ -29,13 +29,14 @@ const List = styled.section`
 `;
 
 const Item = styled.article`
-  min-width: 16.25rem;
-  padding: 0.25rem 0.9375rem;
+  min-width: 16.25rem; // 추후 수정: 디자인 작업 중
+  padding: 0.25rem 0.9375rem; // 추후 수정: 디자인 작업 중
 
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 0.25rem;
+  border-radius: 0.25rem; // 추후 수정: 디자인 작업 중
+  background-color: rgba(0, 0, 0, 0.7); // 추후 수정: theme.colors
 
-  color: white;
+  // 추후 수정: theme.fonts
+  color: white; // 추후 수정: theme.colors
   text-align: center;
   white-space: pre-line; // 개행문자 처리
 
