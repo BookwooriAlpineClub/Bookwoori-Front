@@ -29,8 +29,8 @@ const SButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: 315px;
-  padding: 15px 5px;
+  width: 19.6875rem;
+  padding: 0.9375rem 0.3125rem;
 
   border-radius: 15px;
   border: 1px solid var(--blue-200, #96b8ff);
