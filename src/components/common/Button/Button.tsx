@@ -45,4 +45,6 @@ const SButton = styled.button`
   // font-family: MaruBuri;
   // font-size: 14px;
   // font-weight: 700;
+
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
 `;
