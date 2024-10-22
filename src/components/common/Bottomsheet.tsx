@@ -95,8 +95,11 @@ const Scrim = styled.div<{ $isOpen: boolean }>`
 const Layout = styled.section<{ $isOpen: boolean }>`
   position: fixed;
   bottom: ${({ $isOpen }) => ($isOpen ? 0 : -100)}svh;
+  left: 50%;
+  transform: translateX(-50%);
 
   width: 100svw;
+  max-width: 500px;
   padding: 1.44rem 1.25rem 1.25rem 1.25rem;
 
   border-radius: 1.875rem 1.875rem 0rem 0rem;
