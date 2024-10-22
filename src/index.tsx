@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import GlobalStyle from './styles/global';
 import Router from './Router';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const queryClient = new QueryClient();
 
@@ -22,3 +23,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </RecoilRoot>
   </React.StrictMode>,
 );
+
+serviceWorkerRegistration.register();

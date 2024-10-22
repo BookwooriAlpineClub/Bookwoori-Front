@@ -1,0 +1,44 @@
+{
+  "lang": "ko",
+  "name": "북우리",
+  "short_name": "북우리",
+  "description": "책과 우리가 함께하는 여정, 북우리",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#FFFFFF",
+  "background_color": "#D1FD57",
+  "icons": [
+    {
+      "src": "logo_neon.svg",
+      "type": "image/svg+xml",
+      "sizes": "150x150",
+      "purpose": "maskable"
+    },
+    {
+      "src": "logo_neon.svg",
+      "type": "image/svg+xml",
+      "sizes": "150x150",
+      "purpose": "any"
+    },
+    {
+      "src": "logo_neon_512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot_narrow.svg",
+      "type": "image/svg+xml",
+      "sizes": "540x720",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshot_wide.svg",
+      "type": "image/svg+xml",
+      "sizes": "720x540",
+      "form_factor": "wide"
+    }
+  ]
+}
