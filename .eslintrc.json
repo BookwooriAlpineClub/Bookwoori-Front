@@ -20,7 +20,13 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react", "@tanstack/query", "prettier"],
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "react",
+    "@tanstack/query",
+    "prettier"
+  ],
   "rules": {
     "import/extensions": [
       "error", // "error": 이 규칙을 위반하면 오류로 처리
@@ -32,6 +38,10 @@
       // devDependencies 예외: 특정 파일 패턴에 대해 devDependencies에서 가져오는 것을 허용
       { "devDependencies": ["**/*.test.tsx", "**/*.test.ts"] }
     ],
+    // turn on errors for missing imports
+    "import/no-unresolved": "error",
+    // 상대 경로 import 비허용
+    "no-restricted-imports": ["error", { "patterns": ["..*"] }],
     // JSX를 사용할 때 React를 반드시 import하지 않아도 됨
     "react/react-in-jsx-scope": "off",
     // JSX 코드를 .jsx와 .tsx 파일에서만 사용할 수 있도록 제한
@@ -58,10 +68,14 @@
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
-    // import/resolver 설정: TypeScript 파일의 확장자를 생략할 수 있도록 설정
     "import/resolver": {
       "node": {
+        // TypeScript 파일의 확장자를 생략할 수 있도록 설정
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "typescript": {
+        // 별칭 경로를 인식하도록 설정
+        "alwaysTryTypes": true
       }
     }
   }
