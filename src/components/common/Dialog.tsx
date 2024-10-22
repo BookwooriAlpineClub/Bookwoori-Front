@@ -2,19 +2,19 @@
 Dialog 컴포넌트 사용법
 
 1. 열기/닫기 제어
-1-1. 부모 컴포넌트에 추가: const [dialogShow, setDialogShow] = useState<boolean>(false);
-1-2. 부모 컴포넌트에 추가: {dialogShow && (<Dialog></Dialog>)}
+1-1. 부모 컴포넌트에 추가: const [isDialogShow, setIsDialogShow] = useState<boolean>(false);
+1-2. 부모 컴포넌트에 추가: {isDialogShow && (<Dialog></Dialog>)}
 
 2. props
-2-1. setDialogShow={1-1의 setDialogShow}
-예시. <Dialog setDialogShow={setDialogShow}></Dialog>
+2-1. setIsDialogShow={1-1의 setIsDialogShow}
+예시. <Dialog setIsDialogShow={setIsDialogShow}></Dialog>
 
 3. 내용
 3-1. 부모 컴포넌트에서 <Dialog></Dialog> 안에 작성합니다.
 예시.
 <Dialog>
   <p>다이얼로그 모달</p>
-  <button type='button' onClick={() => setDialogShow(false)}>닫기</button>
+  <button type='button' onClick={() => setIsDialogShow(false)}>닫기</button>
 </Dialog>
 */
 
@@ -23,11 +23,11 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 interface Props {
-  setDialogShow(dialogShow: boolean): void;
+  setIsDialogShow(isDialogShow: boolean): void;
   children: React.ReactNode;
 }
 
-const Dialog = ({ setDialogShow, children }: Props) => {
+const Dialog = ({ setIsDialogShow, children }: Props) => {
   useEffect(() => {
     // 모달 마운트 시 스크롤 방지
     document.body.style.cssText = `
@@ -44,7 +44,7 @@ const Dialog = ({ setDialogShow, children }: Props) => {
   }, []);
 
   return createPortal(
-    <Background onClick={() => setDialogShow(false)}>
+    <Background onClick={() => setIsDialogShow(false)}>
       <Layout onClick={(event) => event.stopPropagation()}>{children}</Layout>
     </Background>,
     document.getElementById('modal') as HTMLElement,
