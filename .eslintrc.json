@@ -44,6 +44,8 @@
       "error",
       { "namedComponents": ["arrow-function", "function-declaration"] }
     ],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": "off",
     // Prettier 규칙: 줄 끝 형식을 자동으로 감지하여 설정
     "prettier/prettier": ["error", { "endOfLine": "auto" }]
   },
