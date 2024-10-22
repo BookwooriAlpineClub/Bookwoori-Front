@@ -90,6 +90,7 @@ const Layout = styled.section<{ $isOpen: boolean; $height: number }>`
 
   width: 100svw;
   max-width: 500px;
+  max-height: 100svh;
   padding: 1.44rem 1.25rem 1.25rem 1.25rem;
 
   border-radius: 1.875rem 1.875rem 0rem 0rem;
