@@ -1,14 +1,15 @@
 import { DefaultTheme } from 'styled-components';
 
 const colors = {
-  1: '#D1FD57',
-  2: '#6761FE',
-  3: '#D9D9FB',
-  4: '#EEF2FF',
-  black: '#1D1C20',
-  gray1: '#ACACAC',
-  gray2: '#F5F5F5',
-  white: '#',
+  neonGreen: '#D1FD57',
+  blue100: '#3660F9',
+  blue200: '#96B8FF',
+  blue300: '#EEF2FF',
+  black100: '#0F1015',
+  black200: '#A5A5A5',
+  black300: '#FAFAFA',
+  white: '#FFFFFF',
+  blackOverlay: 'rgba(15, 16, 21, 0.40)',
 } as const;
 
 interface Font {
