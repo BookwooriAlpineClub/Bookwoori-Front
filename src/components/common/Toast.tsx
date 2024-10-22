@@ -40,7 +40,7 @@ const List = styled.section`
 `;
 
 const Item = styled.article`
-  min-width: 16.25rem; // 추후 수정: 디자인 작업 중
+  min-width: 260px; // 추후 수정: 디자인 작업 중
   padding: 0.25rem 0.9375rem; // 추후 수정: 디자인 작업 중
 
   border-radius: 0.25rem; // 추후 수정: 디자인 작업 중
