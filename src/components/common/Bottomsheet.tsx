@@ -23,7 +23,7 @@ const [isBottomsheetShow, setIsBottomsheetShow] = useState<boolean>(false);
 
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
+import Scrim from './Scrim';
 
 interface Props {
   isBottomsheetShow: boolean;
@@ -43,12 +43,6 @@ const Bottomsheet = ({
 
   useEffect(() => {
     if (isBottomsheetShow) {
-      // 스크롤 방지
-      document.body.style.cssText = `
-      position: fixed;
-      top: -${window.scrollY}px;
-      width: 100%;
-      `;
       setIsMount(true);
       const { height } = bottomsheetRef.current.getBoundingClientRect();
       setBottomsheetHeight(height);
@@ -56,51 +50,30 @@ const Bottomsheet = ({
     } else {
       setIsOpen(false); // slideDown
       setTimeout(() => setIsMount(false), 300); // 트랜지션 후 언마운트
-      // 스크롤 복원
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = '';
-      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
     }
   }, [isBottomsheetShow]);
 
-  return createPortal(
-    <div>
-      {isMount && (
-        <Scrim $isOpen={isOpen} onClick={() => setIsBottomsheetShow(false)}>
-          <Layout
-            ref={bottomsheetRef}
-            $isOpen={isOpen}
-            $height={bottomsheetHeight}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <HandleBar />
-            <article>{children}</article>
-          </Layout>
-        </Scrim>
-      )}
-    </div>,
-    document.getElementById('modal') as HTMLElement,
+  return (
+    <Scrim
+      isOpen={isOpen}
+      isMount={isMount}
+      setIsModalShow={setIsBottomsheetShow}
+    >
+      <Layout
+        ref={bottomsheetRef}
+        $isOpen={isOpen}
+        $height={bottomsheetHeight}
+        onClick={(event) => event.stopPropagation()}
+      >
+        <HandleBar />
+        <article>{children}</article>
+      </Layout>
+    </Scrim>
   );
 };
 
 export default Bottomsheet;
 
-const Scrim = styled.div<{ $isOpen: boolean }>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 800;
-
-  width: 100svw;
-  height: 100svh;
-
-  background-color: ${({ $isOpen }) =>
-    $isOpen
-      ? 'rgba(15, 16, 21, 0.40)'
-      : 'rgba(0, 0, 0, 0)'}; // 추후 수정: theme.colors
-
-  transition: background-color 0.3s ease;
-`;
 const Layout = styled.section<{ $isOpen: boolean; $height: number }>`
   position: fixed;
   left: 50%;
