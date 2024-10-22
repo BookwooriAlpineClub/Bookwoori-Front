@@ -38,20 +38,28 @@ const Bottomsheet = ({
 }: Props) => {
   const [isMount, setIsMount] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [bottomsheetHeight, setBottomsheetHeight] = useState<number>(0);
+  const [bottomsheetHeight, setBottomsheetHeight] = useState<number>(999);
   const bottomsheetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isBottomsheetShow) {
       setIsMount(true);
-      const { height } = bottomsheetRef.current.getBoundingClientRect();
-      setBottomsheetHeight(height);
-      setTimeout(() => setIsOpen(true), 30); // 마운트 후 slideUp
     } else {
       setIsOpen(false); // slideDown
       setTimeout(() => setIsMount(false), 300); // 트랜지션 후 언마운트
     }
   }, [isBottomsheetShow]);
+  useEffect(() => {
+    if (isMount && bottomsheetRef.current) {
+      const height = bottomsheetRef.current.offsetHeight;
+      setBottomsheetHeight(height);
+    }
+  }, [isMount]);
+  useEffect(() => {
+    if (isMount && bottomsheetHeight > 0) {
+      setIsOpen(true);
+    }
+  }, [isMount, bottomsheetHeight]);
 
   return (
     <Scrim
