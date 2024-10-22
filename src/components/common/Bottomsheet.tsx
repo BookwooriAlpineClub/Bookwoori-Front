@@ -22,7 +22,7 @@ const [isBottomsheetShow, setIsBottomsheetShow] = useState<boolean>(false);
 */
 
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 interface Props {
@@ -38,6 +38,8 @@ const Bottomsheet = ({
 }: Props) => {
   const [isMount, setIsMount] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [bottomsheetHeight, setBottomsheetHeight] = useState<number>(0);
+  const bottomsheetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isBottomsheetShow) {
@@ -48,6 +50,8 @@ const Bottomsheet = ({
       width: 100%;
       `;
       setIsMount(true);
+      const { height } = bottomsheetRef.current.getBoundingClientRect();
+      setBottomsheetHeight(height);
       setTimeout(() => setIsOpen(true), 30); // 마운트 후 slideUp
     } else {
       setIsOpen(false); // slideDown
@@ -63,7 +67,12 @@ const Bottomsheet = ({
     <div>
       {isMount && (
         <Scrim $isOpen={isOpen} onClick={() => setIsBottomsheetShow(false)}>
-          <Layout $isOpen={isOpen} onClick={(event) => event.stopPropagation()}>
+          <Layout
+            ref={bottomsheetRef}
+            $isOpen={isOpen}
+            $height={bottomsheetHeight}
+            onClick={(event) => event.stopPropagation()}
+          >
             <HandleBar />
             <article>{children}</article>
           </Layout>
@@ -92,10 +101,10 @@ const Scrim = styled.div<{ $isOpen: boolean }>`
 
   transition: background-color 0.3s ease;
 `;
-const Layout = styled.section<{ $isOpen: boolean }>`
+const Layout = styled.section<{ $isOpen: boolean; $height: number }>`
   position: fixed;
-  bottom: ${({ $isOpen }) => ($isOpen ? 0 : -100)}svh;
   left: 50%;
+  bottom: ${({ $isOpen, $height }) => ($isOpen ? 0 : -$height)}px;
   transform: translateX(-50%);
 
   width: 100svw;
