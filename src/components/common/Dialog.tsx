@@ -47,19 +47,22 @@ const Dialog = ({ isDialogShow, setIsDialogShow, children }: Props) => {
 
   return (
     <Scrim isOpen={isOpen} isMount={isMount} setIsModalShow={setIsDialogShow}>
-      <Layout onClick={(event) => event.stopPropagation()}>{children}</Layout>
+      <Layout $isOpen={isOpen} onClick={(event) => event.stopPropagation()}>
+        {children}
+      </Layout>
     </Scrim>
   );
 };
 
 export default Dialog;
 
-const Layout = styled.section`
+const Layout = styled.section<{ $isOpen: boolean }>`
   position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(${({ $isOpen }) => ($isOpen ? 1 : 0)});
 
+  transition: transform 0.3s ease;
 
   // 추후 수정: 디자인 작업 중
 `;
