@@ -34,17 +34,17 @@ const SButton = styled.button`
 
   border-radius: 15px;
   border: 1px solid var(--blue-200, #96b8ff);
-  background: ${({ disabled }) =>
-    disabled
-      ? 'var(--blue-300, #eef2ff)'
-      : 'var(--blue-100, #3660F9) !important'};
+  background: var(--blue-100, #3660f9);
 
-  color: ${({ disabled }) =>
-    disabled ? 'var(--blue-200, #96b8ff)' : 'var(--white, #fff) !important'};
+  color: var(--white, #fff);
   text-align: center;
   // font-family: MaruBuri;
   // font-size: 14px;
   // font-weight: 700;
 
-  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+  &:disabled {
+    background: var(--blue-300, #eef2ff);
+    color: var(--blue-200, #96b8ff);
+    cursor: default;
+  }
 `;
