@@ -41,7 +41,7 @@ const SHeader = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: fixed;
+  position: sticky;
   top: 0;
 
   width: 100%;
