@@ -16,8 +16,8 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   :root {
-    font-family: 'MaruBuri';
     background-color: white;
+    ${({ theme }) => theme.fonts.body}
   }
   button {
     ${({ theme }) => theme.fonts.mountain}
