@@ -47,11 +47,6 @@ const fonts = {
     font-size: 0.875rem;
     font-weight: 700;
   `,
-  button: `
-    font-family: 'MaruBuri';
-    font-size: 0.875rem;
-    font-weight: 700;
-  `,
 } as const;
 
 export type ColorsTypes = typeof colors;

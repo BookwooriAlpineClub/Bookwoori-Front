@@ -19,6 +19,9 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'MaruBuri';
     background-color: white;
   }
+  button {
+    ${({ theme }) => theme.fonts.mountain}
+  }
   #root {
     width: 100svw;
     height: 100svh;
