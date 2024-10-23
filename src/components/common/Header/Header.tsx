@@ -43,7 +43,6 @@ const SHeader = styled.header`
   justify-content: space-between;
   position: fixed;
   top: 0;
-  z-index: 999;
 
   width: 100%;
   height: 4.375rem;
