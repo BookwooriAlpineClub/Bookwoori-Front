@@ -11,10 +11,6 @@ const GlobalStyle = createGlobalStyle`
     src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.ttf) format("truetype");
   }
 
-  * {
-    font-family: 'MaruBuri';
-    box-sizing: border-box;
-  }
   :root {
     background-color: white;
     ${({ theme }) => theme.fonts.body}
