@@ -7,7 +7,7 @@ interface buttonProps {
   onClick?: () => void;
 }
 
-const Button = ({ text = '내용', type, onClick, disabled }: buttonProps) => {
+const Button = ({ text, type, onClick, disabled }: buttonProps) => {
   return (
     <SButton name='button' type={type} onClick={onClick} disabled={disabled}>
       {text}
