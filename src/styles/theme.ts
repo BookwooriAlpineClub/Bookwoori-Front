@@ -1,37 +1,53 @@
 import { DefaultTheme } from 'styled-components';
 
 const colors = {
-  1: '#D1FD57',
-  2: '#6761FE',
-  3: '#D9D9FB',
-  4: '#EEF2FF',
-  black: '#1D1C20',
-  gray1: '#ACACAC',
-  gray2: '#F5F5F5',
-  white: '#',
+  neonGreen: '#D1FD57',
+  blue100: '#3660F9',
+  blue200: '#96B8FF',
+  blue300: '#EEF2FF',
+  black100: '#0F1015',
+  black200: '#A5A5A5',
+  black300: '#FAFAFA',
+  white: '#FFFFFF',
+  blackOverlay: 'rgba(15, 16, 21, 0.40)',
 } as const;
 
-interface Font {
-  size: number;
-  weight: number;
-  lineHeight: string;
-}
-
-const font = ({ size, weight, lineHeight }: Font): string => {
-  return `
-    font-size: ${size}rem;
-    font-weight: ${weight};
-    line-height: ${lineHeight};
-  `;
-};
-
 const fonts = {
-  H1: font({ size: 1.25, weight: 700, lineHeight: 'normal' }),
-  H2: font({ size: 1, weight: 600, lineHeight: 'normal' }),
-  Caption: font({ size: 0.75, weight: 300, lineHeight: 'normal' }),
-  B1: font({ size: 0.875, weight: 600, lineHeight: 'normal' }),
-  B2: font({ size: 0.75, weight: 300, lineHeight: 'normal' }),
-};
+  title: `
+    font-family: 'HS여름물빛체2.0';
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1rem;
+    letter-spacing: 0.01875rem;
+  `,
+  header: `
+    font-family: 'MaruBuri';
+    font-size: 1rem;
+    font-weight: 600;
+  `,
+  body: `
+    font-family: 'MaruBuri';
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+  `,
+  caption: `
+    font-family: 'MaruBuri';
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: -0.02063rem;
+  `,
+  nickname: `
+    font-family: 'MaruBuri';
+    font-size: 1.25rem;
+    font-weight: 700;
+  `,
+  mountain: `
+    font-family: 'MaruBuri';
+    font-size: 0.875rem;
+    font-weight: 700;
+  `,
+} as const;
 
 export type ColorsTypes = typeof colors;
 export type FontsTypes = typeof fonts;
