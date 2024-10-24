@@ -11,7 +11,7 @@ describe('헤더(공통) 컴포넌트 단위 테스트', () => {
         <Routes>
           <Route
             path='/'
-            element={<Header text='헤더 제목' type='hamburger' />}
+            element={<Header text='헤더 제목' headerType='hamburger' />}
           />
         </Routes>
       </MemoryRouter>,
