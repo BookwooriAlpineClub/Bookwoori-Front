@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
 interface buttonProps {
-  text: string;
+  children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   onClick?: () => void;
 }
 
-const Button = ({ text, type, onClick, disabled }: buttonProps) => {
+const Button = ({ children, type, onClick, disabled }: buttonProps) => {
   return (
     <SButton name='button' type={type} onClick={onClick} disabled={disabled}>
-      {text}
+      {children}
     </SButton>
   );
 };
