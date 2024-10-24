@@ -6,30 +6,30 @@ import { ReactComponent as Users } from '../../../assets/icons/icn_users.svg';
 
 interface headerProps {
   text: string;
-  type: 'hamburger' | 'back' | 'server';
+  headerType: 'hamburger' | 'back' | 'server';
 }
 
-const Header = ({ text, type }: headerProps) => {
+const Header = ({ text, headerType }: headerProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (type === 'back') {
+    if (headerType === 'back') {
       navigate(-1);
     }
   };
 
   return (
     <SHeader role='banner'>
+      <SButton type='button' onClick={handleClick} aria-label={headerType}>
+        {headerType === 'back' ? <Back /> : <Hamburger />}
+      </SButton>
+      <SLabel>{text}</SLabel>
       <SButton
         type='button'
         onClick={handleClick}
-        aria-label={type === 'back' ? 'back' : 'hamburger'}
+        disabled={headerType !== 'server'}
       >
-        {type === 'hamburger' || type === 'server' ? <Hamburger /> : <Back />}
-      </SButton>
-      <SLabel>{text}</SLabel>
-      <SButton type='button' onClick={handleClick}>
-        {type === 'server' && <Users data-testid='users-icon' />}
+        <Users />
       </SButton>
     </SHeader>
   );
@@ -67,4 +67,7 @@ const SButton = styled.button`
   justify-content: center;
 
   width: 1.5rem;
+  &:disabled {
+    visibility: hidden;
+  }
 `;
