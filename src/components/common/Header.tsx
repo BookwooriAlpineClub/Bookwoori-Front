@@ -25,13 +25,11 @@ const Header = ({ text, headerType }: headerProps) => {
         {headerType === 'back' ? <Back /> : <Hamburger />}
       </SButton>
       <SLabel>{text}</SLabel>
-      <SButton
-        type='button'
-        onClick={handleClick}
-        disabled={headerType !== 'server'}
-      >
-        <Users />
-      </SButton>
+      {headerType === 'server' && (
+        <SButton type='button' onClick={handleClick}>
+          <Users />
+        </SButton>
+      )}
     </SHeader>
   );
 };
@@ -53,6 +51,11 @@ const SHeader = styled.header`
 `;
 
 const SLabel = styled.label`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   ${theme.fonts.title}
   color: ${theme.colors.black100};
   text-align: center;
@@ -64,7 +67,4 @@ const SButton = styled.button`
   justify-content: center;
 
   width: 1.5rem;
-  &:disabled {
-    visibility: hidden;
-  }
 `;
