@@ -42,10 +42,10 @@ const Item = styled.article`
   padding: 0.25rem 0.9375rem; // 추후 수정: 디자인 작업 중
 
   border-radius: 0.25rem; // 추후 수정: 디자인 작업 중
-  background-color: rgba(0, 0, 0, 0.7); // 추후 수정: theme.colors
+  background-color: ${({ theme }) => theme.colors.blackOverlay}; // 추후 수정: 디자인 작업 중
 
-  // 추후 수정: theme.fonts
-  color: white; // 추후 수정: theme.colors
+  ${({ theme }) => theme.fonts.body} // 추후 수정: 디자인 작업 중
+  color: ${({ theme }) => theme.colors.white}; // 추후 수정: 디자인 작업 중
   text-align: center;
   white-space: pre-line; // 개행문자 처리
 
