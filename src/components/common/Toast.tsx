@@ -2,7 +2,7 @@
 Toast 컴포넌트 사용법
 
 1. useToast 훅을 불러온다.
-import useToast from 'hooks/useToast';
+import useToast from '@src/hooks/useToast';
 const addToast = useToast();
 
 2. addToast 함수를 통해 토스트를 추가한다.
@@ -13,7 +13,7 @@ addToast({ content: '토스트 내용', category: 'error' }); // 디자인에 �
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
-import { toastState } from '../../states/atoms';
+import { toastState } from '@src/states/atoms';
 
 const Toast = () => {
   const toasts = useRecoilValue(toastState);
