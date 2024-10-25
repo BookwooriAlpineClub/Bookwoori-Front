@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { theme } from 'src/styles/theme';
 
 interface buttonProps {
   children: React.ReactNode;
@@ -7,9 +8,21 @@ interface buttonProps {
   onClick?: () => void;
 }
 
-const Button = ({ children, type, onClick, disabled }: buttonProps) => {
+const Button = ({
+  children,
+  type = 'button',
+  disabled = true,
+  onClick,
+  ...props
+}: buttonProps) => {
   return (
-    <SButton name='button' type={type} onClick={onClick} disabled={disabled}>
+    <SButton
+      name='button'
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      {...props}
+    >
       {children}
     </SButton>
   );
@@ -17,13 +30,6 @@ const Button = ({ children, type, onClick, disabled }: buttonProps) => {
 
 export default Button;
 
-Button.defaultProps = {
-  type: 'button',
-  disabled: true,
-  onClick: () => {},
-};
-
-// 색상 추후 수정
 const SButton = styled.button`
   display: flex;
   justify-content: center;
@@ -32,19 +38,16 @@ const SButton = styled.button`
   width: 19.6875rem;
   padding: 0.9375rem 0.3125rem;
 
-  border-radius: 15px;
-  border: 1px solid var(--blue-200, #96b8ff);
-  background: var(--blue-100, #3660f9);
+  border-radius: 0.9375rem;
+  border: 1px solid ${theme.colors.blue200};
+  background: ${theme.colors.blue100};
 
-  color: var(--white, #fff);
+  color: ${theme.colors.white};
   text-align: center;
-  // font-family: MaruBuri;
-  // font-size: 14px;
-  // font-weight: 700;
 
   &:disabled {
-    background: var(--blue-300, #eef2ff);
-    color: var(--blue-200, #96b8ff);
+    background: ${theme.colors.blue300};
+    color: ${theme.colors.blue200};
     cursor: default;
   }
 `;
