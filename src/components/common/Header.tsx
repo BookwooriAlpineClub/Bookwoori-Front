@@ -20,7 +20,7 @@ const Header = ({ text, headerType }: headerProps) => {
   };
 
   return (
-    <SHeader role='banner'>
+    <SHeader>
       <SButton type='button' onClick={handleClick} aria-label={headerType}>
         {headerType === 'back' ? <Back /> : <Hamburger />}
       </SButton>
