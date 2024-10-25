@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Button from 'src/components/common/Button';
+import Button from '@src/components/common/Button';
 
 describe('버튼(공통) 컴포넌트 단위 테스트', () => {
   test('props에 "text"를 넣으면 button에 text가 렌더되어야 한다.', () => {

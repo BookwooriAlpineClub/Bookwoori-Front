@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from 'src/styles/theme';
+import { theme } from '@src/styles/theme';
 
 interface buttonProps {
   children: React.ReactNode;
