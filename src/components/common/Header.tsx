@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as Hamburger } from '@src/assets/icons/menu.svg';
-import { ReactComponent as Back } from '@src/assets/icons/left_arrow.svg';
-import { ReactComponent as Users } from '@src/assets/icons/users.svg';
+import { ReactComponent as Hamburger } from 'src/assets/icons/menu.svg';
+import { ReactComponent as Back } from 'src/assets/icons/left_arrow.svg';
+import { ReactComponent as Users } from 'src/assets/icons/users.svg';
 
 interface headerProps {
   text: string;
