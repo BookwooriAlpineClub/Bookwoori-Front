@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Hamburger } from '@src/assets/icons/menu.svg';
 import { ReactComponent as Back } from '@src/assets/icons/left_arrow.svg';
 import { ReactComponent as Users } from '@src/assets/icons/users.svg';
-import { theme } from '@src/styles/theme';
 
 interface headerProps {
   text: string;
@@ -47,7 +46,7 @@ const SHeader = styled.header`
   height: 4.375rem;
   padding: 0 1.4375rem;
 
-  background: ${theme.colors.white};
+  background: ${({ theme }) => theme.colors.white};
 `;
 
 const SLabel = styled.label`
@@ -56,8 +55,8 @@ const SLabel = styled.label`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  ${theme.fonts.title}
-  color: ${theme.colors.black100};
+  ${({ theme }) => theme.fonts.title}
+  color:  ${({ theme }) => theme.colors.black100};
   text-align: center;
 `;
 
