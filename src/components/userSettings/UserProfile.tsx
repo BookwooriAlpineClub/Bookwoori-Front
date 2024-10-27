@@ -1,13 +1,25 @@
+import { SyntheticEvent } from 'react';
 import styled from 'styled-components';
-import Background from '@src/assets/images/userSettings/background.png';
-import Profile from '@src/assets/images/userSettings/profile_example.png';
+import Background from '@src/assets/images/userSettings/background_default.svg';
+import Profile from '@src/assets/images/userSettings/profile_default.svg';
 
 const UserProfile = () => {
+  const handleImgError = (
+    e: SyntheticEvent<HTMLImageElement>,
+    type: string,
+  ) => {
+    if (type === 'back') {
+      e.currentTarget.src = Background;
+      return;
+    }
+    e.currentTarget.src = Profile;
+  };
+
   return (
     <SLayout>
       <SImages>
-        <SBackgroundImg src={Background} />
-        <SProfileImg src={Profile} />
+        <SBackgroundImg src='url' onError={(e) => handleImgError(e, 'back')} />
+        <SProfileImg src='url' onError={(e) => handleImgError(e, 'profile')} />
       </SImages>
       <SContainer>
         <SNickname>내별명</SNickname>
@@ -37,7 +49,8 @@ const SLayout = styled.div`
   align-items: center;
   gap: 0.625rem;
 
-  width: 20.9375rem;
+  width: 100%;
+  // width: 20.9375rem;
   padding: 0 0 1.25rem;
 
   border-radius: 1.875rem;
