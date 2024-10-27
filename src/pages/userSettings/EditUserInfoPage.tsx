@@ -16,7 +16,7 @@ const EditUserInfoPage = () => {
   return (
     <SLayout>
       <SContainer>
-        <UserProfilImg />
+        <UserProfilImg edit />
         <SBox>
           <SLabel>별명</SLabel>
           <SWrapper>
@@ -31,7 +31,9 @@ const EditUserInfoPage = () => {
           </SWrapper>
         </SBox>
       </SContainer>
-      <Button disabled={!(value && length <= 10)}>수정하기</Button>
+      <Button disabled={!(value && length <= 10 && ref.current !== value)}>
+        수정하기
+      </Button>
     </SLayout>
   );
 };
@@ -52,6 +54,8 @@ const SContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+
+  width: 100%;
 `;
 
 const SBox = styled.div`
