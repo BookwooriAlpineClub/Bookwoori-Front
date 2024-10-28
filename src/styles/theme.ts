@@ -24,28 +24,36 @@ const fonts = {
     font-family: 'MaruBuri';
     font-size: 1rem;
     font-weight: 600;
+    line-height: normal;
+    letter-spacing: normal;
   `,
   body: `
     font-family: 'MaruBuri';
     font-size: 0.8125rem;
     font-weight: 600;
     line-height: 1.25rem;
+    letter-spacing: normal;
   `,
   caption: `
     font-family: 'MaruBuri';
     font-size: 0.6875rem;
     font-weight: 400;
+    line-height: normal;
     letter-spacing: -0.02063rem;
   `,
   nickname: `
     font-family: 'MaruBuri';
     font-size: 1.25rem;
     font-weight: 700;
+    line-height: normal;
+    letter-spacing: normal;
   `,
   mountain: `
     font-family: 'MaruBuri';
     font-size: 0.875rem;
     font-weight: 700;
+    line-height: normal;
+    letter-spacing: normal;
   `,
 } as const;
 
