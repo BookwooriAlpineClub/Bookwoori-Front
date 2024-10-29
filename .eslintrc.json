@@ -6,7 +6,6 @@
     "node_modules/",
     "public/",
     "*.json",
-    "*.config.js",
     "*.md",
     "react-app-env.d.ts",
     "service-worker.ts",
@@ -57,7 +56,7 @@
     "import/no-extraneous-dependencies": [
       "error",
       // devDependencies 예외: 특정 파일 패턴에 대해 devDependencies에서 가져오는 것을 허용
-      { "devDependencies": ["*.config.*", "**/*.test.tsx"] }
+      { "devDependencies": ["*.config.*", "*.setup.*", "**/*.test.tsx"] }
     ],
     // 상대 경로 import 비허용
     "no-restricted-imports": ["error", { "patterns": ["..*"] }],
