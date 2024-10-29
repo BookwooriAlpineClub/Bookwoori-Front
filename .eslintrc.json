@@ -33,21 +33,20 @@
     "ecmaFeatures": { "jsx": true },
     "ecmaVersion": "latest"
   },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@tanstack/query/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "prettier"
+  ],
   "plugins": [
     "@typescript-eslint",
     "import",
+    "jsx-a11y",
     "react",
-    "@tanstack/query",
-    "prettier"
-  ],
-  "extends": [
-    "airbnb",
-    "airbnb/hooks",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:@tanstack/eslint-plugin-query/recommended",
-    "prettier"
+    "react-hooks",
+    "@tanstack/query"
   ],
   "rules": {
     "import/extensions": [
