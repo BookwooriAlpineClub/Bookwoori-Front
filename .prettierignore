@@ -1,8 +1,12 @@
-# root
-build/
+# dependencies
 node_modules/
 
-# src
+# production
+build/
+
+# misc
 react-app-env.d.ts
+
+# service worker
 service-worker.ts
 serviceWorkerRegistration.ts
