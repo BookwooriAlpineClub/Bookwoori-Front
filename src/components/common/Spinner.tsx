@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as IcnLoading } from '../../assets/icons/loading.svg';
+import { ReactComponent as IcnLoading } from '@src/assets/icons/loading.svg';
 
 const Spinner = () => {
   return <Loading />;
