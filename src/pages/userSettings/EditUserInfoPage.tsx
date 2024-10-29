@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useRef, useState } from 'react';
 import UserProfilImg from '@src/components/userSettings/UserProfileImg';
 import Button from '@src/components/common/Button';
+import Header from '@src/components/common/Header';
 
 const EditUserInfoPage = () => {
   const [value, setValue] = useState<string>('내별명');
@@ -14,27 +15,30 @@ const EditUserInfoPage = () => {
   };
 
   return (
-    <SLayout>
-      <SContainer>
-        <UserProfilImg edit />
-        <SBox>
-          <SLabel>별명</SLabel>
-          <SWrapper>
-            <SInput
-              type='text'
-              placeholder='별명을 입력하세요.'
-              value={value}
-              onChange={handleChangeValue}
-              $color={ref.current === value}
-            />
-            <SSmallLabel>{length}/10</SSmallLabel>
-          </SWrapper>
-        </SBox>
-      </SContainer>
-      <Button disabled={!(value && length <= 10 && ref.current !== value)}>
-        수정하기
-      </Button>
-    </SLayout>
+    <>
+      <Header text='인물 정보 수정하기' headerType='back' />
+      <SLayout>
+        <SContainer>
+          <UserProfilImg edit />
+          <SBox>
+            <SLabel>별명</SLabel>
+            <SWrapper>
+              <SInput
+                type='text'
+                placeholder='별명을 입력하세요.'
+                value={value}
+                onChange={handleChangeValue}
+                $color={ref.current === value}
+              />
+              <SSmallLabel>{length}/10</SSmallLabel>
+            </SWrapper>
+          </SBox>
+        </SContainer>
+        <Button disabled={!(value && length <= 10 && ref.current !== value)}>
+          수정하기
+        </Button>
+      </SLayout>
+    </>
   );
 };
 
