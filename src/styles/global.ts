@@ -11,16 +11,14 @@ const GlobalStyle = createGlobalStyle`
     src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.ttf) format("truetype");
   }
 
-  :root {
-    background-color: white;
+  body {
+    width: 100svw;
+    height: 100svh;
+    background-color: ${({ theme }) => theme.colors.white};
     ${({ theme }) => theme.fonts.body}
   }
   button {
     ${({ theme }) => theme.fonts.mountain}
-  }
-  #root {
-    width: 100svw;
-    height: 100svh;
   }
   /* 스크롤바 비표시 */
   ::-webkit-scrollbar {
