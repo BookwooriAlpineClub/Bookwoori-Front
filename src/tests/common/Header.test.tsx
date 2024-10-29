@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import Header from '@src/components/common/Header';
