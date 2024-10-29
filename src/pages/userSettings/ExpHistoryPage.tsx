@@ -1,3 +1,4 @@
+import Header from '@src/components/common/Header';
 import ExpList from '@src/components/userSettings/ExpList';
 import styled from 'styled-components';
 
@@ -79,14 +80,17 @@ const expList: ExpListType[] = [
 
 const ExpHistoryPage = () => {
   return (
-    <SLayout>
-      {expList.map((item) => {
-        const keys = Object.keys(item);
-        return keys.map((key) => (
-          <ExpList key={`${item}-${key}`} date={key} list={item[key]} />
-        ));
-      })}
-    </SLayout>
+    <>
+      <Header text='지나온 길 보기' headerType='back' />
+      <SLayout>
+        {expList.map((item) => {
+          const keys = Object.keys(item);
+          return keys.map((key) => (
+            <ExpList key={`${item}-${key}`} date={key} list={item[key]} />
+          ));
+        })}
+      </SLayout>
+    </>
   );
 };
 
