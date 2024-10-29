@@ -81,5 +81,17 @@
     "no-use-before-define": "off",
     // 화살표 함수의 중괄호 여부 스타일을 검사하지 않음
     "arrow-body-style": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.tsx"],
+      "extends": [
+        "plugin:jest/recommended",
+        "plugin:jest-dom/recommended",
+        "plugin:testing-library/react"
+      ],
+      "plugins": ["jest", "jest-dom", "testing-library"],
+      "rules": {}
+    }
+  ]
 }
