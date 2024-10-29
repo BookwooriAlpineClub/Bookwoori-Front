@@ -1,23 +1,24 @@
 import styled from 'styled-components';
 import { ReactComponent as Down } from '@src/assets/icons/down_arrow.svg';
-import React from 'react';
+import React, { useState } from 'react';
 
 type accordionProps = {
   text: string;
-  state: string;
   children?: React.ReactNode;
 };
 
-const Accordion = ({ text, state, children }: accordionProps) => {
+const Accordion = ({ text, children }: accordionProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+
   return (
     <SLayout>
       <SContainer>
         <SLabel>{text}</SLabel>
-        <SButton>
-          <SDown $open={state === 'open'} />
+        <SButton onClick={() => setIsOpen(!isOpen)}>
+          <SDown $open={isOpen} />
         </SButton>
       </SContainer>
-      {state === 'open' && children}
+      {isOpen && children}
     </SLayout>
   );
 };
@@ -39,6 +40,7 @@ const SContainer = styled.div`
   align-items: center;
 `;
 const SLabel = styled.label`
+  ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.black100};
 `;
 const SButton = styled.button`
