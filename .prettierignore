@@ -1,6 +1,8 @@
-index.html
+# root
+build/
+node_modules/
 
+# src
 react-app-env.d.ts
-
 service-worker.ts
 serviceWorkerRegistration.ts
