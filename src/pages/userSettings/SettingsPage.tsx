@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Header from '@src/components/common/Header';
 import UserProfile from '@src/components/userSettings/UserProfile';
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Flag } from '@src/assets/icons/flag.svg';
@@ -12,17 +13,20 @@ const SettingsPage = () => {
   ];
 
   return (
-    <SLayout>
-      <UserProfile />
-      <SContainer>
-        {buttonData.map((button) => (
-          <SButton key={button.label} type='button'>
-            {button.icon}
-            {button.label}
-          </SButton>
-        ))}
-      </SContainer>
-    </SLayout>
+    <>
+      <Header text='설정' headerType='hamburger' />
+      <SLayout>
+        <UserProfile />
+        <SContainer>
+          {buttonData.map((button) => (
+            <SButton key={button.label} type='button'>
+              {button.icon}
+              {button.label}
+            </SButton>
+          ))}
+        </SContainer>
+      </SLayout>
+    </>
   );
 };
 
@@ -35,7 +39,7 @@ const SLayout = styled.div`
   align-items: center;
   gap: 1.875rem;
 
-  padding: 0 1.25rem;
+  padding: 1.875rem 1.25rem 3.0625rem;
 `;
 
 const SContainer = styled.div`
