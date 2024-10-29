@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-const useUploadFile = () => {
+const useUploadFile = (previewImg: string | undefined) => {
   const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | undefined>();
+  const [preview, setPreview] = useState<string | undefined>(previewImg);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
