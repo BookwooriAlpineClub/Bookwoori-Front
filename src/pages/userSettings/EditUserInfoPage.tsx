@@ -51,7 +51,7 @@ const SLayout = styled.div`
   justify-content: space-between;
 
   padding: 1.875rem 1.25rem 2.5625rem;
-  height: 100%;
+  height: calc(100% - 4.375rem);
 `;
 
 const SContainer = styled.div`
@@ -78,13 +78,13 @@ const SWrapper = styled.div`
   justify-content: space-between;
 
   padding: 0.875rem 0.625rem;
+
+  border-radius: 0.3125rem;
+  background: ${({ theme }) => theme.colors.white};
 `;
 
 const SInput = styled.input<{ $color: boolean }>`
   width: 100%;
-
-  border-radius: 0.3125rem;
-  background: ${({ theme }) => theme.colors.white};
 
   ${({ theme }) => theme.fonts.body};
   color: ${({ theme, $color }) =>
