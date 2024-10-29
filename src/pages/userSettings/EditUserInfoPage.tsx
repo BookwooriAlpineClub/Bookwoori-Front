@@ -10,8 +10,16 @@ const EditUserInfoPage = () => {
   const ref = useRef(value);
 
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-    setLength(e.target.value.length);
+    const targetValue = e.target.value;
+    const targetLength = e.target.value.length;
+
+    if (targetLength > 20) {
+      setValue(targetValue.slice(0, 20));
+      setLength(20);
+      return;
+    }
+    setValue(targetValue);
+    setLength(targetLength);
   };
 
   return (
