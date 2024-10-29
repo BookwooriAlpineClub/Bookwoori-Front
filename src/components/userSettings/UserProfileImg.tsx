@@ -9,9 +9,9 @@ const UserProfilImg = ({ edit }: { edit?: boolean }) => {
   const {
     preview: backgroundPreview,
     handleFileUpload: handleBackgroundUpload,
-  } = useUploadFile();
+  } = useUploadFile(Background);
   const { preview: profilePreview, handleFileUpload: handleProfileUpload } =
-    useUploadFile();
+    useUploadFile(Profile);
 
   const handleImgError = (
     e: SyntheticEvent<HTMLImageElement>,
@@ -66,6 +66,7 @@ const SImages = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `;
 const SBox = styled.div`
   display: flex;
