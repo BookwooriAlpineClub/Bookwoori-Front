@@ -11,7 +11,7 @@ const SButton = styled.button`
   padding: 8px 15px;
   justify-content: center;
   align-items: center;
-  gap: 0.3125rem;
+  gap: 0.25rem;
 
   width: calc(100% - 30px);
 
