@@ -18,10 +18,10 @@ const SettingsPage = () => {
       <SLayout>
         <UserProfile />
         <SContainer>
-          {buttonData.map((button) => (
-            <SButton key={button.label} type='button'>
-              {button.icon}
-              {button.label}
+          {buttonData.map(({ icon, label }) => (
+            <SButton key={label} type='button'>
+              {icon}
+              {label}
             </SButton>
           ))}
         </SContainer>
