@@ -24,6 +24,15 @@ const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar {
     display: none;
   }
+
+  #toast {
+    position: fixed;
+    z-index: 900;
+  }
+  #modal {
+    position: fixed;
+    z-index: 800;
+  }
 `;
 
 export default GlobalStyle;
