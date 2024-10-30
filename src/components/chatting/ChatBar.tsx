@@ -28,7 +28,7 @@ export default ChatBar;
 const SLayout = styled.div`
   display: flex;
   gap: 0.625rem;
-  position: absolute;
+  position: sticky;
   bottom: 0;
 
   width: 100%;
