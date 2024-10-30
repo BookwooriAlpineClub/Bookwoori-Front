@@ -33,7 +33,6 @@ const List = styled.section`
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 900; // 최상위 레이어
   transform: translate(-50%, -50%);
 `;
 
