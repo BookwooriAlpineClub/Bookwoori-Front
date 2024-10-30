@@ -29,14 +29,14 @@ const Toast = () => {
 
 export default Toast;
 
-const List = styled.section`
+const List = styled.ul`
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
 
-const Item = styled.article`
+const Item = styled.li`
   min-width: 260px; // 추후 수정: 디자인 작업 중
   padding: 0.25rem 0.9375rem; // 추후 수정: 디자인 작업 중
 
