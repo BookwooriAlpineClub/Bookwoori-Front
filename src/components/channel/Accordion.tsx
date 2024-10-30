@@ -31,6 +31,7 @@ const SLayout = styled.div`
   padding: 1.25rem 0.9375rem;
   gap: 0.9375rem;
 
+  width: 100%;
   border-radius: 0.9375rem;
   background-color: ${({ theme }) => theme.colors.white};
 `;
