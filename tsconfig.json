@@ -1,7 +1,7 @@
 {
   // 컴파일 대상 지정
   "exclude": [".github", "build", "node_modules", "public"],
-  "include": ["*.ts", "src"],
+  "include": ["*.ts", "*.tsx", "src"],
   // 컴파일 설정
   "compilerOptions": {
     // Language and Environment

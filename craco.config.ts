@@ -13,7 +13,7 @@ const cracoConfig: CracoConfig = {
   jest: {
     configure: {
       testEnvironment: 'jsdom', // web app
-      setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+      setupFilesAfterEnv: ['<rootDir>/jest.setup.tsx'],
       moduleNameMapper: {
         '^@src/(.*)$': '<rootDir>/src/$1',
       },
