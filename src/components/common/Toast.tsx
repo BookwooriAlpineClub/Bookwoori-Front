@@ -21,7 +21,11 @@ const Toast = () => {
   return createPortal(
     <List>
       {toasts &&
-        toasts.map((item) => <Item key={item.id}>{item.content}</Item>)}
+        toasts.map((item) => (
+          <Item key={item.id} role='alert'>
+            {item.content}
+          </Item>
+        ))}
     </List>,
     document.getElementById('toast') as HTMLElement,
   );
