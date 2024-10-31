@@ -3,7 +3,7 @@ import Header from '@src/components/common/Header';
 import Button from '@src/components/common/Button';
 import Accordion from '@src/components/channel/Accordion';
 import ChannelList from '@src/components/channel/ChannelList';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 type ClimbingStatus = 'RUNNING' | 'READY' | 'FINISHED';
 
@@ -72,6 +72,7 @@ const keys = Object.keys(mockList) as Array<keyof ClimbingData>;
 
 const ChannelListEditPage = () => {
   const [list, setList] = useState(keys);
+  const ref = useRef(list);
 
   const onDrop = (e: React.DragEvent, idx: number) => {
     e.preventDefault();
@@ -102,13 +103,14 @@ const ChannelListEditPage = () => {
               isDraggable
               onDrop={onDrop}
               onDragOver={onDragOver}
-              data-position={idx}
             >
               <ChannelList color='grey' list={mockList[key]} />
             </Accordion>
           ))}
         </SContainer>
-        <Button>편집하기</Button>
+        <Button disabled={JSON.stringify(ref.current) === JSON.stringify(list)}>
+          편집하기
+        </Button>
       </SLayout>
     </>
   );
