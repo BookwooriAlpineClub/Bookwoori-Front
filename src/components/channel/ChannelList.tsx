@@ -8,14 +8,15 @@ interface ClimbingChannel {
 }
 
 interface Props {
+  color?: string;
   list: ClimbingChannel[];
 }
 
-const ChannelList = ({ list }: Props) => {
+const ChannelList = ({ color, list }: Props) => {
   return (
     <SLayout>
       {list.map((it) => (
-        <ChannelItem key={`${it.name}-${it.type}`} type={it.type}>
+        <ChannelItem key={it.climbingId} color={color} type={it.type}>
           {it.name}
         </ChannelItem>
       ))}
