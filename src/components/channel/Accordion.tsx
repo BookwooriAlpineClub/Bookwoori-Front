@@ -3,15 +3,36 @@ import { ReactComponent as Down } from '@src/assets/icons/down_arrow.svg';
 import React, { useState } from 'react';
 
 type accordionProps = {
+  id?: number;
   text: string;
+  isDraggable?: boolean;
+  onDrop?: (e: React.DragEvent, idx: number) => void;
+  onDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
   children?: React.ReactNode;
 };
 
-const Accordion = ({ text, children }: accordionProps) => {
+const onDragStart = (e: React.DragEvent<HTMLDivElement>, id: number) => {
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('idx', String(id));
+};
+
+const Accordion = ({
+  id = -1,
+  text,
+  isDraggable = false,
+  onDrop = () => {},
+  onDragOver,
+  children,
+}: accordionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (
-    <SLayout>
+    <SLayout
+      draggable={isDraggable}
+      onDragStart={(e) => onDragStart(e, id)}
+      onDrop={(e) => onDrop(e, id)}
+      onDragOver={onDragOver}
+    >
       <SContainer>
         <SLabel>{text}</SLabel>
         <SButton onClick={() => setIsOpen(!isOpen)}>
@@ -34,6 +55,8 @@ const SLayout = styled.div`
   width: 100%;
   border-radius: 0.9375rem;
   background-color: ${({ theme }) => theme.colors.white};
+
+  cursor: pointer;
 `;
 const SContainer = styled.div`
   display: flex;

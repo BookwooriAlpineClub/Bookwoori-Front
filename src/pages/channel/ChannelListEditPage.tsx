@@ -3,6 +3,7 @@ import Header from '@src/components/common/Header';
 import Button from '@src/components/common/Button';
 import Accordion from '@src/components/channel/Accordion';
 import ChannelList from '@src/components/channel/ChannelList';
+import React, { useState } from 'react';
 
 type ClimbingStatus = 'RUNNING' | 'READY' | 'FINISHED';
 
@@ -67,17 +68,43 @@ const mockList: ClimbingData = {
   ],
 };
 
+const keys = Object.keys(mockList) as Array<keyof ClimbingData>;
+
 const ChannelListEditPage = () => {
-  const keys = Object.keys(mockList) as Array<keyof ClimbingData>;
+  const [list, setList] = useState(keys);
+
+  const onDrop = (e: React.DragEvent, idx: number) => {
+    e.preventDefault();
+
+    if (idx === -1) return;
+    const sourceIdx = Number(e.dataTransfer.getData('idx'));
+    const updateList = [...list];
+    const [movedList] = updateList.splice(sourceIdx, 1);
+
+    updateList.splice(idx, 0, movedList);
+    setList(updateList);
+  };
+
+  const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
 
   return (
     <>
       <Header text='목록 편집하기' headerType='back' />
       <SLayout>
         <SContainer>
-          {keys.map((key) => (
-            <Accordion text={key} key={key}>
-              <ChannelList list={mockList[key]} />
+          {list.map((key, idx) => (
+            <Accordion
+              id={idx}
+              text={key}
+              key={key}
+              isDraggable
+              onDrop={onDrop}
+              onDragOver={onDragOver}
+              data-position={idx}
+            >
+              <ChannelList color='grey' list={mockList[key]} />
             </Accordion>
           ))}
         </SContainer>
