@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     width: 100svw;
     height: 100svh;
-    background-color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.black300};
     ${({ theme }) => theme.fonts.body}
   }
   button {
