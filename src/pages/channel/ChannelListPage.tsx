@@ -53,7 +53,7 @@ const ChannelListPage = () => {
     { name: '나의 등반', children: <Carousel /> },
     {
       name: '모집 중인 등반',
-      children: <ChannelList list={mockList} />,
+      children: <Carousel />,
     },
     {
       name: '진행 중인 등반',
@@ -67,7 +67,7 @@ const ChannelListPage = () => {
 
   return (
     <>
-      <Header headerType='server' text='채널' />
+      <SHeader headerType='server' text='채널' />
       <SLayout>
         <SButtonContainer>
           {buttonData.map((buttonItem) => (
@@ -90,6 +90,9 @@ const ChannelListPage = () => {
 
 export default ChannelListPage;
 
+const SHeader = styled(Header)`
+  z-index: 1;
+`;
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
