@@ -48,10 +48,8 @@ const Background = styled.div<{ $isOpen: boolean }>`
   width: 100svw;
   height: 100svh;
 
-  background-color: ${({ $isOpen }) =>
-    $isOpen
-      ? 'rgba(15, 16, 21, 0.40)'
-      : 'rgba(0, 0, 0, 0)'}; // 추후 수정: theme.colors
+  background-color: ${({ $isOpen, theme }) =>
+    $isOpen ? theme.colors.blackOverlay : 'rgba(0, 0, 0, 0)'};
 
   transition: background-color 0.3s ease;
 `;
