@@ -25,6 +25,54 @@ const chatting: Chatting[] = [
     time: '오늘',
     text: '채팅 텍스트 채팅 텍스트 채팅 텍스트 채팅 텍스트',
   },
+  {
+    imgUrl: '',
+    nickname: 'AAA',
+    time: '오늘',
+    text: '이야야야',
+  },
+  {
+    imgUrl: '',
+    nickname: '나야나',
+    time: '오늘',
+    text: '채팅 텍스트 채팅 텍스트 채팅 텍스트 채팅 텍스트',
+  },
+  {
+    imgUrl: '',
+    nickname: 'AAA',
+    time: '오늘',
+    text: '이야야야',
+  },
+  {
+    imgUrl: '',
+    nickname: '나야나',
+    time: '오늘',
+    text: '채팅 텍스트 채팅 텍스트 채팅 텍스트 채팅 텍스트',
+  },
+  {
+    imgUrl: '',
+    nickname: 'AAA',
+    time: '오늘',
+    text: '이야야야',
+  },
+  {
+    imgUrl: '',
+    nickname: '나야나',
+    time: '오늘',
+    text: '채팅 텍스트 채팅 텍스트 채팅 텍스트 채팅 텍스트',
+  },
+  {
+    imgUrl: '',
+    nickname: 'AAA',
+    time: '오늘',
+    text: '이야야야',
+  },
+  {
+    imgUrl: '',
+    nickname: '나야나',
+    time: '오늘',
+    text: '채팅 텍스트 채팅 텍스트 채팅 텍스트 채팅 텍스트',
+  },
 ];
 
 const ChattingPage = () => {
@@ -33,7 +81,7 @@ const ChattingPage = () => {
 
   return (
     <>
-      <Header text={nickname} headerType='back' />
+      <SHeader text={nickname} headerType='back' />
       <SLayout>
         <DateLine date={date} />
         {chatting.map((it) => (
@@ -52,6 +100,9 @@ const ChattingPage = () => {
 
 export default ChattingPage;
 
+const SHeader = styled(Header)`
+  z-index: 1;
+`;
 const SLayout = styled.div`
   display: flex;
   position: relative;
