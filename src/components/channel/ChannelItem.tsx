@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { ReactComponent as Hash } from '@src/assets/icons/hash.svg';
 import { ReactComponent as Voice } from '@src/assets/icons/voice.svg';
 import { ReactComponent as Run } from '@src/assets/icons/run.svg';
+import { useState } from 'react';
 
 interface Props {
   color?: string;
@@ -9,15 +10,27 @@ interface Props {
   children: React.ReactNode;
 }
 
-const ChannelItem = ({ color = 'black', type, children }: Props) => {
+const ChannelItem = ({ color = 'grey', type, children }: Props) => {
+  const [isHovering, setIsHovering] = useState<boolean>(false);
   const iconMapping: { [key: string]: React.ReactNode } = {
-    text: <SHash $color={color} />,
-    voice: <SVoice $color={color} />,
-    run: <SRun $color={color} />,
+    text: <SHash $color={color} $isHovering={isHovering} />,
+    voice: <SVoice $color={color} $isHovering={isHovering} />,
+    run: <SRun $color={color} $isHovering={isHovering} />,
+  };
+
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
+  const handleMouseOut = () => {
+    setIsHovering(false);
   };
 
   return (
-    <SItem $color={color}>
+    <SItem
+      $color={color}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    >
       {iconMapping[type]} {children}
     </SItem>
   );
@@ -25,25 +38,44 @@ const ChannelItem = ({ color = 'black', type, children }: Props) => {
 
 export default ChannelItem;
 
-const SItem = styled.div<{ $color: string }>`
+const SItem = styled.button<{ $color: string }>`
   display: flex;
   gap: 0.625rem;
 
   padding: 0 0.625rem;
 
+  ${({ theme }) => theme.fonts.body};
   color: ${({ theme, $color }) =>
-    $color === 'grey' ? theme.colors.black200 : theme.colors.black100};
+    $color === 'black' ? theme.colors.black100 : theme.colors.black200};
+
+  &:hover {
+    padding: 0.625rem;
+
+    border-radius: 0.9375rem;
+    background-color: ${({ theme }) => theme.colors.neonGreen};
+
+    color: ${({ theme }) => theme.colors.black100};
+    cursor: pointer;
+  }
 `;
-const iconStyle = css<{ $color: string }>`
-  fill: ${({ theme, $color }) =>
-    $color === 'grey' ? theme.colors.black200 : theme.colors.black100};
+
+interface StyleProps {
+  $color: string;
+  $isHovering: boolean;
+}
+
+const iconStyle = css<StyleProps>`
+  fill: ${({ theme, $color, $isHovering }) =>
+    $color === 'black' || $isHovering
+      ? theme.colors.black100
+      : theme.colors.black200};
 `;
-const SHash = styled(Hash)<{ $color: string }>`
+const SHash = styled(Hash)<StyleProps>`
   ${iconStyle}
 `;
-const SVoice = styled(Voice)<{ $color: string }>`
+const SVoice = styled(Voice)<StyleProps>`
   ${iconStyle}
 `;
-const SRun = styled(Run)<{ $color: string }>`
+const SRun = styled(Run)<StyleProps>`
   ${iconStyle}
 `;
