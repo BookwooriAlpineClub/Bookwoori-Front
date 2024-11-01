@@ -43,7 +43,6 @@ const Background = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 800; // Toast 컴포넌트보다 낮은 레벨의 레이어
 
   width: 100svw;
   height: 100svh;
