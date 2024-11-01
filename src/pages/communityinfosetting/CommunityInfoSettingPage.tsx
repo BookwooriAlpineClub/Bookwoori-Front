@@ -30,3 +30,9 @@ const mockApiResponse: ApiResponse = {
     '칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔' +
     '구십일이삼사오육칠팔구십',
 };
+  // loading, error 상태 관리
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  // loading, error 페이지 렌더링
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return <h1>{error}</h1>;
