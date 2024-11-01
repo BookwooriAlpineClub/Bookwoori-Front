@@ -41,37 +41,34 @@ const list: List[] = [
 const Carousel = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [carouselList] = useState<Array<List>>(list);
-  const [index, setIndex] = useState<number>(0);
   const [width, setWidth] = useState<number>(0);
+  const [touchedX, setTouchedX] = useState(0);
+  const [touchedY, setTouchedY] = useState(0);
 
   const getMoveItems = () => Math.floor(width / 75);
-
-  // 무한 캐러셀
-  // const scrollToStart = (item: HTMLDivElement | null) => {
-  //   setTimeout(() => {
-  //     setIndex(0);
-  //     item?.scrollTo({ left: 85 });
-  //   }, 10);
-  // };
 
   const handleNext = () => {
     const item = ref.current;
     if (!item) return;
 
     const moveItems = getMoveItems();
-    const newIndex = index + moveItems;
-
-    // if (newIndex >= list.length) {
-    //   scrollToStart(item);
-    //   return;
-    // }
 
     item.scrollTo({
       left: item.scrollLeft + 85 * moveItems,
       behavior: 'smooth',
     });
+  };
 
-    setIndex(newIndex);
+  const handlePrev = () => {
+    const item = ref.current;
+    if (!item) return;
+
+    const moveItems = getMoveItems();
+
+    item.scrollTo({
+      left: item.scrollLeft - 85 * moveItems,
+      behavior: 'smooth',
+    });
   };
 
   useEffect(() => {
@@ -86,9 +83,30 @@ const Carousel = () => {
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchedX(e.changedTouches[0].pageX);
+    setTouchedY(e.changedTouches[0].pageY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const distanceX = touchedX - e.changedTouches[0].pageX;
+    const distanceY = touchedY - e.changedTouches[0].pageY;
+    const vector = Math.abs(distanceX / distanceY);
+
+    if (distanceX > 30 && vector > 2) {
+      handleNext();
+      return;
+    }
+    if (distanceX < -30 && vector > 2) handlePrev();
+  };
+
   return (
     <SLayout>
-      <SContainer ref={ref}>
+      <SContainer
+        ref={ref}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {carouselList.map(({ url, title }) => (
           <SItem key={title}>
             <SImg src={url} />
