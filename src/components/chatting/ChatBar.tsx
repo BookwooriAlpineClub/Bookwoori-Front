@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as Send } from '@src/assets/icons/send.svg';
 import { ReactComponent as SendGreen } from '@src/assets/icons/send_green.svg';
 
@@ -18,7 +18,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
         onChange={handleChangeInput}
         placeholder={`${nickname}에게 문자 보내기`}
       />
-      {chat ? <SendGreen /> : <Send />}
+      <SButton type='button'>{chat ? <SendGreen /> : <Send />}</SButton>
     </SLayout>
   );
 };
@@ -44,4 +44,9 @@ const SInput = styled.input`
 
   ${({ theme }) => theme.fonts.body};
   background-color: ${({ theme }) => theme.colors.black300};
+`;
+const SButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-itmes: center;
 `;
