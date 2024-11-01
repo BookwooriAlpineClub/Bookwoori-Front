@@ -1,22 +1,25 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
-const ChattingListItem = () => {
-  const [isNew] = useState<boolean>(false);
+interface Chatting {
+  imgUrl: string;
+  nickname: string;
+  time: string;
+  text: string;
+  read: boolean;
+}
 
+const ChattingListItem = ({ imgUrl, nickname, time, text, read }: Chatting) => {
   return (
     <SLayout>
-      <SImg />
+      <SImg src={imgUrl} />
       <SContainer>
         <SWrapper>
-          <SCaption>AAA</SCaption>
-          <SCaption>오늘 오후</SCaption>
+          <SCaption $read={read}>{nickname}</SCaption>
+          <SCaption $read={read}>{time}</SCaption>
         </SWrapper>
-        <SPreview>
-          텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트
-        </SPreview>
+        <SPreview $read={read}>{text}</SPreview>
       </SContainer>
-      {isNew && <SCircle />}
+      {!read && <SCircle />}
     </SLayout>
   );
 };
@@ -53,12 +56,15 @@ const SWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const SCaption = styled.label`
+const SCaption = styled.label<{ $read: boolean }>`
   ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme, $read }) =>
+    $read ? theme.colors.black100 : theme.colors.blue100};
 `;
-const SPreview = styled.label`
+const SPreview = styled.label<{ $read: boolean }>`
   ${({ theme }) => theme.fonts.body};
+  color: ${({ theme, $read }) =>
+    $read ? theme.colors.black200 : theme.colors.black100};
 
   overflow: hidden;
   text-overflow: ellipsis;
