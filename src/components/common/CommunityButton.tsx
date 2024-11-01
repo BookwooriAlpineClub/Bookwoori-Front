@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import biCrown from '@src/assets/icons/bi_crown.svg';
 import fiTrash from '@src/assets/icons/fi_trash_2.svg';
 import fiLogOut from '@src/assets/icons/fi_log_out.svg';
@@ -31,3 +32,45 @@ const buttonConfig = {
     icon: fiSettings,
   },
 };
+
+const CommunityButton: React.FC<CommunityButtonProps> = ({
+  type,
+  onClick,
+  testId,
+}) => {
+  const { name, icon } = buttonConfig[type];
+  return (
+    <ButtonContainer onClick={onClick} data-testid={testId} aria-label={name}>
+      <IconWrapper>
+        <img src={icon} alt={`${name} icon`} />
+      </IconWrapper>
+      <TextWrapper>{name}</TextWrapper>
+    </ButtonContainer>
+  );
+};
+
+export default CommunityButton;
+
+const ButtonContainer = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 1.0625rem 0.9375rem;
+  gap: 0.625rem;
+  align-self: stretch;
+  border-radius: 6.1875rem;
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+
+const IconWrapper = styled.div`
+  width: 1.25rem;
+  height: 1.25rem;
+`;
+
+const TextWrapper = styled.span`
+  font-family: ${({ theme }) => theme.fonts.body};
+  color: ${({ theme }) => theme.colors.black100};
+  width: fit-content;
+`;
