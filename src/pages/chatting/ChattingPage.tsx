@@ -38,6 +38,6 @@ const SLayout = styled.div`
   flex-direction: column;
   justify-content: flex-end;
 
-  min-height: calc(100% - 9.375rem);
+  min-height: calc(100svh - 8.8125rem);
   width: 100%;
 `;
