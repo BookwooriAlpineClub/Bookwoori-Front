@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import biCrown from '@src/assets/icons/bi_crown.svg';
 import fiTrash from '@src/assets/icons/fi_trash_2.svg';
@@ -7,9 +8,16 @@ import fiSettings from '@src/assets/icons/fi_settings.svg';
 
 type SettingType = 'transferAuthority' | 'deleteCommunity' | 'leaveCommunity';
 
-type FunctionType = 'CopyInvitation' | 'DetailInfoSetting';
+type FunctionType = 'copyInvitation' | 'detailInfoSetting';
 
 export type CommunityButtonType = SettingType | FunctionType;
+
+interface CommunityButtonProps {
+  type: CommunityButtonType;
+  onClick?: () => void; // 이벤트가 발생하지 않는 버튼 대비 optional 처리
+  testId?: string; // 테스트를 하지 않는 버튼 대비 optional 처리
+}
+
 const buttonConfig = {
   transferAuthority: {
     name: '공동체 권한 넘기기',

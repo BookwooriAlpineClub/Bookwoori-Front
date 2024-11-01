@@ -26,12 +26,12 @@ describe('CommunityButton', () => {
       iconAltText: '공동체 나가기 icon',
     },
     {
-      type: 'CopyInvitation',
+      type: 'copyInvitation',
       name: '초대 링크 복사하기',
       iconAltText: '초대 링크 복사하기 icon',
     },
     {
-      type: 'DetailInfoSetting',
+      type: 'detailInfoSetting',
       name: '상세 정보 설정',
       iconAltText: '상세 정보 설정 icon',
     },
