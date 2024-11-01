@@ -30,6 +30,12 @@ const mockApiResponse: ApiResponse = {
     '칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔' +
     '구십일이삼사오육칠팔구십',
 };
+  const headerText = '공동체 정보 및 설정 보기';
+  const [communityInfoData, setCommunityInfoData] =
+    useState<CommunityInfoType>(defaultCommunityData);
+  // api response에 역할이 없어 임의 설정
+  const communityRole: CommunityRoleType = 'admin';
+
   // loading, error 상태 관리
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
