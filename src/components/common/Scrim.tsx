@@ -40,6 +40,8 @@ const Scrim = ({ isOpen, isMount, setIsModalShow, children }: Props) => {
 export default Scrim;
 
 const Background = styled.div<{ $isOpen: boolean }>`
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+
   position: fixed;
   top: 0;
   left: 0;
@@ -47,8 +49,7 @@ const Background = styled.div<{ $isOpen: boolean }>`
   width: 100svw;
   height: 100svh;
 
-  background-color: ${({ $isOpen, theme }) =>
-    $isOpen ? theme.colors.blackOverlay : 'rgba(0, 0, 0, 0)'};
+  background-color: ${({ theme }) => theme.colors.blackOverlay};
 
-  transition: background-color 0.3s ease;
+  transition: opacity 0.3s ease;
 `;
