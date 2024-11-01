@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 import { ReactComponent as Button } from '@src/assets/images/channel/carousel_btn.svg';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-const list = [
+interface List {
+  url: string;
+  title: string;
+}
+
+const list: List[] = [
   {
     url: 'https://books.google.co.kr/books/publisher/content?id=Q7uTBgAAQBAJ&hl=ko&pg=PA1&img=1&zoom=3&bul=1&sig=ACfU3U1p_z0yHTZfg8DprIuejZmfE_AHhA&w=1280',
-    title: '제목',
+    title: '소년이 온다',
   },
   {
     url: 'https://books.google.co.kr/books/publisher/content?id=Q7uTBgAAQBAJ&hl=ko&pg=PA1&img=1&zoom=3&bul=1&sig=ACfU3U1p_z0yHTZfg8DprIuejZmfE_AHhA&w=1280',
@@ -16,30 +21,80 @@ const list = [
     title: '제목',
   },
   {
-    url: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdYlOA0%2FbtrR9G3Ht9p%2F0ikwVcuwMQLbSQ2kjY2Vrk%2Fimg.png',
+    url: 'https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9788936434595.jpg',
     title: '제목 넘어가면??ㅇ',
+  },
+  {
+    url: 'https://books.google.co.kr/books/publisher/content?id=Q7uTBgAAQBAJ&hl=ko&pg=PA1&img=1&zoom=3&bul=1&sig=ACfU3U1p_z0yHTZfg8DprIuejZmfE_AHhA&w=1280',
+    title: '제목',
+  },
+  {
+    url: 'https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9788936434595.jpg',
+    title: '제목 넘어가면??ㅇ',
+  },
+  {
+    url: 'https://books.google.co.kr/books/publisher/content?id=Q7uTBgAAQBAJ&hl=ko&pg=PA1&img=1&zoom=3&bul=1&sig=ACfU3U1p_z0yHTZfg8DprIuejZmfE_AHhA&w=1280',
+    title: '제목',
   },
 ];
 
 const Carousel = () => {
-  const [startIndex, setStartIndex] = useState(0);
-  const itemsPerPage = 3;
+  const ref = useRef<HTMLDivElement>(null);
+  const [carouselList] = useState<Array<List>>(list);
+  const [index, setIndex] = useState<number>(0);
+  const [width, setWidth] = useState<number>(0);
+
+  const getMoveItems = () => Math.floor(width / 75);
+
+  // 무한 캐러셀
+  // const scrollToStart = (item: HTMLDivElement | null) => {
+  //   setTimeout(() => {
+  //     setIndex(0);
+  //     item?.scrollTo({ left: 85 });
+  //   }, 10);
+  // };
 
   const handleNext = () => {
-    if (startIndex + itemsPerPage < list.length) {
-      setStartIndex((prevIndex) => prevIndex + 1);
-    }
+    const item = ref.current;
+    if (!item) return;
+
+    const moveItems = getMoveItems();
+    const newIndex = index + moveItems;
+
+    // if (newIndex >= list.length) {
+    //   scrollToStart(item);
+    //   return;
+    // }
+
+    item.scrollTo({
+      left: item.scrollLeft + 85 * moveItems,
+      behavior: 'smooth',
+    });
+
+    setIndex(newIndex);
   };
 
-  const displayedItems = list.slice(startIndex, startIndex + itemsPerPage);
+  useEffect(() => {
+    const updateWidth = () => {
+      if (ref.current) {
+        setWidth(ref.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
 
   return (
     <SLayout>
-      <SContainer>
-        {displayedItems.map(({ url, title }) => (
+      <SContainer ref={ref}>
+        {carouselList.map(({ url, title }) => (
           <SItem key={title}>
             <SImg src={url} />
-            <SLabel>{title}</SLabel>
+            <SLayer>
+              <SLabel>{title}</SLabel>
+            </SLayer>
           </SItem>
         ))}
       </SContainer>
@@ -65,6 +120,7 @@ const SContainer = styled.div`
   gap: 0.625rem;
 
   width: 100%;
+  padding: 0 0.1563rem 0 0;
   overflow: hidden;
 `;
 const SButton = styled(Button)`
@@ -81,13 +137,27 @@ const SImg = styled.img`
 
   border-radius: 0.9375rem;
 `;
-const SLabel = styled.label`
+const SLayer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   position: absolute;
-  bottom: 0.625rem;
 
-  width: 4.0625rem;
-  height: 15px;
+  width: 100%;
+  height: 100%;
+  padding: 0.625rem 0.3125rem;
 
+  border-radius: 0.9375rem;
+  background: linear-gradient(
+    0deg,
+    rgba(15, 16, 21, 0.4) 0%,
+    rgba(15, 16, 21, 0.4) 100%
+  );
+`;
+const SLabel = styled.label`
+  width: 100%;
+
+  text-align: center;
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.white};
   -webkit-text-stroke: 2px rgba(15, 16, 21, 0.4);
