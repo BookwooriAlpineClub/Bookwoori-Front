@@ -5,3 +5,6 @@ export interface CommunityInfoType {
   description: string;
   imageUrl: string;
 }
+
+export type CommunityRoleType = 'admin' | 'user';
+
