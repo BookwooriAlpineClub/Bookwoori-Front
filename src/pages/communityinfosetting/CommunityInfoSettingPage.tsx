@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CommunityInfoSection from '@src/components/communityinfosetting/CommunityInfoSection';
+import { delay } from '@src/utils/helpers';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import CommunitySettingSection from '@src/components/communityinfosetting/CommunitySettingSection';
@@ -55,6 +56,34 @@ const CommunityInfoSettingPage = () => {
   // loading, error 상태 관리
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  // fetch api CommunityInfoData
+  useEffect(() => {
+    const fetchCommunityInfoData = async () => {
+      try {
+        // 추후 상태 관리 라이브러리 이용하여 loading, error 상태 관리할 예정
+        setLoading(true);
+        setError(null);
+        // 아직 api 연동 전이므로 delay 함수로 1초 후에 mockApiResponse를 받아옴
+        await delay(1000);
+        const response = mockApiResponse;
+        const formattedData: CommunityInfoType = {
+          name: response.name,
+          memberInfo: `방장 ${response.adminName} • 멤버 ${response.memberCount}명`,
+          creationDate: response.creationDate,
+          description: response.description,
+          imageUrl: response.imageUrl,
+        };
+        setCommunityInfoData(formattedData);
+      } catch {
+        setError('Failed to fetch community data');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCommunityInfoData();
+  }, []);
+
   // loading, error 페이지 렌더링
   if (loading) return <h1>Loading...</h1>;
   if (error) return <h1>{error}</h1>;
