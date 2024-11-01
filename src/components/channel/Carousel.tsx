@@ -44,6 +44,20 @@ const Carousel = () => {
   const [width, setWidth] = useState<number>(0);
   const [touchedX, setTouchedX] = useState(0);
   const [touchedY, setTouchedY] = useState(0);
+  const [clickedX, setClickedX] = useState(0);
+  const [clickedY, setClickedY] = useState(0);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (ref.current) {
+        setWidth(ref.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
 
   const getMoveItems = () => Math.floor(width / 75);
 
@@ -71,18 +85,6 @@ const Carousel = () => {
     });
   };
 
-  useEffect(() => {
-    const updateWidth = () => {
-      if (ref.current) {
-        setWidth(ref.current.offsetWidth);
-      }
-    };
-
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
-  }, []);
-
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchedX(e.changedTouches[0].pageX);
     setTouchedY(e.changedTouches[0].pageY);
@@ -100,12 +102,31 @@ const Carousel = () => {
     if (distanceX < -30 && vector > 2) handlePrev();
   };
 
+  const handleClickStart = (e: React.MouseEvent) => {
+    setClickedX(e.pageX);
+    setClickedY(e.pageY);
+  };
+
+  const handleClickEnd = (e: React.MouseEvent) => {
+    const distanceX = clickedX - e.pageX;
+    const distanceY = clickedY - e.pageY;
+    const vector = Math.abs(distanceX / distanceY);
+
+    if (distanceX > 30 && vector > 2) {
+      handleNext();
+      return;
+    }
+    if (distanceX < -30 && vector > 2) handlePrev();
+  };
+
   return (
     <SLayout>
       <SContainer
         ref={ref}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
+        onMouseDown={handleClickStart}
+        onMouseUp={handleClickEnd}
       >
         {carouselList.map(({ url, title }) => (
           <SItem key={title}>
@@ -140,6 +161,11 @@ const SContainer = styled.div`
   width: 100%;
   padding: 0 0.1563rem 0 0;
   overflow: hidden;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-use-select: none;
+  user-select: none;
 `;
 const SButton = styled(Button)`
   cursor: pointer;
