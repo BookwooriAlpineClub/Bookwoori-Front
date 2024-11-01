@@ -26,13 +26,13 @@ const Scrim = ({ isOpen, isMount, setIsModalShow, children }: Props) => {
   }, []);
 
   return createPortal(
-    <div>
+    <>
       {isMount && (
         <Background $isOpen={isOpen} onClick={() => setIsModalShow(false)}>
           {children}
         </Background>
       )}
-    </div>,
+    </>,
     document.getElementById('modal') as HTMLElement,
   );
 };
