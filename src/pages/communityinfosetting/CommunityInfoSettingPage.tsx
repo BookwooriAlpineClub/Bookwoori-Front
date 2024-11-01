@@ -30,6 +30,15 @@ const mockApiResponse: ApiResponse = {
     '칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔' +
     '구십일이삼사오육칠팔구십',
 };
+
+const defaultCommunityData: CommunityInfoType = {
+  name: '',
+  memberInfo: '',
+  creationDate: '',
+  description: '',
+  imageUrl: '',
+} as const;
+
   const headerText = '공동체 정보 및 설정 보기';
   const [communityInfoData, setCommunityInfoData] =
     useState<CommunityInfoType>(defaultCommunityData);
