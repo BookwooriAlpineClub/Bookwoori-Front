@@ -1,15 +1,16 @@
 import styled from 'styled-components';
 
-interface chatProps {
+interface Chatting {
+  imgUrl?: string;
   nickname: string;
   time: string;
   text: string;
 }
 
-const ChatItem = ({ nickname, time, text }: chatProps) => {
+const ChatItem = ({ imgUrl, nickname, time, text }: Chatting) => {
   return (
     <SLayout>
-      <SImg />
+      <SImg src={imgUrl} />
       <SContainer>
         <SWrapper>
           <SNickname>{nickname}</SNickname>
