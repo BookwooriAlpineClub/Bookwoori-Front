@@ -42,10 +42,8 @@ const Carousel = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [carouselList] = useState<Array<List>>(list);
   const [width, setWidth] = useState<number>(0);
-  const [touchedX, setTouchedX] = useState(0);
-  const [touchedY, setTouchedY] = useState(0);
-  const [clickedX, setClickedX] = useState(0);
-  const [clickedY, setClickedY] = useState(0);
+  const [startX, setStartX] = useState(0);
+  const [startY, setStartY] = useState(0);
 
   useEffect(() => {
     const updateWidth = () => {
@@ -59,64 +57,52 @@ const Carousel = () => {
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
-  const getMoveItems = () => Math.floor(width / 75);
+  const getMoveItems = () => Math.floor(width / 85);
 
-  const handleNext = () => {
+  const handleScroll = (direction: number) => {
     const item = ref.current;
     if (!item) return;
 
     const moveItems = getMoveItems();
 
     item.scrollTo({
-      left: item.scrollLeft + 85 * moveItems,
+      left: item.scrollLeft + direction * moveItems,
       behavior: 'smooth',
     });
   };
 
-  const handlePrev = () => {
-    const item = ref.current;
-    if (!item) return;
-
-    const moveItems = getMoveItems();
-
-    item.scrollTo({
-      left: item.scrollLeft - 85 * moveItems,
-      behavior: 'smooth',
-    });
+  const handleSwipe = (distanceX: number, vector: number) => {
+    if (distanceX > 30 && vector > 2) {
+      handleScroll(85);
+      return;
+    }
+    if (distanceX < -30 && vector > 2) handleScroll(-85);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchedX(e.changedTouches[0].pageX);
-    setTouchedY(e.changedTouches[0].pageY);
+    setStartX(e.changedTouches[0].pageX);
+    setStartY(e.changedTouches[0].pageY);
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    const distanceX = touchedX - e.changedTouches[0].pageX;
-    const distanceY = touchedY - e.changedTouches[0].pageY;
+    const distanceX = startX - e.changedTouches[0].pageX;
+    const distanceY = startY - e.changedTouches[0].pageY;
     const vector = Math.abs(distanceX / distanceY);
 
-    if (distanceX > 30 && vector > 2) {
-      handleNext();
-      return;
-    }
-    if (distanceX < -30 && vector > 2) handlePrev();
+    handleSwipe(distanceX, vector);
   };
 
   const handleClickStart = (e: React.MouseEvent) => {
-    setClickedX(e.pageX);
-    setClickedY(e.pageY);
+    setStartX(e.pageX);
+    setStartY(e.pageY);
   };
 
   const handleClickEnd = (e: React.MouseEvent) => {
-    const distanceX = clickedX - e.pageX;
-    const distanceY = clickedY - e.pageY;
+    const distanceX = startX - e.pageX;
+    const distanceY = startY - e.pageY;
     const vector = Math.abs(distanceX / distanceY);
 
-    if (distanceX > 30 && vector > 2) {
-      handleNext();
-      return;
-    }
-    if (distanceX < -30 && vector > 2) handlePrev();
+    handleSwipe(distanceX, vector);
   };
 
   return (
@@ -137,7 +123,7 @@ const Carousel = () => {
           </SItem>
         ))}
       </SContainer>
-      <SButton onClick={handleNext} />
+      <SButton onClick={() => handleScroll(85)} />
     </SLayout>
   );
 };
