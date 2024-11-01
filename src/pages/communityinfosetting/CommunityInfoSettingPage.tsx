@@ -1,3 +1,9 @@
+import React, { useEffect, useState } from 'react';
+import CommunityInfoSection from '@src/components/communityinfosetting/CommunityInfoSection';
+import styled from 'styled-components';
+import Header from '@src/components/common/Header';
+import CommunitySettingSection from '@src/components/communityinfosetting/CommunitySettingSection';
+
 interface ApiResponse {
   name: string;
   adminName: string; // 방장 이름
@@ -39,6 +45,7 @@ const defaultCommunityData: CommunityInfoType = {
   imageUrl: '',
 } as const;
 
+const CommunityInfoSettingPage = () => {
   const headerText = '공동체 정보 및 설정 보기';
   const [communityInfoData, setCommunityInfoData] =
     useState<CommunityInfoType>(defaultCommunityData);
@@ -51,3 +58,25 @@ const defaultCommunityData: CommunityInfoType = {
   // loading, error 페이지 렌더링
   if (loading) return <h1>Loading...</h1>;
   if (error) return <h1>{error}</h1>;
+
+  return (
+    <>
+      <Header text={headerText} headerType='back' />
+      <Container>
+        <CommunityInfoSection {...communityInfoData} />
+        <CommunitySettingSection communityRole={communityRole} />
+      </Container>
+    </>
+  );
+};
+
+export default CommunityInfoSettingPage;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.94rem;
+  padding: 0.91rem 1.25rem;
+  width: 100vw;
+  width: 100svw;
+`;
