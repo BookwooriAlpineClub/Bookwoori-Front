@@ -104,7 +104,7 @@ const ChannelListEditPage = () => {
               onDrop={onDrop}
               onDragOver={onDragOver}
             >
-              <ChannelList color='grey' list={mockList[key]} />
+              <ChannelList color='none' list={mockList[key]} />
             </Accordion>
           ))}
         </SContainer>

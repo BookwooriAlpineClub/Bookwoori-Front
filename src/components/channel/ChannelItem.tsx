@@ -19,6 +19,7 @@ const ChannelItem = ({ color = 'grey', type, children }: Props) => {
   };
 
   const handleMouseOver = () => {
+    if (color === 'none') return;
     setIsHovering(true);
   };
   const handleMouseOut = () => {
@@ -48,15 +49,17 @@ const SItem = styled.button<{ $color: string }>`
   color: ${({ theme, $color }) =>
     $color === 'black' ? theme.colors.black100 : theme.colors.black200};
 
-  &:hover {
-    padding: 0.625rem;
-
-    border-radius: 0.9375rem;
-    background-color: ${({ theme }) => theme.colors.neonGreen};
-
-    color: ${({ theme }) => theme.colors.black100};
-    cursor: pointer;
-  }
+  ${({ $color, theme }) =>
+    $color !== 'none' &&
+    `
+      &:hover {
+        padding: 0.625rem;
+        border-radius: 0.9375rem;
+        background-color: ${theme.colors.neonGreen};
+        color: ${theme.colors.black100};
+        cursor: pointer;
+      }
+    `}
 `;
 
 interface StyleProps {
