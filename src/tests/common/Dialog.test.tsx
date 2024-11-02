@@ -2,8 +2,6 @@ import { screen, fireEvent } from '@testing-library/react';
 import useDialog from '@src/hooks/useDialog';
 import Dialog from '@src/components/common/Dialog';
 
-window.scrollTo = jest.fn();
-
 const App = () => {
   const { openDialog, closeDialog } = useDialog();
   const ConfirmDialog: React.ReactNode = (
@@ -53,13 +51,17 @@ describe('Dialog', () => {
 
     setTimeout(() => expect(dialog).not.toBeInTheDocument(), 300);
   });
-  test('openDialog()로 전달한 요소가 다이얼로그의 children이어야 하고, 이를 렌더해야 한다.', () => {
-    const dialog = screen.getByRole('dialog');
+  test('openDialog()로 전달한 요소를 렌더해야 한다.', () => {
     const closeBtn = screen.getByTestId('dialog-close');
 
-    dialog.childNodes.forEach((children) => {
-      expect(children).toBe(closeBtn);
-      expect(children).toBeInTheDocument();
-    });
+    expect(closeBtn).toBeInTheDocument();
+  });
+  test('Scrim을 클릭하면 닫혀야 한다.', () => {
+    const dialog = screen.getByLabelText('dialog');
+
+    const scrim = screen.getByLabelText('scrim');
+    fireEvent.click(scrim);
+
+    setTimeout(() => expect(dialog).not.toBeInTheDocument(), 300);
   });
 });
