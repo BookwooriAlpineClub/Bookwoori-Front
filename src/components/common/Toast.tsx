@@ -5,7 +5,7 @@ Toast 컴포넌트 사용법
 import useToast from '@src/hooks/useToast';
 const addToast = useToast();
 
-2. addToast 함수를 통해 토스트를 추가한다.
+2. addToast 함수로 추가한다.
 addToast({ content: '토스트 내용' }); // category 생략 시 기본값 'default'
 addToast({ content: '토스트 내용', category: 'error' }); // 디자인에 따라 추후 category가 삭제될 수 있습니다.
 */
