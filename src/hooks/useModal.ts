@@ -3,10 +3,7 @@ import type { SetterOrUpdater } from 'recoil';
 const useModal = (setModal: SetterOrUpdater<Modal>, transitionMs: number) => {
   const openModal = (content: React.ReactNode): void => {
     // 스크롤 금지
-    document.body.style.cssText = `
-      position: fixed;
-      top: -${window.scrollY}px;
-    `;
+    document.body.style.overflow = 'hidden';
     // 마운트
     setModal((prev) => {
       return { ...prev, content, isOpen: true };
@@ -30,9 +27,7 @@ const useModal = (setModal: SetterOrUpdater<Modal>, transitionMs: number) => {
         return { ...prev, content: '', isOpen: false };
       });
       // 스크롤 허용
-      const scrollY: number = Number(document.body.style.top.slice(1, -2));
-      document.body.style.cssText = '';
-      window.scrollTo(0, scrollY);
+      document.body.style.overflow = '';
     }, transitionMs);
   };
 
