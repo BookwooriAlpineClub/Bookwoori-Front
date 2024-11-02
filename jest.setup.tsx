@@ -2,7 +2,6 @@
 import '@testing-library/jest-dom';
 
 // 전역 환경설정
-import type { ReactNode } from 'react';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'styled-components';
@@ -11,7 +10,7 @@ import GlobalStyle from '@src/styles/global';
 import { render as tlrRender } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
 
-const Provider = ({ children }: { children: ReactNode }) => {
+const Provider = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient();
 
   return (
@@ -26,7 +25,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-const renderWithProviders = (ui: ReactNode, options?: RenderOptions) => {
+const renderWithProviders = (ui: React.ReactNode, options?: RenderOptions) => {
   return tlrRender(<Provider>{ui}</Provider>, options);
 };
 
