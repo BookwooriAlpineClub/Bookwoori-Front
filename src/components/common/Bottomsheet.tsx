@@ -74,7 +74,7 @@ const Bottomsheet = ({
         onClick={(event) => event.stopPropagation()}
       >
         <HandleBar />
-        <article>{children}</article>
+        {children}
       </Layout>
     </Scrim>
   );
