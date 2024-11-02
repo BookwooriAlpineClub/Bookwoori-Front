@@ -71,9 +71,9 @@ const Layout = styled.section<{ $isOpen: boolean }>`
   transform: translateX(-50%)
     translateY(${({ $isOpen }) => ($isOpen ? 0 : '-100%')});
 
-  width: 100svw;
+  width: 100%;
   max-width: 500px;
-  max-height: 100svh;
+  max-height: 100%;
   padding: 1.44rem 1.25rem 1.25rem 1.25rem;
 
   border-radius: 1.875rem 1.875rem 0rem 0rem;
