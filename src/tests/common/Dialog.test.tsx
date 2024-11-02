@@ -7,7 +7,11 @@ window.scrollTo = jest.fn();
 const App = () => {
   const { openDialog, closeDialog } = useDialog();
   const ConfirmDialog: React.ReactNode = (
-    <button data-testid='dialog-close' type='button' onClick={closeDialog}>
+    <button
+	  data-testid='dialog-close'
+	  type='button'
+	  onClick={closeDialog}
+	>
       취소
     </button>
   );
@@ -41,10 +45,12 @@ describe('Dialog', () => {
   });
   test('openDialog()로 열고, closeDialog()로 닫아야 한다.', () => {
     const dialog = screen.getByRole('dialog');
+
     expect(dialog).toBeInTheDocument();
 
     const closeBtn = screen.getByTestId('dialog-close');
     fireEvent.click(closeBtn);
+
     setTimeout(() => expect(dialog).not.toBeInTheDocument(), 300);
   });
   test('openDialog()로 전달한 요소가 다이얼로그의 children이어야 하고, 이를 렌더해야 한다.', () => {

@@ -18,8 +18,8 @@ openDialog(ConfirmDialog);
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { dialogState } from '@src/states/atoms';
-import Scrim from '@src/components/common/Scrim';
 import useDialog from '@src/hooks/useDialog';
+import Scrim from '@src/components/common/Scrim';
 
 const Dialog = () => {
   const { isOpen, transition, content } = useRecoilValue(dialogState);
