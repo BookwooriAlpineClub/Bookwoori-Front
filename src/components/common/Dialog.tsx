@@ -28,8 +28,8 @@ const Dialog = () => {
   return (
     <Scrim isOpen={isOpen} transition={transition} closeModal={closeDialog}>
       <Layout
-        $transition={transition}
         onClick={(event) => event.stopPropagation()}
+        $transition={transition}
       >
         {content}
       </Layout>
