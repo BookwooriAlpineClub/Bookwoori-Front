@@ -4,12 +4,12 @@ import { createPortal } from 'react-dom';
 
 interface Props {
   isOpen: boolean;
-  isMount: boolean;
-  setIsModalShow(isModalShow: boolean): void;
+  transition: ModalTransition;
+  closeModal: () => void;
   children: React.ReactNode;
 }
 
-const Scrim = ({ isOpen, isMount, setIsModalShow, children }: Props) => {
+const Scrim = ({ isOpen, transition, closeModal, children }: Props) => {
   useEffect(() => {
     // 스크롤 방지
     document.body.style.cssText = `
@@ -26,28 +26,26 @@ const Scrim = ({ isOpen, isMount, setIsModalShow, children }: Props) => {
   }, []);
 
   return createPortal(
-    <>
-      {isMount && (
-        <Background $isOpen={isOpen} onClick={() => setIsModalShow(false)}>
-          {children}
-        </Background>
-      )}
-    </>,
+    isOpen && (
+      <Background $transition={transition} onClick={closeModal}>
+        {children}
+      </Background>
+    ),
     document.getElementById('modal') as HTMLElement,
   );
 };
 
 export default Scrim;
 
-const Background = styled.div<{ $isOpen: boolean }>`
-  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+const Background = styled.div<{ $transition: ModalTransition }>`
+  opacity: ${({ $transition }) => ($transition === 'open' ? 1 : 0)};
 
   position: fixed;
   top: 0;
   left: 0;
 
-  width: 100svw;
-  height: 100svh;
+  width: 100%;
+  height: 100%;
 
   background-color: ${({ theme }) => theme.colors.blackOverlay};
 

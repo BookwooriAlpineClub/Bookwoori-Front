@@ -1,54 +1,24 @@
 /*
 Dialog 컴포넌트 사용법
-
-1. 마운트/언마운트 제어
-1-1. 부모 컴포넌트에 <Dialog></Dialog>를 추가한다.
-1-2. 부모 컴포넌트에 state를 추가한다.
-const [isDialogShow, setIsDialogShow] = useState<boolean>(false);
-1-3. 부모 컴포넌트에서 setIsDialogShow로 제어한다.
-
-2. props
-<Dialog
-  isDialogShow={isDialogShow} // 1-2의 isDialogShow
-  setIsDialogShow={setIsDialogShow} // 1-2의 setIsDialogShow
->
-
-3. 내용
-3-1. 부모 컴포넌트에서 <Dialog></Dialog> 안에 작성한다.
-<Dialog>
-  <p>다이얼로그 모달</p>
-  <button type='button' onClick={() => setIsDialogShow(false)}>닫기</button>
-</Dialog>
 */
 
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Scrim from './Scrim';
+import { useRecoilValue } from 'recoil';
+import { dialogState } from '@src/states/atoms';
+import Scrim from '@src/components/common/Scrim';
+import useDialog from '@src/hooks/useDialog';
 
-interface Props {
-  isDialogShow: boolean;
-  setIsDialogShow(isDialogShow: boolean): void;
-  children: React.ReactNode;
-}
-
-const Dialog = ({ isDialogShow, setIsDialogShow, children }: Props) => {
-  const [isMount, setIsMount] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (isDialogShow) {
-      setIsMount(true);
-      setTimeout(() => setIsOpen(true), 30);
-    } else {
-      setIsOpen(false);
-      setTimeout(() => setIsMount(false), 300);
-    }
-  }, [isDialogShow]);
+const Dialog = () => {
+  const { isOpen, transition, content } = useRecoilValue(dialogState);
+  const { closeDialog } = useDialog();
 
   return (
-    <Scrim isOpen={isOpen} isMount={isMount} setIsModalShow={setIsDialogShow}>
-      <Layout $isOpen={isOpen} onClick={(event) => event.stopPropagation()}>
-        {children}
+    <Scrim isOpen={isOpen} transition={transition} closeModal={closeDialog}>
+      <Layout
+        $transition={transition}
+        onClick={(event) => event.stopPropagation()}
+      >
+        {content}
       </Layout>
     </Scrim>
   );
@@ -56,11 +26,14 @@ const Dialog = ({ isDialogShow, setIsDialogShow, children }: Props) => {
 
 export default Dialog;
 
-const Layout = styled.section<{ $isOpen: boolean }>`
+const Layout = styled.section<{ $transition: ModalTransition }>`
   position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) scale(${({ $isOpen }) => ($isOpen ? 1 : 0)});
+  transform: translate(
+    -50%,
+    ${({ $transition }) => ($transition === 'open' ? '-50%' : '-20%')}
+  );
 
   transition: transform 0.3s ease;
 
