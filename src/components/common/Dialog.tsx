@@ -44,10 +44,7 @@ const Layout = styled.section<{ $transition: ModalTransition }>`
   position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(
-    -50%,
-    ${({ $transition }) => ($transition === 'open' ? '-50%' : '-20%')}
-  );
+  transform: translateX(-50%) translateY(${({ $transition }) => ($transition === 'open' ? '-50%' : '-20%')});
 
   transition: transform 0.3s ease;
 
