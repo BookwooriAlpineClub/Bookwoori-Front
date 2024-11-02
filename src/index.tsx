@@ -1,26 +1,29 @@
-import './styles/reset.css';
+import 'src/styles/reset.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RecoilRoot } from 'recoil';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'styled-components';
-import { theme } from './styles/theme';
-import GlobalStyle from './styles/global';
-import Router from './Router';
+import { theme } from 'src/styles/theme';
+import GlobalStyle from 'src/styles/global';
+import Router from 'src/Router';
+import * as serviceWorkerRegistration from 'src/serviceWorkerRegistration';
 import Dialog from '@src/components/common/Dialog';
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <Router />
           <Dialog />
         </ThemeProvider>
-      </RecoilRoot>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </RecoilRoot>
   </React.StrictMode>,
 );
+
+serviceWorkerRegistration.register();

@@ -1,13 +1,22 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  * {
-    font-family: Pretendard;
-    box-sizing: border-box;
+  @font-face {
+    font-family: 'HS여름물빛체2.0';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405@1.0/HSYeoleum20-Regular.woff2') format('woff2');
   }
+  @font-face {
+    font-family: 'MaruBuri';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.ttf) format("truetype");
+  }
+
   :root {
-    font-family: Pretendard;
     background-color: white;
+    ${({ theme }) => theme.fonts.body}
+  }
+  button {
+    ${({ theme }) => theme.fonts.mountain}
   }
   #root {
     width: 100svw;
