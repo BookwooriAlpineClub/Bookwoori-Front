@@ -108,4 +108,5 @@ const Container = styled.div`
   padding: 0.91rem 1.25rem;
   width: 100vw;
   width: 100svw;
+  background-color: ${({ theme }) => theme.colors.black300};
 `;
