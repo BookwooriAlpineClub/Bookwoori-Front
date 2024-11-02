@@ -28,6 +28,7 @@ const Dialog = () => {
   return (
     <Scrim isOpen={isOpen} transition={transition} closeModal={closeDialog}>
       <Layout
+        role='dialog'
         onClick={(event) => event.stopPropagation()}
         $transition={transition}
       >
