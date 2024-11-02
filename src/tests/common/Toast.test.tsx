@@ -29,7 +29,7 @@ describe('Toast', () => {
     const button = screen.getByRole('button');
     fireEvent.click(button);
   });
-  test('addToast 함수로 토스트를 추가하면 즉시 마운트되고, 그로부터 4.5초가 지나면 언마운트되어야 한다.', () => {
+  test('addToast 함수로 추가하면 즉시 마운트되고, 그로부터 4.5초가 지나면 언마운트되어야 한다.', () => {
     const toast = screen.getByRole('alert');
     expect(toast).toBeInTheDocument();
     setTimeout(() => expect(toast).not.toBeInTheDocument(), 4500);
