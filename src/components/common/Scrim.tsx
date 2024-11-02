@@ -11,7 +11,11 @@ interface Props {
 const Scrim = ({ isOpen, transition, closeModal, children }: Props) => {
   return createPortal(
     isOpen && (
-      <Background $transition={transition} onClick={closeModal}>
+      <Background
+        aria-label='scrim'
+        onClick={closeModal}
+        $transition={transition}
+      >
         {children}
       </Background>
     ),

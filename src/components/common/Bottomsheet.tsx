@@ -32,10 +32,11 @@ const Bottomsheet = () => {
       closeModal={closeBottomsheet}
     >
       <Layout
+        aria-label='bottomsheet'
         onClick={(event) => event.stopPropagation()}
         $transition={transition}
       >
-        <HandleBar />
+        <HandleBar aria-label='handle-bar' />
         {content}
       </Layout>
     </Scrim>
