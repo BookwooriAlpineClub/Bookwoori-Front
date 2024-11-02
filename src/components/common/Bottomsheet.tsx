@@ -94,7 +94,7 @@ const Layout = styled.section<{ $isOpen: boolean; $height: number }>`
   padding: 1.44rem 1.25rem 1.25rem 1.25rem;
 
   border-radius: 1.875rem 1.875rem 0rem 0rem;
-  background-color: #fafafa; // 추후 수정: theme.colors
+  background-color: ${({ theme }) => theme.colors.black300};
 
   transition: bottom 0.3s ease;
 `;
@@ -108,5 +108,5 @@ const HandleBar = styled.button`
   height: 0.1875rem;
 
   border-radius: 6.1875rem;
-  background-color: #96b8ff; // 추후 수정: theme.colors
+  background-color: ${({ theme }) => theme.colors.blue200};
 `;
