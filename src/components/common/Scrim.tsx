@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 interface Props {
@@ -10,24 +9,13 @@ interface Props {
 }
 
 const Scrim = ({ isOpen, transition, closeModal, children }: Props) => {
-  useEffect(() => {
-    // 스크롤 방지
-    document.body.style.cssText = `
-      position: fixed;
-      top: -${window.scrollY}px;
-      width: 100%;
-    `;
-    return () => {
-      // 스크롤 복원
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = '';
-      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-    };
-  }, []);
-
   return createPortal(
     isOpen && (
-      <Background $transition={transition} onClick={closeModal}>
+      <Background
+        aria-label='scrim'
+        onClick={closeModal}
+        $transition={transition}
+      >
         {children}
       </Background>
     ),
