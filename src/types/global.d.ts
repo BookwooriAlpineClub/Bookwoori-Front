@@ -1,4 +1,4 @@
-export type Toast = {
+declare type Toast = {
   id: number;
   content: string;
   category?: 'default' | 'success' | 'error';
