@@ -22,8 +22,8 @@ const [isBottomsheetShow, setIsBottomsheetShow] = useState<boolean>(false);
 */
 
 import styled from 'styled-components';
-import { useState, useEffect, useRef } from 'react';
-import Scrim from './Scrim';
+import { useState, useEffect } from 'react';
+import Scrim from '@src/components/common/Scrim';
 
 interface Props {
   isBottomsheetShow: boolean;
@@ -38,8 +38,6 @@ const Bottomsheet = ({
 }: Props) => {
   const [isMount, setIsMount] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [bottomsheetHeight, setBottomsheetHeight] = useState<number>(999);
-  const bottomsheetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isBottomsheetShow) {
@@ -49,17 +47,6 @@ const Bottomsheet = ({
       setTimeout(() => setIsMount(false), 300); // 트랜지션 후 언마운트
     }
   }, [isBottomsheetShow]);
-  useEffect(() => {
-    if (isMount && bottomsheetRef.current) {
-      const height = bottomsheetRef.current.offsetHeight;
-      setBottomsheetHeight(height);
-    }
-  }, [isMount]);
-  useEffect(() => {
-    if (isMount && bottomsheetHeight > 0) {
-      setIsOpen(true);
-    }
-  }, [isMount, bottomsheetHeight]);
 
   return (
     <Scrim
@@ -67,12 +54,7 @@ const Bottomsheet = ({
       isMount={isMount}
       setIsModalShow={setIsBottomsheetShow}
     >
-      <Layout
-        ref={bottomsheetRef}
-        $isOpen={isOpen}
-        $height={bottomsheetHeight}
-        onClick={(event) => event.stopPropagation()}
-      >
+      <Layout $isOpen={isOpen} onClick={(event) => event.stopPropagation()}>
         <HandleBar />
         {children}
       </Layout>
@@ -82,11 +64,12 @@ const Bottomsheet = ({
 
 export default Bottomsheet;
 
-const Layout = styled.section<{ $isOpen: boolean; $height: number }>`
+const Layout = styled.section<{ $isOpen: boolean }>`
   position: fixed;
   left: 50%;
-  bottom: ${({ $isOpen, $height }) => ($isOpen ? 0 : -$height)}px;
-  transform: translateX(-50%);
+  bottom: 0;
+  transform: translateX(-50%)
+    translateY(${({ $isOpen }) => ($isOpen ? 0 : '-100%')});
 
   width: 100svw;
   max-width: 500px;
@@ -96,7 +79,7 @@ const Layout = styled.section<{ $isOpen: boolean; $height: number }>`
   border-radius: 1.875rem 1.875rem 0rem 0rem;
   background-color: ${({ theme }) => theme.colors.black300};
 
-  transition: bottom 0.3s ease;
+  transition: transform 0.3s ease;
 `;
 const HandleBar = styled.button`
   position: absolute;
