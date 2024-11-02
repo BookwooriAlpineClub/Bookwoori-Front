@@ -1,62 +1,42 @@
 /*
 Bottomsheet 컴포넌트 사용법
 
-1. 마운트/언마운트 제어
-1-1. 부모 컴포넌트에 <Bottomsheet></Bottomsheet>를 추가한다.
-1-2. 부모 컴포넌트에 state를 추가한다.
-const [isBottomsheetShow, setIsBottomsheetShow] = useState<boolean>(false);
-1-3. 부모 컴포넌트에서 setIsBottomsheetShow로 제어한다.
+1. useBottomsheet 훅을 불러온다.
+import useBottomsheet from '@src/hooks/useBottomsheet';
+const { openBottomsheet, closeBottomsheet } = useBottomsheet();
 
-2. props
-<Bottomsheet
-  isBottomsheetShow={isBottomsheetShow} // 1-2의 isBottomsheetShow
-  setIsBottomsheetShow={setIsBottomsheetShow} // 1-2의 setIsBottomsheetShow
->
-
-3. 내용
-3-1. 부모 컴포넌트에서 <Bottomsheet></Bottomsheet> 안에 작성한다.
-<Bottomsheet>
-  <p>바텀시트 모달</p>
-  <button type='button' onClick={() => setIsBottomsheetShow(false)}>닫기</button>
-</Bottomsheet>
+2. openBottomsheet()로 열고, closeBottomsheet()로 닫는다.
+const ConfirmBottomsheet: React.ReactNode = (
+  <div>
+    <button type='button' onClick={closeBottomsheet}>취소</button>
+    <button type='button' onClick={() => {action(); closeBottomsheet();}}>확인</button>
+  </div>
+);
+openBottomsheet(ConfirmBottomsheet);
 */
 
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import { bottomsheetState } from '@src/states/atoms';
+import useBottomsheet from '@src/hooks/useBottomsheet';
 import Scrim from '@src/components/common/Scrim';
 
-interface Props {
-  isBottomsheetShow: boolean;
-  setIsBottomsheetShow(isBottomsheetShow: boolean): void;
-  children: React.ReactNode;
-}
-
-const Bottomsheet = ({
-  isBottomsheetShow,
-  setIsBottomsheetShow,
-  children,
-}: Props) => {
-  const [isMount, setIsMount] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (isBottomsheetShow) {
-      setIsMount(true);
-    } else {
-      setIsOpen(false); // slideDown
-      setTimeout(() => setIsMount(false), 300); // 트랜지션 후 언마운트
-    }
-  }, [isBottomsheetShow]);
+const Bottomsheet = () => {
+  const { isOpen, transition, content } = useRecoilValue(bottomsheetState);
+  const { closeBottomsheet } = useBottomsheet();
 
   return (
     <Scrim
       isOpen={isOpen}
-      isMount={isMount}
-      setIsModalShow={setIsBottomsheetShow}
+      transition={transition}
+      closeModal={closeBottomsheet}
     >
-      <Layout $isOpen={isOpen} onClick={(event) => event.stopPropagation()}>
+      <Layout
+        onClick={(event) => event.stopPropagation()}
+        $transition={transition}
+      >
         <HandleBar />
-        {children}
+        {content}
       </Layout>
     </Scrim>
   );
@@ -64,12 +44,11 @@ const Bottomsheet = ({
 
 export default Bottomsheet;
 
-const Layout = styled.section<{ $isOpen: boolean }>`
+const Layout = styled.section<{ $transition: ModalTransition }>`
   position: fixed;
   left: 50%;
   bottom: 0;
-  transform: translateX(-50%)
-    translateY(${({ $isOpen }) => ($isOpen ? 0 : '-100%')});
+  transform: translateX(-50%) translateY(${({ $transition }) => ($transition === 'open' ? 0 : '100%')});
 
   width: 100%;
   max-width: 500px;
