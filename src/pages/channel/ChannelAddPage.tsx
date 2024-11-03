@@ -29,7 +29,7 @@ const ChannelAddPage = () => {
   return (
     <Layout>
       <Header text='모임 추가하기' headerType='back' />
-      <Form id='form'>
+      <Form id='channel-add-form'>
         <InputRadio
           title='모임 유형'
           items={[
@@ -99,7 +99,7 @@ const ChannelAddPage = () => {
           </>
         )}
       </Form>
-      <SButton type='submit' form='form' disabled={isBtnDisabled()}>
+      <SButton type='submit' form='channel-add-form' disabled={isBtnDisabled()}>
         추가하기
       </SButton>
     </Layout>
