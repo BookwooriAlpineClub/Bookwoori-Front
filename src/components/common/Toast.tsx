@@ -6,8 +6,8 @@ import useToast from '@src/hooks/useToast';
 const addToast = useToast();
 
 2. addToast 함수로 추가한다.
-addToast({ content: '토스트 내용' }); // category 생략 시 기본값 'default'
-addToast({ content: '토스트 내용', category: 'error' }); // 디자인에 따라 추후 category가 삭제될 수 있습니다.
+addToast({ content: '토스트 내용' }); // kind 생략 시 기본값 'default'
+addToast({ content: '토스트 내용', kind: 'error' }); // 디자인에 따라 추후 kind가 삭제될 수 있습니다.
 */
 
 import styled from 'styled-components';
