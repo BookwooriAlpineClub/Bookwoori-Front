@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { NoSelect } from '@src/styles/mixins';
 import Fieldset from '@src/components/common/Fieldset';
 
 export type Period = {
@@ -38,7 +39,7 @@ const InputDatepicker = ({
         />
         {type === 'period' && (
           <>
-            <span>-</span>
+            <Span>-</Span>
             <Input
               name={title}
               value={value.end}
@@ -68,4 +69,7 @@ const Input = styled.input.attrs({ type: 'date' })<{ value: string }>`
   color: ${({ value, theme }) =>
     value ? theme.colors.black100 : theme.colors.black200};
   ${({ theme }) => theme.fonts.body};
+`;
+const Span = styled.span`
+  ${NoSelect}
 `;

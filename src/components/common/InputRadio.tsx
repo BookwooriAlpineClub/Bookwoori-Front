@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { NoSelect } from '@src/styles/mixins';
 import Fieldset from '@src/components/common/Fieldset';
 import icnCheck from '@src/assets/icons/check_circle.svg';
 
@@ -63,6 +64,8 @@ const Container = styled.div`
   display: flex;
   flex-flow: row nowrap;
   gap: 0.62rem;
+
+  ${NoSelect}
 `;
 const Input = styled.input.attrs({ type: 'radio' })`
   width: 1.0625rem;
