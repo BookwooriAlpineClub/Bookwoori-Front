@@ -5,6 +5,7 @@ interface buttonProps {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   onClick?: () => void;
+  form?: string;
 }
 
 const Button = ({
@@ -12,6 +13,7 @@ const Button = ({
   type = 'button',
   disabled = true,
   onClick,
+  form,
   ...props
 }: buttonProps) => {
   return (
@@ -20,6 +22,7 @@ const Button = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
+      form={form}
       {...props}
     >
       {children}

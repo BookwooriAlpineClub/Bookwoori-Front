@@ -1,172 +1,118 @@
-import Button from '@src/components/common/Button';
-import Header from '@src/components/common/Header';
-import styled, { css } from 'styled-components';
-import { ReactComponent as Hash } from '@src/assets/icons/hash.svg';
-import { ReactComponent as Voice } from '@src/assets/icons/voice.svg';
-import { ReactComponent as Run } from '@src/assets/icons/run.svg';
-import { ReactComponent as Check } from '@src/assets/icons/check_circle.svg';
+import styled from 'styled-components';
 import { useState } from 'react';
-import TextAddList from '@src/components/channel/TextAddList';
-import ClimbAddList from '@src/components/channel/ClimbAddList';
+import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
+import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
+import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
+import Header from '@src/components/common/Header';
+import InputRadio from '@src/components/common/InputRadio';
+import InputDropdown from '@src/components/common/InputDropdown';
+import InputText from '@src/components/common/InputText';
+import InputDatepicker from '@src/components/common/InputDatepicker';
+import Button from '@src/components/common/Button';
 
-type Types = {
-  text: string;
-  icon: React.ReactNode;
-};
+const dummy: string[] = ['선택지1', '선택지2', '선택지3', '선택지4'];
 
 const ChannelAddPage = () => {
-  const [checked, setChecked] = useState<string>('');
-  const [value, setValue] = useState<string>('');
-  const [length, setLength] = useState<number>(0);
-  const types: Types[] = [
-    { text: '문자', icon: <SHash $checked={checked === '문자'} /> },
-    { text: '전화', icon: <SVoice $checked={checked === '전화'} /> },
-    { text: '등반', icon: <SRun $checked={checked === '등반'} /> },
-  ];
+  const [kind, setKind] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [book, setBook] = useState<string>('');
+  const [date, setDate] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
 
-  const handleRadio = (type: string) => {
-    setChecked(type);
-  };
+  function isBtnDisabled(): boolean {
+    if (kind === '문자' || kind === '전화') return !(kind && category && name);
+    if (kind === '등반') return !(kind && name && book && date && description);
+    return true;
+  }
 
   return (
-    <SLayout>
+    <Layout>
       <Header text='모임 추가하기' headerType='back' />
-      <SContainer>
-        <SBox>
-          <SRadio>
-            <SLabel>모임 유형</SLabel>
-            <SRadioBox>
-              {types.map(({ text, icon }) => (
-                <label key={text} htmlFor={text}>
-                  <SItemWrapper $checked={checked === text}>
-                    <SItem $checked={checked === text}>
-                      {icon} {text}
-                    </SItem>
-                    {checked === text ? <Check /> : <SCircle />}
-                    <input
-                      id={text}
-                      type='radio'
-                      name='types'
-                      value={text}
-                      checked={checked === text}
-                      onChange={() => handleRadio(text)}
-                    />
-                  </SItemWrapper>
-                </label>
-              ))}
-            </SRadioBox>
-          </SRadio>
-          {checked === '문자' && (
-            <TextAddList
-              value={value}
-              setValue={setValue}
-              length={length}
-              setLength={setLength}
+      <Form id='form'>
+        <InputRadio
+          title='모임 유형'
+          items={[
+            { text: '문자', icon: <IcnHash /> },
+            { text: '전화', icon: <IcnVoice /> },
+            { text: '등반', icon: <IcnRun /> },
+          ]}
+          required
+          setValue={setKind}
+        />
+        {kind === '문자' ||
+          (kind === '전화' && (
+            <InputDropdown
+              title='모임 분류'
+              placeholder='분류 선택'
+              items={dummy}
+              required
+              value={category}
+              setValue={setCategory}
             />
-          )}
-          {checked === '전화' && (
-            <TextAddList
-              value={value}
-              setValue={setValue}
-              length={length}
-              setLength={setLength}
+          ))}
+        {kind !== '' && (
+          <InputText
+            title='모임 이름'
+            placeholder='모임 이름을 입력하세요.'
+            type='short'
+            limit={20}
+            required
+            value={name}
+            setValue={setName}
+          />
+        )}
+        {kind === '등반' && (
+          <>
+            <InputText // 검색 페이지 이동
+              title='등반할 책'
+              placeholder='책 제목을 입력하세요.'
+              type='short'
+              limit={-1}
+              required
+              setValue={setBook}
             />
-          )}
-          {checked === '등반' && <ClimbAddList />}
-        </SBox>
-        <Button>추가하기</Button>
-      </SContainer>
-    </SLayout>
+            <InputDatepicker
+              title='등반 시기'
+              placeholder='기간을 선택하세요.'
+              min={new Date().toISOString().slice(0, 10)}
+              required
+              value={date}
+              setValue={setDate}
+            />
+            <InputText
+              title='등반 설명'
+              placeholder='사람들에게 등반에 대해 알려주세요.'
+              type='long'
+              limit={150}
+              required
+              value={description}
+              setValue={setDescription}
+            />
+          </>
+        )}
+      </Form>
+      <SButton type='submit' form='form' disabled={isBtnDisabled()}>
+        추가하기
+      </SButton>
+    </Layout>
   );
 };
 
 export default ChannelAddPage;
 
-const SLayout = styled.div`
+const Layout = styled.div`
   display: flex;
-  flex-direction: column;
-  height: 100svh;
-`;
-const SContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1.25rem;
-
+  flex-flow: column nowrap;
   height: 100%;
-  padding: 0.9063rem 1.25rem 2.5625rem;
 `;
-const SBox = styled.div`
+const Form = styled.form`
   display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+  flex-flow: column nowrap;
+  flex-grow: 1;
 
-  width: 100%;
+  margin: 0.91rem auto;
 `;
-const SRadio = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-`;
-const SLabel = styled.label`
-  ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
-`;
-const SRadioBox = styled.fieldset`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-
-  padding: 0.9375rem;
-
-  border-radius: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.white};
-`;
-const SItemWrapper = styled.div<{ $checked: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 0.625rem;
-
-  border-radius: 0.9375rem;
-  background-color: ${({ theme, $checked }) =>
-    $checked && theme.colors.blue300};
-  input {
-    display: none;
-  }
-  label {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  cursor: pointer;
-`;
-const SItem = styled.div<{ $checked: boolean }>`
-  display: flex;
-  gap: 5px;
-
-  color: ${({ theme, $checked }) =>
-    $checked ? theme.colors.black100 : theme.colors.black200};
-`;
-const SCircle = styled.div`
-  width: 1.0625rem;
-  height: 1.0625rem;
-
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.black300};
-`;
-const fillColor = css<{ $checked: boolean }>`
-  fill: ${({ theme, $checked }) =>
-    $checked ? theme.colors.black100 : theme.colors.black200};
-`;
-const SHash = styled(Hash)<{ $checked: boolean }>`
-  ${fillColor}
-`;
-const SVoice = styled(Voice)<{ $checked: boolean }>`
-  ${fillColor}
-`;
-const SRun = styled(Run)<{ $checked: boolean }>`
-  ${fillColor}
+const SButton = styled(Button)`
+  margin: 0 auto 2.56rem;
 `;
