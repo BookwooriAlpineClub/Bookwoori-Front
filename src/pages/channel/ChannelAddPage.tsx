@@ -116,7 +116,9 @@ const Layout = styled.div`
 const Form = styled.form`
   display: flex;
   flex-flow: column nowrap;
-  flex-grow: 1;
+  flex: 1;
+
+  overflow: scroll;
 
   margin: 0.91rem 5%;
 `;
