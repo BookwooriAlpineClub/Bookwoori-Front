@@ -75,7 +75,14 @@ const ChannelAddPage = () => {
             <InputDatepicker
               title='등반 시기'
               placeholder='기간을 선택하세요.'
-              min={new Date().toISOString().slice(0, 10)}
+              min={new Date()
+                .toLocaleDateString('ko-KR', {
+                  timeZone: undefined,
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                })
+                .replace(/(\d{4}). (\d{2}). (\d{2})./, '$1-$2-$3')}
               required
               value={date}
               setValue={setDate}
