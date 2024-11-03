@@ -40,17 +40,16 @@ const ChannelAddPage = () => {
           required
           setValue={setKind}
         />
-        {kind === '문자' ||
-          (kind === '전화' && (
-            <InputDropdown
-              title='모임 분류'
-              placeholder='분류 선택'
-              items={dummy}
-              required
-              value={category}
-              setValue={setCategory}
-            />
-          ))}
+        {(kind === '문자' || kind === '전화') && (
+          <InputDropdown
+            title='모임 분류'
+            placeholder='분류 선택'
+            items={dummy}
+            required
+            value={category}
+            setValue={setCategory}
+          />
+        )}
         {kind !== '' && (
           <InputText
             title='모임 이름'
