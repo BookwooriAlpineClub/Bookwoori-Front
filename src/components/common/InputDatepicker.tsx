@@ -2,13 +2,16 @@ import styled from 'styled-components';
 import Fieldset from '@src/components/common/Fieldset';
 
 interface Props extends Omit<InputProps, 'placeholder'> {
+  type: 'date' | 'period';
   min?: string;
   max?: string;
-  value: string;
+  value: Period;
+  setValue: React.Dispatch<React.SetStateAction<Period>>;
 }
 
 const InputDatepicker = ({
   title,
+  type,
   min,
   max,
   required,
@@ -17,21 +20,46 @@ const InputDatepicker = ({
 }: Props) => {
   return (
     <Fieldset title={title}>
-      <Input
-        name={title}
-        value={value}
-        min={min}
-        max={max}
-        pattern='\d{4}-\d{2}-\d{2}'
-        required={required}
-        onChange={(e) => setValue(e.target.value)}
-      />
+      <Container>
+        <Input
+          name={title}
+          value={value.start}
+          min={min}
+          max={value.end}
+          pattern='\d{4}-\d{2}-\d{2}'
+          required={required}
+          onChange={(e) =>
+            setValue((prev) => ({ ...prev, start: e.target.value }))
+          }
+        />
+        {type === 'period' && (
+          <>
+            <span>-</span>
+            <Input
+              name={title}
+              value={value.end}
+              min={value.start}
+              max={max}
+              pattern='\d{4}-\d{2}-\d{2}'
+              required={required}
+              onChange={(e) =>
+                setValue((prev) => ({ ...prev, end: e.target.value }))
+              }
+            />
+          </>
+        )}
+      </Container>
     </Fieldset>
   );
 };
 
 export default InputDatepicker;
 
+const Container = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+`;
 const Input = styled.input.attrs({ type: 'date' })<{ value: string }>`
   color: ${({ value, theme }) =>
     value ? theme.colors.black100 : theme.colors.black200};

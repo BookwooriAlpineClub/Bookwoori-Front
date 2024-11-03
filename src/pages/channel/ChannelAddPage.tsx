@@ -17,7 +17,7 @@ const ChannelAddPage = () => {
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [book, setBook] = useState<string>('');
-  const [date, setDate] = useState<string>('');
+  const [date, setDate] = useState<Period>({ start: '', end: '' });
   const [description, setDescription] = useState<string>('');
 
   function isBtnDisabled(): boolean {
@@ -73,6 +73,7 @@ const ChannelAddPage = () => {
             />
             <InputDatepicker
               title='등반 시기'
+              type='period'
               min={new Date()
                 .toLocaleDateString('ko-KR', {
                   timeZone: undefined,
