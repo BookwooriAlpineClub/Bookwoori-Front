@@ -118,7 +118,7 @@ const Form = styled.form`
   flex-flow: column nowrap;
   flex-grow: 1;
 
-  margin: 0.91rem auto;
+  margin: 0.91rem 5%;
 `;
 const SButton = styled(Button)`
   margin: 0 auto 2.56rem;

@@ -26,6 +26,11 @@ const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar {
     display: none;
   }
+
+  #root, #modal, #toast {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export default GlobalStyle;
