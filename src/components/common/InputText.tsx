@@ -43,20 +43,17 @@ const InputText = ({
 
 export default InputText;
 
-const Input = styled.input.attrs({ type: 'text' })`
+const Input = styled.input.attrs({ type: 'text' })<{ as: string }>`
+  width: 100%;
+  height: ${({ as }) => (as === 'input' ? '1.25rem' : '8.75rem')};
+
   color: ${({ theme }) => theme.colors.black100};
   ${({ theme }) => theme.fonts.body};
 
+  resize: vertical;
+
   &::placeholder {
     color: ${({ theme }) => theme.colors.black200};
-  }
-
-  &[as='input'] {
-    height: 1.25rem;
-  }
-  &[as='textarea'] {
-    height: 8.75rem;
-    resize: vertical;
   }
 `;
 const Limit = styled.span`
