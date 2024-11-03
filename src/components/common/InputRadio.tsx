@@ -16,8 +16,10 @@ const InputRadio = ({ title, items, required, setValue }: Props) => {
     <Fieldset title={title}>
       {items.map(({ text, icon }) => (
         <Label key={text}>
-          {icon}
-          {text}
+          <Container>
+            {icon}
+            {text}
+          </Container>
           <Input
             name={title}
             value={text}
@@ -33,6 +35,9 @@ const InputRadio = ({ title, items, required, setValue }: Props) => {
 export default InputRadio;
 
 const Label = styled.label`
+  display: flex;
+  justify-content: space-between;
+
   width: 100%;
   padding: 0.63rem;
 
@@ -46,6 +51,11 @@ const Label = styled.label`
 
     color: ${({ theme }) => theme.colors.black100};
   }
+`;
+const Container = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.62rem;
 `;
 const Input = styled.input.attrs({ type: 'radio' })`
   width: 1.0625rem;
