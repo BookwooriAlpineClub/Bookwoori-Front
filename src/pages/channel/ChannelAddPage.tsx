@@ -117,6 +117,7 @@ const Form = styled.form`
   display: flex;
   flex-flow: column nowrap;
   flex: 1;
+  gap: 1.25rem;
 
   overflow: scroll;
 
