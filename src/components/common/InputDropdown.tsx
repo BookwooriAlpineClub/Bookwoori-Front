@@ -17,27 +17,33 @@ const InputDropdown = ({
 }: Props) => {
   return (
     <Fieldset title={title}>
-      <Input
-        name={title}
-        value={value}
-        required={required}
-        onChange={(e) => setValue(e.target.value)}
-      >
-        <Option value='' disabled>
-          {placeholder}
-        </Option>
-        {items.map((item) => (
-          <Option key={item} value={item}>
-            {item}
+      <Container>
+        <Input
+          name={title}
+          value={value}
+          required={required}
+          onChange={(e) => setValue(e.target.value)}
+        >
+          <Option value='' disabled>
+            {placeholder}
           </Option>
-        ))}
-      </Input>
+          {items.map((item) => (
+            <Option key={item} value={item}>
+              {item}
+            </Option>
+          ))}
+        </Input>
+      </Container>
     </Fieldset>
   );
 };
 
 export default InputDropdown;
 
+const Container = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+`;
 const Input = styled.select<{ value: string }>`
   color: ${({ value, theme }) =>
     value ? theme.colors.black100 : theme.colors.black200};
