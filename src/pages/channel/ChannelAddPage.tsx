@@ -72,7 +72,7 @@ const ChannelAddPage = () => {
               setValue={setBook}
             />
             <InputDatepicker
-              title='등반 시기'
+              title='등반 기간'
               type='period'
               min={new Date()
                 .toLocaleDateString('ko-KR', {
