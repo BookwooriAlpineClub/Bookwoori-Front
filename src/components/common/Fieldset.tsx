@@ -23,10 +23,14 @@ const Legend = styled.legend`
 `;
 const Container = styled.div`
   position: relative;
+
+  display: flex;
+  flex-flow: column nowrap;
   gap: 0.3125rem;
 
   width: 100%;
   padding: 0.9375rem;
 
+  border-radius: 0.9375rem;
   background-color: ${({ theme }) => theme.colors.white};
 `;
