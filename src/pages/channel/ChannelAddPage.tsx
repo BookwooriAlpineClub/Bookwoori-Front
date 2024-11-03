@@ -7,7 +7,7 @@ import Header from '@src/components/common/Header';
 import InputRadio from '@src/components/common/InputRadio';
 import InputDropdown from '@src/components/common/InputDropdown';
 import InputText from '@src/components/common/InputText';
-import InputDatepicker from '@src/components/common/InputDatepicker';
+import InputDatepicker, { type Period } from '@src/components/common/InputDatepicker';
 import Button from '@src/components/common/Button';
 
 const dummy: string[] = ['선택지1', '선택지2', '선택지3', '선택지4'];

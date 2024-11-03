@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import Fieldset from '@src/components/common/Fieldset';
 
+export type Period = {
+  start: string;
+  end: string;
+};
 interface Props extends Omit<InputProps, 'placeholder'> {
   type: 'date' | 'period';
   min?: string;

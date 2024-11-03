@@ -4,7 +4,3 @@ declare interface InputProps {
   required: boolean;
   setValue: React.Dispatch<React.SetStateAction<T>>;
 }
-declare type Period = {
-  start: string;
-  end: string;
-};
