@@ -14,26 +14,33 @@ interface Props extends Omit<InputProps, 'placeholder'> {
 const InputRadio = ({ title, items, required, setValue }: Props) => {
   return (
     <Fieldset title={title}>
-      {items.map(({ text, icon }) => (
-        <Label key={text}>
-          <Container>
-            {icon}
-            {text}
-          </Container>
-          <Input
-            name={title}
-            value={text}
-            required={required}
-            onChange={(e) => setValue(e.target.value)}
-          />
-        </Label>
-      ))}
+      <Ul>
+        {items.map(({ text, icon }) => (
+          <Label key={text}>
+            <Container>
+              {icon}
+              {text}
+            </Container>
+            <Input
+              name={title}
+              value={text}
+              required={required}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          </Label>
+        ))}
+      </Ul>
     </Fieldset>
   );
 };
 
 export default InputRadio;
 
+const Ul = styled.ul`
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.3125rem;
+`;
 const Label = styled.label`
   display: flex;
   justify-content: space-between;
