@@ -50,7 +50,7 @@ const Input = styled.input.attrs({ type: 'text' })<{ as: string }>`
   color: ${({ theme }) => theme.colors.black100};
   ${({ theme }) => theme.fonts.body};
 
-  resize: vertical;
+  resize: none;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.black200};
