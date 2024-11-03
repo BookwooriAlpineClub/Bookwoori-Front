@@ -73,7 +73,6 @@ const ChannelAddPage = () => {
             />
             <InputDatepicker
               title='등반 시기'
-              placeholder='기간을 선택하세요.'
               min={new Date()
                 .toLocaleDateString('ko-KR', {
                   timeZone: undefined,

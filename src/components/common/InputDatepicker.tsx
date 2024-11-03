@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Fieldset from '@src/components/common/Fieldset';
 
-interface Props extends InputProps {
+interface Props extends Omit<InputProps, 'placeholder'> {
   min?: string;
   max?: string;
   value: string;
@@ -9,7 +9,6 @@ interface Props extends InputProps {
 
 const InputDatepicker = ({
   title,
-  placeholder,
   min,
   max,
   required,
@@ -20,7 +19,6 @@ const InputDatepicker = ({
     <Fieldset title={title}>
       <Input
         name={title}
-        placeholder={placeholder}
         value={value}
         min={min}
         max={max}
