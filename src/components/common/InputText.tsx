@@ -58,7 +58,7 @@ const Input = styled.input.attrs({ type: 'text' })<{ as: string }>`
 `;
 const Limit = styled.span`
   position: absolute;
-  bottom: 0.875rem;
+  bottom: 0.885rem;
   right: 0.625rem;
 
   color: ${({ theme }) => theme.colors.black200};
