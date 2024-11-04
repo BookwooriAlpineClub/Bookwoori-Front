@@ -1,21 +1,28 @@
 import styled from 'styled-components';
 import UserProfilImg from '@src/components/userSettings/UserProfileImg';
 
-const UserProfile = () => {
+interface ProfileData {
+  nickname: string;
+  mountain: string;
+  meter: number;
+  pages: number;
+}
+
+const UserProfile = ({ data }: { data: ProfileData }) => {
   return (
     <SLayout>
       <UserProfilImg />
       <SContainer>
-        <SNickname>내별명</SNickname>
-        <SMountain>0번째, ㅇㅇ산 등산가</SMountain>
+        <SNickname>{data.nickname}</SNickname>
+        <SMountain>0번째, {data.mountain}산 등산가</SMountain>
         <SBox>
           <SWrapper>
-            <SNicknameBlue>999</SNicknameBlue>
+            <SNicknameBlue>{data.meter}</SNicknameBlue>
             <SCaption>지나온 길(m)</SCaption>
           </SWrapper>
           <SLine />
           <SWrapper>
-            <SNicknameBlue>9999</SNicknameBlue>
+            <SNicknameBlue>{data.pages}</SNicknameBlue>
             <SCaption>읽어낸 책(p)</SCaption>
           </SWrapper>
         </SBox>

@@ -5,6 +5,13 @@ import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Flag } from '@src/assets/icons/flag.svg';
 import { ReactComponent as Delete } from '@src/assets/icons/trash.svg';
 
+interface ProfileData {
+  nickname: string;
+  mountain: string;
+  meter: number;
+  pages: number;
+}
+
 const SettingsPage = () => {
   const buttonData = [
     { icon: <Edit />, label: '인물 정보 수정하기' },
@@ -12,11 +19,18 @@ const SettingsPage = () => {
     { icon: <Delete />, label: '계정 삭제하기' },
   ];
 
+  const profileData: ProfileData = {
+    nickname: '피크민',
+    mountain: '한라',
+    meter: 999,
+    pages: 9999,
+  };
+
   return (
     <>
       <Header text='설정' headerType='hamburger' />
       <SLayout>
-        <UserProfile />
+        <UserProfile data={profileData} />
         <SContainer>
           {buttonData.map(({ icon, label }) => (
             <SButton key={label} type='button'>
