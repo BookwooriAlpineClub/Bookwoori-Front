@@ -39,6 +39,7 @@ const list: List[] = [
 ];
 
 const Carousel = () => {
+  const CAROUSEL_ITEM_WIDTH = 85;
   const ref = useRef<HTMLDivElement>(null);
   const [carouselList] = useState<Array<List>>(list);
   const [width, setWidth] = useState<number>(0);
@@ -57,7 +58,7 @@ const Carousel = () => {
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
-  const getMoveItems = () => Math.floor(width / 85);
+  const getMoveItems = () => Math.floor(width / CAROUSEL_ITEM_WIDTH);
 
   const handleScroll = (direction: number) => {
     const item = ref.current;
@@ -73,10 +74,10 @@ const Carousel = () => {
 
   const handleSwipe = (distanceX: number, vector: number) => {
     if (distanceX > 30 && vector > 2) {
-      handleScroll(85);
+      handleScroll(CAROUSEL_ITEM_WIDTH);
       return;
     }
-    if (distanceX < -30 && vector > 2) handleScroll(-85);
+    if (distanceX < -30 && vector > 2) handleScroll(CAROUSEL_ITEM_WIDTH * -1);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
