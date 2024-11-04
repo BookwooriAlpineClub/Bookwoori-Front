@@ -6,11 +6,11 @@ const useUploadFile = (previewImg: string | undefined) => {
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
-    if (selectedFiles && selectedFiles.length > 0) {
-      const newFile = selectedFiles[0];
-      setFile(newFile);
-      setPreview(URL.createObjectURL(newFile));
-    }
+    if (!selectedFiles?.length) return;
+    
+    const newFile = selectedFiles[0];
+    setFile(newFile);
+    setPreview(URL.createObjectURL(newFile));
   };
 
   return { file, preview, handleFileUpload };
