@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as Down } from '@src/assets/icons/down_arrow.svg';
 import React, { useState } from 'react';
 
-type accordionProps = {
+type AccordionProps = {
   id?: number;
   text: string;
   isDraggable?: boolean;
@@ -23,7 +23,7 @@ const Accordion = ({
   onDrop = () => {},
   onDragOver,
   children,
-}: accordionProps) => {
+}: AccordionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (

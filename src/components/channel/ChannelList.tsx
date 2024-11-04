@@ -7,12 +7,12 @@ interface ClimbingChannel {
   type: 'text' | 'voice' | 'run';
 }
 
-interface Props {
+interface ChannelListProps {
   color?: string;
   list: ClimbingChannel[];
 }
 
-const ChannelList = ({ color, list }: Props) => {
+const ChannelList = ({ color, list }: ChannelListProps) => {
   return (
     <SLayout>
       {list.map((it) => (
