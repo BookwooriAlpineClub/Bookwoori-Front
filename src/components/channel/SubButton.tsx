@@ -8,7 +8,7 @@ export default SubButton;
 
 const SButton = styled.button`
   display: flex;
-  padding: 8px 15px;
+  padding: 0.5rem 0.9375rem;
   justify-content: center;
   align-items: center;
   gap: 0.25rem;

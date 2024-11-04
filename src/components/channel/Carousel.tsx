@@ -190,7 +190,7 @@ const SLabel = styled.label`
   text-align: center;
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.white};
-  -webkit-text-stroke: 2px rgba(15, 16, 21, 0.4);
+  -webkit-text-stroke: 0.125rem rgba(15, 16, 21, 0.4);
 
   overflow: hidden;
   white-space: nowrap;

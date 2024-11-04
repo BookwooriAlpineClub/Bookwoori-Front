@@ -103,7 +103,7 @@ const SLayout = styled.div`
 const SButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: 0.625rem;
 `;
 const IconSize = css`
   width: 1rem;
