@@ -35,7 +35,7 @@ const Accordion = ({
     >
       <SContainer>
         <SLabel>{text}</SLabel>
-        <SButton onClick={() => setIsOpen(!isOpen)}>
+        <SButton onClick={() => setIsOpen((prev) => !prev)}>
           <SDown $open={isOpen} />
         </SButton>
       </SContainer>
