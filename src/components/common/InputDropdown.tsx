@@ -43,6 +43,8 @@ export default InputDropdown;
 const Layout = styled.div`
   display: flex;
   flex-flow: column nowrap;
+
+  cursor: pointer;
 `;
 const Input = styled.select<{ value: string }>`
   color: ${({ value, theme }) =>
