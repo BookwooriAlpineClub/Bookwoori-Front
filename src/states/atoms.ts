@@ -8,3 +8,15 @@ export const bottomsheetState = atom<Modal>({
     transition: 'close',
   },
 });
+export const dialogState = atom<Modal>({
+  key: 'dialogState',
+  default: {
+    content: '',
+    isOpen: false,
+    transition: 'close',
+  },
+});
+export const toastState = atom<Toast[]>({
+  key: 'toastState',
+  default: [],
+});
