@@ -1,3 +1,6 @@
 import { atom } from 'recoil';
 
-export {};
+export const toastState = atom<Toast[]>({
+  key: 'toastState',
+  default: [],
+});
