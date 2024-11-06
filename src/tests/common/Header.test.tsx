@@ -1,9 +1,8 @@
-import '@testing-library/jest-dom';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import Header from '@src/components/common/Header';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '@src/styles/theme';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import Header from '@src/components/common/Header';
 
 describe('헤더(공통) 컴포넌트 단위 테스트', () => {
   test('props로 헤더 text를 전달하면 text가 렌더되어야 한다.', () => {
