@@ -8,3 +8,7 @@ export const dialogState = atom<Modal>({
     transition: 'close',
   },
 });
+export const toastState = atom<Toast[]>({
+  key: 'toastState',
+  default: [],
+});

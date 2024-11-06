@@ -9,6 +9,7 @@ import { theme } from '@src/styles/theme';
 import GlobalStyle from '@src/styles/global';
 import Router from '@src/Router';
 import Dialog from '@src/components/common/Dialog';
+import Toast from '@src/components/common/Toast';
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <GlobalStyle />
           <Router />
           <Dialog />
+          <Toast />
         </ThemeProvider>
       </QueryClientProvider>
     </RecoilRoot>
