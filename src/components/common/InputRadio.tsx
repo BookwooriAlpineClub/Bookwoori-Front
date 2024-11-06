@@ -15,7 +15,7 @@ interface Props extends Omit<InputProps, 'placeholder'> {
 const InputRadio = ({ title, items, required, setValue }: Props) => {
   return (
     <Fieldset title={title}>
-      <Ul>
+      <Layout>
         {items.map(({ text, icon }) => (
           <Label key={text}>
             <Container>
@@ -30,14 +30,14 @@ const InputRadio = ({ title, items, required, setValue }: Props) => {
             />
           </Label>
         ))}
-      </Ul>
+      </Layout>
     </Fieldset>
   );
 };
 
 export default InputRadio;
 
-const Ul = styled.ul`
+const Layout = styled.div`
   display: flex;
   flex-flow: column nowrap;
   gap: 0.3125rem;

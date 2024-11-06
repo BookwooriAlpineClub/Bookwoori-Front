@@ -25,7 +25,7 @@ const InputDatepicker = ({
 }: Props) => {
   return (
     <Fieldset title={title}>
-      <Container>
+      <Layout>
         <Input
           name={title}
           value={value.start}
@@ -53,14 +53,14 @@ const InputDatepicker = ({
             />
           </>
         )}
-      </Container>
+      </Layout>
     </Fieldset>
   );
 };
 
 export default InputDatepicker;
 
-const Container = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;

@@ -17,7 +17,7 @@ const InputDropdown = ({
 }: Props) => {
   return (
     <Fieldset title={title}>
-      <Container>
+      <Layout>
         <Input
           name={title}
           value={value}
@@ -33,14 +33,14 @@ const InputDropdown = ({
             </Option>
           ))}
         </Input>
-      </Container>
+      </Layout>
     </Fieldset>
   );
 };
 
 export default InputDropdown;
 
-const Container = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-flow: column nowrap;
 `;
