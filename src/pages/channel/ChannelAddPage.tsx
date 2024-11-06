@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { formatDate } from '@src/utils/formatters';
 import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
 import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
 import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
@@ -74,14 +75,7 @@ const ChannelAddPage = () => {
             <InputDatepicker
               title='등반 기간'
               type='period'
-              min={new Date()
-                .toLocaleDateString('ko-KR', {
-                  timeZone: undefined,
-                  year: 'numeric',
-                  month: '2-digit',
-                  day: '2-digit',
-                })
-                .replace(/(\d{4}). (\d{2}). (\d{2})./, '$1-$2-$3')}
+              min={formatDate(new Date())}
               required
               value={date}
               setValue={setDate}
