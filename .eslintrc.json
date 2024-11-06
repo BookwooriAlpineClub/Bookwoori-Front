@@ -1,8 +1,36 @@
 {
   "root": true,
+  "ignorePatterns": [
+    ".github/",
+    "build/",
+    "node_modules/",
+    "public/",
+    "*.json",
+    "*.md",
+    "react-app-env.d.ts",
+    "service-worker.ts",
+    "serviceWorkerRegistration.ts"
+  ],
   "env": {
     "browser": true,
-    "es2021": true
+    "es6": true
+  },
+  "settings": {
+    // React 버전을 자동으로 감지하도록 설정
+    "react": { "version": "detect" },
+    // 경로 별칭 매핑 설정
+    "import/resolver": {
+      "alias": {
+        "map": [["@src", "./src"]],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": { "jsx": true },
+    "ecmaVersion": "latest"
   },
   "extends": [
     "airbnb",
@@ -10,26 +38,18 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:@tanstack/eslint-plugin-query/recommended",
-    "plugin:prettier/recommended",
+    "plugin:@tanstack/query/recommended",
     "prettier"
   ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": { "jsx": true },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
   "plugins": [
     "@typescript-eslint",
     "import",
+    "jsx-a11y",
     "react",
-    "@tanstack/query",
-    "prettier"
+    "react-hooks",
+    "@tanstack/query"
   ],
   "rules": {
-    "react/jsx-props-no-spreading": "off",
-    "react/require-default-props": "off",
     "import/extensions": [
       "error", // "error": 이 규칙을 위반하면 오류로 처리
       "ignorePackages", // "ignorePackages": 패키지 모듈을 가져올 때는 확장자를 검사하지 않음
@@ -38,10 +58,8 @@
     "import/no-extraneous-dependencies": [
       "error",
       // devDependencies 예외: 특정 파일 패턴에 대해 devDependencies에서 가져오는 것을 허용
-      { "devDependencies": ["**/*.test.tsx", "**/*.test.ts"] }
+      { "devDependencies": ["*.config.*", "*.setup.*", "**/*.test.tsx"] }
     ],
-    // turn on errors for missing imports
-    "import/no-unresolved": "error",
     // 상대 경로 import 비허용
     "no-restricted-imports": ["error", { "patterns": ["..*"] }],
     // JSX를 사용할 때 React를 반드시 import하지 않아도 됨
@@ -56,29 +74,25 @@
       "error",
       { "namedComponents": ["arrow-function", "function-declaration"] }
     ],
+    // 컴포넌트.defaultProps{} 미사용 허용
+    "react/require-default-props": "off",
+    // ...props 허용
+    "react/jsx-props-no-spreading": "off",
+    // styled-components를 뒤에 선언할 수 있게 허용
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": "off",
-    // Prettier 규칙: 줄 끝 형식을 자동으로 감지하여 설정
-    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+    // 화살표 함수의 중괄호 여부 스타일을 검사하지 않음
+    "arrow-body-style": "off"
   },
-  "settings": {
-    // React 버전을 자동으로 감지하도록 설정
-    "react": {
-      "version": "detect"
-    },
-    // TypeScript 파일에 대한 parser를 설정
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
-    },
-    "import/resolver": {
-      "node": {
-        // TypeScript 파일의 확장자를 생략할 수 있도록 설정
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      },
-      "typescript": {
-        // 별칭 경로를 인식하도록 설정
-        "alwaysTryTypes": true
-      }
+  "overrides": [
+    {
+      "files": ["**/*.test.tsx"],
+      "extends": [
+        "plugin:jest/recommended",
+        "plugin:jest-dom/recommended",
+        "plugin:testing-library/react"
+      ],
+      "plugins": ["jest", "jest-dom", "testing-library"],
+      "rules": {}
     }
-  }
+  ]
 }
