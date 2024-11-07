@@ -1,37 +1,32 @@
 import styled from 'styled-components';
 
-interface ItemProps {
-  imgUrl: string;
-  nickname: string;
-  time: string;
-  text: string;
-  isRead: boolean;
-}
-
-interface BadgeListItemProps {
-  listItem: ItemProps;
+interface BadgeListItemProps extends BadgeItem {
   type: 'notice' | 'chatting';
 }
 
-const BadgeListItem = ({ type, listItem }: BadgeListItemProps) => {
-  const { imgUrl, nickname, time, text, isRead } = listItem;
-
-  const decideCaptionColor = (): 'new' | 'notice' | 'chatting' => {
-    if (!isRead) return 'new';
-
-    if (type === 'notice') return 'notice';
-    return 'chatting';
-  };
-
+const BadgeListItem = ({
+  type,
+  imgUrl,
+  caption,
+  time,
+  message,
+  isRead,
+}: BadgeListItemProps) => {
   return (
     <SLayout>
       <SImg src={imgUrl} />
       <SContainer>
         <SWrapper>
-          <SCaption className={decideCaptionColor()}>{nickname}</SCaption>
-          <SCaption className={decideCaptionColor()}>{time}</SCaption>
+          <SCaption className={type} $isRead={isRead}>
+            {caption}
+          </SCaption>
+          <SCaption className={type} $isRead={isRead}>
+            {time}
+          </SCaption>
         </SWrapper>
-        <SMessage $color={isRead && type === 'chatting'}>{text}</SMessage>
+        <SMessage className={type} $isRead={isRead}>
+          {message}
+        </SMessage>
       </SContainer>
       {!isRead && <SCircle />}
     </SLayout>
@@ -70,27 +65,32 @@ const SWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const SCaption = styled.span`
+const SCaption = styled.span<{ $isRead: boolean }>`
   ${({ theme }) => theme.fonts.caption};
 
-  &.new {
-    color: ${({ theme }) => theme.colors.blue100};
-  }
   &.notice {
-    color: ${({ theme }) => theme.colors.black200};
+    color: ${({ $isRead, theme }) =>
+      $isRead ? theme.colors.black200 : theme.colors.blue100};
   }
   &.chatting {
-    color: ${({ theme }) => theme.colors.black100};
+    color: ${({ $isRead, theme }) =>
+      $isRead ? theme.colors.black100 : theme.colors.blue100};
   }
 `;
-const SMessage = styled.span<{ $color: boolean }>`
+const SMessage = styled.span<{ $isRead: boolean }>`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme, $color }) =>
-    $color ? theme.colors.black200 : theme.colors.black100};
 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  &.notice {
+    color: ${({ theme }) => theme.colors.black100};
+  }
+  &.chatting {
+    color: ${({ $isRead, theme }) =>
+      $isRead ? theme.colors.black200 : theme.colors.black100};
+  }
 `;
 const SCircle = styled.div`
   width: 0.375rem;
