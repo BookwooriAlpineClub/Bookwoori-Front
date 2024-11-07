@@ -46,6 +46,13 @@ button {
 }
 input[type='button'],
 input[type='submit'],
-input[type='reset'] {
+input[type='reset'],
+input[type='radio'],
+label {
   cursor: pointer;
+}
+input[type='radio'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
