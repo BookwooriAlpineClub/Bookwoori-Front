@@ -1,4 +1,3 @@
-import { theme } from '@src/styles/theme';
 import styled from 'styled-components';
 
 interface ItemProps {
@@ -17,11 +16,11 @@ interface BadgeListItemProps {
 const BadgeListItem = ({ type, listItem }: BadgeListItemProps) => {
   const { imgUrl, nickname, time, text, isRead } = listItem;
 
-  const decideCaptionColor = (): string => {
-    if (!isRead) return theme.colors.blue100;
+  const decideCaptionColor = (): 'new' | 'notice' | 'chatting' => {
+    if (!isRead) return 'new';
 
-    if (type === 'notice') return theme.colors.black200;
-    return theme.colors.black100;
+    if (type === 'notice') return 'notice';
+    return 'chatting';
   };
 
   return (
@@ -29,8 +28,8 @@ const BadgeListItem = ({ type, listItem }: BadgeListItemProps) => {
       <SImg src={imgUrl} />
       <SContainer>
         <SWrapper>
-          <SCaption $color={decideCaptionColor}>{nickname}</SCaption>
-          <SCaption $color={decideCaptionColor}>{time}</SCaption>
+          <SCaption className={decideCaptionColor()}>{nickname}</SCaption>
+          <SCaption className={decideCaptionColor()}>{time}</SCaption>
         </SWrapper>
         <SMessage $color={isRead && type === 'chatting'}>{text}</SMessage>
       </SContainer>
@@ -48,7 +47,7 @@ const SLayout = styled.div`
   padding: 0.9375rem 0.625rem;
 
   border-radius: 1.25rem;
-  background-color: ${theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.white};
 
   cursor: pointer;
 `;
@@ -56,7 +55,7 @@ const SImg = styled.img`
   width: 2.5rem;
   height: 2.5rem;
 
-  background-color: ${theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.blue300};
   border-radius: 50%;
 `;
 const SContainer = styled.div`
@@ -71,13 +70,22 @@ const SWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const SCaption = styled.span<{ $color: () => string }>`
-  ${theme.fonts.caption};
-  color: ${({ $color }) => $color};
+const SCaption = styled.span`
+  ${({ theme }) => theme.fonts.caption};
+
+  &.new {
+    color: ${({ theme }) => theme.colors.blue100};
+  }
+  &.notice {
+    color: ${({ theme }) => theme.colors.black200};
+  }
+  &.chatting {
+    color: ${({ theme }) => theme.colors.black100};
+  }
 `;
 const SMessage = styled.span<{ $color: boolean }>`
-  ${theme.fonts.body};
-  color: ${({ $color }) =>
+  ${({ theme }) => theme.fonts.body};
+  color: ${({ theme, $color }) =>
     $color ? theme.colors.black200 : theme.colors.black100};
 
   overflow: hidden;
@@ -89,5 +97,5 @@ const SCircle = styled.div`
   height: 0.375rem;
 
   border-radius: 50%;
-  background-color: ${theme.colors.blue100};
+  background-color: ${({ theme }) => theme.colors.blue100};
 `;
