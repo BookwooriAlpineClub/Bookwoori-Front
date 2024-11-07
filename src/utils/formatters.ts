@@ -20,21 +20,21 @@ export const formatDate = (date: Date): string => {
  * @returns "n년" | "n개월" | "n일" | "n시간" | "n분" | "n초" | "방금"
  */
 export const formatTimeGap = (x: Date, y: Date): string => {
-  const secondMs = 1000;
-  const minuteMs = secondMs * 60;
-  const hourMs = minuteMs * 60;
-  const dayMs = hourMs * 24;
-  const monthMs = dayMs * 31;
-  const yearMs = monthMs * 12;
+  let diff: number = 0;
+  let time: string = '방금';
 
-  let diffMs = x.getTime() - y.getTime();
-  if (diffMs < 0) diffMs *= -1;
+  diff = x.getFullYear() - y.getFullYear();
+  if (diff !== 0) time = '년';
+  diff = x.getMonth() - y.getMonth();
+  if (diff !== 0) time = '개월';
+  diff = x.getDate() - y.getDate();
+  if (diff !== 0) time = '일';
+  diff = x.getHours() - y.getHours();
+  if (diff !== 0) time = '시간';
+  diff = x.getMinutes() - y.getMinutes();
+  if (diff !== 0) time = '분';
+  diff = x.getSeconds() - y.getSeconds();
+  if (diff !== 0) time = '초';
 
-  if (diffMs >= yearMs) return `${diffMs / yearMs}년`;
-  if (diffMs >= monthMs) return `${diffMs / monthMs}개월`;
-  if (diffMs >= dayMs) return `${diffMs / dayMs}일`;
-  if (diffMs >= hourMs) return `${diffMs / hourMs}시간`;
-  if (diffMs >= minuteMs) return `${diffMs / minuteMs}분`;
-  if (diffMs >= secondMs) return `${diffMs / secondMs}초`;
-  return '방금';
+  return diff ? `${Math.abs(diff)}${time}` : time;
 };
