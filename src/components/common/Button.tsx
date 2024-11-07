@@ -1,30 +1,12 @@
 import styled from 'styled-components';
 
-interface buttonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
-  onClick?: () => void;
-  form?: string;
 }
 
-const Button = ({
-  children,
-  type = 'button',
-  disabled = true,
-  onClick,
-  form,
-  ...props
-}: buttonProps) => {
+const Button = ({ children, ...props }: ButtonProps) => {
   return (
-    <SButton
-      name='button'
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      form={form}
-      {...props}
-    >
+    <SButton name='button' {...props}>
       {children}
     </SButton>
   );
