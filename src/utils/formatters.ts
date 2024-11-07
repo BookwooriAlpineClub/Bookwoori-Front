@@ -14,27 +14,24 @@ export const formatDate = (date: Date): string => {
     .replace(/(\d{4}). (\d{2}). (\d{2})./, '$1-$2-$3');
 };
 /**
- * x와 y의 시간 차를 특정 형식으로 반환합니다.
- * @param x new Date()로 생성한 객체
- * @param y new Date()로 생성한 객체
+ * a와 b의 시간 차를 특정 형식으로 반환합니다.
+ * @param a new Date()로 생성한 객체
+ * @param b new Date()로 생성한 객체
  * @returns "n년" | "n개월" | "n일" | "n시간" | "n분" | "n초" | "방금"
  */
-export const formatTimeGap = (x: Date, y: Date): string => {
-  let diff: number = 0;
-  let time: string = '방금';
+export const formatTimeGap = (a: Date, b: Date): string => {
+  const epochDate = new Date('1970-01-01');
+  const diffDate = new Date(Math.abs(a.getTime() - b.getTime()));
 
-  diff = x.getFullYear() - y.getFullYear();
-  if (diff !== 0) time = '년';
-  diff = x.getMonth() - y.getMonth();
-  if (diff !== 0) time = '개월';
-  diff = x.getDate() - y.getDate();
-  if (diff !== 0) time = '일';
-  diff = x.getHours() - y.getHours();
-  if (diff !== 0) time = '시간';
-  diff = x.getMinutes() - y.getMinutes();
-  if (diff !== 0) time = '분';
-  diff = x.getSeconds() - y.getSeconds();
-  if (diff !== 0) time = '초';
+  const diffList = [
+    { diff: epochDate.getFullYear() - diffDate.getFullYear(), unit: '년' },
+    { diff: epochDate.getMonth() - diffDate.getMonth(), unit: '개월' },
+    { diff: epochDate.getDate() - diffDate.getDate(), unit: '일' },
+    { diff: epochDate.getHours() - diffDate.getHours(), unit: '시간' },
+    { diff: epochDate.getMinutes() - diffDate.getMinutes(), unit: '분' },
+    { diff: epochDate.getSeconds() - diffDate.getSeconds(), unit: '초' },
+  ];
 
-  return diff ? `${Math.abs(diff)}${time}` : time;
+  const timeGap = diffList.find((diffItem) => diffItem.diff !== 0);
+  return timeGap ? `${Math.abs(timeGap.diff)}${timeGap.unit}` : '방금';
 };
