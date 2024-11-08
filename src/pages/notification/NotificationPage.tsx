@@ -90,11 +90,22 @@ export default NotificationPage;
 const Layout = styled.div`
   display: flex;
   flex-flow: column nowrap;
+
+  height: 100%;
 `;
 const Ol = styled.ol`
   display: flex;
   flex-flow: column nowrap;
   gap: 0.62rem;
 
+  flex: 1;
+  overflow-y: scroll;
+
   margin: 0.94rem 5%;
+`;
+const Span = styled.span`
+  margin: auto;
+
+  ${({ theme }) => theme.fonts.body}
+  color: ${({ theme }) => theme.colors.black200};
 `;
