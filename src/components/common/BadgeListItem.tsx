@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
-interface BadgeListItemProps extends BadgeItem {
+export interface BadgeListItemProps {
   type: 'notice' | 'chatting';
+  imgUrl: string;
+  caption: string;
+  time: string;
+  message: string;
+  isRead: boolean;
 }
 
 const BadgeListItem = ({

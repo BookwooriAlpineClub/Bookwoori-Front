@@ -9,13 +9,6 @@ declare type Toast = {
   content: string;
   kind?: 'default' | 'success' | 'error';
 };
-declare type BadgeItem = {
-  imgUrl: string;
-  caption: string;
-  time: string;
-  message: string;
-  isRead: boolean;
-};
 
 declare interface InputProps {
   title: string;

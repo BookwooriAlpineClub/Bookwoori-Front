@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { formatTimeGap } from '@src/utils/formatters';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
-import BadgeListItem from '@src/components/common/BadgeListItem';
+import BadgeListItem, { type BadgeListItemProps } from '@src/components/common/BadgeListItem';
 
-const mock: BadgeItem[] = [
+const mock: Omit<BadgeListItemProps, 'type'>[] = [
   {
     imgUrl: '/',
     caption: 'AAA공동체 - BBB모임',
@@ -57,7 +57,7 @@ const mock: BadgeItem[] = [
 ];
 
 const NotificationPage = () => {
-  const [notiList, setNotiList] = useState<BadgeItem[]>([]);
+  const [notiList, setNotiList] = useState<Omit<BadgeListItemProps, 'type'>[]>([]);
 
   useEffect(() => {
     const data = mock; // 데이터 fetch
