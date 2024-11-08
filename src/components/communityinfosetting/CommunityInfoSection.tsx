@@ -28,8 +28,8 @@ const CommunityInfoSection: React.FC<CommunityInfoProps> = ({
         <ContentWrapper>
           <Name>{name}</Name>
           <MemberInfo>{memberInfo}</MemberInfo>
-          <CreationDate>{creationDate}</CreationDate>
-          <Description>{description}</Description>
+          <Caption>{creationDate}</Caption>
+          <Caption>{description}</Caption>
         </ContentWrapper>
       </CardContainer>
     </SectionContainer>
@@ -83,22 +83,17 @@ const ContentWrapper = styled.div`
   width: 100%;
 `;
 
-const Name = styled.div`
+const Name = styled.span`
   font-family: ${({ theme }) => theme.fonts.nickname};
   color: ${({ theme }) => theme.colors.black100};
 `;
 
-const MemberInfo = styled.div`
+const MemberInfo = styled.span`
   font-family: ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.blue100};
 `;
 
-const CreationDate = styled.div`
-  font-family: ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.black200};
-`;
-
-const Description = styled.div`
+const Caption = styled.span`
   font-family: ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.black200};
 `;
