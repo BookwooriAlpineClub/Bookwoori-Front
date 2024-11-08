@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import { ReactComponent as IcnLoading } from '../../assets/icons/loading.svg';
+import { ReactComponent as IcnSpinner } from '@src/assets/icons/spinner.svg';
 
 const Spinner = () => {
-  return <Loading />;
+  return <AnimatedSpinner />;
 };
 
 export default Spinner;
 
-const Loading = styled(IcnLoading)`
+const AnimatedSpinner = styled(IcnSpinner)`
   @keyframes spin {
     from {
       transform: rotate(0);

@@ -25,6 +25,10 @@ const GlobalStyle = createGlobalStyle`
     display: none;
   }
 
+  #root, #modal, #toast {
+    width: 100%;
+    height: 100%;
+  }
   #toast {
     position: fixed;
     z-index: 900;
