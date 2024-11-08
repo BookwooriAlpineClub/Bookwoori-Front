@@ -1,6 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
-import SectionContainer from '@src/components/communityinfosetting/SectionContainer';
+import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
 
 interface CommunityInfoProps {
   name: string;
@@ -10,17 +9,16 @@ interface CommunityInfoProps {
   imageUrl: string;
 }
 
-const CommunityInfoSection: React.FC<CommunityInfoProps> = ({
+const CommunityInfoSection = ({
   name,
   memberInfo,
   creationDate,
   description,
   imageUrl,
-}) => {
+}: CommunityInfoProps) => {
   const subtitle = '공동체 정보';
   return (
-    <SectionContainer>
-      <Body>{subtitle}</Body>
+    <TitleAndFieldContainer title={subtitle}>
       <CardContainer>
         <ImageWrapper>
           <img src={imageUrl} alt={`${name} profile`} />
@@ -32,16 +30,11 @@ const CommunityInfoSection: React.FC<CommunityInfoProps> = ({
           <Caption>{description}</Caption>
         </ContentWrapper>
       </CardContainer>
-    </SectionContainer>
+    </TitleAndFieldContainer>
   );
 };
 
 export default CommunityInfoSection;
-
-const Body = styled.h2`
-  font-family: ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
-`;
 
 const CardContainer = styled.section`
   display: flex;
