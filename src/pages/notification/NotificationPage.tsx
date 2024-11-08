@@ -72,13 +72,11 @@ const NotificationPage = () => {
   return (
     <Layout>
       <Header text='알림' headerType='hamburger' />
-      <Ul>
         {notiList.map((item) => (
-          <li key={item.time}>
             <BadgeListItem type='notice' {...item} />
-          </li>
         ))}
-      </Ul>
+      <Ol>
+      </Ol>
     </Layout>
   );
 };
@@ -89,7 +87,7 @@ const Layout = styled.div`
   display: flex;
   flex-flow: column nowrap;
 `;
-const Ul = styled.ul`
+const Ol = styled.ol`
   display: flex;
   flex-flow: column nowrap;
   gap: 0.62rem;

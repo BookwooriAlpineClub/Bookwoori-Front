@@ -40,7 +40,7 @@ const BadgeListItem = ({
 
 export default BadgeListItem;
 
-const SLayout = styled.div`
+const SLayout = styled.li`
   display: flex;
   gap: 0.125rem;
 
