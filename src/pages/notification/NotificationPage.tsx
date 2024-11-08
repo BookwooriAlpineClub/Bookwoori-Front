@@ -60,22 +60,26 @@ const NotificationPage = () => {
   const [notiList, setNotiList] = useState<Omit<BadgeListItemProps, 'type'>[]>([]);
 
   useEffect(() => {
-    const data = mock; // 데이터 fetch
-    setNotiList(
-      data.map((item) => {
-        const time = formatTimeGap(new Date(), new Date(item.time));
-        return { ...item, time };
-      }),
-    );
+    const data: Omit<BadgeListItemProps, 'type'>[] = mock; // 데이터 fetch (정렬된 데이터 수신 가정)
+    setNotiList(data);
   }, []);
 
   return (
     <Layout>
       <Header text='알림' headerType='hamburger' />
-        {notiList.map((item) => (
-            <BadgeListItem type='notice' {...item} />
-        ))}
       <Ol>
+        {notiList.length !== 0 ? (
+          notiList.map((item, index) => (
+            <BadgeListItem
+              key={index}
+              type='notice'
+              {...item}
+              time={formatTimeGap(new Date(), new Date(item.time))}
+            />
+          ))
+        ) : (
+          <Span>알림이 없어요.</Span>
+        )}
       </Ol>
     </Layout>
   );
