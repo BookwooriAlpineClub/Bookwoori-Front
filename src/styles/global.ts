@@ -12,8 +12,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    width: 100svw;
-    height: 100svh;
+    @supports (width: 100svw) {
+      width: 100svw;
+      height: 100svh;
+    }
+    @supports not (width: 100svw) {
+      width: 100vw;
+      height: 100vh;
+    }
     background-color: ${({ theme }) => theme.colors.black300};
     ${({ theme }) => theme.fonts.body}
   }
