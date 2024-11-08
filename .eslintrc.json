@@ -78,8 +78,6 @@
     "react/require-default-props": "off",
     // ...props 허용
     "react/jsx-props-no-spreading": "off",
-    // key 값으로 배열의 index를 사용할 수 있게 허용
-    "react/no-array-index-key": "off",
     // styled-components를 뒤에 선언할 수 있게 허용
     "no-use-before-define": "off",
     // 화살표 함수의 중괄호 여부 스타일을 검사하지 않음

@@ -1,66 +1,43 @@
 import { useEffect, useState } from 'react';
-import { formatTimeGap } from '@src/utils/formatters';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
-import BadgeListItem, { type BadgeListItemProps } from '@src/components/common/BadgeListItem';
+import NotiItem, { type NotiItemType } from '@src/components/notification/NotiItem';
 
-const mock: Omit<BadgeListItemProps, 'type'>[] = [
+const mock: NotiItemType[] = [
   {
-    imgUrl: '/',
-    caption: 'AAA공동체 - BBB모임',
-    time: '2024-11-08 02:05:00',
-    message: 'OO님이 나를 언급했어요.',
+    id: 3,
+    createdAt: '2024-10-21 01:00:00',
+    server: 'AAA공동체 - BBB모임',
+    serverImg: '/',
+    content: 'OO님이 나를 언급했어요.',
     isRead: false,
+    link: '/3',
   },
   {
-    imgUrl: '/',
-    caption: 'AAA공동체 - BBB모임',
-    time: '2024-11-08 02:04:30',
-    message: 'OO님이 나를 언급했어요.',
-    isRead: false,
-  },
-  {
-    imgUrl: '/',
-    caption: 'AAA공동체 - BBB모임',
-    time: '2024-11-08 01:50:59',
-    message: 'OO님이 나를 언급했어요.',
-    isRead: false,
-  },
-  {
-    imgUrl: '/',
-    caption: 'AAA공동체 - BBB모임',
-    time: '2024-11-08 01:00:00',
-    message: 'OO님이 나를 언급했어요.',
-    isRead: false,
-  },
-  {
-    imgUrl: '/',
-    caption: 'AAA공동체 - BBB모임',
-    time: '2024-10-21 01:00:00',
-    message: 'OO님이 나를 언급했어요.',
-    isRead: false,
-  },
-  {
-    imgUrl: '/',
-    caption: 'CCC공동체 - DDD모임',
-    time: '2024-09-07 23:00:00',
-    message: '등반 모임 생성이 완료됐어요.',
+    id: 2,
+    createdAt: '2024-09-07 23:00:00',
+    server: 'CCC공동체 - DDD모임',
+    serverImg: '/',
+    content: '등반 모임 생성이 완료됐어요.',
     isRead: true,
+    link: '/2',
   },
   {
-    imgUrl: '/',
-    caption: 'EEE공동체 - FFF모임',
-    time: '2020-11-07 00:00:00',
-    message: 'OO님이 내 감상평에 반응을 남겼어요.',
+    id: 1,
+    createdAt: '2020-11-07 00:00:00',
+    server: 'EEE공동체 - FFF모임',
+    serverImg: '/',
+    content: 'OO님이 내 감상평에 반응을 남겼어요.',
     isRead: true,
+    link: '/1',
   },
 ];
 
 const NotificationPage = () => {
-  const [notiList, setNotiList] = useState<Omit<BadgeListItemProps, 'type'>[]>([]);
+  const [notiList, setNotiList] = useState<NotiItemType[]>([]);
 
   useEffect(() => {
-    const data: Omit<BadgeListItemProps, 'type'>[] = mock; // 데이터 fetch (정렬된 데이터 수신 가정)
+    const data: NotiItemType[] = mock; // 데이터 fetch (정렬된 데이터 수신 가정)
     setNotiList(data);
   }, []);
 
@@ -69,14 +46,7 @@ const NotificationPage = () => {
       <Header text='알림' headerType='hamburger' />
       <Ol>
         {notiList.length !== 0 ? (
-          notiList.map((item, index) => (
-            <BadgeListItem
-              key={index}
-              type='notice'
-              {...item}
-              time={formatTimeGap(new Date(), new Date(item.time))}
-            />
-          ))
+          notiList.map((item) => <NotiItem key={item.id} {...item} />)
         ) : (
           <Span>알림이 없어요.</Span>
         )}

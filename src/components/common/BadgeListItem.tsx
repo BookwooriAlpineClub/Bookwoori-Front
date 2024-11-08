@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
-export interface BadgeListItemProps {
-  type: 'notice' | 'chatting';
+type BadgeListItemType = {
   imgUrl: string;
   caption: string;
   time: string;
   message: string;
   isRead: boolean;
+};
+interface Props extends BadgeListItemType {
+  type: 'notice' | 'chatting';
+  onClick: () => void;
 }
 
 const BadgeListItem = ({
@@ -16,9 +19,10 @@ const BadgeListItem = ({
   time,
   message,
   isRead,
-}: BadgeListItemProps) => {
+  onClick,
+}: Props) => {
   return (
-    <SLayout>
+    <SLayout onClick={onClick}>
       <SImg src={imgUrl} />
       <SContainer>
         <SWrapper>
