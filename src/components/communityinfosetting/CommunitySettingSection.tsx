@@ -1,20 +1,17 @@
-import React from 'react';
-import SectionContainer from '@src/components/communityinfosetting/SectionContainer';
-import styled from 'styled-components';
 import CommunityButton from '@src/components/common/CommunityButton';
 import { CommunityRoleType } from '@src/pages/communityinfosetting/CommunityInfoSettingPage';
+import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
 
 export interface CommunitySettingSectionProps {
   communityRole: CommunityRoleType;
 }
 
-const CommunitySettingSection: React.FC<CommunitySettingSectionProps> = ({
+const CommunitySettingSection = ({
   communityRole,
-}) => {
+}: CommunitySettingSectionProps) => {
   const subtitle = '공동체 설정';
   return (
-    <SectionContainer>
-      <Body>{subtitle}</Body>
+    <TitleAndFieldContainer title={subtitle}>
       {communityRole === 'admin' && (
         <>
           <CommunityButton
@@ -36,13 +33,8 @@ const CommunitySettingSection: React.FC<CommunitySettingSectionProps> = ({
           onClick={() => alert('leaveCommunity')}
         />
       )}
-    </SectionContainer>
+    </TitleAndFieldContainer>
   );
 };
 
 export default CommunitySettingSection;
-
-const Body = styled.h2`
-  font-family: ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
-`;
