@@ -5,11 +5,12 @@ import { ReactComponent as Back } from '@src/assets/icons/left_arrow.svg';
 import { ReactComponent as Users } from '@src/assets/icons/users.svg';
 
 interface headerProps {
+  className?: string;
   text: string;
   headerType: 'hamburger' | 'back' | 'server';
 }
 
-const Header = ({ text, headerType }: headerProps) => {
+const Header = ({ className, text, headerType }: headerProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -19,7 +20,7 @@ const Header = ({ text, headerType }: headerProps) => {
   };
 
   return (
-    <SHeader>
+    <SHeader className={className}>
       <SButton type='button' onClick={handleClick} aria-label={headerType}>
         {headerType === 'back' ? <Back /> : <Hamburger />}
       </SButton>
