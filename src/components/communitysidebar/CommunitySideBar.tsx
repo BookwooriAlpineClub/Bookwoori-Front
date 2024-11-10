@@ -142,7 +142,6 @@ const CommunitySideBar = ({ isOpen, onClose }: CommunitySideBarProps) => {
   return (
     <>
       <Dialog />
-      <div>아오</div>
       <Scrim isOpen={isOpen} transition={transition} closeModal={handleClose}>
         <SideBarContainer
           isOpen={isOpen}
