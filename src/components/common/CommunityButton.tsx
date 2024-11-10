@@ -32,11 +32,11 @@ const buttonConfig = {
     icon: fiLogOut,
   },
   copyInvitation: {
-    name: '초대 링크 복사하기',
+    name: '공동체 초대장 복사하기',
     icon: bIUserPlus,
   },
   detailInfoSetting: {
-    name: '상세 정보 설정',
+    name: '공동체 정보 및 설정 보기',
     icon: fiSettings,
   },
 };
