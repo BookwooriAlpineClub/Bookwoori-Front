@@ -105,32 +105,24 @@ const RecruitClimbingBottomSheet = () => {
   };
 
   return (
-    <SContainer>
+    <>
       <SWrapper>
-        <STitle>모집 중인 클라이밍</STitle>
+        <span>모집 중인 등반</span>
         <button type='button' onClick={handleClick}>
           <Plus />
         </button>
       </SWrapper>
-      {recruitingClimbingList.map((it) => (
-        <RecruitClimbingItem key={it.climbingId} item={it} />
-      ))}
-    </SContainer>
+      <SContainer>
+        {recruitingClimbingList.map((it) => (
+          <RecruitClimbingItem key={it.climbingId} item={it} />
+        ))}
+      </SContainer>
+    </>
   );
 };
 
 export default RecruitClimbingBottomSheet;
 
-const SContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.9375rem;
-
-  padding: 0 1.25rem;
-  height: 80%;
-
-  overflow: scroll;
-`;
 const SWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -138,4 +130,11 @@ const SWrapper = styled.div`
 
   padding: 0.625rem 0;
 `;
-const STitle = styled.label``;
+const SContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.9375rem;
+
+  height: 80vh;
+  overflow: scroll;
+`;
