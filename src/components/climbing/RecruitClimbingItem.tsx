@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import Button from '@src/components/common/Button';
 import { ReactComponent as Calendar } from '@src/assets/icons/md_insert_invitation.svg';
 import { ReactComponent as Group } from '@src/assets/icons/md_group.svg';
@@ -32,8 +33,13 @@ interface ClimbingEvent {
 }
 
 const RecruitClimbingItem = ({ item }: { item: ClimbingEvent }) => {
+  const [isJoined, setIsJoined] = useState<boolean>(item.isJoined);
   const formatDate = (date: string) => {
     return date.split('-').join('.').concat('.');
+  };
+
+  const handleClickJoin = () => {
+    setIsJoined((prev) => !prev);
   };
 
   return (
@@ -72,8 +78,8 @@ const RecruitClimbingItem = ({ item }: { item: ClimbingEvent }) => {
           편집하기
         </SButton>
       ) : (
-        <SButton $color={item.isJoined}>
-          {item.isJoined && <SCheck />}
+        <SButton $color={isJoined} onClick={handleClickJoin}>
+          {isJoined && <SCheck />}
           참여하기
         </SButton>
       )}
