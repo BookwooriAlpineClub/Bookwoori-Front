@@ -150,7 +150,6 @@ const SContent = styled.div`
 `;
 const STitle = styled.label`
   ${({ theme }) => theme.fonts.body};
-  margin-bottom: 0.3125rem;
 `;
 const SContentWrapper = styled.div`
   display: flex;
