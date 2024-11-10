@@ -6,6 +6,7 @@ interface Props extends InputProps {
   type: 'short' | 'long';
   limit: number;
   value?: string;
+  disabled?: boolean;
 }
 
 /**
@@ -18,6 +19,7 @@ const InputText = ({
   type,
   limit,
   required,
+  disabled,
   value,
   setValue,
 }: Props) => {
@@ -29,6 +31,8 @@ const InputText = ({
         placeholder={placeholder}
         maxLength={limit}
         required={required}
+        disabled={disabled}
+        value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setValue(e.target.value)
         }
@@ -55,6 +59,9 @@ const Input = styled.input.attrs({ type: 'text' })<{ as: string }>`
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.black200};
+  }
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.white};
   }
 `;
 const Limit = styled.span`

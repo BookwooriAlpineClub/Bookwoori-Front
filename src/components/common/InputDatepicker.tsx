@@ -10,6 +10,7 @@ interface Props extends Omit<InputProps, 'placeholder'> {
   type: 'date' | 'period';
   min?: string;
   max?: string;
+  disabled?: boolean;
   value: Period;
   setValue: React.Dispatch<React.SetStateAction<Period>>;
 }
@@ -20,6 +21,7 @@ const InputDatepicker = ({
   min,
   max,
   required,
+  disabled,
   value,
   setValue,
 }: Props) => {
@@ -33,6 +35,7 @@ const InputDatepicker = ({
           max={value.end}
           pattern='\d{4}-\d{2}-\d{2}'
           required={required}
+          disabled={disabled}
           onChange={(e) =>
             setValue((prev) => ({ ...prev, start: e.target.value }))
           }
@@ -69,6 +72,10 @@ const Input = styled.input.attrs({ type: 'date' })<{ value: string }>`
   color: ${({ value, theme }) =>
     value ? theme.colors.black100 : theme.colors.black200};
   ${({ theme }) => theme.fonts.body};
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.white};
+  }
 `;
 const Span = styled.span`
   ${NoSelect}
