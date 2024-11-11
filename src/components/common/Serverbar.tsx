@@ -36,6 +36,21 @@ type buttonConfig = {
   className: string;
 };
 
+/**
+ * Serverbar 컴포넌트 사용법
+ *
+ * 0. Serverbar 컴포넌트를 추가한다.
+ * 1. useServerbar 훅을 불러온다.
+ * 2. openServerbar()로 연다.
+ *
+ * @example
+ * <Serverbar />
+ *
+ * import useServerbar from '@src/hooks/useServerbar';
+ * const { openServerbar } = useServerbar();
+ *
+ * openServerbar();
+ */
 const Serverbar = () => {
   const setServerList = useSetRecoilState(serverListState); // 추후 삭제
   const { content, isOpen, transition } = useRecoilValue(serverbarSelector);
