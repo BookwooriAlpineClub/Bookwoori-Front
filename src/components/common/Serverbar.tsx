@@ -190,6 +190,8 @@ const SButton = styled.label`
     position: relative;
 
     &::after {
+      content: '';
+
       position: absolute;
       top: 0;
       right: 0;
