@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { serverListState } from '@src/states/atoms';
+import { serverListState } from '@src/states/atoms'; // 추후 삭제
 import { serverbarSelector } from '@src/states/selectors';
 import useServerbar from '@src/hooks/useServerber';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
-import Button from '@src/components/serverbar/Button';
 import { ReactComponent as IcnLibrary } from '@src/assets/icons/library.svg';
 import { ReactComponent as IcnBell } from '@src/assets/icons/bell.svg';
 import { ReactComponent as IcnChat } from '@src/assets/icons/chat.svg';
@@ -29,7 +29,7 @@ const mockServerList: Server[] = [
   },
 ];
 
-type Btn = {
+type buttonConfig = {
   name: string;
   link: string;
   icon: React.ReactElement;
@@ -37,14 +37,15 @@ type Btn = {
 };
 
 const Serverbar = () => {
-  const setServerList = useSetRecoilState(serverListState);
+  const setServerList = useSetRecoilState(serverListState); // 추후 삭제
   const { content, isOpen, transition } = useRecoilValue(serverbarSelector);
   const { closeServerbar } = useServerbar();
+  const navigate = useNavigate();
 
   const [isNotiRead, setIsNotiRead] = useState<boolean>(true);
   const [isChatRead, setIsChatRead] = useState<boolean>(true);
 
-  const buttons: Btn[] = [
+  const buttonConfigs: buttonConfig[] = [
     {
       name: '서재',
       link: '/library',
@@ -77,6 +78,11 @@ const Serverbar = () => {
     },
   ];
 
+  function handleClick(link: string) {
+    navigate(link);
+    closeServerbar();
+  }
+
   useEffect(() => {
     setServerList(mockServerList); // 추후 삭제
 
@@ -94,27 +100,30 @@ const Serverbar = () => {
         $transition={transition}
       >
         <Fieldset>
-          {buttons.map((item) => (
+          {buttonConfigs.map((item) => (
             <>
-              <Button
-                key={item.name}
-                link={item.link}
-                checked={window.location.pathname === item.link}
-                className={item.className}
-              >
+              <SButton key={item.name} className={item.className}>
+                <input
+                  type='radio'
+                  name='serverbar'
+                  onClick={() => handleClick(item.link)}
+                  checked={window.location.pathname === item.link}
+                />
                 {item.icon}
-              </Button>
+              </SButton>
               {(item.name === '서재' || item.name === '계정 설정') && <Hr />}
             </>
           ))}
           {content.length !== 0 &&
             content.map((item) => (
-              <ImageButton
-                key={item.serverId}
-                link={`${item.serverId}`}
-                checked={window.location.pathname === `${item.serverId}`}
-                $img={item.serverImg}
-              />
+              <ImageButton key={item.serverId} $img={item.serverImg}>
+                <input
+                  type='radio'
+                  name='serverbar'
+                  onChange={() => handleClick(`/${item.serverId}`)}
+                  checked={window.location.pathname === `/${item.serverId}`}
+                />
+              </ImageButton>
             ))}
         </Fieldset>
       </Layout>
@@ -153,7 +162,53 @@ const Hr = styled.hr`
 
   border: 1.5px solid ${({ theme }) => theme.colors.blue300};
 `;
-const ImageButton = styled(Button)<{ $img: string }>`
+const SButton = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 3.125rem;
+  height: 3.125rem;
+
+  border-radius: 50%;
+
+  &:has(input[type='radio']:checked) {
+    border-radius: 20px;
+  }
+
+  &.neongreen {
+    background-color: ${({ theme }) => theme.colors.black300};
+    color: ${({ theme }) => theme.colors.black200};
+
+    &:has(input[type='radio']:checked) {
+      background-color: ${({ theme }) => theme.colors.neonGreen};
+      color: ${({ theme }) => theme.colors.black100};
+    }
+  }
+
+  &.new {
+    position: relative;
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      width: 0.5rem;
+      height: 0.5rem;
+
+      border-radius: 50%;
+      border: 1px solid ${({ theme }) => theme.colors.white};
+      background-color: ${({ theme }) => theme.colors.blue100};
+    }
+  }
+
+  &.blue {
+    background-color: ${({ theme }) => theme.colors.blue200};
+    color: ${({ theme }) => theme.colors.white};
+  }
+`;
+const ImageButton = styled(SButton)<{ $img: string }>`
   background-image: url(${({ $img }) => $img});
   background-repeat: no-repeat;
   background-size: cover;
