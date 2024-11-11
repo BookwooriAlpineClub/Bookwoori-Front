@@ -48,31 +48,31 @@ const Serverbar = () => {
   const buttonConfigs: buttonConfig[] = [
     {
       name: '서재',
-      link: '/library',
+      link: 'library',
       icon: <IcnLibrary />,
       className: 'neongreen',
     },
     {
       name: '알림',
-      link: '/notifications',
+      link: 'notifications',
       icon: <IcnBell />,
       className: isNotiRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '채팅',
-      link: '/chatting',
+      link: 'chatting',
       icon: <IcnChat />,
       className: isChatRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '계정 설정',
-      link: '/settings',
+      link: 'settings',
       icon: <IcnSettings />,
       className: 'neongreen',
     },
     {
       name: '서버 추가',
-      link: '/server',
+      link: 'server',
       icon: <IcnPlus />,
       className: 'blue',
     },
@@ -106,8 +106,8 @@ const Serverbar = () => {
                 <input
                   type='radio'
                   name='serverbar'
-                  onClick={() => handleClick(item.link)}
-                  checked={window.location.pathname === item.link}
+                  onClick={() => handleClick(`/${item.link}`)}
+                  checked={window.location.pathname === `/${item.link}`}
                 />
                 {item.icon}
               </SButton>
