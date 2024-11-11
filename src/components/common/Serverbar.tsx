@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { serverListState } from '@src/states/atoms'; // 추후 삭제
 import { serverbarSelector } from '@src/states/selectors';
-import useServerbar from '@src/hooks/useServerber';
+import useServerbar from '@src/hooks/useServerbar';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 import { ReactComponent as IcnLibrary } from '@src/assets/icons/library.svg';
