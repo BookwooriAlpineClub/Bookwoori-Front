@@ -14,6 +14,11 @@ export const formatDate = (date: Date): string => {
     .replace(/(\d{4}). (\d{2}). (\d{2})./, '$1-$2-$3');
 };
 
+/* number를 base64로 인코딩하는 함수 */
+export const encodeId = (id: number) => {
+  return btoa(String(id));
+};
+
 /* param id가 base64로 인코딩된 string일 경우 디코딩하는 함수 */
 export const decodeIdParam = (id: string | undefined): number => {
   if (!id) {
