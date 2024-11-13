@@ -4,11 +4,12 @@ interface SubButtonProps {
   icon?: React.ReactNode;
   label: string;
   width?: string;
+  onClick: () => void;
 }
 
-const SubButton = ({ icon, label, width }: SubButtonProps) => {
+const SubButton = ({ icon, label, width, onClick }: SubButtonProps) => {
   return (
-    <Button width={width}>
+    <Button width={width} onClick={onClick}>
       {icon}
       {label}
     </Button>
