@@ -13,3 +13,23 @@ export const formatDate = (date: Date): string => {
     })
     .replace(/(\d{4}). (\d{2}). (\d{2})./, '$1-$2-$3');
 };
+
+/* param id가 base64로 인코딩된 string일 경우 디코딩하는 함수 */
+export const decodeIdParam = (id: string | undefined): number => {
+  if (!id) {
+    throw new Error('Missing id');
+  }
+  if (!isBase64Encoded(id)) {
+    return Number(id); // 추후에는 throw Error로 변경 예정 코드
+  }
+  try {
+    const decodedString = atob(id);
+    const decodedNumber = Number(decodedString);
+    if (Number.isNaN(decodedNumber)) {
+      throw new Error('Decoded ID is not a valid number');
+    }
+    return decodedNumber;
+  } catch (e) {
+    throw new Error(`${e}: Failed to decode id`);
+  }
+};
