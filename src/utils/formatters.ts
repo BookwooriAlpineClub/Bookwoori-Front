@@ -1,3 +1,5 @@
+import { isBase64Encoded } from './validators'; // at decodedIdParam
+
 /**
  * input[type="date"] 태그는 "YYYY-MM-DD" 형식만 이해할 수 있습니다.
  * @param date new Date()로 생성한 객체
