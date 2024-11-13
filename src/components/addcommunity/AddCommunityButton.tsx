@@ -43,7 +43,7 @@ const ButtonContainer = styled.button`
 `;
 
 const TextWrapper = styled.span`
-  font-family: ${({ theme }) => theme.fonts.body};
+  ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.black100};
   width: fit-content;
 `;
