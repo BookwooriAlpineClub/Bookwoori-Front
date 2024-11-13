@@ -93,8 +93,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
-  padding: 0 1.25rem;
-  padding-top: 1.875rem;
+  padding: 1.875rem 1.25rem 0;
   width: 100svw;
   min-height: calc(100svh - 4.375rem);
   background-color: ${({ theme }) => theme.colors.black300};
