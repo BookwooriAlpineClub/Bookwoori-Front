@@ -11,16 +11,18 @@ export const ROUTE_PATH = {
   /* library */
   library: '/library',
   libraryMember: '/library/:memberId',
-  libraryBookSearch: '/library/book/search',
+  libraryBookSearch: '/library/book',
   libraryBookDetail: '/library/book/:bookId',
   libraryRecord: '/library/record',
   libraryRecordDetail: '/library/record/:recordId',
-  libraryEditRecord: '/library/record/edit/:recordId',
+  libraryEditRecord: '/library/record/edit',
+  libraryEditRecordOne: '/library/record/edit/:recordId',
   libraryReview: '/library/review',
   /* notification */
   notification: '/notification',
   /* dm */
   dm: '/dm',
+  dmChat: '/dm/chat',
   dmChatMember: '/dm/chat/:memberId',
   /* setting */
   setting: '/setting',
@@ -38,5 +40,6 @@ export const ROUTE_PATH = {
   /* climbing */
   climbing: '/climbing/:climbingId',
   climbingCreate: '/climbing/create',
-  climbingEdit: '/climbing/edit/:climbingId',
+  climbingEdit: '/climbing/edit',
+  climbingEditOne: '/climbing/edit/:climbingId',
 };
