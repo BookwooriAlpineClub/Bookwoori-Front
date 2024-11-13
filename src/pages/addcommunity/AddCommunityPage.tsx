@@ -54,8 +54,7 @@ const Container = styled.div`
   align-items: center;
   gap: 1.94rem;
   padding: 1.87rem 1.25rem;
-  width: 100vw;
-  width: 100svw;
+  width: 100%;
   min-height: calc(100vh - 4.375em);
   min-height: calc(100svh - 4.375rem);
 
