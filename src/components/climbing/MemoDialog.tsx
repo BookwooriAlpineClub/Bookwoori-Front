@@ -34,7 +34,7 @@ const MemoDialog = ({ memo, closeDialog }: MemoDialogProps) => {
       </InputContainer>
       <ButtonContainer>
         <SubButton label='삭제하기' onClick={closeDialog} width='39vw' />
-        <SubButton label='수정하기' width='39vw' />
+        <SubButton label='수정하기' width='39vw' onClick={closeDialog}/>
       </ButtonContainer>
     </DialogLayout>
   );
