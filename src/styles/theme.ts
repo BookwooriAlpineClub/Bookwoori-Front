@@ -8,6 +8,7 @@ const colors = {
   black100: '#0F1015',
   black200: '#A5A5A5',
   black300: '#FAFAFA',
+  black400: '#E9EAEB',
   white: '#FFFFFF',
   blackOverlay: 'rgba(15, 16, 21, 0.40)',
 } as const;
