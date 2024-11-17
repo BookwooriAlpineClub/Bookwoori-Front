@@ -15,7 +15,7 @@ const ChatMenu = () => {
     <SLayout>
       <SContainer>
         {emojiList.map((it) => (
-          <SEmoji>{it}</SEmoji>
+          <SEmoji key={it}>{it}</SEmoji>
         ))}
       </SContainer>
       {buttonData.map(({ icon, label }) => (

@@ -86,6 +86,7 @@ const ChattingPage = () => {
         <DateLine date={date} />
         {chatting.map((it) => (
           <ChatItem
+            key={it.text}
             imgUrl={it.imgUrl}
             nickname={it.nickname}
             time={it.time}
