@@ -26,6 +26,14 @@ const ChatItem = ({ chatItem }: { chatItem: Chatting }) => {
           <STime>{chatItem.time}</STime>
         </SWrapper>
         <SText>{chatItem.text}</SText>
+        {chatItem.emoji && (
+          <SEmoji
+            type='button'
+            onClick={() => openBottomsheet(<ChatMenu emoji={chatItem.emoji} />)}
+          >
+            {chatItem.emoji}
+          </SEmoji>
+        )}
       </SContainer>
     </SLayout>
   );
@@ -67,4 +75,18 @@ const SText = styled.p`
   ${({ theme }) => theme.colors.black100};
   line-height: 20px;
   font-weight: 600;
+
+  cursor: default;
+`;
+const SEmoji = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: min-content;
+  min-width: 30px;
+  height: 23px;
+
+  border-radius: 1.875rem;
+  background-color: ${({ theme }) => theme.colors.blue300};
 `;

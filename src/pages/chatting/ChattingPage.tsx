@@ -26,6 +26,7 @@ const chatting: Chatting[] = [
     nickname: '나야나',
     time: '오늘',
     text: '채팅 텍스트 채팅 텍스트 채팅 텍스트 채팅 텍스트',
+    emoji: '👍',
   },
   {
     imgUrl: '',
