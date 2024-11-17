@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import useBottomsheet from '@src/hooks/useBottomsheet';
+import useLongPress from '@src/hooks/useLongPress';
+import ChatMenu from './ChatMenu';
 
 interface Chatting {
   imgUrl?: string;
@@ -8,8 +11,13 @@ interface Chatting {
 }
 
 const ChatItem = ({ imgUrl, nickname, time, text }: Chatting) => {
+  const { openBottomsheet } = useBottomsheet();
+  const longPressHandler = useLongPress({
+    onLongPress: () => openBottomsheet(<ChatMenu />),
+  });
+
   return (
-    <SLayout>
+    <SLayout {...longPressHandler}>
       <SImg src={imgUrl} />
       <SContainer>
         <SWrapper>
