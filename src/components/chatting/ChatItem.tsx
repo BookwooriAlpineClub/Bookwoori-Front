@@ -5,26 +5,27 @@ import ChatMenu from './ChatMenu';
 
 interface Chatting {
   imgUrl?: string;
+  emoji?: string;
   nickname: string;
   time: string;
   text: string;
 }
 
-const ChatItem = ({ imgUrl, nickname, time, text }: Chatting) => {
+const ChatItem = ({ chatItem }: { chatItem: Chatting }) => {
   const { openBottomsheet } = useBottomsheet();
   const longPressHandler = useLongPress({
-    onLongPress: () => openBottomsheet(<ChatMenu />),
+    onLongPress: () => openBottomsheet(<ChatMenu emoji={chatItem.emoji} />),
   });
 
   return (
     <SLayout {...longPressHandler}>
-      <SImg src={imgUrl} />
+      <SImg src={chatItem.imgUrl} />
       <SContainer>
         <SWrapper>
-          <SNickname>{nickname}</SNickname>
-          <STime>{time}</STime>
+          <SNickname>{chatItem.nickname}</SNickname>
+          <STime>{chatItem.time}</STime>
         </SWrapper>
-        <SText>{text}</SText>
+        <SText>{chatItem.text}</SText>
       </SContainer>
     </SLayout>
   );
