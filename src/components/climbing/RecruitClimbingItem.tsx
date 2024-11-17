@@ -180,10 +180,8 @@ const SButton = styled(Button)<{ $color: boolean }>`
 const SEdit = styled(Edit)`
   width: 12px;
   height: 12px;
-  fill: ${({ theme }) => theme.colors.blue200};
 `;
 const SCheck = styled(Check)`
   width: 12px;
   height: 12px;
-  fill: ${({ theme }) => theme.colors.blue200};
 `;
