@@ -46,8 +46,8 @@ const Carousel = ({ type }: { type: 'next' | 'more' }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [carouselList] = useState<Array<List>>(list);
   const [width, setWidth] = useState<number>(0);
-  const [startX, setStartX] = useState(0);
-  const [startY, setStartY] = useState(0);
+  const [startX, setStartX] = useState<number>(0);
+  const [startY, setStartY] = useState<number>(0);
   const { openBottomsheet } = useBottomsheet();
 
   useEffect(() => {
