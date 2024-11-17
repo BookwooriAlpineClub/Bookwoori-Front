@@ -1,7 +1,6 @@
 import SubButton from '@src/components/channel/SubButton';
 import Header from '@src/components/common/Header';
 import styled, { css } from 'styled-components';
-import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as CategoryAdd } from '@src/assets/icons/category_add.svg';
 import { ReactComponent as ChannelAdd } from '@src/assets/icons/channel_add.svg';
 import Accordion from '@src/components/channel/Accordion';
@@ -46,7 +45,6 @@ const ChannelListPage = () => {
   const buttonData: ButtonData[] = [
     { icon: <SCategoryAdd />, label: '분류 추가' },
     { icon: <SChannelAdd />, label: '모임 추가' },
-    { icon: <SEdit />, label: '목록 편집' },
   ];
 
   const channelNameData: ChannelData[] = [
@@ -54,6 +52,10 @@ const ChannelListPage = () => {
     {
       name: '모집 중인 등반',
       children: <Carousel />,
+    },
+    {
+      name: '분류',
+      children: <ChannelList list={mockList} />,
     },
     {
       name: '진행 중인 등반',
@@ -108,9 +110,6 @@ const SButtonContainer = styled.div`
 const IconSize = css`
   width: 1rem;
   height: 1rem;
-`;
-const SEdit = styled(Edit)`
-  ${IconSize}
 `;
 const SChannelAdd = styled(ChannelAdd)`
   ${IconSize}

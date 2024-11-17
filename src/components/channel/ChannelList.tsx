@@ -29,7 +29,7 @@ export default ChannelList;
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.9375rem;
+  gap: 0.3125rem;
 
   ${({ theme }) => theme.fonts.body}
 `;
