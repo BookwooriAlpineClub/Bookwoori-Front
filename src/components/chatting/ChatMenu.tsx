@@ -17,9 +17,13 @@ const ChatMenu = ({ emoji }: { emoji?: string }) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     const clicked = e.currentTarget.textContent;
-    if (clicked) {
-      setClickedEmoji(clicked);
+    if (!clicked) return;
+    if (clicked === clickedEmoji) {
+      setClickedEmoji('');
+      return;
     }
+    
+    setClickedEmoji(clicked);
   };
 
   return (
