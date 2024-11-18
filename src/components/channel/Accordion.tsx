@@ -6,6 +6,7 @@ type AccordionProps = {
   id?: number;
   text: string;
   isDraggable?: boolean;
+  onDragStart?: (e: React.DragEvent, idx: number) => void;
   onDrop?: (e: React.DragEvent, idx: number) => void;
   onDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
   children?: React.ReactNode;
@@ -15,21 +16,17 @@ const Accordion = ({
   id = -1,
   text,
   isDraggable = false,
+  onDragStart = () => {},
   onDrop = () => {},
   onDragOver,
   children,
 }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  const onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('idx', String(id));
-  };
-
   return (
     <SLayout
       draggable={isDraggable}
-      onDragStart={(e) => onDragStart(e)}
+      onDragStart={(e) => onDragStart(e, id)}
       onDrop={(e) => onDrop(e, id)}
       onDragOver={onDragOver}
     >
