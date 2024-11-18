@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import useDialog from '@src/hooks/useDialog';
 import { ReactComponent as Hash } from '@src/assets/icons/hash.svg';
 import { ReactComponent as Voice } from '@src/assets/icons/voice.svg';
 import { ReactComponent as Run } from '@src/assets/icons/run.svg';
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Delete } from '@src/assets/icons/trash.svg';
+import DeleteConfirmModal from '@src/components/channel/DeleteConfirmModal';
 
 interface Props {
   color?: string;
@@ -17,13 +19,22 @@ const ChannelItem = ({ color = 'grey', type, children }: Props) => {
     voice: <Voice />,
     run: <Run />,
   };
+  const { openDialog, closeDialog } = useDialog();
 
   return (
     <SItem $color={color}>
       <Wrapper>
         {iconMapping[type]} {children}
       </Wrapper>
-      {type === 'run' ? <Delete /> : <Edit />}
+      {type === 'run' ? (
+        <Delete
+          onClick={() =>
+            openDialog(<DeleteConfirmModal closeDialog={closeDialog} />)
+          }
+        />
+      ) : (
+        <Edit />
+      )}
     </SItem>
   );
 };
