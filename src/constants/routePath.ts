@@ -4,9 +4,7 @@ export const ROUTE_PATH = {
   example: '/example',
   exampleId: '/example/:id',
   /* auth */
-  test: '/test',
   root: '/',
-  signUp: '/sign-up',
   signIn: '/sign-in',
   /* library */
   library: '/library',
