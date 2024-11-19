@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-const usePopover = () => {
-  const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
+const usePopover = <T extends HTMLElement>() => {
+  const [anchorEl, setAnchorEl] = useState<T | null>(null);
 
-  const openPopover = (event: React.MouseEvent<HTMLDivElement>) => {
+  const openPopover = (event: React.MouseEvent<T>) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
 
-  const closePopover = (event: React.MouseEvent<HTMLElement>) => {
+  const closePopover = (event: React.MouseEvent<T>) => {
     event.stopPropagation();
     setAnchorEl(null);
   };
