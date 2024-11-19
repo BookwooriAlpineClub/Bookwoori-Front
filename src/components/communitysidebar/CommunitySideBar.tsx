@@ -271,7 +271,7 @@ const MemberItem = styled.div`
 `;
 
 const Nickname = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body};
+  ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.black100};
 `;
 

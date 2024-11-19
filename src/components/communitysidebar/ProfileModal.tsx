@@ -41,7 +41,7 @@ const ModalContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0.97rem;
-  width: calc(100svw - 2.5rem);
+  width: calc(100% - 2.5rem);
   max-width: 35rem;
   background: transparent;
 `;
