@@ -58,7 +58,7 @@ export default ChannelEditPage;
 const SLayout = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.25rem;
 
   width: 100%;
   padding: 1.875rem 1.25rem;
