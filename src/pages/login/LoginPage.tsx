@@ -33,6 +33,6 @@ const Button = styled.button`
   display: flex;
   align-items: center;
 
-  border-radius: 10px;
+  border-radius: 0.625rem;
   border: 0.125rem solid ${({ theme }) => theme.colors.black100};
 `;
