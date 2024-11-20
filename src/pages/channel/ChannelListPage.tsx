@@ -50,10 +50,10 @@ const ChannelListPage = () => {
   ];
 
   const channelNameData: ChannelData[] = [
-    { name: '나의 등반', children: <Carousel /> },
+    { name: '나의 등반', children: <Carousel type='next' /> },
     {
       name: '모집 중인 등반',
-      children: <Carousel />,
+      children: <Carousel type='more' />,
     },
     {
       name: '진행 중인 등반',
@@ -111,6 +111,7 @@ const IconSize = css`
 `;
 const SEdit = styled(Edit)`
   ${IconSize}
+  fill: ${({ theme }) => theme.colors.white};
 `;
 const SChannelAdd = styled(ChannelAdd)`
   ${IconSize}
