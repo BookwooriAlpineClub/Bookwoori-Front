@@ -6,15 +6,15 @@ type UseLongPressProps = {
 };
 
 const useLongPress = ({ onLongPress, delay = 500 }: UseLongPressProps) => {
-  const longPressTriggered = useRef(false);
+  const isLongPressTriggered = useRef(false);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   const startPress = useCallback(
     (event: React.MouseEvent | React.TouchEvent) => {
       event.persist();
-      longPressTriggered.current = false;
+      isLongPressTriggered.current = false;
       const timeout = setTimeout(() => {
-        longPressTriggered.current = true;
+        isLongPressTriggered.current = true;
         onLongPress(event);
       }, delay);
       setTimer(timeout);

@@ -22,7 +22,7 @@ const ChatMenu = ({ emoji }: { emoji?: string }) => {
       setClickedEmoji('');
       return;
     }
-    
+
     setClickedEmoji(clicked);
   };
 
@@ -32,7 +32,7 @@ const ChatMenu = ({ emoji }: { emoji?: string }) => {
         {emojiList.map((it) => (
           <SEmoji
             key={it}
-            color={clickedEmoji === it}
+            isClicked={clickedEmoji === it}
             onClick={handleClickEmoji}
           >
             {it}
@@ -62,7 +62,7 @@ const SContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const SEmoji = styled.button<{ color: boolean }>`
+const SEmoji = styled.button<{ isClicked: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,8 +71,8 @@ const SEmoji = styled.button<{ color: boolean }>`
   height: 3.125rem;
 
   border-radius: 50%;
-  background-color: ${({ theme, color }) =>
-    color ? theme.colors.blue300 : theme.colors.white};
+  background-color: ${({ theme, isClicked }) =>
+    isClicked ? theme.colors.blue300 : theme.colors.white};
 
   font-size: 1.5rem;
 `;
