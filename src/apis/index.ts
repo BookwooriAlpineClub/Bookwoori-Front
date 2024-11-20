@@ -20,18 +20,16 @@ const onRequest = (
   config: InternalAxiosRequestConfig,
 ): InternalAxiosRequestConfig => {
   const accessToken = localStorage.getItem('accessToken');
-  const newConfig = { ...config };
 
-  if (!newConfig.headers) {
-    newConfig.headers = new AxiosHeaders();
-  }
+  const newConfig = {
+    ...config,
+    headers: new AxiosHeaders(config.headers?.toJSON()),
+  };
 
   if (accessToken) {
-    newConfig.headers = new AxiosHeaders({
-      ...config.headers.toJSON(),
-      Authorization: `Bearer ${accessToken}`,
-    });
+    newConfig.headers.set('Authorization', `Bearer ${accessToken}`);
   }
+  
   return newConfig;
 };
 
