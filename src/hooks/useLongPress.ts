@@ -11,7 +11,6 @@ const useLongPress = ({ onLongPress, delay = 500 }: UseLongPressProps) => {
 
   const startPress = useCallback(
     (event: React.MouseEvent | React.TouchEvent) => {
-      event.persist();
       isLongPressTriggered.current = false;
       const timeout = setTimeout(() => {
         isLongPressTriggered.current = true;
@@ -22,14 +21,7 @@ const useLongPress = ({ onLongPress, delay = 500 }: UseLongPressProps) => {
     [onLongPress, delay],
   );
 
-  const endPress = useCallback(() => {
-    if (timer) {
-      clearTimeout(timer);
-      setTimer(null);
-    }
-  }, [timer]);
-
-  const cancelPress = useCallback(() => {
+  const clearPress = useCallback(() => {
     if (timer) {
       clearTimeout(timer);
       setTimer(null);
@@ -38,10 +30,10 @@ const useLongPress = ({ onLongPress, delay = 500 }: UseLongPressProps) => {
 
   return {
     onMouseDown: startPress,
-    onMouseUp: endPress,
-    onMouseLeave: cancelPress,
+    onMouseUp: clearPress,
+    onMouseLeave: clearPress,
     onTouchStart: startPress,
-    onTouchEnd: endPress,
+    onTouchEnd: clearPress,
   };
 };
 
