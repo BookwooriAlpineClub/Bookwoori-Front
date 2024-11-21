@@ -11,6 +11,11 @@ import Router from '@src/Router';
 import Bottomsheet from '@src/components/common/Bottomsheet';
 import Dialog from '@src/components/common/Dialog';
 import Toast from '@src/components/common/Toast';
+import {
+  StyledEngineProvider,
+  ThemeProvider as MUIThemeProvider,
+} from '@mui/material/styles';
+import muiTheme from '@src/styles/muiTheme';
 
 const queryClient = new QueryClient();
 
@@ -18,13 +23,17 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <Router />
-          <Bottomsheet />
-          <Dialog />
-          <Toast />
-        </ThemeProvider>
+        <StyledEngineProvider injectFirst>
+          <MUIThemeProvider theme={muiTheme}>
+            <ThemeProvider theme={theme}>
+              <GlobalStyle />
+              <Router />
+              <Bottomsheet />
+              <Dialog />
+              <Toast />
+            </ThemeProvider>
+          </MUIThemeProvider>
+        </StyledEngineProvider>
       </QueryClientProvider>
     </RecoilRoot>
   </React.StrictMode>,

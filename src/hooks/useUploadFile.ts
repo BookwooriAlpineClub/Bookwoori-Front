@@ -7,13 +7,20 @@ const useUploadFile = (previewImg: string | undefined) => {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (!selectedFiles?.length) return;
-    
+
     const newFile = selectedFiles[0];
     setFile(newFile);
     setPreview(URL.createObjectURL(newFile));
+
+    e.target.value = '';
   };
 
-  return { file, preview, handleFileUpload };
+  const handleFileDelete = () => {
+    setFile(null);
+    setPreview(undefined);
+  };
+
+  return { file, preview, handleFileUpload, handleFileDelete };
 };
 
 export default useUploadFile;
