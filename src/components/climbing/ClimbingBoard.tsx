@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ClimbingRope from './ClimbingRope';
+import ClimbingRope from '@src/components/climbing/ClimbingRope';
 
 interface ClimbingMemberInfo {
   memberId: number;
