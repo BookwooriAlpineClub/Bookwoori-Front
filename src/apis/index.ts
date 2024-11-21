@@ -1,20 +1,6 @@
-import axios, {
-  AxiosHeaders,
-  AxiosInstance,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-} from 'axios';
-
-const apiUrl = process.env.REACT_APP_API_URL;
-
-const client: AxiosInstance = axios.create({
-  baseURL: apiUrl,
-});
-
-const authClient: AxiosInstance = axios.create({
-  baseURL: apiUrl,
-  withCredentials: true,
-});
+import { AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import client from '@src/apis/client';
+import authClient from '@src/apis/authClient';
 
 const onRequest = (
   config: InternalAxiosRequestConfig,
@@ -29,7 +15,7 @@ const onRequest = (
   if (accessToken) {
     newConfig.headers.set('Authorization', `Bearer ${accessToken}`);
   }
-  
+
   return newConfig;
 };
 
@@ -45,5 +31,3 @@ client.interceptors.response.use(onResponse);
 
 authClient.interceptors.request.use(onRequest);
 authClient.interceptors.response.use(onResponse);
-
-export { client, authClient };
