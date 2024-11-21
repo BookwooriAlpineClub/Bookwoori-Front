@@ -42,10 +42,6 @@ const router = createBrowserRouter([
         element: <h1>Root</h1>,
       },
       {
-        path: ROUTE_PATH.signUp,
-        element: <h1>Sign Up Page</h1>,
-      },
-      {
         path: ROUTE_PATH.signIn,
         element: <h1>Sign In Page</h1>,
       },
@@ -78,7 +74,7 @@ const router = createBrowserRouter([
         loader: (args) => isParamLoader(args, 'recordId'),
       },
       {
-        path: ROUTE_PATH.libraryEditRecord,
+        path: ROUTE_PATH.libraryEditRecordOne,
         element: <h1>Library Record Edit</h1>,
         loader: (args) => isParamLoader(args, 'recordId'),
       },
@@ -130,7 +126,6 @@ const router = createBrowserRouter([
       {
         path: ROUTE_PATH.invitationServer,
         element: <h1>Invitation Server Page</h1>,
-        loader: (args) => isParamLoader(args, 'invitationCode'),
       },
       {
         path: ROUTE_PATH.joinServer,
@@ -145,6 +140,15 @@ const router = createBrowserRouter([
       {
         path: ROUTE_PATH.serverChannel,
         element: <h1>Server Channel Page</h1>,
+        loader: (args) => isParamLoader(args, 'serverId'),
+      },
+      {
+        path: ROUTE_PATH.addServer,
+        element: <h1>Add Channel Page</h1>,
+      },
+      {
+        path: ROUTE_PATH.editChannelOne,
+        element: <h1>Edit Channel Page</h1>,
         loader: (args) => isParamLoader(args, 'serverId'),
       },
       /* climbing */
