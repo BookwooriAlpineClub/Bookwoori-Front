@@ -55,31 +55,25 @@ const ClimbingEditPage = () => {
           value={climbingName}
           setValue={setClimbingName}
         />
-        <SWrapper>
-          <InputText
-            title='책 제목'
-            placeholder='책 제목을 입력하세요.'
-            type='short'
-            limit={-1}
-            required
-            value={bookTitle}
-            setValue={setBookTitle}
-            disabled
-          />
-          <SOverlay />
-        </SWrapper>
-        <SWrapper>
+        <InputText
+          title='책 제목'
+          placeholder='책 제목을 입력하세요.'
+          type='short'
+          limit={-1}
+          required
+          value={bookTitle}
+          setValue={setBookTitle}
+          disabled
+        />
           <InputDatepicker
             title='등반 시기'
             type='period'
             min={formatDate(new Date())}
             required
-            disabled
+            disabled='start'
             value={date}
             setValue={setDate}
           />
-          <SHalfOverlay />
-        </SWrapper>
         <InputText
           title='등반 설명'
           placeholder='사람들에게 등반에 대해 알려주세요.'
@@ -111,25 +105,4 @@ const SLayout = styled.form`
 
   width: 100%;
   padding: 1.875rem 1.25rem;
-`;
-const SWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`;
-const SOverlay = styled.div`
-  position: absolute;
-  bottom: 0;
-
-  width: 100%;
-  height: 3.125rem;
-
-  border-radius: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.black200};
-  opacity: 0.3;
-
-  z-index: 1;
-`;
-const SHalfOverlay = styled(SOverlay)`
-  width: 48%;
 `;

@@ -19,35 +19,47 @@ const InputText = ({
   type,
   limit,
   required,
-  disabled,
+  disabled = false,
   value,
   setValue,
 }: Props) => {
   return (
     <Fieldset title={title}>
-      <Input
-        as={type === 'short' ? 'input' : 'textarea'}
-        name={title}
-        placeholder={placeholder}
-        maxLength={limit}
-        required={required}
-        disabled={disabled}
-        value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setValue(e.target.value)
-        }
-      />
-      {limit >= 0 && (
-        <Limit>
-          {value ? value.length : 0}/{limit}
-        </Limit>
-      )}
+      <Container isDisabled={disabled}>
+        <Input
+          as={type === 'short' ? 'input' : 'textarea'}
+          name={title}
+          placeholder={placeholder}
+          maxLength={limit}
+          required={required}
+          disabled={disabled}
+          value={value}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setValue(e.target.value)
+          }
+        />
+        {limit >= 0 && (
+          <Limit>
+            {value ? value.length : 0}/{limit}
+          </Limit>
+        )}
+      </Container>
     </Fieldset>
   );
 };
 
 export default InputText;
 
+const Container = styled.div<{ isDisabled: boolean }>`
+  position: relative;
+
+  padding: 0.9375rem;
+  width: 100%;
+
+  border-radius: 0.9375rem;
+  background-color: ${({ theme, isDisabled }) =>
+    isDisabled ? theme.colors.black400 : theme.colors.white}};
+`;
 const Input = styled.input.attrs({ type: 'text' })<{ as: string }>`
   width: 100%;
   height: ${({ as }) => (as === 'input' ? '1.25rem' : '8.75rem')};
@@ -61,7 +73,8 @@ const Input = styled.input.attrs({ type: 'text' })<{ as: string }>`
     color: ${({ theme }) => theme.colors.black200};
   }
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.black400};
+    color: ${({ theme }) => theme.colors.black200};
   }
 `;
 const Limit = styled.span`

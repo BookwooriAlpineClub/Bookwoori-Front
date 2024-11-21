@@ -8,7 +8,7 @@ const Fieldset = ({ title, children }: Props) => {
   return (
     <fieldset name={title}>
       <Legend>{title}</Legend>
-      <Container>{children}</Container>
+      {children}
     </fieldset>
   );
 };
@@ -20,13 +20,4 @@ const Legend = styled.legend`
 
   color: ${({ theme }) => theme.colors.black100};
   ${({ theme }) => theme.fonts.body};
-`;
-const Container = styled.div`
-  position: relative;
-
-  width: 100%;
-  padding: 0.9375rem;
-
-  border-radius: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.white};
 `;
