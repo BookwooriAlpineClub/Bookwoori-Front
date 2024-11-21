@@ -1,6 +1,9 @@
 import styled from 'styled-components';
-import { ReactComponent as Button } from '@src/assets/images/channel/carousel_btn.svg';
+import { ReactComponent as Next } from '@src/assets/images/channel/carousel_btn.svg';
+import { ReactComponent as More } from '@src/assets/images/channel/carousel_more_btn.svg';
 import { useEffect, useRef, useState } from 'react';
+import useBottomsheet from '@src/hooks/useBottomsheet';
+import RecruitClimbingBottomSheet from '@src/components/climbing/RecruitClimbingBottomSheet';
 
 interface List {
   url: string;
@@ -38,13 +41,14 @@ const list: List[] = [
   },
 ];
 
-const Carousel = () => {
+const Carousel = ({ type }: { type: 'next' | 'more' }) => {
   const CAROUSEL_ITEM_WIDTH = 85;
   const ref = useRef<HTMLDivElement>(null);
   const [carouselList] = useState<Array<List>>(list);
   const [width, setWidth] = useState<number>(0);
-  const [startX, setStartX] = useState(0);
-  const [startY, setStartY] = useState(0);
+  const [startX, setStartX] = useState<number>(0);
+  const [startY, setStartY] = useState<number>(0);
+  const { openBottomsheet } = useBottomsheet();
 
   useEffect(() => {
     const updateWidth = () => {
@@ -106,6 +110,14 @@ const Carousel = () => {
     handleSwipe(distanceX, vector);
   };
 
+  const handleClickMoreButton = () => {
+    openBottomsheet(<RecruitClimbingBottomSheet />);
+  };
+
+  const handClickNextButton = () => {
+    handleScroll(CAROUSEL_ITEM_WIDTH);
+  };
+
   return (
     <SLayout>
       <SContainer
@@ -124,7 +136,15 @@ const Carousel = () => {
           </SItem>
         ))}
       </SContainer>
-      <SButton onClick={() => handleScroll(85)} />
+      {type === 'next' ? (
+        <button type='button' onClick={handClickNextButton}>
+          <Next />
+        </button>
+      ) : (
+        <button type='button' onClick={handleClickMoreButton}>
+          <More />
+        </button>
+      )}
     </SLayout>
   );
 };
@@ -153,9 +173,6 @@ const SContainer = styled.div`
   -moz-user-select: none;
   -ms-use-select: none;
   user-select: none;
-`;
-const SButton = styled(Button)`
-  cursor: pointer;
 `;
 const SItem = styled.div`
   display: flex;

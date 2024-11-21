@@ -2,20 +2,41 @@ import styled from 'styled-components';
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Copy } from '@src/assets/icons/copy.svg';
 import { ReactComponent as Delete } from '@src/assets/icons/trash.svg';
+import { useState } from 'react';
 
-const ChatMenu = () => {
+const ChatMenu = ({ emoji }: { emoji?: string }) => {
   const emojiList = ['👍', '🫶', '☺️', '😢', '🤔'];
+  const [clickedEmoji, setClickedEmoji] = useState<string | undefined>(emoji);
   const buttonData = [
     { icon: <Edit />, label: '수정하기' },
     { icon: <Copy />, label: '글자 복사하기' },
     { icon: <Delete />, label: '삭제하기' },
   ];
 
+  const handleClickEmoji = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    const clicked = e.currentTarget.textContent;
+    if (!clicked) return;
+    if (clicked === clickedEmoji) {
+      setClickedEmoji('');
+      return;
+    }
+
+    setClickedEmoji(clicked);
+  };
+
   return (
     <SLayout>
       <SContainer>
         {emojiList.map((it) => (
-          <SEmoji>{it}</SEmoji>
+          <SEmoji
+            key={it}
+            isClicked={clickedEmoji === it}
+            onClick={handleClickEmoji}
+          >
+            {it}
+          </SEmoji>
         ))}
       </SContainer>
       {buttonData.map(({ icon, label }) => (
@@ -41,7 +62,7 @@ const SContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const SEmoji = styled.button`
+const SEmoji = styled.button<{ isClicked: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +71,8 @@ const SEmoji = styled.button`
   height: 3.125rem;
 
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme, isClicked }) =>
+    isClicked ? theme.colors.blue300 : theme.colors.white};
 
   font-size: 1.5rem;
 `;
