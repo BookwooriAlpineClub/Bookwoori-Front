@@ -6,3 +6,5 @@ client.interceptors.response.use(onResponse);
 
 authClient.interceptors.request.use(onRequest);
 authClient.interceptors.response.use(onResponse);
+
+export { client, authClient };
