@@ -14,7 +14,7 @@ export const ROUTE_PATH = {
   libraryRecord: '/library/record',
   libraryRecordDetail: '/library/record/:recordId',
   libraryEditRecord: '/library/record/edit',
-  libraryEditRecordOne: '/library/record/edit/:recordId',
+  libraryEditRecordOne: '/library/record/:recordId/edit',
   libraryReview: '/library/review',
   /* notification */
   notification: '/notification',
