@@ -1,12 +1,13 @@
+import styled, { css } from 'styled-components';
+import { useEffect, useRef } from 'react';
+import useDraggable from '@src/hooks/useDraggable';
 import SubButton from '@src/components/channel/SubButton';
 import Header from '@src/components/common/Header';
-import styled, { css } from 'styled-components';
-import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
-import { ReactComponent as CategoryAdd } from '@src/assets/icons/category_add.svg';
-import { ReactComponent as ChannelAdd } from '@src/assets/icons/channel_add.svg';
 import Accordion from '@src/components/channel/Accordion';
 import Carousel from '@src/components/channel/Carousel';
 import ChannelList from '@src/components/channel/ChannelList';
+import { ReactComponent as CategoryAdd } from '@src/assets/icons/category_add.svg';
+import { ReactComponent as ChannelAdd } from '@src/assets/icons/channel_add.svg';
 
 interface ButtonData {
   icon: React.ReactNode;
@@ -16,6 +17,7 @@ interface ButtonData {
 interface ChannelData {
   name: string;
   children: React.ReactNode;
+  type?: 'default';
 }
 
 interface ClimbingChannel {
@@ -42,28 +44,57 @@ const mockList: ClimbingChannel[] = [
   },
 ];
 
+const channelNameData: ChannelData[] = [
+  { name: '나의 등반', children: <Carousel />, type: 'default' },
+  {
+    name: '모집 중인 등반',
+    children: <Carousel />,
+    type: 'default',
+  },
+  {
+    name: '분류1',
+    children: <ChannelList list={mockList} />,
+  },
+  {
+    name: '분류2',
+    children: <ChannelList list={mockList} />,
+  },
+  {
+    name: '분류3',
+    children: <ChannelList list={mockList} />,
+  },
+  {
+    name: '진행 중인 등반',
+    children: <ChannelList list={mockList} />,
+    type: 'default',
+  },
+  {
+    name: '종료된 등반',
+    children: <ChannelList list={mockList} />,
+    type: 'default',
+  },
+];
+
 const ChannelListPage = () => {
   const buttonData: ButtonData[] = [
     { icon: <SCategoryAdd />, label: '분류 추가' },
     { icon: <SChannelAdd />, label: '모임 추가' },
-    { icon: <SEdit />, label: '목록 편집' },
   ];
 
-  const channelNameData: ChannelData[] = [
-    { name: '나의 등반', children: <Carousel type='next' /> },
-    {
-      name: '모집 중인 등반',
-      children: <Carousel type='more' />,
-    },
-    {
-      name: '진행 중인 등반',
-      children: <ChannelList list={mockList} />,
-    },
-    {
-      name: '종료된 등반',
-      children: <ChannelList list={mockList} />,
-    },
-  ];
+  const { list, handleDraggable } = useDraggable(channelNameData);
+  const ref = useRef(channelNameData);
+
+  useEffect(() => {
+    if (JSON.stringify(ref.current) !== JSON.stringify(list)) {
+      // 백에 데이터 전송
+    }
+  }, [list]);
+
+  const handleDraggableCondition = (idx: number) => {
+    const isDraggable = channelNameData[idx]?.type !== 'default';
+
+    return isDraggable ? handleDraggable(idx) : {};
+  };
 
   return (
     <>
@@ -77,8 +108,13 @@ const ChannelListPage = () => {
           ))}
         </SButtonContainer>
         <SContainer>
-          {channelNameData.map((data) => (
-            <Accordion key={data.name} text={data.name}>
+          {list.map((data, idx) => (
+            <Accordion
+              id={idx}
+              key={data.name}
+              text={data.name}
+              {...handleDraggableCondition(idx)}
+            >
               {data.children}
             </Accordion>
           ))}
@@ -108,10 +144,6 @@ const SButtonContainer = styled.div`
 const IconSize = css`
   width: 1rem;
   height: 1rem;
-`;
-const SEdit = styled(Edit)`
-  ${IconSize}
-  fill: ${({ theme }) => theme.colors.white};
 `;
 const SChannelAdd = styled(ChannelAdd)`
   ${IconSize}

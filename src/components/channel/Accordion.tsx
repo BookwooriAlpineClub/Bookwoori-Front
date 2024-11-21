@@ -5,33 +5,40 @@ import React, { useState } from 'react';
 type AccordionProps = {
   id?: number;
   text: string;
-  isDraggable?: boolean;
-  onDrop?: (e: React.DragEvent, idx: number) => void;
+  draggable?: boolean;
+  onDragStart?: (e: React.DragEvent, idx: number) => void;
+  onDrop?: (idx: number) => void;
   onDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
+  // onTouchStart?: (e: React.TouchEvent, idx: number) => void;
+  // onTouchEnd?: (e: React.TouchEvent, idx: number) => void;
+  // onTouchMove?: (e: React.TouchEvent) => void;
   children?: React.ReactNode;
 };
 
 const Accordion = ({
   id = -1,
   text,
-  isDraggable = false,
+  draggable = false,
+  onDragStart = () => {},
   onDrop = () => {},
-  onDragOver,
+  onDragOver = () => {},
+  // onTouchStart = () => {},
+  // onTouchEnd = () => {},
+  // onTouchMove = () => {},
   children,
 }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
-
-  const onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('idx', String(id));
-  };
+  const isTouchDevice = 'ontouchstart' in window;
 
   return (
     <SLayout
-      draggable={isDraggable}
-      onDragStart={(e) => onDragStart(e)}
-      onDrop={(e) => onDrop(e, id)}
+      draggable={!isTouchDevice && draggable}
+      onDragStart={(e) => onDragStart(e, id)}
+      onDrop={() => onDrop(id)}
       onDragOver={onDragOver}
+      // onTouchStart={(e) => onTouchStart(e, id)}
+      // onTouchEnd={(e) => onTouchEnd(e, id)}
+      // onTouchMove={onTouchMove}
     >
       <SContainer>
         <SLabel>{text}</SLabel>
