@@ -34,8 +34,9 @@ export const ROUTE_PATH = {
   joinServer: '/add-server/join',
   /* server */
   server: '/server/:serverId',
-  serverChannel: '/server/:serverId/category/:categoryId/channel/:channelId',
   serverChannel: '/server/:serverId/:channelId',
+  addChannel: '/server/:serverId/create',
+  editChannelOne: '/server/:serverId/:channelId/edit',
   /* climbing */
   climbing: '/climbing/:climbingId',
   climbingCreate: '/climbing/create',
