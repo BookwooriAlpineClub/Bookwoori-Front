@@ -7,6 +7,7 @@ import Header from '@src/components/common/Header';
 
 interface Chatting {
   imgUrl?: string;
+  emoji?: string;
   nickname: string;
   time: string;
   text: string;
@@ -18,12 +19,14 @@ const chatting: Chatting[] = [
     nickname: 'AAA',
     time: '오늘',
     text: '이야야야',
+    emoji: '😢',
   },
   {
     imgUrl: '',
     nickname: '나야나',
     time: '오늘',
     text: '채팅 텍스트 채팅 텍스트 채팅 텍스트 채팅 텍스트',
+    emoji: '👍',
   },
   {
     imgUrl: '',
@@ -85,12 +88,7 @@ const ChattingPage = () => {
       <SLayout>
         <DateLine date={date} />
         {chatting.map((it) => (
-          <ChatItem
-            imgUrl={it.imgUrl}
-            nickname={it.nickname}
-            time={it.time}
-            text={it.text}
-          />
+          <ChatItem key={it.time} chatItem={it} />
         ))}
       </SLayout>
       <ChatBar nickname={nickname} />

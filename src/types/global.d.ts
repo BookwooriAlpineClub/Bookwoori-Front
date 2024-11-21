@@ -9,6 +9,7 @@ declare type Toast = {
   content: string;
   kind?: 'default' | 'success' | 'error';
 };
+
 declare interface InputProps {
   title: string;
   placeholder: string;

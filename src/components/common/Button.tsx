@@ -19,7 +19,7 @@ const SButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: 19.6875rem;
+  width: 100%;
   padding: 0.9375rem 0.3125rem;
 
   border-radius: 0.9375rem;
