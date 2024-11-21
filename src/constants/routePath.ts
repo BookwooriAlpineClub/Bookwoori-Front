@@ -35,6 +35,7 @@ export const ROUTE_PATH = {
   /* server */
   server: '/server/:serverId',
   serverChannel: '/server/:serverId/category/:categoryId/channel/:channelId',
+  serverChannel: '/server/:serverId/:channelId',
   /* climbing */
   climbing: '/climbing/:climbingId',
   climbingCreate: '/climbing/create',
