@@ -16,6 +16,7 @@
   "private": true,
   "scripts": {
     "start": "craco start",
+    "start:without-eslint": "DISABLE_ESLINT_PLUGIN=true craco start",
     "build": "craco build",
     "test": "craco test"
   },
