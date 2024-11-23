@@ -1,5 +1,5 @@
-import apiUrl from "@src/constants/apiUrl";
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance } from 'axios';
+import { apiUrl } from '@src/constants/apiUrl';
 
 const authClient: AxiosInstance = axios.create({
   baseURL: apiUrl,
