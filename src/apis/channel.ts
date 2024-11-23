@@ -1,5 +1,5 @@
 import type { AxiosResponse } from 'axios';
-import type { Channel } from '@src/types/apis/channel';
+import type { Channel } from '@src/types/apis/channel.d';
 import { authClient } from '@src/apis/index';
 
 /** 채널 생성 */

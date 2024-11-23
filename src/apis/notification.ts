@@ -1,5 +1,5 @@
 import type { AxiosResponse } from 'axios';
-import type { Notification } from '@src/types/apis/notification';
+import type { Notification } from '@src/types/apis/notification.d';
 import { authClient } from '@src/apis/index';
 
 /** 알림 구독 */
