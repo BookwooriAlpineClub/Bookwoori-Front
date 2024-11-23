@@ -1,3 +1,11 @@
+import 'axios';
+
+declare module 'axios' {
+  interface InternalAxiosRequestConfig {
+    sent?: boolean;
+  }
+}
+
 declare type ModalTransition = 'open' | 'close';
 declare type Modal = {
   content: React.ReactNode;
