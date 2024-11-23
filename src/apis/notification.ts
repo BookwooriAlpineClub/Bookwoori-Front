@@ -2,14 +2,14 @@ import type { AxiosResponse } from 'axios';
 import type { Notification } from '@src/types/apis/notification';
 import { authClient } from '@src/apis/index';
 
-// 알림 구독
+/** 알림 구독 */
 // 백엔드 API 명세서 미완성
-// export const getNotification = async <Res>(): Promise<Res> => {
-//   const response = await authClient.get<Res>(`/notification`);
-//   return response.data;
-// };
+export const getNotification = async <Res>(): Promise<Res> => {
+  const response = await authClient.get<Res>(`/notification`);
+  return response.data;
+};
 
-// 알림 리스트 조회
+/** 알림 리스트 조회 */
 export const getNotificationList = async <
   Res = Notification[],
 >(): Promise<Res> => {
@@ -17,19 +17,19 @@ export const getNotificationList = async <
   return response.data;
 };
 
-// 알림 읽기
+/** 알림 읽기 */
 // 백엔드 API 명세서 미완성
-// export const patchNotification = async <
-//   Res = void,
-//   Req = Pick<Notification, 'isRead'>,
-// >(
-//   id: number,
-//   body: Req,
-// ): Promise<Res> => {
-//   const response = await authClient.patch<Res, AxiosResponse<Res>, Req>(
-//     `/notification/${id}`,
-//     body,
-//     { headers: { 'Content-Type': 'application/json' } },
-//   );
-//   return response.data;
-// };
+export const patchNotification = async <
+  Res = void,
+  Req = Pick<Notification, 'isRead'>,
+>(
+  id: number,
+  body: Req,
+): Promise<Res> => {
+  const response = await authClient.patch<Res, AxiosResponse<Res>, Req>(
+    `/notification/${id}`,
+    body,
+    { headers: { 'Content-Type': 'application/json' } },
+  );
+  return response.data;
+};

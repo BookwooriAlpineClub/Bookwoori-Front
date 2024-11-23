@@ -2,6 +2,7 @@ import type { AxiosResponse } from 'axios';
 import type { Channel } from '@src/types/apis/channel';
 import { authClient } from '@src/apis/index';
 
+/** 채널 생성 */
 export const postChannel = async <Res = void, Req = Channel>(
   body: Req,
 ): Promise<Res> => {
@@ -13,7 +14,8 @@ export const postChannel = async <Res = void, Req = Channel>(
   return response.data;
 };
 
-// 백엔드 수정 요청함.
+/** 채널 수정 */
+// 백엔드에 수정 요청함
 export const patchChannel = async <
   Res = void,
   Req = Pick<Channel, 'categoryId' | 'name'>,
@@ -29,6 +31,7 @@ export const patchChannel = async <
   return response.data;
 };
 
+/** 채널 삭제 */
 export const deleteChannel = async <Res = void>(
   channelId: number,
 ): Promise<Res> => {

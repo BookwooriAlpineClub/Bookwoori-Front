@@ -2,6 +2,7 @@ import type { AxiosResponse } from 'axios';
 import type { Record, Review } from '@src/types/apis/record.d';
 import { authClient } from '@src/apis/index';
 
+/** 진행도별 책 기록 목록 조회 */
 // 백엔드에 수정 요청함
 export const getRecordList = async <Res = Record[]>(
   status: Pick<Record, 'status'>,
@@ -10,13 +11,15 @@ export const getRecordList = async <Res = Record[]>(
   return response.data;
 };
 
+/** 내 감상평 목록 조회 */
 // 백엔드에 수정 요청함
 export const getReviewList = async <Res = Review[]>(): Promise<Res> => {
   const response = await authClient.get<Res>(`/records/reviews`);
   return response.data;
 };
 
-// 백엔드에 수정 요청함
+/** 책 기록 상세 조회 */
+// 백엔드에 추가 요청함
 export const getRecordDetail = async <Res = Record>(
   recordId: number,
 ): Promise<Res> => {
@@ -24,6 +27,7 @@ export const getRecordDetail = async <Res = Record>(
   return response.data;
 };
 
+/** 책 기록 추가 */
 // 백엔드에 수정 요청함
 export const postRecord = async <Res = void, Req = Record>(
   body: Req,
@@ -36,6 +40,7 @@ export const postRecord = async <Res = void, Req = Record>(
   return response.data;
 };
 
+/** 책 기록 수정 */
 // 백엔드에 수정 요청함
 export const putRecord = async <Res = void, Req = Record>(
   recordId: number,
@@ -49,6 +54,7 @@ export const putRecord = async <Res = void, Req = Record>(
   return response.data;
 };
 
+/** 책 기록 삭제 */
 export const deleteRecord = async <Res = void>(
   recordId: number,
 ): Promise<Res> => {
