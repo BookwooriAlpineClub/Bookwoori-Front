@@ -17,7 +17,7 @@ export const getReviewList = async <Res = Review[]>(): Promise<Res> => {
 };
 
 // 백엔드에 수정 요청함
-export const getRecordItem = async <Res = Record>(
+export const getRecordDetail = async <Res = Record>(
   recordId: number,
 ): Promise<Res> => {
   const response = await authClient.get<Res>(`/records?recordId=${recordId}`);

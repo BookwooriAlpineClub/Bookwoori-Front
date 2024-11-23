@@ -8,8 +8,8 @@ export const getBookList = async <Res = Book[]>(
   return response.data;
 };
 
-export const getBookItem = async <Res = Book>(
-  isbn13: number
+export const getBookDetail = async <Res = Book>(
+  isbn13: number,
 ): Promise<Res> => {
   const response = await authClient.get<Res>(`/books/${isbn13}`);
   return response.data;
