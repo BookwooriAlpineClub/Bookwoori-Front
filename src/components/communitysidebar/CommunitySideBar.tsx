@@ -98,7 +98,6 @@ const CommunitySideBar = () => {
   const { sideBar, closeSideBar } = useSideBar();
   const [memberList, setMemberList] = useState<Member[]>([]);
   const copyText = 'bookWOORI1234'; // fetchCopyInvitationURI() 사용 예정
-
   const { isCopied, handleCopy } = useCopyToClipboard(copyText);
   const { openDialog } = useDialog();
 
