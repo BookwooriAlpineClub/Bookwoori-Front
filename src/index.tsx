@@ -11,6 +11,7 @@ import Router from '@src/Router';
 import Bottomsheet from '@src/components/common/Bottomsheet';
 import Dialog from '@src/components/common/Dialog';
 import Toast from '@src/components/common/Toast';
+import CommunitySideBar from '@src/components/communitysidebar/CommunitySideBar';
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Bottomsheet />
           <Dialog />
           <Toast />
+          <CommunitySideBar />
         </ThemeProvider>
       </QueryClientProvider>
     </RecoilRoot>
