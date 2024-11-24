@@ -21,10 +21,14 @@ export const toastState = atom<Toast[]>({
   default: [],
 });
 export const profileState = atom<File | null>({
-  key: 'fileState',
+  key: 'profileState',
   default: null,
 });
 export const bgFileState = atom<File | null>({
-  key: 'fileState',
+  key: 'bgfileState',
+  default: null,
+});
+export const communityFileState = atom<File | null>({
+  key: 'communityfileState',
   default: null,
 });
