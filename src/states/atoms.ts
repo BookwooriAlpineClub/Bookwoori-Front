@@ -20,3 +20,11 @@ export const toastState = atom<Toast[]>({
   key: 'toastState',
   default: [],
 });
+
+export const sideBarState = atom<SideBar>({
+  key: 'SideBarState',
+  default: {
+    isOpen: false,
+    transition: 'close',
+  },
+});
