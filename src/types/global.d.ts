@@ -9,9 +9,15 @@ declare type Toast = {
   content: string;
   kind?: 'default' | 'success' | 'error';
 };
+
 declare interface InputProps {
   title: string;
   placeholder: string;
   required: boolean;
   setValue: React.Dispatch<React.SetStateAction<T>>;
+}
+
+interface SideBar {
+  isOpen: boolean;
+  transition: ModalTransition;
 }
