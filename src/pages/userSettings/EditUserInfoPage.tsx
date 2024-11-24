@@ -1,12 +1,19 @@
 import styled from 'styled-components';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { profileState } from '@src/states/atoms';
+import useMember from '@src/hooks/query/useMember';
 import UserProfilImg from '@src/components/userSettings/UserProfileImg';
 import Button from '@src/components/common/Button';
 import Header from '@src/components/common/Header';
+import ButtonBackground from '@src/components/common/ButtonBackground';
 
 const EditUserInfoPage = () => {
-  const [value, setValue] = useState<string>('내별명');
+  const userId = 1;
+  const { profileData, isLoading, isError, editProfile } = useMember(userId);
+  const [value, setValue] = useState<string | undefined>(profileData?.nickname);
   const [length, setLength] = useState<number>(0);
+  const profileFile = useRecoilValue(profileState);
   const ref = useRef(value);
 
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,12 +29,40 @@ const EditUserInfoPage = () => {
     setLength(targetLength);
   };
 
+  const handleEditProfile = () => {
+    const formData = new FormData();
+    if (value) {
+      formData.append('nickname', value);
+    }
+    if (profileFile) {
+      formData.append('profileImg', profileFile);
+    }
+
+    editProfile.mutate(formData);
+  };
+
+  useEffect(() => {
+    if (profileData) {
+      setValue(profileData.nickname);
+      setLength(profileData.nickname.length);
+      ref.current = profileData.nickname;
+    }
+  }, [profileData]);
+
+  if (isLoading) {
+    return <h1>로딩중</h1>;
+  }
+
+  if (isError) {
+    throw new Error('데이터를 불러오는데 실패했습니다.');
+  }
+
   return (
     <>
       <Header text='인물 정보 수정하기' headerType='back' />
       <SLayout>
         <SContainer>
-          <UserProfilImg edit />
+          <UserProfilImg edit profile={profileData?.profileImg || undefined} />
           <SBox>
             <SLabel>별명</SLabel>
             <SWrapper>
@@ -42,9 +77,16 @@ const EditUserInfoPage = () => {
             </SWrapper>
           </SBox>
         </SContainer>
-        <Button disabled={!(value && length <= 10 && ref.current !== value)}>
-          수정하기
-        </Button>
+        <ButtonBackground color='transparent'>
+          <Button
+            disabled={
+              !((value && length <= 10 && ref.current !== value) || profileFile)
+            }
+            onClick={handleEditProfile}
+          >
+            수정하기
+          </Button>
+        </ButtonBackground>
       </SLayout>
     </>
   );
@@ -56,10 +98,8 @@ const SLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
 
-  padding: 1.875rem 1.25rem 2.5625rem;
-  height: calc(100% - 4.375rem);
+  padding: 1.875rem 1.25rem 0;
 `;
 
 const SContainer = styled.div`
