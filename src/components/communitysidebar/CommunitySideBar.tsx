@@ -140,47 +140,48 @@ const CommunitySideBar = ({ isOpen, onClose }: CommunitySideBarProps) => {
   }, [isOpen]);
 
   return (
-    <>
-      <Dialog />
-      <Scrim isOpen={isOpen} transition={transition} closeModal={handleClose}>
-        <SideBarContainer
-          isOpen={isOpen}
-          transition={transition}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <CommunityTitleContainer>
-            <img src='' alt='server profile' />
-            <span>숲길35</span>
-          </CommunityTitleContainer>
-          <TitleAndFieldContainer title='공동체 기능'>
-            <CommunityButton type='detailInfoSetting' onClick={() => {}} />
-            <CommunityButton type='copyInvitation' onClick={handleCopy} />
-          </TitleAndFieldContainer>
-          {isCopied && <p>초대 코드가 복사되었습니다.</p>}
-          <TitleAndFieldContainer title='멤버 목록'>
-            <MemberListContainer>
-              {memberList.map((member) => (
-                <MemberItem key={member.memberId} onClick={openProfileModal}>
-                  <img
-                    src={member.profileImg}
-                    alt={`${member.nickname} profile`}
-                  />
-                  <div>
-                    <Nickname>{member.nickname}</Nickname>
-                    <Mountain>{member.mountain}</Mountain>
-                  </div>
-                  {member.role === 'OWNER' && (
-                    <IconWrapper>
-                      <BiCrown />
-                    </IconWrapper>
-                  )}
-                </MemberItem>
-              ))}
-            </MemberListContainer>
-          </TitleAndFieldContainer>
-        </SideBarContainer>
-      </Scrim>
-    </>
+    <Scrim
+      isOpen={sideBar.isOpen}
+      transition={sideBar.transition}
+      closeModal={closeSideBar} // 사이드바 닫기
+    >
+      <SideBarContainer
+        isOpen={sideBar.isOpen}
+        transition={sideBar.transition}
+        onClick={(e) => e.stopPropagation()} // 클릭 이벤트 전파 방지
+      >
+        <CommunityTitleContainer>
+          <img src='' alt='server profile' />
+          <span>숲길35</span>
+        </CommunityTitleContainer>
+        <TitleAndFieldContainer title='공동체 기능'>
+          <CommunityButton type='detailInfoSetting' onClick={() => {}} />
+          <CommunityButton type='copyInvitation' onClick={handleCopy} />
+        </TitleAndFieldContainer>
+        {isCopied && <p>초대 코드가 복사되었습니다.</p>}
+        <TitleAndFieldContainer title='멤버 목록'>
+          <MemberListContainer>
+            {memberList.map((member) => (
+              <MemberItem key={member.memberId} onClick={openProfileModal}>
+                <img
+                  src={member.profileImg}
+                  alt={`${member.nickname} profile`}
+                />
+                <div>
+                  <Nickname>{member.nickname}</Nickname>
+                  <Mountain>{member.mountain}</Mountain>
+                </div>
+                {member.role === 'OWNER' && (
+                  <IconWrapper>
+                    <BiCrown />
+                  </IconWrapper>
+                )}
+              </MemberItem>
+            ))}
+          </MemberListContainer>
+        </TitleAndFieldContainer>
+      </SideBarContainer>
+    </Scrim>
   );
 };
 
