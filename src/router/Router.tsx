@@ -13,6 +13,9 @@ const RouterExampleDetailPage = React.lazy(
 );
 
 /* lazy load */
+const ReviewListPage = React.lazy(
+  () => import('@src/pages/book/ReviewListPage'),
+);
 const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
 );
@@ -80,7 +83,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryReview,
-        element: <h1>Library Review</h1>,
+        element: <ReviewListPage />,
       },
       /* notification */
       {
