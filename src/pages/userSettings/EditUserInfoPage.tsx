@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { profileState } from '@src/states/atoms';
 import useMember from '@src/hooks/query/useMember';
+import { convertURLToFile } from '@src/utils/formatters';
 import UserProfilImg from '@src/components/userSettings/UserProfileImg';
 import Button from '@src/components/common/Button';
 import Header from '@src/components/common/Header';
@@ -29,13 +30,15 @@ const EditUserInfoPage = () => {
     setLength(targetLength);
   };
 
-  const handleEditProfile = () => {
+  const handleEditProfile = async () => {
     const formData = new FormData();
     if (value) {
       formData.append('nickname', value);
     }
-    if (profileFile) {
-      formData.append('profileImg', profileFile);
+    const file =
+      profileFile || (await convertURLToFile(profileData?.profileImg ?? ''));
+    if (file) {
+      formData.append('profileImg', file);
     }
 
     editProfile.mutate(formData);
