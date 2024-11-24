@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Hamburger } from '@src/assets/icons/menu.svg';
 import { ReactComponent as Back } from '@src/assets/icons/left_arrow.svg';
 import { ReactComponent as Users } from '@src/assets/icons/users.svg';
+import useSideBar from '@src/hooks/useSideBar';
 
 interface headerProps {
   text: string;
@@ -11,6 +12,7 @@ interface headerProps {
 
 const Header = ({ text, headerType }: headerProps) => {
   const navigate = useNavigate();
+  const { openSideBar } = useSideBar();
 
   const handleClick = () => {
     if (headerType === 'back') {
@@ -25,7 +27,7 @@ const Header = ({ text, headerType }: headerProps) => {
       </SButton>
       <SLabel>{text}</SLabel>
       {headerType === 'server' && (
-        <SButton type='button' onClick={handleClick}>
+        <SButton type='button' onClick={openSideBar}>
           <Users />
         </SButton>
       )}
@@ -56,7 +58,7 @@ const SLabel = styled.label`
   transform: translate(-50%, -50%);
 
   ${({ theme }) => theme.fonts.title}
-  color:  ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.black100};
   text-align: center;
 `;
 
