@@ -7,8 +7,8 @@ import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 import { delay } from '@src/utils/helpers';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 import useDialog from '@src/hooks/useDialog';
-import Dialog from '@src/components/common/Dialog';
 import ProfileModal from '@src/components/communitysidebar/ProfileModal';
+import useSideBar from '@src/hooks/useSideBar';
 
 interface Member {
   memberId: number;
@@ -17,11 +17,6 @@ interface Member {
   level: number;
   mountain: string;
   role: 'OWNER' | 'MEMBER';
-}
-
-interface CommunitySideBarProps {
-  isOpen: boolean;
-  onClose: () => void;
 }
 
 const mockMemberList: Member[] = [
@@ -99,8 +94,8 @@ const mockMemberList: Member[] = [
   },
 ];
 
-const CommunitySideBar = ({ isOpen, onClose }: CommunitySideBarProps) => {
-  const [transition, setTransition] = useState<ModalTransition>('open');
+const CommunitySideBar = () => {
+  const { sideBar, closeSideBar } = useSideBar();
   const [memberList, setMemberList] = useState<Member[]>([]);
   const copyText = 'bookWOORI1234'; // fetchCopyInvitationURI() 사용 예정
 
@@ -112,13 +107,6 @@ const CommunitySideBar = ({ isOpen, onClose }: CommunitySideBarProps) => {
       <ProfileModal nickname='숲길35' mountain='동산' meter={1000} pages={10} />
     );
     openDialog(ProfileModalComponent);
-  };
-
-  const handleClose = () => {
-    setTransition('close');
-    setTimeout(() => {
-      onClose();
-    }, 3000);
   };
 
   const fetchMembers = async () => {
@@ -134,10 +122,10 @@ const CommunitySideBar = ({ isOpen, onClose }: CommunitySideBarProps) => {
   };
 
   useEffect(() => {
-    if (isOpen) {
+    if (sideBar.isOpen) {
       fetchMembers();
     }
-  }, [isOpen]);
+  }, [sideBar.isOpen]);
 
   return (
     <Scrim
