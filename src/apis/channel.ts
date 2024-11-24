@@ -14,8 +14,10 @@ export const postChannel = async <Res = void, Req = Channel>(
   return response.data;
 };
 
-/** 채널 수정 */
-// 백엔드에 수정 요청함
+/**
+ * 채널 편집
+ * @ 백엔드에 수정 요청함
+ */
 export const patchChannel = async <
   Res = void,
   Req = Pick<Channel, 'categoryId' | 'name'>,
@@ -31,7 +33,10 @@ export const patchChannel = async <
   return response.data;
 };
 
-/** 채널 삭제 */
+/**
+ * 채널 삭제
+ * @ 백엔드 구현 미완료
+ */
 export const deleteChannel = async <Res = void>(
   channelId: number,
 ): Promise<Res> => {
