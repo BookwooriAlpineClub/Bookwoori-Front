@@ -1,12 +1,8 @@
 import styled from 'styled-components';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { AxiosError } from 'axios';
-import { ProfileResponse } from '@src/types/domain/member';
-import { getProfile } from '@src/apis/member';
-import { deleteAccount } from '@src/apis/auth';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useDialog from '@src/hooks/useDialog';
+import useMember from '@src/hooks/query/useMember';
 import Header from '@src/components/common/Header';
 import UserProfile from '@src/components/userSettings/UserProfile';
 import Spinner from '@src/components/common/Spinner';
@@ -17,18 +13,9 @@ import { ReactComponent as Delete } from '@src/assets/icons/trash.svg';
 
 const SettingsPage = () => {
   const navigate = useNavigate();
-  const userId = 2;
-  const { data, isSuccess, isLoading, isError } = useQuery<
-    ProfileResponse,
-    AxiosError
-  >({
-    queryKey: ['/members', userId],
-    queryFn: () => getProfile(userId), // 유저 본인 프로필 조회 api로 교체 예정
-  });
-  const delAccount = useMutation({
-    mutationFn: () => deleteAccount(),
-    onSuccess: () => window.location.replace(ROUTE_PATH.root),
-  });
+  const userId = 1;
+  const { profileData, isSuccess, isLoading, isError, delAccount } =
+    useMember(userId);
   const { openDialog, closeDialog } = useDialog();
 
   const handleDelete = delAccount.mutate;
@@ -69,7 +56,7 @@ const SettingsPage = () => {
     <>
       <SHeader text='설정' headerType='hamburger' />
       <SLayout>
-        <UserProfile data={isSuccess ? data : undefined} />
+        <UserProfile data={isSuccess ? profileData : undefined} />
         <SContainer>
           {buttonData.map(({ icon, label, onClick }) => (
             <SButton key={label} type='button' onClick={onClick}>
