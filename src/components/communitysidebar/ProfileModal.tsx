@@ -43,6 +43,7 @@ const ModalContainer = styled.div`
   gap: 0.97rem;
   width: calc(100% - 2.5rem);
   max-width: 35rem;
+  min-width: 20rem;
   background: transparent;
 `;
 
