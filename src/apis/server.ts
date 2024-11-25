@@ -3,8 +3,7 @@ import { authClient } from '@src/apis/index';
 import { Server } from '@src/types/apis/server.d';
 
 const SERVER_BASE_URL = '/servers';
-const buildServerUrl = (path: string | number = '') =>
-  `${SERVER_BASE_URL}${path}`;
+const buildServerUrl = (path: string = '') => `${SERVER_BASE_URL}${path}`;
 
 export const postServer = async <
   Res = void,
@@ -51,7 +50,7 @@ export const getServerOne = async <Res = Omit<Server, 'serverId'>>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res, AxiosResponse<Res>>(
-    buildServerUrl(serverId),
+    buildServerUrl(`/${serverId}`),
     { headers },
   );
   return response.data;
@@ -66,7 +65,7 @@ export const patchServerOne = async <
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.patch<Res, AxiosResponse<Res>>(
-    buildServerUrl(serverId),
+    buildServerUrl(`/${serverId}`),
     body,
     { headers },
   );
@@ -85,7 +84,7 @@ export const patchServerImg = async <
   formData.append('serverImg', body.serverImg);
 
   const response = await authClient.patch<Res, AxiosResponse<Res>>(
-    buildServerUrl(serverId),
+    buildServerUrl(`/${serverId}`),
     formData,
     { headers: { 'Content-Type': 'multipart/form-data', ...headers } },
   );
@@ -97,7 +96,7 @@ export const deleteServerOne = async <Res = void>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.delete<Res, AxiosResponse<Res>>(
-    buildServerUrl(serverId),
+    buildServerUrl(`/${serverId}`),
     { headers },
   );
   return response.data;
@@ -125,11 +124,11 @@ export const postServerJoinByCode = async <Res = void>(
   return response.data;
 };
 
-export const getServerCode = async <Res = { inviteCode: string }>(
+export const postServerCode = async <Res = { inviteCode: string }>(
   serverId: number,
   headers?: Record<string, string>,
 ): Promise<Res> => {
-  const response = await authClient.get<Res, AxiosResponse<Res>>(
+  const response = await authClient.post<Res, AxiosResponse<Res>>(
     buildServerUrl(`/code/${serverId}`),
     { headers },
   );
@@ -186,10 +185,10 @@ export const getServerChannels = async <Res = []>(
 export const getServerClimbing = async <Res = []>(
   serverId: number,
   headers?: Record<string, string>,
-  query?: 'ready' | 'me',
+  query?: '/ready' | '/me',
 ): Promise<Res> => {
   const response = await authClient.get<Res, AxiosResponse<Res>>(
-    buildServerUrl(`/${serverId}/climbing/${query || ''}`),
+    buildServerUrl(`/${serverId}/climbs${query || ''}`),
     { headers },
   );
   return response.data;
