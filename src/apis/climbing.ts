@@ -8,7 +8,7 @@ const buildClimbUrl = (path: string | number = '') =>
 
 export const postClimbing = async <Res = void, Req = Climbing>(
   body: Req,
-  headers?: Record<string, string>, // 선택사항으로 변경
+  headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.post<Res, AxiosResponse<Res>, Req>(
     buildClimbUrl(),
@@ -21,7 +21,7 @@ export const postClimbing = async <Res = void, Req = Climbing>(
 export const patchClimbing = async <Res = void, Req = Partial<Climbing>>(
   climbingId: number,
   body: Req,
-  headers?: Record<string, string>, // 선택사항으로 변경
+  headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.patch<Res, AxiosResponse<Res>, Req>(
     buildClimbUrl(climbingId),
@@ -33,7 +33,7 @@ export const patchClimbing = async <Res = void, Req = Partial<Climbing>>(
 
 export const getClimbing = async <Res = Climbing>(
   climbingId: number,
-  headers?: Record<string, string>, // 선택사항으로 변경
+  headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res, AxiosResponse<Res>>(
     buildClimbUrl(climbingId),
@@ -45,7 +45,7 @@ export const getClimbing = async <Res = Climbing>(
 export const patchClimbingReview = async <Res = void, Req = Partial<Climbing>>(
   climbingId: number,
   body: Req,
-  headers?: Record<string, string>, // 선택사항으로 변경
+  headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.patch<Res, AxiosResponse<Res>, Req>(
     buildClimbUrl(`${climbingId}/reviews`),
@@ -60,7 +60,7 @@ export const postClimbingReviewEmoji = async <Res = void, Req = void>(
   reviewId: number,
   emoji: string,
   body: Req,
-  headers?: Record<string, string>, // 선택사항으로 변경
+  headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.post<Res, AxiosResponse<Res>, Req>(
     buildClimbUrl(`${climbingId}/reviews/${reviewId}/emojis/${emoji}`),
@@ -72,7 +72,7 @@ export const postClimbingReviewEmoji = async <Res = void, Req = void>(
 
 export const getClimbingMembers = async <Res = void>(
   climbingId: number,
-  headers?: Record<string, string>, // 선택사항으로 변경
+  headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res, AxiosResponse<Res>>(
     buildClimbUrl(`${climbingId}/members`),
@@ -84,7 +84,7 @@ export const getClimbingMembers = async <Res = void>(
 export const postClimbingMember = async <Res = void, Req = void>(
   climbingId: number,
   body: Req,
-  headers?: Record<string, string>, // 선택사항으로 변경
+  headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.post<Res, AxiosResponse<Res>, Req>(
     buildClimbUrl(`${climbingId}/members`),
@@ -100,7 +100,7 @@ export const patchClimbingMemberMemo = async <
 >(
   climbingId: number,
   body: Req,
-  headers?: Record<string, string>, // 선택사항으로 변경
+  headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.patch<Res, AxiosResponse<Res>, Req>(
     buildClimbUrl(`${climbingId}/members/memo`),
@@ -113,7 +113,7 @@ export const patchClimbingMemberMemo = async <
 export const getClimbingReviewEmojis = async <Res = ReviewEmojiResponse>(
   climbingId: number,
   reviewId: number,
-  headers?: Record<string, string>, // 선택사항으로 변경
+  headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res, AxiosResponse<Res>>(
     buildClimbUrl(`${climbingId}/reviews/${reviewId}/emojis`),
