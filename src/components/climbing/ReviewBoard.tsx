@@ -42,7 +42,7 @@ const reviews = [
 const ReviewBoard = () => {
   const { openBottomsheet } = useBottomsheet();
 
-  const hasShared = false;
+  const hasShared = true;
   const isAllowed = true;
   return (
     <Container>
