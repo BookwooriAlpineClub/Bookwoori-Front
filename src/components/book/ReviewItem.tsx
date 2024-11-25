@@ -1,5 +1,6 @@
 import type { Review } from '@src/types/apis/record';
 import styled, { css } from 'styled-components';
+import Chip from '@src/components/common/Chip';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
 const ReviewItem = ({ bookInfo, star, reviewContent }: Review) => {
@@ -11,10 +12,10 @@ const ReviewItem = ({ bookInfo, star, reviewContent }: Review) => {
       <TextWrapper>
         <RowLayout>
           <Title>{title}</Title>
-          <Star>
+          <Chip>
             <IcnStar width={12} height={13} />
             {star}
-          </Star>
+          </Chip>
         </RowLayout>
         <Author>{author}</Author>
         <ReviewContent>{reviewContent}</ReviewContent>
@@ -74,18 +75,4 @@ const ReviewContent = styled.p`
   ${({ theme }) => theme.fonts.body}
   ${TextEllipsis}
   -webkit-line-clamp: 3;
-`;
-const Star = styled.b`
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  gap: 0.125rem;
-
-  padding: 0.125rem 0.5rem 0.125rem 0.375rem;
-
-  border-radius: 0.625rem;
-  background-color: ${({ theme }) => theme.colors.blue300};
-
-  ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.blue100};
 `;
