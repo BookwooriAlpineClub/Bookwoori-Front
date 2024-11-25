@@ -60,6 +60,9 @@ const ClimbingAddPage = React.lazy(
 const ClimbingEditPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingEditPage'),
 );
+const LibraryHomePage = React.lazy(
+  () => import('@src/pages/library/LibraryHomePage'),
+);
 
 const router = createBrowserRouter([
   {
@@ -97,7 +100,7 @@ const router = createBrowserRouter([
       /* library */
       {
         path: ROUTE_PATH.library,
-        element: <h1>Library Page</h1>,
+        element: <LibraryHomePage />,
       },
       {
         path: ROUTE_PATH.libraryMember,
