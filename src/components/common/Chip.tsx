@@ -9,7 +9,7 @@ const Chip = ({ Icon, text }: Props) => {
   return (
     <Wrapper>
       <Icon width={12} height={12} />
-      {text}
+      <Span>{text}</Span>
     </Wrapper>
   );
 };
@@ -22,11 +22,17 @@ const Wrapper = styled.mark`
   align-items: center;
   gap: 0.125rem;
 
-  padding: 0.125rem 0.5rem 0.125rem 0.375rem;
+  padding: 0.125rem 0.375rem;
 
   border-radius: 0.625rem;
   background-color: ${({ theme }) => theme.colors.blue300};
 
-  ${({ theme }) => theme.fonts.caption}
   color: ${({ theme }) => theme.colors.blue100};
+`;
+const Span = styled.span`
+  align-self: end;
+
+  margin-right: 0.12rem;
+
+  ${({ theme }) => theme.fonts.caption}
 `;
