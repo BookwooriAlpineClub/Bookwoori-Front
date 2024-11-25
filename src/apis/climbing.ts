@@ -2,9 +2,8 @@ import { AxiosResponse } from 'axios';
 import { authClient } from '@src/apis/index';
 import { Climbing, ReviewEmojiResponse } from '@src/types/apis/climbing.d';
 
-const CLIMB_BASE_URL = '/climbs/';
-const buildClimbUrl = (path: string | number = '') =>
-  `${CLIMB_BASE_URL}${path}`;
+const CLIMB_BASE_URL = '/climbs';
+const buildClimbUrl = (path: string = '') => `${CLIMB_BASE_URL}${path}`;
 
 export const postClimbing = async <Res = void, Req = Climbing>(
   body: Req,
@@ -24,7 +23,7 @@ export const patchClimbing = async <Res = void, Req = Partial<Climbing>>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.patch<Res, AxiosResponse<Res>, Req>(
-    buildClimbUrl(climbingId),
+    buildClimbUrl(`/${climbingId}`),
     body,
     { headers: { 'Content-Type': 'application/json', ...headers } },
   );
@@ -36,7 +35,7 @@ export const getClimbing = async <Res = Climbing>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res, AxiosResponse<Res>>(
-    buildClimbUrl(climbingId),
+    buildClimbUrl(`/${climbingId}`),
     { headers },
   );
   return response.data;
@@ -48,7 +47,7 @@ export const patchClimbingReview = async <Res = void, Req = Partial<Climbing>>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.patch<Res, AxiosResponse<Res>, Req>(
-    buildClimbUrl(`${climbingId}/reviews`),
+    buildClimbUrl(`/${climbingId}/reviews`),
     body,
     { headers: { 'Content-Type': 'application/json', ...headers } },
   );
@@ -63,7 +62,7 @@ export const postClimbingReviewEmoji = async <Res = void, Req = void>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.post<Res, AxiosResponse<Res>, Req>(
-    buildClimbUrl(`${climbingId}/reviews/${reviewId}/emojis/${emoji}`),
+    buildClimbUrl(`/${climbingId}/reviews/${reviewId}/emojis/${emoji}`),
     body,
     { headers: { 'Content-Type': 'application/json', ...headers } },
   );
@@ -75,7 +74,7 @@ export const getClimbingMembers = async <Res = void>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res, AxiosResponse<Res>>(
-    buildClimbUrl(`${climbingId}/members`),
+    buildClimbUrl(`/${climbingId}/members`),
     { headers },
   );
   return response.data;
@@ -87,7 +86,7 @@ export const postClimbingMember = async <Res = void, Req = void>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.post<Res, AxiosResponse<Res>, Req>(
-    buildClimbUrl(`${climbingId}/members`),
+    buildClimbUrl(`/${climbingId}/members`),
     body,
     { headers: { 'Content-Type': 'application/json', ...headers } },
   );
@@ -103,7 +102,7 @@ export const patchClimbingMemberMemo = async <
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.patch<Res, AxiosResponse<Res>, Req>(
-    buildClimbUrl(`${climbingId}/members/memo`),
+    buildClimbUrl(`/${climbingId}/members/memo`),
     body,
     { headers: { 'Content-Type': 'application/json', ...headers } },
   );
@@ -116,7 +115,7 @@ export const getClimbingReviewEmojis = async <Res = ReviewEmojiResponse>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res, AxiosResponse<Res>>(
-    buildClimbUrl(`${climbingId}/reviews/${reviewId}/emojis`),
+    buildClimbUrl(`/${climbingId}/reviews/${reviewId}/emojis`),
     { headers },
   );
   return response.data;
