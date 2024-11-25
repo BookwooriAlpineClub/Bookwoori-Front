@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 
 interface Props {
-  children: React.ReactNode;
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  text: string | number;
 }
 
-const Chip = ({ children }: Props) => {
-  return <Wrapper>{children}</Wrapper>;
+const Chip = ({ Icon, text }: Props) => {
+  return (
+    <Wrapper>
+      <Icon width={12} height={12} />
+      {text}
+    </Wrapper>
+  );
 };
 
 export default Chip;

@@ -12,10 +12,7 @@ const ReviewItem = ({ bookInfo, star, reviewContent }: Review) => {
       <TextWrapper>
         <RowLayout>
           <Title>{title}</Title>
-          <Chip>
-            <IcnStar width={12} height={13} />
-            {star}
-          </Chip>
+          <Chip Icon={IcnStar} text={star} />
         </RowLayout>
         <Author>{author}</Author>
         <ReviewContent>{reviewContent}</ReviewContent>
