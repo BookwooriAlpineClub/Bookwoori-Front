@@ -66,7 +66,6 @@ const SelectedBackground = styled.div<{ position: number }>`
   transition:
     left 0.3s ease-in-out,
     background-color 0.3s ease-in-out;
-  z-index: 1;
 `;
 
 const Button = styled.button<{ isSelected: boolean }>`
@@ -77,5 +76,4 @@ const Button = styled.button<{ isSelected: boolean }>`
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.white : theme.colors.black100};
   transition: color 0.3s ease;
-  z-index: 2;
 `;
