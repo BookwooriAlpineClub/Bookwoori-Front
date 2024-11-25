@@ -16,6 +16,9 @@ const RouterExampleDetailPage = React.lazy(
 const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
 );
+const ClimbingPage = React.lazy(
+  () => import('@src/pages/climbing/ClimbingPage'),
+);
 
 const router = createBrowserRouter([
   {
@@ -154,7 +157,7 @@ const router = createBrowserRouter([
       /* climbing */
       {
         path: ROUTE_PATH.climbing,
-        element: <h1>Climbing Page</h1>,
+        element: <ClimbingPage />,
         loader: (args) => isParamLoader(args, 'climbingId'),
       },
       {
