@@ -1,16 +1,20 @@
-import type { BookInfo } from '@src/types/apis/book.d';
+import type { BookDetail } from '@src/types/apis/book.d';
 
-export type Record = Pick<BookInfo, 'bookId'> & {
-  status: 'WISH' | 'READING' | 'FINISHED';
+export type Record = {
+  recordId: number;
+  memberId: number;
+  readingStatus: 'WISH' | 'READING' | 'FINISHED';
   startDate: string;
   endDate: string;
   currentPage: number;
+  maxPage: number;
   star: number;
-  review: string;
+  reviewContent: string;
+  bookInfo: BookDetail;
 };
-
-export type Review = Pick<Record, 'star' | 'review'> & {
-  bookInfo: BookInfo;
-  recordId: number;
+export type Review = Pick<
+  Record,
+  'recordId' | 'star' | 'reviewContent' | 'bookInfo'
+> & {
   reviewId: number;
 };
