@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { ClimbingRecruitItem } from '@src/types/domain/climbingTemp';
 import Button from '@src/components/common/Button';
 import { ReactComponent as Calendar } from '@src/assets/icons/md_insert_invitation.svg';
 import { ReactComponent as Group } from '@src/assets/icons/md_group.svg';
@@ -7,39 +7,21 @@ import { ReactComponent as Book } from '@src/assets/icons/md_book.svg';
 import { ReactComponent as Walk } from '@src/assets/icons/md_directions_walk.svg';
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Check } from '@src/assets/icons/md_check.svg';
+import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
+import usePopover from '@src/hooks/usePopover';
+import Popover from '@src/components/common/Popover';
 
-interface BookInfo {
-  title: string;
-  author: string;
-  publisher: string;
-  pubDate: string;
-  itemPage: number;
-  description: string;
-  isbn13: string;
-  cover: string;
-}
+const RecruitClimbingItem = ({ item }: { item: ClimbingRecruitItem }) => {
+  const serverId = 2;
+  const { participateClimbing } = useClimbingRecruit(serverId);
+  const { anchorEl, isOpen, openPopover, closePopover } = usePopover();
 
-interface ClimbingEvent {
-  climbingId: number;
-  status: 'READY' | 'ONGOING' | 'FINISHED';
-  name: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-  memberCount: number;
-  isJoined: boolean;
-  isOwner: boolean;
-  bookInfo: BookInfo;
-}
-
-const RecruitClimbingItem = ({ item }: { item: ClimbingEvent }) => {
-  const [isJoined, setIsJoined] = useState<boolean>(item.isJoined);
   const formatDate = (date: string) => {
     return date.split('-').join('.').concat('.');
   };
 
   const handleClickJoin = () => {
-    setIsJoined((prev) => !prev);
+    participateClimbing.mutate(item.climbingId);
   };
 
   return (
@@ -53,9 +35,12 @@ const RecruitClimbingItem = ({ item }: { item: ClimbingEvent }) => {
         </SWrapper>
         <SWrapper>
           <SImg />
-          <SGroupButton>
+          <SGroupButton onClick={openPopover}>
             <Group /> {item.memberCount}
           </SGroupButton>
+          <Popover anchorEl={anchorEl} isOpen={isOpen} onClose={closePopover}>
+            dkk
+          </Popover>
         </SWrapper>
       </SContainer>
       <SContent>
@@ -72,14 +57,14 @@ const RecruitClimbingItem = ({ item }: { item: ClimbingEvent }) => {
           <SBody>{item.description}</SBody>
         </SContentWrapper>
       </SContent>
-      {item.isOwner ? (
-        <SButton $color={item.isOwner}>
+      {item.isOWner ? (
+        <SButton $color={item.isOWner}>
           <SEdit />
           편집하기
         </SButton>
       ) : (
-        <SButton $color={isJoined} onClick={handleClickJoin}>
-          {isJoined && <SCheck />}
+        <SButton $color={item.isJoined} onClick={handleClickJoin}>
+          {item.isJoined && <SCheck />}
           참여하기
         </SButton>
       )}
