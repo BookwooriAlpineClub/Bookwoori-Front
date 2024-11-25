@@ -1,5 +1,5 @@
 import ClimbingProgressPage from '@src/pages/climbing/ClimbingProgressPage';
-// import ClimbingTerminatePage from '@src/pages/climbing/ClimbingTerminatePage';
+import ClimbingTerminatePage from '@src/pages/climbing/ClimbingTerminatePage';
 
 
 enum ClimbingState {
@@ -16,7 +16,7 @@ const ClimbingPage = () => {
     <>
       {state === 'RUNNING' && <ClimbingProgressPage />}
       {(state === 'FINISHED' || state === 'FAILED') && (
-        <h2>임시</h2>
+        <ClimbingTerminatePage />
       )}
     </>
   );
