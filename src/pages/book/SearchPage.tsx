@@ -1,6 +1,8 @@
+import type { BookListItem } from '@src/types/apis/book';
 import { useState } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { ListLayout } from '@src/styles/mixins';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 import { ReactComponent as IcnClose } from '@src/assets/icons/ck_close.svg';
 
@@ -8,6 +10,7 @@ const SearchPage = () => {
   const navigate = useNavigate();
 
   const [keyword, setKeyword] = useState<string>('');
+  const [result, setResult] = useState<BookListItem[]>([]);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // 새로고침 방지 (기본 기능 비활성화)
@@ -28,7 +31,7 @@ const SearchPage = () => {
   };
 
   return (
-    <>
+    <ListLayout>
       <Header>
         <Form onSubmit={handleFormSubmit}>
           <IcnSearch width={20} height={20} />
@@ -42,8 +45,15 @@ const SearchPage = () => {
           <IcnClose width={20} height={20} />
         </Button>
       </Header>
-      {keyword}
-    </>
+      {keyword && (
+        <main>
+          {result.length === 0 ? (
+            <strong>검색 결과가 없어요.</strong>
+          ) : (
+          )}
+        </main>
+      )}
+    </ListLayout>
   );
 };
 
