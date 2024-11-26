@@ -13,7 +13,7 @@ const SearchPage = () => {
     // 새로고침 방지 (기본 기능 비활성화)
     event.preventDefault();
 
-    // 제출된 데이터 가져오기
+    // 입력 키워드 저장
     const formdata = new FormData(event.currentTarget);
     const input: string = (formdata.get('keyword') ?? '') as string;
     setKeyword(input);
