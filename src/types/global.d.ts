@@ -17,6 +17,7 @@ declare type Server = {
 declare type Serverbar = Omit<Modal, 'content'> & {
   content: Server[];
 };
+
 declare interface InputProps {
   title: string;
   placeholder: string;
