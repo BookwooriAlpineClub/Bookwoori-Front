@@ -15,7 +15,7 @@ export const postCategory = async <Res = void, Req = CategoryRequest>(
 
 /* 카테고리 이름 변경 */
 export const patchCategory = async <Res = void, Req = CategoryNameRequest>(
-  categoryId: CategoryNameRequest,
+  categoryId: number,
   data: Req,
 ): Promise<Res> => {
   const res = await authClient.patch(`categories/${categoryId}/name`, data);
