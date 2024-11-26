@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
+import { ReactComponent as IcnClose } from '@src/assets/icons/ck_close.svg';
 
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -25,17 +26,26 @@ const SearchPage = () => {
       );
     else navigate({ search: '' }, { replace: true });
   };
+  const handleButtonClick = () => {
+    navigate({ search: '' }, { replace: true }); // 앞으로가기 대비
+    navigate(-1);
+  };
 
   return (
     <>
-      <Form onSubmit={handleFormSubmit}>
-        <IcnSearch width={20} height={20} />
-        <Input
-          type='text'
-          name='keyword'
-          placeholder='책 제목, 작가를 검색해 보세요.'
-        />
-      </Form>
+      <Header>
+        <Form onSubmit={handleFormSubmit}>
+          <IcnSearch width={20} height={20} />
+          <Input
+            type='text'
+            name='keyword'
+            placeholder='책 제목, 작가를 검색해 보세요.'
+          />
+        </Form>
+        <Button type='button' onClick={handleButtonClick}>
+          <IcnClose width={20} height={20} />
+        </Button>
+      </Header>
       {keyword}
     </>
   );
@@ -43,6 +53,17 @@ const SearchPage = () => {
 
 export default SearchPage;
 
+const Header = styled.header`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.875rem;
+
+  width: 100%;
+  padding: 0.9375rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
+`;
 const Form = styled.form`
   display: flex;
   align-items: center;
@@ -69,4 +90,9 @@ const Input = styled.input`
   &::placeholder {
     color: ${({ theme }) => theme.colors.blue200};
   }
+`;
+const Button = styled.button`
+  font: unset;
+  line-height: 0;
+  color: ${({ theme }) => theme.colors.blue100};
 `;
