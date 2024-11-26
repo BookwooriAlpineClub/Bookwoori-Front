@@ -19,11 +19,7 @@ const SearchPage = () => {
     setKeyword(input);
 
     // 쿼리스트링 추가 및 삭제
-    if (input)
-      navigate(
-        { search: `?${createSearchParams({ keyword: input })}` },
-        { replace: true },
-      );
+    if (input) navigate({ search: `?${createSearchParams({ keyword: input })}` }, { replace: true });
     else navigate({ search: '' }, { replace: true });
   };
   const handleButtonClick = () => {
