@@ -24,42 +24,30 @@ const InputText = ({
   setValue,
 }: Props) => {
   return (
-    <Fieldset title={title}>
-      <Container isDisabled={disabled}>
-        <Input
-          as={type === 'short' ? 'input' : 'textarea'}
-          name={title}
-          placeholder={placeholder}
-          maxLength={limit}
-          required={required}
-          disabled={disabled}
-          value={value}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setValue(e.target.value)
-          }
-        />
-        {limit >= 0 && (
-          <Limit>
-            {value ? value.length : 0}/{limit}
-          </Limit>
-        )}
-      </Container>
+    <Fieldset title={title} isDisabled={disabled}>
+      <Input
+        as={type === 'short' ? 'input' : 'textarea'}
+        name={title}
+        placeholder={placeholder}
+        maxLength={limit}
+        required={required}
+        disabled={disabled}
+        value={value}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setValue(e.target.value)
+        }
+      />
+      {limit >= 0 && (
+        <Limit>
+          {value ? value.length : 0}/{limit}
+        </Limit>
+      )}
     </Fieldset>
   );
 };
 
 export default InputText;
 
-const Container = styled.div<{ isDisabled: boolean }>`
-  position: relative;
-
-  padding: 0.9375rem;
-  width: 100%;
-
-  border-radius: 0.9375rem;
-  background-color: ${({ theme, isDisabled }) =>
-    isDisabled ? theme.colors.black400 : theme.colors.white}};
-`;
 const Input = styled.input.attrs({ type: 'text' })<{ as: string }>`
   width: 100%;
   height: ${({ as }) => (as === 'input' ? '1.25rem' : '8.75rem')};

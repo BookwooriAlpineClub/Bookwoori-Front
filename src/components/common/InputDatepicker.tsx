@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
-import Fieldset from '@src/components/common/Fieldset';
 
 export type Period = {
   start: string;
@@ -26,7 +25,8 @@ const InputDatepicker = ({
   setValue,
 }: Props) => {
   return (
-    <Fieldset title={title}>
+    <fieldset>
+      <Legend>{title}</Legend>
       <Layout>
         <Input
           name={title}
@@ -58,7 +58,7 @@ const InputDatepicker = ({
           </>
         )}
       </Layout>
-    </Fieldset>
+    </fieldset>
   );
 };
 
@@ -69,6 +69,12 @@ const Layout = styled.div`
   flex-flow: row nowrap;
   justify-content: space-evenly;
   align-items: center;
+`;
+const Legend = styled.legend`
+  margin-bottom: 0.63rem;
+
+  color: ${({ theme }) => theme.colors.black100};
+  ${({ theme }) => theme.fonts.body};
 `;
 const Input = styled.input.attrs({ type: 'date' })<{ value: string }>`
   width: 100%;
