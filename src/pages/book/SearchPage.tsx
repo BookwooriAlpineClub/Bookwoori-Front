@@ -3,8 +3,30 @@ import { useState } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { ListLayout } from '@src/styles/mixins';
+import BookinfoItem from '@src/components/book/BookinfoItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 import { ReactComponent as IcnClose } from '@src/assets/icons/ck_close.svg';
+
+const mock: BookListItem[] = [
+  {
+    title: '디 에센셜 한강 (무선 보급판) - 2024 노벨문학상 수상작가',
+    author: '한강 (지은이)',
+    publisher: '문학동네',
+    pubYear: '2023',
+    isbn13: '9788954693462',
+    cover:
+      'https://image.aladin.co.kr/product/31784/0/coversum/8954693466_2.jpg',
+  },
+  {
+    title: '한강 : 회복하는 인간 Convalescence - 2024 노벨문학상 수상작가',
+    author: '한강 (지은이), 전승희 (옮긴이), K. E. 더핀 (감수)',
+    publisher: '도서출판 아시아',
+    pubYear: '2013',
+    isbn13: '9788994006826',
+    cover:
+      'https://image.aladin.co.kr/product/2778/68/coversum/s312934675_1.jpg',
+  },
+];
 
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -24,6 +46,9 @@ const SearchPage = () => {
     // 쿼리스트링 추가 및 삭제
     if (input) navigate({ search: `?${createSearchParams({ keyword: input })}` }, { replace: true });
     else navigate({ search: '' }, { replace: true });
+
+    // 검색
+    setResult(mock);
   };
   const handleButtonClick = () => {
     navigate({ search: '' }, { replace: true }); // 앞으로가기 대비
@@ -50,6 +75,11 @@ const SearchPage = () => {
           {result.length === 0 ? (
             <strong>검색 결과가 없어요.</strong>
           ) : (
+            <Ul>
+              {result.map((item) => (
+                <BookinfoItem key={item.isbn13} {...item} />
+              ))}
+            </Ul>
           )}
         </main>
       )}
@@ -101,4 +131,9 @@ const Button = styled.button`
   font: unset;
   line-height: 0;
   color: ${({ theme }) => theme.colors.blue100};
+`;
+const Ul = styled.ul`
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1.25rem;
 `;

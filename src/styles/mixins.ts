@@ -11,7 +11,11 @@ export const NoSelect = css`
  * @example
  * <ListLayout>
  *   <main>
- *     <strong>데이터가 없어요.</strong>
+ *     {data.length === 0 ? (
+ *       <strong>데이터가 없어요.</strong>
+ *     ) : (
+ *       <ul>{data.map()}</ul>
+ *     )}
  *   </main>
  * </ListLayout>
  */
@@ -21,7 +25,6 @@ export const ListLayout = styled.div`
 
   height: 100%;
 
-  // 데이터 없는 경우 텍스트 표시
   main:has(strong) {
     display: flex;
 
@@ -34,5 +37,9 @@ export const ListLayout = styled.div`
     color: ${({ theme }) => theme.colors.black200};
 
     ${NoSelect}
+  }
+  ul,
+  ol {
+    margin: 0.94rem 5%;
   }
 `;
