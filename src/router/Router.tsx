@@ -13,6 +13,7 @@ const RouterExampleDetailPage = React.lazy(
 );
 
 /* lazy load */
+const SearchPage = React.lazy(() => import('@src/pages/book/SearchPage'));
 const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
 );
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryBookSearch,
-        element: <h1>Library Book Search</h1>,
+        element: <SearchPage />,
       },
       {
         path: ROUTE_PATH.libraryBookDetail,
