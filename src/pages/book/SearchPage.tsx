@@ -1,6 +1,5 @@
 import type { BookListItem } from '@src/types/apis/book';
-import { useState } from 'react';
-import { useNavigate, createSearchParams } from 'react-router-dom';
+import { useNavigate, createSearchParams, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ListLayout } from '@src/styles/mixins';
 import BookinfoItem from '@src/components/book/BookinfoItem';
@@ -30,28 +29,27 @@ const mock: BookListItem[] = [
 
 const SearchPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const keyword: string = new URLSearchParams(location.search).get('keyword') ?? '';
 
-  const [keyword, setKeyword] = useState<string>('');
-  const [result, setResult] = useState<BookListItem[]>([]);
+  // API 요청
+  const data: BookListItem[] = mock;
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // 새로고침 방지 (기본 기능 비활성화)
     event.preventDefault();
 
-    // 입력 키워드 저장
+    // 제출 데이터 가져오기
     const formdata = new FormData(event.currentTarget);
     const input: string = (formdata.get('keyword') ?? '') as string;
-    setKeyword(input);
 
-    // 쿼리스트링 추가 및 삭제
-    if (input) navigate({ search: `?${createSearchParams({ keyword: input })}` }, { replace: true });
-    else navigate({ search: '' }, { replace: true });
-
-    // 검색
-    setResult(mock);
+    // 쿼리 파라미터 업데이트
+    navigate(
+      { search: input ? `?${createSearchParams({ keyword: input })}` : '' },
+      { replace: true },
+    );
   };
   const handleButtonClick = () => {
-    navigate({ search: '' }, { replace: true }); // 앞으로가기 대비
     navigate(-1);
   };
 
@@ -72,11 +70,11 @@ const SearchPage = () => {
       </Header>
       {keyword && (
         <main>
-          {result.length === 0 ? (
+          {data.length === 0 ? (
             <strong>검색 결과가 없어요.</strong>
           ) : (
             <Ul>
-              {result.map((item) => (
+              {data.map((item) => (
                 <BookinfoItem key={item.isbn13} {...item} />
               ))}
             </Ul>
