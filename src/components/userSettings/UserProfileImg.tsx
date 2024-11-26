@@ -1,17 +1,28 @@
 import { SyntheticEvent } from 'react';
 import styled from 'styled-components';
+import useUploadFile from '@src/hooks/useUploadFile';
+import { bgFileState, profileState } from '@src/states/atoms';
 import Background from '@src/assets/images/userSettings/background_default.svg';
 import Profile from '@src/assets/images/userSettings/profile_default.svg';
 import { ReactComponent as Camera } from '@src/assets/icons/camera.svg';
-import useUploadFile from '@src/hooks/useUploadFile';
 
-const UserProfilImg = ({ edit }: { edit?: boolean }) => {
+interface UserProfileImgProps {
+  edit?: boolean;
+  profile?: string;
+  background?: string;
+}
+
+const UserProfilImg = ({
+  edit,
+  profile = Profile,
+  background = Background,
+}: UserProfileImgProps) => {
   const {
     preview: backgroundPreview,
     handleFileUpload: handleBackgroundUpload,
-  } = useUploadFile(Background);
+  } = useUploadFile(background, bgFileState);
   const { preview: profilePreview, handleFileUpload: handleProfileUpload } =
-    useUploadFile(Profile);
+    useUploadFile(profile, profileState);
 
   const handleImgError = (
     e: SyntheticEvent<HTMLImageElement>,

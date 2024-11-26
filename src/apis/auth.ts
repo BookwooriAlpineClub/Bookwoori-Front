@@ -39,7 +39,7 @@ const postRefreshToken = async () => {
 
 const deleteAccount = async () => {
   try {
-    await authClient.delete('auth/token');
+    await authClient.patch('auth/delete');
   } catch (e) {
     if (e instanceof Error) {
       throw new Error(e.message);
