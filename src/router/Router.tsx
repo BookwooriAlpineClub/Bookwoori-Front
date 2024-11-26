@@ -17,6 +17,12 @@ const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
 );
 
+/* auth */
+const LoginPage = React.lazy(() => import('@src/pages/login/LoginPage'));
+const RedirectionPage = React.lazy(
+  () => import('@src/pages/login/RedirectionPage'),
+);
+
 const router = createBrowserRouter([
   {
     element: (
@@ -42,8 +48,12 @@ const router = createBrowserRouter([
         element: <h1>Root</h1>,
       },
       {
+        path: ROUTE_PATH.redirection,
+        element: <RedirectionPage />,
+      },
+      {
         path: ROUTE_PATH.signIn,
-        element: <h1>Sign In Page</h1>,
+        element: <LoginPage />,
       },
       /* library */
       {
