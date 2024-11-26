@@ -33,7 +33,7 @@ const ChannelItem = ({ color = 'grey', type, children }: Props) => {
           }
         />
       ) : (
-        <Edit />
+        <Edit width='20px' height='20px' />
       )}
     </SItem>
   );
