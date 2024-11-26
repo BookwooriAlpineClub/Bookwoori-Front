@@ -17,6 +17,7 @@ const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
 );
 
+
 /* settings */
 const SettingsPage = React.lazy(
   () => import('@src/pages/userSettings/SettingsPage'),
@@ -26,6 +27,11 @@ const ExpHistoryPage = React.lazy(
 );
 const EditUserInfoPage = React.lazy(
   () => import('@src/pages/userSettings/EditUserInfoPage'),
+
+/* auth */
+const LoginPage = React.lazy(() => import('@src/pages/login/LoginPage'));
+const RedirectionPage = React.lazy(
+  () => import('@src/pages/login/RedirectionPage'),
 );
 
 const router = createBrowserRouter([
@@ -53,8 +59,12 @@ const router = createBrowserRouter([
         element: <h1>Root</h1>,
       },
       {
+        path: ROUTE_PATH.redirection,
+        element: <RedirectionPage />,
+      },
+      {
         path: ROUTE_PATH.signIn,
-        element: <h1>Sign In Page</h1>,
+        element: <LoginPage />,
       },
       /* library */
       {
