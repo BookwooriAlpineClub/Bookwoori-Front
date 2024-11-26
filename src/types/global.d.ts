@@ -1,13 +1,21 @@
+declare type Toast = {
+  id: number;
+  content: string;
+  kind?: 'default' | 'success' | 'error';
+};
 declare type ModalTransition = 'open' | 'close';
 declare type Modal = {
   content: React.ReactNode;
   isOpen: boolean;
   transition: ModalTransition;
 };
-declare type Toast = {
-  id: number;
-  content: string;
-  kind?: 'default' | 'success' | 'error';
+declare type Server = {
+  serverId: number;
+  name: string;
+  serverImg: string;
+};
+declare type Serverbar = Omit<Modal, 'content'> & {
+  content: Server[];
 };
 
 declare interface InputProps {
