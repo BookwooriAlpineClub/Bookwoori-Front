@@ -45,10 +45,10 @@ const mockList: ClimbingChannel[] = [
 ];
 
 const channelNameData: ChannelData[] = [
-  { name: '나의 등반', children: <Carousel />, type: 'default' },
+  { name: '나의 등반', children: <Carousel type='next'/>, type: 'default' },
   {
     name: '모집 중인 등반',
-    children: <Carousel />,
+    children: <Carousel type='more' />,
     type: 'default',
   },
   {
