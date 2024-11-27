@@ -4,7 +4,12 @@ import Fieldset from '@src/components/common/Fieldset';
 import icnCheck from '@src/assets/icons/check_circle.svg';
 
 interface Props extends Omit<InputProps, 'placeholder'> {
-  items: { text: string; icon: React.ReactElement }[];
+  items: {
+    text: string;
+    icon: React.ReactElement;
+    isRadioDisabled?: boolean;
+  }[];
+  defaultValue?: string;
 }
 
 /**
@@ -12,11 +17,17 @@ interface Props extends Omit<InputProps, 'placeholder'> {
  * @ text - 중앙 텍스트
  * @ icon - 좌측 svg 아이콘
  */
-const InputRadio = ({ title, items, required, setValue }: Props) => {
+const InputRadio = ({
+  title,
+  items,
+  required,
+  setValue,
+  defaultValue,
+}: Props) => {
   return (
     <Fieldset title={title}>
       <Layout>
-        {items.map(({ text, icon }) => (
+        {items.map(({ text, icon, isRadioDisabled }) => (
           <Label key={text}>
             <Container>
               {icon}
@@ -27,6 +38,8 @@ const InputRadio = ({ title, items, required, setValue }: Props) => {
               value={text}
               required={required}
               onChange={(e) => setValue(e.target.value)}
+              disabled={isRadioDisabled}
+              checked={defaultValue === text}
             />
           </Label>
         ))}
