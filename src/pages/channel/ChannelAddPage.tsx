@@ -1,31 +1,37 @@
-import styled from 'styled-components';
+import type { BookListItem } from '@src/types/apis/book.d';
 import { useState } from 'react';
 import { formatDate } from '@src/utils/formatters';
-import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
-import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
-import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
+import useBottomsheet from '@src/hooks/useBottomsheet';
+import styled from 'styled-components';
 import Header from '@src/components/common/Header';
+import Fieldset from '@src/components/common/Fieldset';
 import InputRadio from '@src/components/common/InputRadio';
 import InputDropdown from '@src/components/common/InputDropdown';
 import InputText from '@src/components/common/InputText';
 import InputDatepicker, { type Period } from '@src/components/common/InputDatepicker';
 import Button from '@src/components/common/Button';
+import SearchBottomsheet from '@src/components/channel/SearchBottomsheet';
+import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
+import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
+import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
 
 const dummy: string[] = ['선택지1', '선택지2', '선택지3', '선택지4'];
 
 const ChannelAddPage = () => {
+  const { openBottomsheet, closeBottomsheet } = useBottomsheet();
+
   const [kind, setKind] = useState<string>('');
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [book, setBook] = useState<string>('');
+  const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({ title: '', isbn13: '' });
   const [date, setDate] = useState<Period>({ start: '', end: '' });
   const [description, setDescription] = useState<string>('');
 
-  function isBtnDisabled(): boolean {
+  const isBtnDisabled = (): boolean => {
     if (kind === '문자' || kind === '전화') return !(kind && category && name);
     if (kind === '등반') return !(kind && name && book && date && description);
     return true;
-  }
+  };
 
   return (
     <Layout>
@@ -64,14 +70,24 @@ const ChannelAddPage = () => {
         )}
         {kind === '등반' && (
           <>
-            <InputText // 검색 페이지 이동
-              title='등반할 책'
-              placeholder='책 제목을 입력하세요.'
-              type='short'
-              limit={-1}
-              required
-              setValue={setBook}
-            />
+            <Fieldset title='등반할 책'>
+              <InputSearch
+                name='등반할 책'
+                placeholder='책을 선택하세요.'
+                type='text'
+                value={book.title}
+                readOnly
+                required
+                onClick={() => {
+                  openBottomsheet(
+                    <SearchBottomsheet
+                      setValue={setBook}
+                      closeBottomsheet={closeBottomsheet}
+                    />,
+                  );
+                }}
+              />
+            </Fieldset>
             <InputDatepicker
               title='등반 기간'
               type='period'
@@ -115,6 +131,19 @@ const Form = styled.form`
   overflow: scroll;
 
   margin: 0.91rem 5%;
+`;
+const InputSearch = styled.input`
+  width: 100%;
+  height: 1.25rem;
+
+  ${({ theme }) => theme.fonts.body};
+  color: ${({ theme }) => theme.colors.black100};
+
+  cursor: pointer;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.black200};
+  }
 `;
 const SButton = styled(Button)`
   margin: 0 auto 2.56rem;
