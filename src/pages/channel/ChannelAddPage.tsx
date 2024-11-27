@@ -8,13 +8,15 @@ import Header from '@src/components/common/Header';
 import InputRadio from '@src/components/common/InputRadio';
 import InputDropdown from '@src/components/common/InputDropdown';
 import InputText from '@src/components/common/InputText';
-import InputDatepicker, { type Period } from '@src/components/common/InputDatepicker';
+import InputDatepicker, {
+  type Period,
+} from '@src/components/common/InputDatepicker';
 import Button from '@src/components/common/Button';
 
 const dummy: string[] = ['선택지1', '선택지2', '선택지3', '선택지4'];
 
-const ChannelAddPage = () => {
-  const [kind, setKind] = useState<string>('');
+const ChannelAddPage = ({ type }: { type?: 'climb' }) => {
+  const [kind, setKind] = useState<string>(type === 'climb' ? '등반' : '');
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [book, setBook] = useState<string>('');
@@ -31,16 +33,31 @@ const ChannelAddPage = () => {
     <Layout>
       <Header text='모임 추가하기' headerType='back' />
       <Form id='channel-add-form'>
-        <InputRadio
-          title='모임 유형'
-          items={[
-            { text: '문자', icon: <IcnHash /> },
-            { text: '전화', icon: <IcnVoice /> },
-            { text: '등반', icon: <IcnRun /> },
-          ]}
-          required
-          setValue={setKind}
-        />
+        {type === 'climb' ? (
+          <InputRadio
+            title='모임 유형'
+            items={[
+              { text: '문자', icon: <IcnHash />, isRadioDisabled: true },
+              { text: '전화', icon: <IcnVoice />, isRadioDisabled: true },
+              { text: '등반', icon: <IcnRun />, isRadioDisabled: false },
+            ]}
+            required
+            setValue={setKind}
+            defaultValue='등반'
+          />
+        ) : (
+          <InputRadio
+            title='모임 유형'
+            items={[
+              { text: '문자', icon: <IcnHash /> },
+              { text: '전화', icon: <IcnVoice /> },
+              { text: '등반', icon: <IcnRun /> },
+            ]}
+            required
+            setValue={setKind}
+            defaultValue={kind}
+          />
+        )}
         {(kind === '문자' || kind === '전화') && (
           <InputDropdown
             title='모임 분류'
