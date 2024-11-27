@@ -56,7 +56,7 @@ const SLayout = styled.div`
   flex-direction: column;
   gap: 0.625rem;
 
-  width: 100%;
+  margin: 1.44rem 1.25rem 1.25rem 1.25rem;
 `;
 const SContainer = styled.div`
   display: flex;
