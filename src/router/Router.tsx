@@ -17,6 +17,9 @@ const SearchPage = React.lazy(() => import('@src/pages/book/SearchPage'));
 const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
 );
+const ChannelAddPage = React.lazy(
+  () => import('@src/pages/channel/ChannelAddPage'),
+);
 
 const router = createBrowserRouter([
   {
@@ -145,7 +148,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.addServer,
-        element: <h1>Add Channel Page</h1>,
+        element: <ChannelAddPage />,
       },
       {
         path: ROUTE_PATH.editChannelOne,
