@@ -1,7 +1,9 @@
-import type { BookListItem } from '@src/types/apis/book';
-import { useNavigate } from 'react-router-dom';
-import { ROUTE_PATH } from '@src/constants/routePath';
+import type { BookListItem } from '@src/types/apis/book.d';
 import styled, { css } from 'styled-components';
+
+interface Props extends Omit<BookListItem, 'isbn13'> {
+  onClick?: () => void;
+}
 
 const BookinfoItem = ({
   title,
@@ -9,16 +11,10 @@ const BookinfoItem = ({
   publisher,
   pubYear,
   cover,
-  isbn13,
-}: BookListItem) => {
-  const navigate = useNavigate();
-
-  const handleItemClick = () => {
-    navigate(`${ROUTE_PATH.libraryBookSearch}/${isbn13}`);
-  };
-
+  onClick,
+}: Props) => {
   return (
-    <Container onClick={handleItemClick}>
+    <Container onClick={onClick}>
       <Img src={cover} alt='책 표지' loading='lazy' />
       <TextWrapper>
         <BodyEllipsis>{title}</BodyEllipsis>

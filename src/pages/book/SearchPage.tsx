@@ -1,5 +1,6 @@
-import type { BookListItem } from '@src/types/apis/book';
+import type { BookListItem } from '@src/types/apis/book.d';
 import { useNavigate, createSearchParams, useLocation } from 'react-router-dom';
+import { ROUTE_PATH } from '@src/constants/routePath';
 import styled from 'styled-components';
 import { ListLayout } from '@src/styles/mixins';
 import BookinfoItem from '@src/components/book/BookinfoItem';
@@ -52,6 +53,9 @@ const SearchPage = () => {
   const handleButtonClick = () => {
     navigate(-1);
   };
+  const handleItemClick = (isbn13: string): void => {
+    navigate(`${ROUTE_PATH.libraryBookSearch}/${isbn13}`);
+  };
 
   return (
     <ListLayout>
@@ -75,7 +79,11 @@ const SearchPage = () => {
           ) : (
             <Ul>
               {data.map((item) => (
-                <BookinfoItem key={item.isbn13} {...item} />
+                <BookinfoItem
+                  key={item.isbn13}
+                  {...item}
+                  onClick={() => handleItemClick(item.isbn13)}
+                />
               ))}
             </Ul>
           )}
