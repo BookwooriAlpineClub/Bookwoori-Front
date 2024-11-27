@@ -24,7 +24,7 @@ const RecruitClimbingItem = ({
 }) => {
   const { id: serverId } = useLoaderData<{ id: string }>() || {};
   const { participateClimbing } = useClimbingRecruit(
-    Number(serverId),
+    serverId ? Number(serverId) : 0,
     item.climbingId,
   );
   const { anchorEl, isOpen, openPopover, closePopover } = usePopover();

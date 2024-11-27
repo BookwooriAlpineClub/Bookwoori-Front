@@ -38,3 +38,10 @@ export interface ClimbingParticipants {
 export interface ClimbingParticipantsRes {
   climbingMemberList: ClimbingParticipants[];
 }
+
+export interface ClimbingEditReq {
+  name: string;
+  description: string;
+  startTime: string;
+  endTime: string;
+}

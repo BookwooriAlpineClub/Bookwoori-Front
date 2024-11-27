@@ -1,3 +1,8 @@
+import styled from 'styled-components';
+import { useState } from 'react';
+import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
+import useLoaderData from '@src/hooks/useRoaderData';
+import { formatDate } from '@src/utils/formatters';
 import Button from '@src/components/common/Button';
 import ButtonBackground from '@src/components/common/ButtonBackground';
 import Header from '@src/components/common/Header';
@@ -5,42 +10,37 @@ import InputDatepicker, {
   Period,
 } from '@src/components/common/InputDatepicker';
 import InputText from '@src/components/common/InputText';
-import { formatDate } from '@src/utils/formatters';
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-
-interface ClimbingEditItemType {
-  name: string;
-  bookTitle: string;
-  startDate: string;
-  endDate: string;
-  memo: string;
-}
-
-// 모집 중인 클라이밍 채널 목록을 전역 저장하고 거기서 뽑아올 예정
-const mockItem: ClimbingEditItemType = {
-  name: '채널 제목',
-  bookTitle: '책제목',
-  startDate: '2023-07-27',
-  endDate: '2023-07-27',
-  memo: '채널 메모입니다.',
-};
 
 const ClimbingEditPage = () => {
-  const [climbingName, setClimbingName] = useState<string>('');
-  const [bookTitle, setBookTitle] = useState<string>('');
+  const serverId = 2;
+  const { id: climbingId } = useLoaderData<{ id: string }>();
+  const { readyClimbingInfo, editClimbing } = useClimbingRecruit(
+    Number(serverId),
+    Number(climbingId),
+  );
+  const [climbingName, setClimbingName] = useState<string>(
+    readyClimbingInfo?.name ?? '',
+  );
+  const [bookTitle, setBookTitle] = useState<string>(
+    readyClimbingInfo?.bookInfo.title ?? '',
+  );
   const [date, setDate] = useState<Period>({
-    start: '2024-11-11',
-    end: '2024-11-16',
+    start: readyClimbingInfo?.startDate ?? '',
+    end: readyClimbingInfo?.endDate ?? '',
   });
-  const [description, setDescription] = useState<string>('');
+  const [description, setDescription] = useState<string>(
+    readyClimbingInfo?.description ?? '',
+  );
 
-  useEffect(() => {
-    setClimbingName(mockItem.name);
-    setBookTitle(mockItem.bookTitle);
-    setDate({ start: mockItem.startDate, end: mockItem.endDate });
-    setDescription(mockItem.memo);
-  }, []);
+  const handleClickEdit = () => {
+    const data = {
+      name: climbingName,
+      'description': description,
+      startTime: date.start,
+      endTime: date.end,
+    };
+    editClimbing.mutate(data);
+  };
 
   return (
     <>
@@ -65,15 +65,15 @@ const ClimbingEditPage = () => {
           setValue={setBookTitle}
           disabled
         />
-          <InputDatepicker
-            title='등반 시기'
-            type='period'
-            min={formatDate(new Date())}
-            required
-            disabled='start'
-            value={date}
-            setValue={setDate}
-          />
+        <InputDatepicker
+          title='등반 시기'
+          type='period'
+          min={formatDate(new Date())}
+          required
+          disabled='start'
+          value={date}
+          setValue={setDate}
+        />
         <InputText
           title='등반 설명'
           placeholder='사람들에게 등반에 대해 알려주세요.'
@@ -85,7 +85,10 @@ const ClimbingEditPage = () => {
         />
       </SLayout>
       <ButtonBackground>
-        <Button disabled={!climbingName || !description || !date.end}>
+        <Button
+          disabled={!climbingName || !description || !date.end}
+          onClick={handleClickEdit}
+        >
           편집하기
         </Button>
       </ButtonBackground>

@@ -11,7 +11,7 @@ const RecruitClimbingBottomSheet = ({
   closeBottomSheet: () => void;
 }) => {
   const serverId = 2;
-  const { data = [] } = useClimbingRecruit(serverId);
+  const { data = [] } = useClimbingRecruit(Number(serverId));
   const navigate = useNavigate();
 
   const handleClick = () => {

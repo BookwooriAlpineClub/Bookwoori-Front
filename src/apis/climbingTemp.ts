@@ -1,5 +1,6 @@
 import { authClient } from '@src/apis/index';
 import {
+  ClimbingEditReq,
   ClimbingParticipantsRes,
   ClimbingRecruitListRes,
 } from '@src/types/domain/climbingTemp';
@@ -31,8 +32,11 @@ export const getClimbingInfo = async (climbingId: number) => {
 };
 
 /* 클라이밍 채널 편집 */
-export const patchClimbing = async (climbingId: number) => {
-  const res = await authClient.patch(`/climbs/${climbingId}`);
+export const patchClimbing = async (
+  climbingId: number,
+  body: ClimbingEditReq,
+) => {
+  const res = await authClient.patch(`/climbs/${climbingId}`, body);
   return res.data;
 };
 
