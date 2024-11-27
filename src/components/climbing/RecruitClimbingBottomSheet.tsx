@@ -1,17 +1,9 @@
 import styled from 'styled-components';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import useCustomNavigate from '@src/hooks/useCustomNavigate';
 import { ReactComponent as Plus } from '@src/assets/icons/hi_outline_plus.svg';
 import RecruitClimbingItem from '@src/components/climbing/RecruitClimbingItem';
 import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
-import { ROUTE_PATH } from '@src/constants/routePath';
-
-const useCustomNavigate = () => {
-  const navigate = (path: string) => {
-    window.history.pushState({}, '', path);
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  };
-
-  return navigate;
-};
 
 const RecruitClimbingBottomSheet = ({
   closeBottomSheet,
