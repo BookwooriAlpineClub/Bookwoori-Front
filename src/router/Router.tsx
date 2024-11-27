@@ -17,7 +17,6 @@ const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
 );
 
-
 /* settings */
 const SettingsPage = React.lazy(
   () => import('@src/pages/userSettings/SettingsPage'),
@@ -27,11 +26,33 @@ const ExpHistoryPage = React.lazy(
 );
 const EditUserInfoPage = React.lazy(
   () => import('@src/pages/userSettings/EditUserInfoPage'),
+);
 
 /* auth */
 const LoginPage = React.lazy(() => import('@src/pages/login/LoginPage'));
 const RedirectionPage = React.lazy(
   () => import('@src/pages/login/RedirectionPage'),
+);
+
+/* dm */
+const ChattingListPage = React.lazy(
+  () => import('@src/pages/chatting/ChattingListPage'),
+);
+const ChattingPage = React.lazy(
+  () => import('@src/pages/chatting/ChattingPage'),
+);
+
+/* server */
+const ChannelEditPage = React.lazy(
+  () => import('@src/pages/channel/ChannelEditPage'),
+);
+
+/* climbing */
+const ClimbingAddPage = React.lazy(
+  () => import('@src/pages/channel/ChannelAddPage'),
+);
+const ClimbingEditPage = React.lazy(
+  () => import('@src/pages/climbing/ClimbingEditPage'),
 );
 
 const router = createBrowserRouter([
@@ -111,11 +132,11 @@ const router = createBrowserRouter([
       /* dm */
       {
         path: ROUTE_PATH.dm,
-        element: <h1>Direct Message Page</h1>,
+        element: <ChattingListPage />,
       },
       {
         path: ROUTE_PATH.dmChatMember,
-        element: <h1>DM Chat Page</h1>,
+        element: <ChattingPage />,
         loader: (args) => isParamLoader(args, 'memberId'),
       },
       /* setting */
@@ -169,7 +190,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.editChannelOne,
-        element: <h1>Edit Channel Page</h1>,
+        element: <ChannelEditPage />,
         loader: (args) => isParamLoader(args, 'serverId'),
       },
       /* climbing */
@@ -180,11 +201,11 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.climbingCreate,
-        element: <h1>Create Climbing Page</h1>,
+        element: <ClimbingAddPage type='climb' />,
       },
       {
         path: ROUTE_PATH.climbingEdit,
-        element: <h1>Edit Climbing Page</h1>,
+        element: <ClimbingEditPage />,
         loader: (args) => isParamLoader(args, 'climbingId'),
       },
       /* 404 */
