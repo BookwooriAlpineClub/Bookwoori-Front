@@ -17,7 +17,6 @@ const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
 );
 
-
 /* settings */
 const SettingsPage = React.lazy(
   () => import('@src/pages/userSettings/SettingsPage'),
@@ -27,6 +26,7 @@ const ExpHistoryPage = React.lazy(
 );
 const EditUserInfoPage = React.lazy(
   () => import('@src/pages/userSettings/EditUserInfoPage'),
+);
 
 /* auth */
 const LoginPage = React.lazy(() => import('@src/pages/login/LoginPage'));
