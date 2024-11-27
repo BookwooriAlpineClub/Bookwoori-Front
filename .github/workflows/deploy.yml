@@ -24,7 +24,7 @@ jobs:
 
       - name: Set environment variables
         run: echo "REACT_APP_SERVER_URL=${{ secrets.REACT_APP_API_URL }}" >> .env
-               
+
 
       - name: Install dependencies
         run: |
@@ -43,4 +43,11 @@ jobs:
         run: |
           aws s3 sync \
             build s3://${{secrets.S3_BUCKETS}} \
-            --delete
+            --delete \
+            --cache-control "no-cache, no-store, must-revalidate" \
+
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID}} \
+            --paths "/*"
