@@ -2,6 +2,7 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import React, { Suspense } from 'react';
 import isParamLoader from '@src/router/loader';
+import Bottomsheet from '@src/components/common/Bottomsheet';
 
 /* example */
 const RouterExamplePage = React.lazy(
@@ -60,6 +61,7 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<h1>Loading</h1>}>
         <Outlet />
+        <Bottomsheet />
       </Suspense>
     ),
     errorElement: <h1>Error</h1>,
@@ -204,7 +206,7 @@ const router = createBrowserRouter([
         element: <ClimbingAddPage type='climb' />,
       },
       {
-        path: ROUTE_PATH.climbingEdit,
+        path: ROUTE_PATH.climbingEditOne,
         element: <ClimbingEditPage />,
         loader: (args) => isParamLoader(args, 'climbingId'),
       },

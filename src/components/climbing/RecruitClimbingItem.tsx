@@ -1,5 +1,12 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { ClimbingRecruitItem } from '@src/types/domain/climbingTemp';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
+import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
+import usePopover from '@src/hooks/usePopover';
+import useLoaderData from '@src/hooks/useRoaderData';
+import Popover from '@src/components/common/Popover';
+import ParticipantList from '@src/components/climbing/ParticipantList';
 import Button from '@src/components/common/Button';
 import { ReactComponent as Calendar } from '@src/assets/icons/md_insert_invitation.svg';
 import { ReactComponent as Group } from '@src/assets/icons/md_group.svg';
@@ -8,38 +15,32 @@ import { ReactComponent as Walk } from '@src/assets/icons/md_directions_walk.svg
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Check } from '@src/assets/icons/md_check.svg';
 
-interface BookInfo {
-  title: string;
-  author: string;
-  publisher: string;
-  pubDate: string;
-  itemPage: number;
-  description: string;
-  isbn13: string;
-  cover: string;
-}
+const RecruitClimbingItem = ({
+  item,
+  closeBottomSheet,
+}: {
+  item: ClimbingRecruitItem;
+  closeBottomSheet: () => void;
+}) => {
+  const { id: serverId } = useLoaderData<{ id: string }>() || {};
+  const { participateClimbing } = useClimbingRecruit(
+    serverId ? Number(serverId) : 0,
+    item.climbingId,
+  );
+  const { anchorEl, isOpen, openPopover, closePopover } = usePopover();
+  const navigate = useEncodedNavigation();
 
-interface ClimbingEvent {
-  climbingId: number;
-  status: 'READY' | 'ONGOING' | 'FINISHED';
-  name: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-  memberCount: number;
-  isJoined: boolean;
-  isOwner: boolean;
-  bookInfo: BookInfo;
-}
-
-const RecruitClimbingItem = ({ item }: { item: ClimbingEvent }) => {
-  const [isJoined, setIsJoined] = useState<boolean>(item.isJoined);
   const formatDate = (date: string) => {
     return date.split('-').join('.').concat('.');
   };
 
+  const handleClickEdit = () => {
+    closeBottomSheet();
+    navigate(ROUTE_PATH.climbingEdit, item.climbingId);
+  };
+
   const handleClickJoin = () => {
-    setIsJoined((prev) => !prev);
+    participateClimbing.mutate();
   };
 
   return (
@@ -52,10 +53,12 @@ const RecruitClimbingItem = ({ item }: { item: ClimbingEvent }) => {
           </SCaption>
         </SWrapper>
         <SWrapper>
-          <SImg />
-          <SGroupButton>
+          <SGroupButton onClick={openPopover}>
             <Group /> {item.memberCount}
           </SGroupButton>
+          <Popover anchorEl={anchorEl} isOpen={isOpen} onClose={closePopover}>
+            <ParticipantList climbingId={item.climbingId} />
+          </Popover>
         </SWrapper>
       </SContainer>
       <SContent>
@@ -72,14 +75,14 @@ const RecruitClimbingItem = ({ item }: { item: ClimbingEvent }) => {
           <SBody>{item.description}</SBody>
         </SContentWrapper>
       </SContent>
-      {item.isOwner ? (
-        <SButton $color={item.isOwner}>
+      {item.isOWner ? (
+        <SButton $color={item.isOWner} onClick={handleClickEdit}>
           <SEdit />
           편집하기
         </SButton>
       ) : (
-        <SButton $color={isJoined} onClick={handleClickJoin}>
-          {isJoined && <SCheck />}
+        <SButton $color={item.isJoined} onClick={handleClickJoin}>
+          {item.isJoined && <SCheck />}
           참여하기
         </SButton>
       )}
@@ -108,6 +111,7 @@ const SContainer = styled.div`
 `;
 const SWrapper = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   gap: 0.3125rem;
 `;
@@ -119,13 +123,6 @@ const SCaption = styled.span`
 
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.black200};
-`;
-const SImg = styled.image`
-  width: 1.25rem;
-  height: 1.25rem;
-
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.black200};
 `;
 const SGroupButton = styled.button`
   display: flex;

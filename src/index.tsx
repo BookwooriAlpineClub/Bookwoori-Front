@@ -9,7 +9,6 @@ import { theme } from '@src/styles/theme';
 import GlobalStyle from '@src/styles/global';
 import { RouterProvider } from 'react-router-dom';
 import router from '@src/router/Router';
-import Bottomsheet from '@src/components/common/Bottomsheet';
 import Dialog from '@src/components/common/Dialog';
 import Toast from '@src/components/common/Toast';
 import { StyledEngineProvider, ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
@@ -26,7 +25,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             <ThemeProvider theme={theme}>
               <GlobalStyle />
               <RouterProvider router={router} />
-              <Bottomsheet />
               <Dialog />
               <Toast />
             </ThemeProvider>
