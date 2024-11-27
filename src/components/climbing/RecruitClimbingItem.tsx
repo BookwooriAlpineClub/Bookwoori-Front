@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { ClimbingRecruitItem } from '@src/types/domain/climbingTemp';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
 import usePopover from '@src/hooks/usePopover';
+import useLoaderData from '@src/hooks/useRoaderData';
 import Popover from '@src/components/common/Popover';
 import ParticipantList from '@src/components/climbing/ParticipantList';
 import Button from '@src/components/common/Button';
@@ -12,17 +15,32 @@ import { ReactComponent as Walk } from '@src/assets/icons/md_directions_walk.svg
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Check } from '@src/assets/icons/md_check.svg';
 
-const RecruitClimbingItem = ({ item }: { item: ClimbingRecruitItem }) => {
-  const serverId = 2;
-  const { participateClimbing } = useClimbingRecruit(serverId);
+const RecruitClimbingItem = ({
+  item,
+  closeBottomSheet,
+}: {
+  item: ClimbingRecruitItem;
+  closeBottomSheet: () => void;
+}) => {
+  const { id: serverId } = useLoaderData<{ id: string }>() || {};
+  const { participateClimbing } = useClimbingRecruit(
+    Number(serverId),
+    item.climbingId,
+  );
   const { anchorEl, isOpen, openPopover, closePopover } = usePopover();
+  const navigate = useEncodedNavigation();
 
   const formatDate = (date: string) => {
     return date.split('-').join('.').concat('.');
   };
 
+  const handleClickEdit = () => {
+    closeBottomSheet();
+    navigate(ROUTE_PATH.climbingEdit, item.climbingId);
+  };
+
   const handleClickJoin = () => {
-    participateClimbing.mutate(item.climbingId);
+    participateClimbing.mutate();
   };
 
   return (
@@ -58,7 +76,7 @@ const RecruitClimbingItem = ({ item }: { item: ClimbingRecruitItem }) => {
         </SContentWrapper>
       </SContent>
       {item.isOWner ? (
-        <SButton $color={item.isOWner}>
+        <SButton $color={item.isOWner} onClick={handleClickEdit}>
           <SEdit />
           편집하기
         </SButton>

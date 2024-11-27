@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ROUTE_PATH } from '@src/constants/routePath';
-import useCustomNavigate from '@src/hooks/useCustomNavigate';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Plus } from '@src/assets/icons/hi_outline_plus.svg';
 import RecruitClimbingItem from '@src/components/climbing/RecruitClimbingItem';
 import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
@@ -12,7 +12,7 @@ const RecruitClimbingBottomSheet = ({
 }) => {
   const serverId = 2;
   const { data = [] } = useClimbingRecruit(serverId);
-  const navigate = useCustomNavigate();
+  const navigate = useNavigate();
 
   const handleClick = () => {
     closeBottomSheet();
@@ -30,7 +30,11 @@ const RecruitClimbingBottomSheet = ({
       <SContainer>
         {data.length > 0 ? (
           data.map((it) => (
-            <RecruitClimbingItem key={it.climbingId} item={it} />
+            <RecruitClimbingItem
+              key={it.climbingId}
+              item={it}
+              closeBottomSheet={closeBottomSheet}
+            />
           ))
         ) : (
           <Wrapper>
