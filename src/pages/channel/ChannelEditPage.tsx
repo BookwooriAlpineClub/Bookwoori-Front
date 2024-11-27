@@ -6,7 +6,7 @@ import Button from '@src/components/common/Button';
 import InputText from '@src/components/common/InputText';
 import InputDropdown from '@src/components/common/InputDropdown';
 import ButtonBackground from '@src/components/common/ButtonBackground';
-import DeleteConfirmModal from '@src/components/channel/DeleteConfirmModal';
+import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 
 const categoryList = ['분류1', '분류2'];
 
@@ -42,7 +42,12 @@ const ChannelEditPage = () => {
           <Button disabled={!name || !category}>수정하기</Button>
           <TextButton
             onClick={() =>
-              openDialog(<DeleteConfirmModal closeDialog={closeDialog} />)
+              openDialog(
+                <DeleteConfirmModal
+                  closeDialog={closeDialog}
+                  onClickDelete={closeDialog}
+                />,
+              )
             }
           >
             모임 삭제하기

@@ -48,7 +48,7 @@ const Carousel = ({ type }: { type: 'next' | 'more' }) => {
   const [width, setWidth] = useState<number>(0);
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
-  const { openBottomsheet } = useBottomsheet();
+  const { openBottomsheet, closeBottomsheet } = useBottomsheet();
 
   useEffect(() => {
     const updateWidth = () => {
@@ -111,7 +111,9 @@ const Carousel = ({ type }: { type: 'next' | 'more' }) => {
   };
 
   const handleClickMoreButton = () => {
-    openBottomsheet(<RecruitClimbingBottomSheet />);
+    openBottomsheet(
+      <RecruitClimbingBottomSheet closeBottomSheet={closeBottomsheet} />,
+    );
   };
 
   const handClickNextButton = () => {

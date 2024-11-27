@@ -28,6 +28,5 @@ const Layout = styled.div<{ color: string | undefined }>`
 
   width: 100%;
   padding: 0.9375rem 1.875rem 1.875rem;
-
   background-color: ${({ theme, color }) => color || theme.colors.white};
 `;

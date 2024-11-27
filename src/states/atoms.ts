@@ -1,5 +1,9 @@
 import { atom } from 'recoil';
 
+export const toastState = atom<Toast[]>({
+  key: 'toastState',
+  default: [],
+});
 export const bottomsheetState = atom<Modal>({
   key: 'bottomsheetState',
   default: {
@@ -16,7 +20,26 @@ export const dialogState = atom<Modal>({
     transition: 'close',
   },
 });
-export const toastState = atom<Toast[]>({
-  key: 'toastState',
+export const serverListState = atom<Server[]>({
+  key: 'serverListState',
   default: [],
+});
+export const serverbarState = atom<Omit<Serverbar, 'content'>>({
+  key: 'serverbarState',
+  default: {
+    isOpen: false,
+    transition: 'close',
+  },
+});
+export const profileState = atom<File | null>({
+  key: 'profileState',
+  default: null,
+});
+export const bgFileState = atom<File | null>({
+  key: 'bgfileState',
+  default: null,
+});
+export const communityFileState = atom<File | null>({
+  key: 'communityfileState',
+  default: null,
 });

@@ -2,6 +2,7 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import React, { Suspense } from 'react';
 import isParamLoader from '@src/router/loader';
+import Bottomsheet from '@src/components/common/Bottomsheet';
 
 /* example */
 const RouterExamplePage = React.lazy(
@@ -17,11 +18,50 @@ const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
 );
 
+/* settings */
+const SettingsPage = React.lazy(
+  () => import('@src/pages/userSettings/SettingsPage'),
+);
+const ExpHistoryPage = React.lazy(
+  () => import('@src/pages/userSettings/ExpHistoryPage'),
+);
+const EditUserInfoPage = React.lazy(
+  () => import('@src/pages/userSettings/EditUserInfoPage'),
+);
+
+/* auth */
+const LoginPage = React.lazy(() => import('@src/pages/login/LoginPage'));
+const RedirectionPage = React.lazy(
+  () => import('@src/pages/login/RedirectionPage'),
+);
+
+/* dm */
+const ChattingListPage = React.lazy(
+  () => import('@src/pages/chatting/ChattingListPage'),
+);
+const ChattingPage = React.lazy(
+  () => import('@src/pages/chatting/ChattingPage'),
+);
+
+/* server */
+const ChannelEditPage = React.lazy(
+  () => import('@src/pages/channel/ChannelEditPage'),
+);
+
+/* climbing */
+const ClimbingAddPage = React.lazy(
+  () => import('@src/pages/channel/ChannelAddPage'),
+);
+const ClimbingEditPage = React.lazy(
+  () => import('@src/pages/climbing/ClimbingEditPage'),
+);
+
 const router = createBrowserRouter([
   {
     element: (
       <Suspense fallback={<h1>Loading</h1>}>
         <Outlet />
+        <Bottomsheet />
       </Suspense>
     ),
     errorElement: <h1>Error</h1>,
@@ -42,8 +82,12 @@ const router = createBrowserRouter([
         element: <h1>Root</h1>,
       },
       {
+        path: ROUTE_PATH.redirection,
+        element: <RedirectionPage />,
+      },
+      {
         path: ROUTE_PATH.signIn,
-        element: <h1>Sign In Page</h1>,
+        element: <LoginPage />,
       },
       /* library */
       {
@@ -90,25 +134,25 @@ const router = createBrowserRouter([
       /* dm */
       {
         path: ROUTE_PATH.dm,
-        element: <h1>Direct Message Page</h1>,
+        element: <ChattingListPage />,
       },
       {
         path: ROUTE_PATH.dmChatMember,
-        element: <h1>DM Chat Page</h1>,
+        element: <ChattingPage />,
         loader: (args) => isParamLoader(args, 'memberId'),
       },
       /* setting */
       {
         path: ROUTE_PATH.setting,
-        element: <h1>Settings Page</h1>,
+        element: <SettingsPage />,
       },
       {
         path: ROUTE_PATH.settingProfile,
-        element: <h1>Profile Settings Page</h1>,
+        element: <EditUserInfoPage />,
       },
       {
         path: ROUTE_PATH.settingExp,
-        element: <h1>Experience Settings Page</h1>,
+        element: <ExpHistoryPage />,
       },
       /* add-server */
       {
@@ -148,7 +192,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.editChannelOne,
-        element: <h1>Edit Channel Page</h1>,
+        element: <ChannelEditPage />,
         loader: (args) => isParamLoader(args, 'serverId'),
       },
       /* climbing */
@@ -159,11 +203,11 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.climbingCreate,
-        element: <h1>Create Climbing Page</h1>,
+        element: <ClimbingAddPage type='climb' />,
       },
       {
-        path: ROUTE_PATH.climbingEdit,
-        element: <h1>Edit Climbing Page</h1>,
+        path: ROUTE_PATH.climbingEditOne,
+        element: <ClimbingEditPage />,
         loader: (args) => isParamLoader(args, 'climbingId'),
       },
       /* 404 */

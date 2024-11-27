@@ -49,6 +49,7 @@ const channelNameData: ChannelData[] = [
   {
     name: '모집 중인 등반',
     children: <Carousel type='more' />,
+    children: <Carousel type='more' />,
     type: 'default',
   },
   {

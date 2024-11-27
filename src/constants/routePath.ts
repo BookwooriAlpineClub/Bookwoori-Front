@@ -6,6 +6,7 @@ export const ROUTE_PATH = {
   /* auth */
   root: '/',
   signIn: '/sign-in',
+  redirection: '/auth/success',
   /* library */
   library: '/library',
   libraryMember: '/library/:memberId',

@@ -2,13 +2,14 @@ import styled from 'styled-components';
 
 interface Props extends Pick<InputProps, 'title'> {
   children: React.ReactNode;
+  isDisabled?: boolean;
 }
 
-const Fieldset = ({ title, children }: Props) => {
+const Fieldset = ({ title, children, isDisabled = false }: Props) => {
   return (
     <fieldset name={title}>
       <Legend>{title}</Legend>
-      <Container>{children}</Container>
+      <Container isDisabled={isDisabled}>{children}</Container>
     </fieldset>
   );
 };
@@ -21,12 +22,13 @@ const Legend = styled.legend`
   color: ${({ theme }) => theme.colors.black100};
   ${({ theme }) => theme.fonts.body};
 `;
-const Container = styled.div`
+const Container = styled.div<{ isDisabled: boolean }>`
   position: relative;
 
-  width: 100%;
   padding: 0.9375rem;
+  width: 100%;
 
   border-radius: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme, isDisabled }) =>
+    isDisabled ? theme.colors.black400 : theme.colors.white}};
 `;
