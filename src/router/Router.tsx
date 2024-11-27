@@ -147,7 +147,7 @@ const router = createBrowserRouter([
         loader: (args) => isParamLoader(args, 'serverId'),
       },
       {
-        path: ROUTE_PATH.addServer,
+        path: ROUTE_PATH.addChannel,
         element: <ChannelAddPage />,
       },
       {
