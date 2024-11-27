@@ -206,7 +206,7 @@ const router = createBrowserRouter([
         element: <ClimbingAddPage type='climb' />,
       },
       {
-        path: ROUTE_PATH.climbingEdit,
+        path: ROUTE_PATH.climbingEditOne,
         element: <ClimbingEditPage />,
         loader: (args) => isParamLoader(args, 'climbingId'),
       },
