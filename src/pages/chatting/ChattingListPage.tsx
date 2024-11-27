@@ -42,6 +42,7 @@ const ChattingListPage = () => {
       <SLayout>
         {chatList.map((it) => (
           <ChattingListItem
+            key={it.time}
             nickname={it.nickname}
             imgUrl={it.imgUrl}
             time={it.time}
