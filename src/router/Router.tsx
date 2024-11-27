@@ -56,7 +56,7 @@ const router = createBrowserRouter([
       /* auth */
       {
         path: ROUTE_PATH.root,
-        element: <h1>Root for Deploy branch</h1>,
+        element: <h1>Root</h1>,
       },
       {
         path: ROUTE_PATH.redirection,
