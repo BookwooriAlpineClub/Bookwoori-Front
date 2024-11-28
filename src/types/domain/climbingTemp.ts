@@ -42,6 +42,20 @@ export interface ClimbingParticipantsRes {
 export interface ClimbingEditReq {
   name: string;
   description: string;
-  startTime: string;
-  endTime: string;
+  startDate: string;
+  endDate: string;
 }
+
+type ClimbingListKey = {
+  key: 'myClimbings' | 'readyClimbings';
+};
+
+export interface ClimbingInfo {
+  climbingId: number;
+  cover: string;
+  name: string;
+}
+
+export type ClimbingListRes = {
+  [key in ClimbingListKey['key']]: ClimbingInfo[];
+};
