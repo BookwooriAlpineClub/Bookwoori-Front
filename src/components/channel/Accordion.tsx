@@ -27,7 +27,7 @@ const Accordion = ({
   // onTouchMove = () => {},
   children,
 }: AccordionProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(!!children);
   const isTouchDevice = 'ontouchstart' in window;
 
   return (
@@ -42,7 +42,10 @@ const Accordion = ({
     >
       <SContainer>
         <SLabel>{text}</SLabel>
-        <SButton onClick={() => setIsOpen((prev) => !prev)}>
+        <SButton
+          onClick={() => setIsOpen((prev) => !prev)}
+          disabled={!children}
+        >
           <SDown $open={isOpen} />
         </SButton>
       </SContainer>
