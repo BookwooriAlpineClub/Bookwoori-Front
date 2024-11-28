@@ -12,17 +12,17 @@ import InputDatepicker, {
 import InputText from '@src/components/common/InputText';
 
 const ClimbingEditPage = () => {
-  const serverId = 2;
+  const serverId = 3; // 전역 서버 정보 필요
   const { id: climbingId } = useLoaderData<{ id: string }>();
   const { readyClimbingInfo, editClimbing } = useClimbingRecruit(
     Number(serverId),
     Number(climbingId),
   );
-  const [climbingName, setClimbingName] = useState<string>(
-    readyClimbingInfo?.name ?? '',
+  const [climbingName, setClimbingName] = useState<string | undefined>(
+    readyClimbingInfo?.name,
   );
-  const [bookTitle, setBookTitle] = useState<string>(
-    readyClimbingInfo?.bookInfo.title ?? '',
+  const [bookTitle, setBookTitle] = useState<string | undefined>(
+    readyClimbingInfo?.bookInfo.title,
   );
   const [date, setDate] = useState<Period>({
     start: readyClimbingInfo?.startDate ?? '',
@@ -34,8 +34,8 @@ const ClimbingEditPage = () => {
 
   const handleClickEdit = () => {
     const data = {
-      name: climbingName,
-      'description': description,
+      name: climbingName ?? '',
+      description,
       startTime: date.start,
       endTime: date.end,
     };
@@ -84,7 +84,7 @@ const ClimbingEditPage = () => {
           setValue={setDescription}
         />
       </SLayout>
-      <ButtonBackground>
+      <ButtonBackground color='transparent'>
         <Button
           disabled={!climbingName || !description || !date.end}
           onClick={handleClickEdit}
