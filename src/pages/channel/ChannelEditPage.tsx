@@ -37,7 +37,7 @@ const ChannelEditPage = () => {
           setValue={setName}
         />
       </SLayout>
-      <ButtonBackground>
+      <ButtonBackground color='transparent'>
         <Container>
           <Button disabled={!name || !category}>수정하기</Button>
           <TextButton
@@ -72,6 +72,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
+
+  width: 100%;
 `;
 const TextButton = styled.button`
   margin-bottom: -0.625rem;
