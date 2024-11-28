@@ -13,25 +13,34 @@ interface Props {
   color?: string;
   type: string;
   children: React.ReactNode;
+  channelId: number;
+  categoryId: number;
 }
 
-const ChannelItem = ({ color = 'grey', type, children }: Props) => {
-  const serverId = 1;
+const ChannelItem = ({
+  color = 'grey',
+  type,
+  channelId,
+  categoryId,
+  children,
+}: Props) => {
+  const serverId = 3;
   const climbingId = 2;
-  const channelId = 1;
   const navigate = useNavigate();
   const { openDialog, closeDialog } = useDialog();
   const iconMapping: { [key: string]: React.ReactNode } = {
-    text: <Hash />,
-    voice: <Voice />,
+    CHAT: <Hash />,
+    VOICE: <Voice />,
     run: <Run />,
   };
   const handleNavigateChannel: { [key: string]: () => void } = {
-    text: () => navigate(`/server/${encodeId(serverId)}/${channelId}`),
+    CHAT: () => navigate(`/server/${encodeId(serverId)}/${channelId}`),
     run: () => navigate(`/climbing/${encodeId(climbingId)}`),
   };
   const handleClickEdit = () => {
-    navigate(`/server/${encodeId(serverId)}/${channelId}/edit`);
+    navigate(`/server/${encodeId(serverId)}/${channelId}/edit`, {
+      state: { categoryId },
+    });
   };
 
   return (

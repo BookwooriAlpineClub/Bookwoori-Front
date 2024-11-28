@@ -1,22 +1,24 @@
 import styled from 'styled-components';
+import { Channel } from '@src/types/apis/channel.d';
 import ChannelItem from './ChannelItem';
-
-interface ClimbingChannel {
-  climbingId: number;
-  name: string;
-  type: 'text' | 'voice' | 'run';
-}
 
 interface ChannelListProps {
   color?: string;
-  list: ClimbingChannel[];
+  channels: Channel[];
+  categoryId: number;
 }
 
-const ChannelList = ({ color, list }: ChannelListProps) => {
+const ChannelList = ({ color, channels, categoryId }: ChannelListProps) => {
   return (
     <SLayout>
-      {list.map((it) => (
-        <ChannelItem key={it.climbingId} color={color} type={it.type}>
+      {channels.map((it) => (
+        <ChannelItem
+          key={it.channelId}
+          channelId={it.channelId}
+          categoryId={categoryId}
+          color={color}
+          type={it.type}
+        >
           {it.name}
         </ChannelItem>
       ))}
