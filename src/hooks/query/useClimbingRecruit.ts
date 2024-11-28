@@ -20,25 +20,33 @@ const useClimbingRecruit = (serverId: number, climbingId?: number) => {
     queryFn: () => getClimbingRecruitList(serverId),
   });
 
-  const { data: readyClimbingInfo } = useQuery<
+  const {
+    data: readyClimbingInfo,
+    isLoading: infoLoading,
+    isFetching,
+  } = useQuery<
     ClimbingRecruitListRes,
     AxiosError,
     ClimbingRecruitItem | undefined
   >({
-    queryKey: ['/climbs/ready', serverId, climbingId],
+    queryKey: ['/climbs/ready', serverId],
     queryFn: () => getClimbingRecruitList(serverId),
     select: (getData) =>
       getData.readyClimbingList.find((item) => item.climbingId === climbingId),
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 
   const queryClient = useQueryClient();
   const participateClimbing = useMutation({
+    mutationKey: ['putParticipate'],
     mutationFn: () => putParticipate(climbingId ?? 0),
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ['/climbs/ready'] }),
   });
 
   const editClimbing = useMutation({
+    mutationKey: ['patchClimbing'],
     mutationFn: (body: ClimbingEditReq) => patchClimbing(climbingId ?? 0, body),
     onSuccess: () =>
       queryClient.invalidateQueries({
@@ -51,6 +59,8 @@ const useClimbingRecruit = (serverId: number, climbingId?: number) => {
     isLoading,
     isSuccess,
     readyClimbingInfo,
+    infoLoading,
+    isFetching,
     participateClimbing,
     editClimbing,
   };
