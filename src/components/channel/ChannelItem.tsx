@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import useDialog from '@src/hooks/useDialog';
+import { useNavigate } from 'react-router-dom';
+import { encodeId } from '@src/utils/formatters';
 import { ReactComponent as Hash } from '@src/assets/icons/hash.svg';
 import { ReactComponent as Voice } from '@src/assets/icons/voice.svg';
 import { ReactComponent as Run } from '@src/assets/icons/run.svg';
@@ -14,16 +16,27 @@ interface Props {
 }
 
 const ChannelItem = ({ color = 'grey', type, children }: Props) => {
+  const serverId = 1;
+  const climbingId = 2;
+  const channelId = 1;
+  const navigate = useNavigate();
+  const { openDialog, closeDialog } = useDialog();
   const iconMapping: { [key: string]: React.ReactNode } = {
     text: <Hash />,
     voice: <Voice />,
     run: <Run />,
   };
-  const { openDialog, closeDialog } = useDialog();
+  const handleNavigateChannel: { [key: string]: () => void } = {
+    text: () => navigate(`/server/${encodeId(serverId)}/${channelId}`),
+    run: () => navigate(`/climbing/${encodeId(climbingId)}`),
+  };
+  const handleClickEdit = () => {
+    navigate(`/server/${encodeId(serverId)}/${channelId}/edit`);
+  };
 
   return (
     <SItem $color={color}>
-      <Wrapper>
+      <Wrapper onClick={handleNavigateChannel[type]}>
         {iconMapping[type]} {children}
       </Wrapper>
       {type === 'run' ? (
@@ -38,7 +51,7 @@ const ChannelItem = ({ color = 'grey', type, children }: Props) => {
           }
         />
       ) : (
-        <Edit width='20px' height='20px' />
+        <Edit width='20px' height='20px' onClick={handleClickEdit} />
       )}
     </SItem>
   );
