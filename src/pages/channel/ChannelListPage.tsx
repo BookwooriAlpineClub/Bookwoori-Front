@@ -80,10 +80,14 @@ const ChannelListPage = () => {
             </Accordion>
           ))}
           <Accordion key='진행 중인 등반' text='진행 중인 등반'>
-            {/* <ChannelList /> */}
+            {climbingList && climbingList?.runningClimbings.length > 0 && (
+              <ChannelList climbs={climbingList?.runningClimbings} />
+            )}
           </Accordion>
           <Accordion key='종료된 등반' text='종료된 등반'>
-            {/* <ChannelList /> */}
+            {climbingList && climbingList?.endClimbingings.length > 0 && (
+              <ChannelList climbs={climbingList?.endClimbingings} />
+            )}
           </Accordion>
         </SContainer>
       </SLayout>
