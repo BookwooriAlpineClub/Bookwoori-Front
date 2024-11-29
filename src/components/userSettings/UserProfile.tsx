@@ -1,28 +1,29 @@
 import styled from 'styled-components';
 import UserProfilImg from '@src/components/userSettings/UserProfileImg';
+import useMember from '@src/hooks/query/useMember';
 
-interface ProfileData {
-  nickname: string;
-  mountain: string;
-  meter: number;
-  pages: number;
-}
+const UserProfile = () => {
+  const { profileData: data } = useMember();
 
-const UserProfile = ({ data }: { data: ProfileData }) => {
   return (
     <SLayout>
-      <UserProfilImg />
+      <UserProfilImg
+        profile={data?.profileImg ?? undefined}
+        background={data?.backgroundImg ?? undefined}
+      />
       <SContainer>
-        <SNickname>{data.nickname}</SNickname>
-        <SMountain>0번째, {data.mountain}산 등산가</SMountain>
+        <SNickname>{data?.nickname}</SNickname>
+        <SMountain>
+          {data?.level}번째, {data?.mountain} 등산가
+        </SMountain>
         <SBox>
           <SWrapper>
-            <SNicknameBlue>{data.meter}</SNicknameBlue>
+            <SNicknameBlue>{data?.height}</SNicknameBlue>
             <SCaption>지나온 길(m)</SCaption>
           </SWrapper>
           <SLine />
           <SWrapper>
-            <SNicknameBlue>{data.pages}</SNicknameBlue>
+            <SNicknameBlue>{data?.totalPage}</SNicknameBlue>
             <SCaption>읽어낸 책(p)</SCaption>
           </SWrapper>
         </SBox>
@@ -41,7 +42,6 @@ const SLayout = styled.div`
   gap: 0.625rem;
 
   width: 100%;
-  // width: 20.9375rem;
   padding: 0 0 1.25rem;
 
   border-radius: 1.875rem;
@@ -59,10 +59,12 @@ const SContainer = styled.div`
 const SNickname = styled.label`
   ${({ theme }) => theme.fonts.nickname};
   color: ${({ theme }) => theme.colors.black100};
+  cursor: default;
 `;
 const SMountain = styled.label`
   ${({ theme }) => theme.fonts.mountain};
   color: ${({ theme }) => theme.colors.blue100};
+  cursor: default;
 `;
 const SBox = styled.div`
   display: flex;
@@ -81,10 +83,12 @@ const SWrapper = styled.div`
 const SNicknameBlue = styled.label`
   ${({ theme }) => theme.fonts.nickname};
   color: ${({ theme }) => theme.colors.blue100};
+  cursor: default;
 `;
 const SCaption = styled.label`
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.black100};
+  cursor: default;
 `;
 const SLine = styled.div`
   width: 0.0938rem;

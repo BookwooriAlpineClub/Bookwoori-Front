@@ -6,11 +6,12 @@ import { ReactComponent as Users } from '@src/assets/icons/users.svg';
 import useSideBar from '@src/hooks/useSideBar';
 
 interface headerProps {
+  className?: string;
   text: string;
   headerType: 'hamburger' | 'back' | 'server';
 }
 
-const Header = ({ text, headerType }: headerProps) => {
+const Header = ({ className, text, headerType }: headerProps) => {
   const navigate = useNavigate();
   const { openSideBar } = useSideBar();
 
@@ -21,7 +22,7 @@ const Header = ({ text, headerType }: headerProps) => {
   };
 
   return (
-    <SHeader>
+    <SHeader className={className}>
       <SButton type='button' onClick={handleClick} aria-label={headerType}>
         {headerType === 'back' ? <Back /> : <Hamburger />}
       </SButton>

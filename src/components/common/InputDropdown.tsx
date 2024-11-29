@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
+import { Categories } from '@src/types/domain/channel';
 import Fieldset from '@src/components/common/Fieldset';
 
 interface Props extends InputProps {
-  items: string[];
+  items: string[] | Pick<Categories, 'categoryId' | 'name'>[];
   value: string;
+  disabled?: boolean;
 }
 
 const InputDropdown = ({
@@ -12,6 +14,7 @@ const InputDropdown = ({
   placeholder,
   items,
   required,
+  disabled = false,
   value,
   setValue,
 }: Props) => {
@@ -22,14 +25,18 @@ const InputDropdown = ({
           name={title}
           value={value}
           required={required}
+          disabled={disabled}
           onChange={(e) => setValue(e.target.value)}
         >
           <Option value='' disabled>
             {placeholder}
           </Option>
           {items.map((item) => (
-            <Option key={item} value={item}>
-              {item}
+            <Option
+              key={typeof item === 'string' ? item : item.categoryId}
+              value={typeof item === 'string' ? item : item.categoryId}
+            >
+              {typeof item === 'string' ? item : item.name}
             </Option>
           ))}
         </Input>
