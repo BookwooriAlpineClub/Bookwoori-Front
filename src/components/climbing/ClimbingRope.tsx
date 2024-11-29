@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { ClimbingParticipants } from '@src/types/domain/climbingTemp';
 import { ReactComponent as Flag } from '@src/assets/icons/climbing_flag_done.svg';
 import { ReactComponent as FlagBefore } from '@src/assets/icons/climbing_flag_before.svg';
-import ProfileImg from '@src/assets/images/userSettings/profile_default.svg';
+import ProfileImg from '@src/assets/images/userSettings/background_default.svg';
 import Memo from '@src/components/climbing/Memo';
 import ProgressBar from '@src/components/climbing/ProgressBar';
-import { ClimbingParticipants } from '@src/types/domain/climbingTemp';
 
 interface Props {
   item: ClimbingParticipants;
