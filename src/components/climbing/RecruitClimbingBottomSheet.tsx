@@ -10,7 +10,7 @@ const RecruitClimbingBottomSheet = ({
 }: {
   closeBottomSheet: () => void;
 }) => {
-  const serverId = 2;
+  const serverId = 3;
   const { data = [] } = useClimbingRecruit(Number(serverId));
   const navigate = useNavigate();
 

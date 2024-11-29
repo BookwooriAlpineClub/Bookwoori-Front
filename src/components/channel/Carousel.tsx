@@ -4,47 +4,18 @@ import { ReactComponent as More } from '@src/assets/images/channel/carousel_more
 import { useEffect, useRef, useState } from 'react';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import RecruitClimbingBottomSheet from '@src/components/climbing/RecruitClimbingBottomSheet';
+import { ClimbingInfo } from '@src/types/domain/climbingTemp';
+import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 
-interface List {
-  url: string;
-  title: string;
-}
-
-const list: List[] = [
-  {
-    url: 'https://books.google.co.kr/books/publisher/content?id=Q7uTBgAAQBAJ&hl=ko&pg=PA1&img=1&zoom=3&bul=1&sig=ACfU3U1p_z0yHTZfg8DprIuejZmfE_AHhA&w=1280',
-    title: '소년이 온다',
-  },
-  {
-    url: 'https://books.google.co.kr/books/publisher/content?id=Q7uTBgAAQBAJ&hl=ko&pg=PA1&img=1&zoom=3&bul=1&sig=ACfU3U1p_z0yHTZfg8DprIuejZmfE_AHhA&w=1280',
-    title: '제목',
-  },
-  {
-    url: 'https://books.google.co.kr/books/publisher/content?id=Q7uTBgAAQBAJ&hl=ko&pg=PA1&img=1&zoom=3&bul=1&sig=ACfU3U1p_z0yHTZfg8DprIuejZmfE_AHhA&w=1280',
-    title: '제목',
-  },
-  {
-    url: 'https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9788936434595.jpg',
-    title: '제목 넘어가면??ㅇ',
-  },
-  {
-    url: 'https://books.google.co.kr/books/publisher/content?id=Q7uTBgAAQBAJ&hl=ko&pg=PA1&img=1&zoom=3&bul=1&sig=ACfU3U1p_z0yHTZfg8DprIuejZmfE_AHhA&w=1280',
-    title: '제목',
-  },
-  {
-    url: 'https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9788936434595.jpg',
-    title: '제목 넘어가면??ㅇ',
-  },
-  {
-    url: 'https://books.google.co.kr/books/publisher/content?id=Q7uTBgAAQBAJ&hl=ko&pg=PA1&img=1&zoom=3&bul=1&sig=ACfU3U1p_z0yHTZfg8DprIuejZmfE_AHhA&w=1280',
-    title: '제목',
-  },
-];
-
-const Carousel = ({ type }: { type: 'next' | 'more' }) => {
+const Carousel = ({
+  type,
+  list,
+}: {
+  type: 'next' | 'more';
+  list: ClimbingInfo[];
+}) => {
   const CAROUSEL_ITEM_WIDTH = 85;
   const ref = useRef<HTMLDivElement>(null);
-  const [carouselList] = useState<Array<List>>(list);
   const [width, setWidth] = useState<number>(0);
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
@@ -120,6 +91,11 @@ const Carousel = ({ type }: { type: 'next' | 'more' }) => {
     handleScroll(CAROUSEL_ITEM_WIDTH);
   };
 
+  const navigate = useEncodedNavigation();
+  const handleClickNavigate = (climbingId: number) => {
+    navigate('/climbing', climbingId);
+  };
+
   return (
     <SLayout>
       <SContainer
@@ -129,11 +105,17 @@ const Carousel = ({ type }: { type: 'next' | 'more' }) => {
         onMouseDown={handleClickStart}
         onMouseUp={handleClickEnd}
       >
-        {carouselList.map(({ url, title }) => (
-          <SItem key={title}>
-            <SImg src={url} />
+        {list.map(({ name, cover, climbingId }) => (
+          <SItem
+            key={climbingId}
+            onClick={
+              type === 'next' ? () => handleClickNavigate(climbingId) : () => {}
+            }
+            disabled={type === 'more'}
+          >
+            <SImg src={cover} />
             <SLayer>
-              <SLabel>{title}</SLabel>
+              <SLabel>{name}</SLabel>
             </SLayer>
           </SItem>
         ))}
@@ -176,10 +158,14 @@ const SContainer = styled.div`
   -ms-use-select: none;
   user-select: none;
 `;
-const SItem = styled.div`
+const SItem = styled.button`
   display: flex;
   justify-content: center;
   position: relative;
+
+  &:disabled {
+    cursor: default;
+  }
 `;
 const SImg = styled.img`
   width: 4.6875rem;

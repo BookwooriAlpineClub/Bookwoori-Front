@@ -8,79 +8,35 @@ import Carousel from '@src/components/channel/Carousel';
 import ChannelList from '@src/components/channel/ChannelList';
 import { ReactComponent as CategoryAdd } from '@src/assets/icons/category_add.svg';
 import { ReactComponent as ChannelAdd } from '@src/assets/icons/channel_add.svg';
+import { useNavigate } from 'react-router-dom';
+import { encodeId } from '@src/utils/formatters';
+import useChannel from '@src/hooks/query/useChannel';
+import useCategory from '@src/hooks/query/useCategory';
+import useLoaderData from '@src/hooks/useRoaderData';
 
 interface ButtonData {
   icon: React.ReactNode;
   label: string;
+  onClick: () => void;
 }
-
-interface ChannelData {
-  name: string;
-  children: React.ReactNode;
-  type?: 'default';
-}
-
-interface ClimbingChannel {
-  climbingId: number;
-  name: string;
-  type: 'text' | 'voice' | 'run';
-}
-
-const mockList: ClimbingChannel[] = [
-  {
-    climbingId: 7,
-    name: '클라이밍 채널 이름',
-    type: 'text',
-  },
-  {
-    climbingId: 8,
-    name: '클라이밍 채널 이름',
-    type: 'voice',
-  },
-  {
-    climbingId: 9,
-    name: '클라이밍 채널 이름',
-    type: 'run',
-  },
-];
-
-const channelNameData: ChannelData[] = [
-  { name: '나의 등반', children: <Carousel type='more' />, type: 'default' },
-  {
-    name: '모집 중인 등반',
-    children: <Carousel type='more' />,
-    type: 'default',
-  },
-  {
-    name: '분류1',
-    children: <ChannelList list={mockList} />,
-  },
-  {
-    name: '분류2',
-    children: <ChannelList list={mockList} />,
-  },
-  {
-    name: '분류3',
-    children: <ChannelList list={mockList} />,
-  },
-  {
-    name: '진행 중인 등반',
-    children: <ChannelList list={mockList} />,
-    type: 'default',
-  },
-  {
-    name: '종료된 등반',
-    children: <ChannelList list={mockList} />,
-    type: 'default',
-  },
-];
 
 const ChannelListPage = () => {
+  const { id: serverId } = useLoaderData<{ id: number }>();
+  const navigate = useNavigate();
   const buttonData: ButtonData[] = [
-    { icon: <SCategoryAdd />, label: '분류 추가' },
-    { icon: <SChannelAdd />, label: '모임 추가' },
+    {
+      icon: <SCategoryAdd />,
+      label: '분류 추가',
+      onClick: () => navigate(`/server/${encodeId(serverId)}/create/category`),
+    },
+    {
+      icon: <SChannelAdd />,
+      label: '모임 추가',
+      onClick: () => navigate(`/server/${encodeId(serverId)}/create/channel`),
+    },
   ];
-
+  const { channels, climbingList } = useChannel(serverId);
+  const { categoryList: channelNameData = [] } = useCategory(serverId);
   const { list, handleDraggable } = useDraggable(channelNameData);
   const ref = useRef(channelNameData);
 
@@ -90,34 +46,49 @@ const ChannelListPage = () => {
     }
   }, [list]);
 
-  const handleDraggableCondition = (idx: number) => {
-    const isDraggable = channelNameData[idx]?.type !== 'default';
-
-    return isDraggable ? handleDraggable(idx) : {};
-  };
-
   return (
     <>
       <SHeader headerType='server' text='채널' />
       <SLayout>
         <SButtonContainer>
           {buttonData.map((buttonItem) => (
-            <SubButton key={buttonItem.label}>
+            <SubButton key={buttonItem.label} onClick={buttonItem.onClick}>
               {buttonItem.icon} {buttonItem.label}
             </SubButton>
           ))}
         </SButtonContainer>
         <SContainer>
-          {list.map((data, idx) => (
+          <Accordion key='나의 등반' text='나의 등반'>
+            <Carousel type='next' list={climbingList?.myClimbings ?? []} />
+          </Accordion>
+          <Accordion key='모집 중인 등반' text='모집 중인 등반'>
+            <Carousel type='more' list={climbingList?.readyClimbings ?? []} />
+          </Accordion>
+          {channels?.map((data, idx) => (
             <Accordion
               id={idx}
               key={data.name}
-              text={data.name}
-              {...handleDraggableCondition(idx)}
+              text={data.name === 'DEFAULT' ? '기본' : data.name}
+              {...handleDraggable(idx)}
             >
-              {data.children}
+              {data.channels.length > 0 && (
+                <ChannelList
+                  channels={data.channels}
+                  categoryId={Number(data.categoryId)}
+                />
+              )}
             </Accordion>
           ))}
+          <Accordion key='진행 중인 등반' text='진행 중인 등반'>
+            {climbingList && climbingList?.runningClimbings.length > 0 && (
+              <ChannelList climbs={climbingList?.runningClimbings} />
+            )}
+          </Accordion>
+          <Accordion key='종료된 등반' text='종료된 등반'>
+            {climbingList && climbingList?.endClimbingings.length > 0 && (
+              <ChannelList climbs={climbingList?.endClimbingings} />
+            )}
+          </Accordion>
         </SContainer>
       </SLayout>
     </>

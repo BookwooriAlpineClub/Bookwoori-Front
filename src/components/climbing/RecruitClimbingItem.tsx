@@ -4,7 +4,6 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
 import usePopover from '@src/hooks/usePopover';
-import useLoaderData from '@src/hooks/useRoaderData';
 import Popover from '@src/components/common/Popover';
 import ParticipantList from '@src/components/climbing/ParticipantList';
 import Button from '@src/components/common/Button';
@@ -22,9 +21,9 @@ const RecruitClimbingItem = ({
   item: ClimbingRecruitItem;
   closeBottomSheet: () => void;
 }) => {
-  const { id: serverId } = useLoaderData<{ id: string }>() || {};
+  const serverId = 3; // 서버 아이디 전역관리
   const { participateClimbing } = useClimbingRecruit(
-    serverId ? Number(serverId) : 0,
+    Number(serverId),
     item.climbingId,
   );
   const { anchorEl, isOpen, openPopover, closePopover } = usePopover();
