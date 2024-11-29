@@ -5,25 +5,22 @@ import { ProfileResponse } from '@src/types/domain/member';
 import { deleteAccount } from '@src/apis/auth';
 import { ROUTE_PATH } from '@src/constants/routePath';
 
-const useMember = (userId: number) => {
+const useMember = (userId?: number) => {
   const {
     data: profileData,
     isLoading,
     isError,
-    isSuccess
-  } = useQuery<
-    ProfileResponse,
-    AxiosError
-  >({
-    queryKey: ['/members', userId],
-    queryFn: () => getProfile(userId), // 유저 본인 프로필 조회 api도 사용가능 하도록 수정 예정
+    isSuccess,
+  } = useQuery<ProfileResponse, AxiosError>({
+    queryKey: ['getProfile', userId],
+    queryFn: () => getProfile(userId),
   });
 
   const queryClient = useQueryClient();
   const editProfile = useMutation({
     mutationFn: (formData: FormData) => patchProfile(formData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/members'] });
+      queryClient.invalidateQueries({ queryKey: ['getProfile', userId] });
       window.location.reload();
     },
   });

@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 import UserProfilImg from '@src/components/userSettings/UserProfileImg';
-import { ProfileResponse } from '@src/types/domain/member';
+import useMember from '@src/hooks/query/useMember';
 
-const UserProfile = ({ data }: { data: ProfileResponse | undefined }) => {
+const UserProfile = () => {
+  const { profileData: data } = useMember();
+
   return (
     <SLayout>
-      <UserProfilImg profile={data?.profileImg ?? undefined} />
+      <UserProfilImg
+        profile={data?.profileImg ?? undefined}
+        background={data?.backgroundImg ?? undefined}
+      />
       <SContainer>
         <SNickname>{data?.nickname}</SNickname>
         <SMountain>
