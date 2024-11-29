@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { encodeId } from '@src/utils/formatters';
 import useChannel from '@src/hooks/query/useChannel';
 import useCategory from '@src/hooks/query/useCategory';
+import useLoaderData from '@src/hooks/useRoaderData';
 
 interface ButtonData {
   icon: React.ReactNode;
@@ -20,7 +21,7 @@ interface ButtonData {
 }
 
 const ChannelListPage = () => {
-  const serverId = 3;
+  const { id: serverId } = useLoaderData<{ id: number }>();
   const navigate = useNavigate();
   const buttonData: ButtonData[] = [
     {
