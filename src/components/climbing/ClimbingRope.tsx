@@ -1,21 +1,14 @@
 import styled from 'styled-components';
-import { useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { ReactComponent as Flag } from '@src/assets/icons/climbing_flag_done.svg';
 import { ReactComponent as FlagBefore } from '@src/assets/icons/climbing_flag_before.svg';
+import ProfileImg from '@src/assets/images/userSettings/profile_default.svg';
 import Memo from '@src/components/climbing/Memo';
 import ProgressBar from '@src/components/climbing/ProgressBar';
-
-interface ClimbingMemberInfo {
-  memberId: number;
-  nickname: string;
-  profileImg: string;
-  memo: string | null;
-  currentPage: number;
-  status: 'UNREAD' | 'FINISHED';
-}
+import { ClimbingParticipants } from '@src/types/domain/climbingTemp';
 
 interface Props {
-  item: ClimbingMemberInfo;
+  item: ClimbingParticipants;
 }
 
 const ClimbingRope = ({ item }: Props) => {
@@ -53,6 +46,10 @@ const ClimbingRope = ({ item }: Props) => {
     return () => observer.disconnect();
   }, []);
 
+  const handleImgError = (e: SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = ProfileImg;
+  };
+
   return (
     <Layout>
       <Background>
@@ -66,10 +63,15 @@ const ClimbingRope = ({ item }: Props) => {
           isChanged={containerHeight}
         />
         <Profile>
-          <Img
-            src={item.profileImg}
-            outline={status === 'FINISHED' && item.status === 'FINISHED'}
-          />
+          {item.profileImg ? (
+            <Img
+              src={item.profileImg}
+              outline={status === 'FINISHED' && item.status === 'FINISHED'}
+              onError={handleImgError}
+            />
+          ) : (
+            <Img src={ProfileImg} alt='img' />
+          )}
           <Nickname>{item.nickname}</Nickname>
         </Profile>
         {(isUser || item.memo) && status !== 'FINISHED' && (
@@ -93,7 +95,7 @@ const Layout = styled.div`
 const Background = styled.div`
   display: flex;
   justify-content: center;
-  
+
   height: 5.5rem;
   background-color: ${({ theme }) => theme.colors.black300};
 `;
@@ -126,7 +128,7 @@ const Profile = styled.div`
   align-items: center;
   gap: 0.4375rem;
 `;
-const Img = styled.img<{ outline: boolean }>`
+const Img = styled.img<{ outline?: boolean }>`
   width: 3.25rem;
   height: 3.25rem;
 

@@ -30,7 +30,7 @@ export interface ClimbingParticipants {
   profileImg: string | null;
   level: number;
   mountain: string;
-  status: 'UNREAD';
+  status: 'UNREAD' | 'FINISHED';
   currentPage: number;
   memo: string | null;
 }
