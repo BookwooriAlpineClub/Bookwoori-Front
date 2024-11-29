@@ -7,6 +7,7 @@ interface ClimbingMemberInfo {
   profileImg: string;
   memo: string | null;
   currentPage: number;
+  status: 'UNREAD' | 'FINISHED';
 }
 
 const climbingMemberList: ClimbingMemberInfo[] = [
@@ -17,6 +18,7 @@ const climbingMemberList: ClimbingMemberInfo[] = [
       'https://img.freepik.com/free-photo/beautiful-beach-sea_74190-6620.jpg',
     memo: null,
     currentPage: 500,
+    status: 'FINISHED',
   },
   {
     memberId: 2,
@@ -25,6 +27,7 @@ const climbingMemberList: ClimbingMemberInfo[] = [
       'https://i.namu.wiki/i/Bge3xnYd4kRe_IKbm2uqxlhQJij2SngwNssjpjaOyOqoRhQlNwLrR2ZiK-JWJ2b99RGcSxDaZ2UCI7fiv4IDDQ.webp',
     memo: '메모메모',
     currentPage: 480,
+    status: 'UNREAD',
   },
   {
     memberId: 1,
@@ -33,6 +36,7 @@ const climbingMemberList: ClimbingMemberInfo[] = [
       'https://images.mypetlife.co.kr/content/uploads/2023/07/07110007/AdobeStock_479535950-1024x683.jpeg',
     memo: null,
     currentPage: 200,
+    status: 'UNREAD',
   },
   {
     memberId: 2,
@@ -41,6 +45,7 @@ const climbingMemberList: ClimbingMemberInfo[] = [
       'https://i.namu.wiki/i/Bge3xnYd4kRe_IKbm2uqxlhQJij2SngwNssjpjaOyOqoRhQlNwLrR2ZiK-JWJ2b99RGcSxDaZ2UCI7fiv4IDDQ.webp',
     memo: '메모메모',
     currentPage: 120,
+    status: 'UNREAD',
   },
   {
     memberId: 1,
@@ -49,6 +54,7 @@ const climbingMemberList: ClimbingMemberInfo[] = [
       'https://images.mypetlife.co.kr/content/uploads/2023/07/07110007/AdobeStock_479535950-1024x683.jpeg',
     memo: null,
     currentPage: 90,
+    status: 'UNREAD',
   },
   {
     memberId: 2,
@@ -57,6 +63,16 @@ const climbingMemberList: ClimbingMemberInfo[] = [
       'https://i.namu.wiki/i/Bge3xnYd4kRe_IKbm2uqxlhQJij2SngwNssjpjaOyOqoRhQlNwLrR2ZiK-JWJ2b99RGcSxDaZ2UCI7fiv4IDDQ.webp',
     memo: '메모메모',
     currentPage: 0,
+    status: 'UNREAD',
+  },
+  {
+    memberId: 2,
+    nickname: '이멤버',
+    profileImg:
+      'https://i.namu.wiki/i/Bge3xnYd4kRe_IKbm2uqxlhQJij2SngwNssjpjaOyOqoRhQlNwLrR2ZiK-JWJ2b99RGcSxDaZ2UCI7fiv4IDDQ.webp',
+    memo: '메모메모',
+    currentPage: 0,
+    status: 'UNREAD',
   },
 ];
 
@@ -74,10 +90,9 @@ export default ClimbingBoard;
 
 const Layout = styled.div`
   display: flex;
+  justify-content: space-around;
 
   height: 100%;
-  padding: 0 0.625rem 0.625rem 0.625rem;
 
-  background-color: ${({ theme }) => theme.colors.white};
   overflow: scroll;
 `;

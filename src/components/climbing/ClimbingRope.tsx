@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ReactComponent as Flag } from '@src/assets/icons/climbing_flag_done.svg';
 import { ReactComponent as FlagBefore } from '@src/assets/icons/climbing_flag_before.svg';
 import Memo from '@src/components/climbing/Memo';
-import ProgressBar from './ProgressBar';
+import ProgressBar from '@src/components/climbing/ProgressBar';
 
 interface ClimbingMemberInfo {
   memberId: number;
@@ -11,13 +11,12 @@ interface ClimbingMemberInfo {
   profileImg: string;
   memo: string | null;
   currentPage: number;
+  status: 'UNREAD' | 'FINISHED';
 }
 
 interface Props {
   item: ClimbingMemberInfo;
 }
-
-const PROGRESS_BAR_HEIGHT = 350;
 
 const ClimbingRope = ({ item }: Props) => {
   // 해당 아이템이 내거인지 비교
@@ -27,32 +26,56 @@ const ClimbingRope = ({ item }: Props) => {
   // 전역으로 클라이밍 상태 가져옴
   const status: string = 'PROGRESS';
   const [height, setHeight] = useState<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerHeight, setContainerHeight] = useState<number>(0);
 
   const calculatePercentage = (): number => {
-    return PROGRESS_BAR_HEIGHT * (item.currentPage / totalPage);
+    return item.currentPage / totalPage;
   };
 
   useEffect(() => {
     setHeight(calculatePercentage());
   }, [item, totalPage]);
 
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new ResizeObserver(() => {
+      if (container) {
+        const newHeight = container.offsetHeight;
+        setContainerHeight(newHeight);
+      }
+    });
+
+    observer.observe(container);
+    // eslint-disable-next-line consistent-return
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <Layout>
-      <Container>
-        {height === PROGRESS_BAR_HEIGHT ? <SFlag /> : <SFlagBefore />}
+      <Background>
+        {item.status === 'FINISHED' ? <SFlag /> : <SFlagBefore />}
+      </Background>
+      <Container ref={containerRef}>
         <Line />
-        <ProgressBar height={height} page={item.currentPage} />
+        <ProgressBar
+          height={height}
+          page={item.currentPage}
+          isChanged={containerHeight}
+        />
         <Profile>
           <Img
             src={item.profileImg}
-            outline={status === 'FINISHED' && height === PROGRESS_BAR_HEIGHT}
+            outline={status === 'FINISHED' && item.status === 'FINISHED'}
           />
           <Nickname>{item.nickname}</Nickname>
         </Profile>
+        {(isUser || item.memo) && status !== 'FINISHED' && (
+          <Memo isUser={isUser} memo={item.memo ? item.memo : ''} />
+        )}
       </Container>
-      {(isUser || item.memo) && status !== 'FINISHED' && (
-        <Memo isUser={isUser} memo={item.memo ? item.memo : ''} />
-      )}
     </Layout>
   );
 };
@@ -63,7 +86,16 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.8125rem;
+
   height: 100%;
+  width: 100%;
+`;
+const Background = styled.div`
+  display: flex;
+  justify-content: center;
+  
+  height: 5.5rem;
+  background-color: ${({ theme }) => theme.colors.black300};
 `;
 const SFlag = styled(Flag)`
   width: 5.3125rem;
@@ -73,6 +105,14 @@ const SFlagBefore = styled(FlagBefore)`
   width: 5.3125rem;
   height: 6.25rem;
 `;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  padding-bottom: 0.9375rem;
+  background-color: ${({ theme }) => theme.colors.white};
+`;
 const Line = styled.div`
   margin-bottom: 0.0625rem;
 
@@ -80,11 +120,6 @@ const Line = styled.div`
   height: 0.0625rem;
   background-color: ${({ theme }) => theme.colors.black400};
 `;
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 const Profile = styled.div`
   display: flex;
   flex-direction: column;
