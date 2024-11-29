@@ -8,7 +8,7 @@ const ChatMenu = ({ emoji }: { emoji?: string }) => {
   const emojiList = ['👍', '🫶', '☺️', '😢', '🤔'];
   const [clickedEmoji, setClickedEmoji] = useState<string | undefined>(emoji);
   const buttonData = [
-    { icon: <Edit />, label: '수정하기' },
+    { icon: <Edit width='20px' height='20px' />, label: '수정하기' },
     { icon: <Copy />, label: '글자 복사하기' },
     { icon: <Delete />, label: '삭제하기' },
   ];
@@ -41,7 +41,7 @@ const ChatMenu = ({ emoji }: { emoji?: string }) => {
       </SContainer>
       {buttonData.map(({ icon, label }) => (
         <SButton key={label} type='button'>
-          {icon}
+          <Icon>{icon}</Icon>
           {label}
         </SButton>
       ))}
@@ -88,4 +88,7 @@ const SButton = styled.button`
 
   ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.black100};
+`;
+const Icon = styled.span`
+  color: ${({ theme }) => theme.colors.blue100};
 `;

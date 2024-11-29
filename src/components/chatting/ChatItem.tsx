@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import useLongPress from '@src/hooks/useLongPress';
-import ChatMenu from './ChatMenu';
+import ChatMenu from '@src/components/chatting/ChatMenu';
+import Profile from '@src/assets/images/userSettings/background_default.svg';
 
 interface Chatting {
   imgUrl?: string;
@@ -19,7 +20,7 @@ const ChatItem = ({ chatItem }: { chatItem: Chatting }) => {
 
   return (
     <SLayout {...longPressHandler}>
-      <SImg src={chatItem.imgUrl} />
+      {chatItem.imgUrl ? <SImg src={chatItem.imgUrl} /> : <SImg src={Profile} />}
       <SContainer>
         <SWrapper>
           <SNickname>{chatItem.nickname}</SNickname>
