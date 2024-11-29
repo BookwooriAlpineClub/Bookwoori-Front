@@ -2,10 +2,14 @@ import { useRecoilState } from 'recoil';
 import { sideBarState } from '@src/states/atoms';
 
 const useSideBar = () => {
-  document.body.style.overflow = 'hidden';
   const [sideBar, setSideBar] = useRecoilState(sideBarState);
+
   const openSideBar = (): void => {
-    setSideBar({ isOpen: true, transition: 'open' });
+    document.body.style.overflow = 'hidden';
+    setSideBar((prev) => ({ ...prev, isOpen: true }));
+    setTimeout(() => {
+      setSideBar((prev) => ({ ...prev, transition: 'open' }));
+    }, 30);
   };
 
   const closeSideBar = (): void => {
