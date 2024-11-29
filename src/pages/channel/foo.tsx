@@ -6,12 +6,12 @@ const WebSocketExample = () => {
   const [newMessage, setNewMessage] = useState<string>('');
 
   useEffect(() => {
-    // 메시지 핸들러 정의
+    // 메시지 핸들러 정의 (새로운 메시지가 도착할 때 호출)
     const onMessage = (message: MessageRequest) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     };
 
-    // WebSocket 연결
+    // WebSocket 연결 (구독하고자 하는 url)
     connectHandler(onMessage, '/topic/channel/23');
 
     return () => {
@@ -24,8 +24,10 @@ const WebSocketExample = () => {
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
 
+    // dm일 경우 MessageRequest 형식 변경 필요
     const message: MessageRequest = {
-      messageRoomId: 1,
+      channelId: 23,
+      // messageRoomId: 1,
       type: 'text',
       content: newMessage,
     };
