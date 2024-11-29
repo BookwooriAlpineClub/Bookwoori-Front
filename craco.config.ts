@@ -16,6 +16,7 @@ const cracoConfig: CracoConfig = {
       setupFilesAfterEnv: ['<rootDir>/jest.setup.tsx'],
       moduleNameMapper: {
         '^@src/(.*)$': '<rootDir>/src/$1',
+        '^axios$': require.resolve('axios'),
       },
       ...defaultPreset,
     },
