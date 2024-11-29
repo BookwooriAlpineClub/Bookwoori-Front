@@ -2,6 +2,7 @@ export interface ProfileResponse {
   isMine: boolean;
   nickname: string;
   profileImg: string | null;
+  backgroundImg: string | null;
   level: number;
   mountain: string;
   height: number;

@@ -5,7 +5,6 @@ import useDialog from '@src/hooks/useDialog';
 import useMember from '@src/hooks/query/useMember';
 import Header from '@src/components/common/Header';
 import UserProfile from '@src/components/userSettings/UserProfile';
-import Spinner from '@src/components/common/Spinner';
 import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Flag } from '@src/assets/icons/flag.svg';
@@ -13,12 +12,12 @@ import { ReactComponent as Delete } from '@src/assets/icons/trash.svg';
 
 const SettingsPage = () => {
   const navigate = useNavigate();
-  const userId = 1;
-  const { profileData, isSuccess, isLoading, isError, delAccount } =
-    useMember(userId);
+  const { delAccount } = useMember();
   const { openDialog, closeDialog } = useDialog();
 
-  const handleDelete = delAccount.mutate;
+  const handleDelete = () => {
+    delAccount.mutate();
+  };
 
   const buttonData = [
     {
@@ -44,19 +43,11 @@ const SettingsPage = () => {
     },
   ];
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (isError) {
-    throw new Error('데이터를 불러오는데 실패했습니다.');
-  }
-
   return (
     <>
       <SHeader text='설정' headerType='hamburger' />
       <SLayout>
-        <UserProfile data={isSuccess ? profileData : undefined} />
+        <UserProfile />
         <SContainer>
           {buttonData.map(({ icon, label, onClick }) => (
             <SButton key={label} type='button' onClick={onClick}>
