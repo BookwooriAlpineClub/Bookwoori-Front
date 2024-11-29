@@ -19,8 +19,14 @@ const Memo = ({ memo, isUser }: MemoProps) => {
 
   return (
     <Layout type='button' onClick={handleClickMemo} disabled={!isUser}>
-      <Triangle />
-      <TextBox>{memo ? `${memo}` : <SPlus />}</TextBox>
+      {isUser ? (
+        <>
+          <Triangle />
+          <TextBox>{memo || <SPlus />}</TextBox>
+        </>
+      ) : (
+        <Blank />
+      )}
     </Layout>
   );
 };
@@ -61,4 +67,7 @@ const SPlus = styled(Plus)`
   height: 0.9375rem;
 
   fill: ${({ theme }) => theme.colors.blue200};
+`;
+const Blank = styled.div`
+  height: 2.725rem;
 `;

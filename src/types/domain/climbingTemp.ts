@@ -25,6 +25,7 @@ export interface ClimbingRecruitListRes {
 }
 
 export interface ClimbingParticipants {
+  isMine: boolean,
   memberId: number;
   nickname: string;
   profileImg: string | null;

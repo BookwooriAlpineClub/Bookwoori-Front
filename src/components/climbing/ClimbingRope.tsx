@@ -12,8 +12,6 @@ interface Props {
 }
 
 const ClimbingRope = ({ item }: Props) => {
-  // 해당 아이템이 내거인지 비교
-  const [isUser] = useState<boolean>(true);
   // 전역으로 클라이밍 정보를 저장하고 해당 정보를 가져올 예정
   const totalPage: number = 500;
   // 전역으로 클라이밍 상태 가져옴
@@ -74,8 +72,8 @@ const ClimbingRope = ({ item }: Props) => {
           )}
           <Nickname>{item.nickname}</Nickname>
         </Profile>
-        {(isUser || item.memo) && status !== 'FINISHED' && (
-          <Memo isUser={isUser} memo={item.memo ? item.memo : ''} />
+        {status !== 'FINISHED' && (
+          <Memo isUser={item.isMine} memo={item.memo ? item.memo : ''} />
         )}
       </Container>
     </Layout>
