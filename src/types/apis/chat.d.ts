@@ -1,5 +1,6 @@
 declare type MessageRequest = {
-  messageRoomId: number;
+  messageRoomId?: number;
+  channelId?: number;
   type: 'text' | 'image';
   content: string;
 };
