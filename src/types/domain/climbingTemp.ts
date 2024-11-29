@@ -59,3 +59,7 @@ export interface ClimbingInfo {
 export type ClimbingListRes = {
   [key in ClimbingListKey['key']]: ClimbingInfo[];
 };
+
+export type MemoReq = {
+  memo: string;
+};

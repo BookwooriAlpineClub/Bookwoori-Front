@@ -3,11 +3,12 @@ import {
   ClimbingEditReq,
   ClimbingParticipantsRes,
   ClimbingRecruitListRes,
+  MemoReq,
 } from '@src/types/domain/climbingTemp';
 
 /* 메모 수정 */
-export const patchMemo = async (climbingId: number) => {
-  const res = await authClient.patch(`/climbs/${climbingId}/members/memo`);
+export const patchMemo = async (climbingId: number, body: MemoReq) => {
+  const res = await authClient.patch(`/climbs/${climbingId}/members/memo`, body);
   return res.data;
 };
 
