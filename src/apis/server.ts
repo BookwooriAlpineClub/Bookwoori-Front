@@ -176,7 +176,7 @@ export const getServerChannels = async <Res = []>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res, AxiosResponse<Res>>(
-    buildServerUrl(`/${serverId}/channels`),
+    buildServerUrl(`/${serverId}/categories`),
     { headers },
   );
   return response.data;
