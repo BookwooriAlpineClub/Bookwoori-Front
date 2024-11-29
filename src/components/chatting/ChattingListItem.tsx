@@ -5,10 +5,16 @@ interface Chatting {
   nickname: string;
   time: string;
   text: string;
-  read: boolean;
+  read?: boolean;
 }
 
-const ChattingListItem = ({ imgUrl, nickname, time, text, read }: Chatting) => {
+const ChattingListItem = ({
+  imgUrl,
+  nickname,
+  time,
+  text,
+  read = true,
+}: Chatting) => {
   return (
     <SLayout>
       <SImg src={imgUrl} />
