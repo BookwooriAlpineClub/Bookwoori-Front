@@ -1,7 +1,11 @@
-import { Channel } from '@src/types/apis/channel.d';
-
 export type Categories = {
   categoryId: string;
   name: string;
-  channels: Channel[];
+  channels: ChannelItem[];
+};
+
+export type ChannelItem = {
+  type: 'chat' | 'voice';
+  channelId: number;
+  name: string;
 };

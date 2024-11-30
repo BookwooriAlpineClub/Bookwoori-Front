@@ -12,8 +12,10 @@ export const patchProfile = async (body: FormData) => {
 };
 
 /* 개별 프로필 조회 */
-export const getProfile = async (memberId: number): Promise<ProfileResponse> => {
-  const res = await authClient.get(`members/${memberId}`);
+export const getProfile = async (
+  memberId?: number,
+): Promise<ProfileResponse> => {
+  const res = await authClient.get(`members/${memberId ?? 'me'}`);
   return res.data;
 };
 

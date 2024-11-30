@@ -24,3 +24,8 @@ declare interface InputProps {
   required: boolean;
   setValue: React.Dispatch<React.SetStateAction<T>>;
 }
+
+interface SideBar {
+  isOpen: boolean;
+  transition: ModalTransition;
+}

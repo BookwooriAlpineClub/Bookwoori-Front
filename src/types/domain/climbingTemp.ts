@@ -48,12 +48,16 @@ export interface ClimbingEditReq {
 }
 
 type ClimbingListKey = {
-  key: 'myClimbings' | 'readyClimbings';
+  key:
+    | 'myClimbings'
+    | 'readyClimbings'
+    | 'runningClimbings'
+    | 'endClimbingings';
 };
 
 export interface ClimbingInfo {
   climbingId: number;
-  cover: string;
+  cover?: string;
   name: string;
 }
 

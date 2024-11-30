@@ -1,10 +1,10 @@
 import type { AxiosResponse } from 'axios';
-import type { Channel } from '@src/types/apis/channel.d';
 import { authClient } from '@src/apis/index';
+import { Channel } from '@src/types/apis/channel.d';
 
 export const patchChannel = async <
   Res = void,
-  Req = Pick<Channel, 'channelId' | 'name'>,
+  Req = Pick<Channel, 'categoryId' | 'name'>,
 >(
   channelId: number,
   body: Req,

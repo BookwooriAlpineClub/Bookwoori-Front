@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { profileState } from '@src/states/atoms';
+import { bgFileState, profileState } from '@src/states/atoms';
 import useMember from '@src/hooks/query/useMember';
 import { convertURLToFile } from '@src/utils/formatters';
 import UserProfilImg from '@src/components/userSettings/UserProfileImg';
@@ -10,11 +10,11 @@ import Header from '@src/components/common/Header';
 import ButtonBackground from '@src/components/common/ButtonBackground';
 
 const EditUserInfoPage = () => {
-  const userId = 1;
-  const { profileData, isLoading, isError, editProfile } = useMember(userId);
+  const { profileData, isLoading, isError, editProfile } = useMember();
   const [value, setValue] = useState<string | undefined>(profileData?.nickname);
   const [length, setLength] = useState<number>(0);
   const profileFile = useRecoilValue(profileState);
+  const backgroundFile = useRecoilValue(bgFileState);
   const ref = useRef(value);
 
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,9 +36,19 @@ const EditUserInfoPage = () => {
       formData.append('nickname', value);
     }
     const file =
-      profileFile || (await convertURLToFile(profileData?.profileImg ?? ''));
+      profileFile ||
+      (profileData?.profileImg &&
+        (await convertURLToFile(profileData?.profileImg ?? '')));
+    const bgFile =
+      backgroundFile ||
+      (profileData?.backgroundImg &&
+        (await convertURLToFile(profileData?.backgroundImg ?? '')));
+
     if (file) {
       formData.append('profileImg', file);
+    }
+    if (bgFile) {
+      formData.append('backgroundImg', bgFile);
     }
 
     editProfile.mutate(formData);
