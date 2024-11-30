@@ -10,6 +10,3 @@ export type BookDetail = {
 export type BookListItem = Omit<BookDetail, 'itemPage' | 'description'> & {
   isbn13: string;
 };
-export type BookInfo = BookDetail & {
-  bookId: number;
-};
