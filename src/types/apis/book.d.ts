@@ -5,8 +5,7 @@ export type BookDetail = {
   pubYear: string;
   itemPage: number;
   description: string;
+  isbn13: string;
   cover: string;
 };
-export type BookListItem = Omit<BookDetail, 'itemPage' | 'description'> & {
-  isbn13: string;
-};
+export type BookListItem = Omit<BookDetail, 'itemPage' | 'description'>;
