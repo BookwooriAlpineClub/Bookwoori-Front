@@ -33,6 +33,22 @@ const ProfileModal = (data: ProfileModalProps) => (
     </ButtonContainer>
   </ModalContainer>
 );
+// type MessageRoom = {
+//   messageRoomId: number;
+//   memberId: number;
+//   nickname: string;
+//   profileImg: string | null;
+//   recentMessage: string | null;
+//   recentMessageTime: string | null;
+// };
+
+// function getMessageRoomIdByMemberId(
+//   messageRooms: MessageRoom[],
+//   memberId: number,
+// ): number | null {
+//   const room = messageRooms.find((room) => room.memberId === memberId);
+//   return room ? room.messageRoomId : null; // 해당 memberId가 없으면 null 반환
+// }
 
 export default ProfileModal;
 
