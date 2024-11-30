@@ -26,11 +26,6 @@ export const serverListState = atom<Server[]>({
 });
 export const sideBarState = atom<SideBar>({
   key: 'SideBarState',
-  default: {
-    isOpen: false,
-    transition: 'close',
-  },
-});
 export const serverbarState = atom<Omit<Serverbar, 'content'>>({
   key: 'serverbarState',
   default: {

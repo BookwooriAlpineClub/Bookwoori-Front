@@ -26,10 +26,10 @@ const buttons = {
 
 const ProfileModal = (data: ProfileModalProps) => (
   <ModalContainer>
-    <UserProfile />
+    <UserProfile data={data} />
     <ButtonContainer>
-      <SubButton onClick={() => {}} {...buttons.hiking} />
-      <SubButton onClick={() => {}} {...buttons.message} />
+      <SubButton {...buttons.hiking} />
+      <SubButton {...buttons.message} />
     </ButtonContainer>
   </ModalContainer>
 );
