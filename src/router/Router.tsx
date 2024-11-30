@@ -20,7 +20,7 @@ const ChannelListPage = React.lazy(
 const ClimbingPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingPage'),
 );
-
+/* library */
 /* settings */
 const SettingsPage = React.lazy(
   () => import('@src/pages/userSettings/SettingsPage'),
