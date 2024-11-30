@@ -1,18 +1,11 @@
 import CommunityButton from '@src/components/common/CommunityButton';
-import { CommunityRoleType } from '@src/pages/communityinfosetting/CommunityInfoSettingPage';
 import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
 
-export interface CommunitySettingSectionProps {
-  communityRole: CommunityRoleType;
-}
-
-const CommunitySettingSection = ({
-  communityRole,
-}: CommunitySettingSectionProps) => {
+const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
   const subtitle = '공동체 설정';
   return (
     <TitleAndFieldContainer title={subtitle}>
-      {communityRole === 'admin' && (
+      {isOwner && (
         <>
           <CommunityButton
             type='transferAuthority'
@@ -26,7 +19,7 @@ const CommunitySettingSection = ({
           />
         </>
       )}
-      {communityRole === 'user' && (
+      {!isOwner && (
         <CommunityButton
           type='leaveCommunity'
           testId='leave-community-button'
