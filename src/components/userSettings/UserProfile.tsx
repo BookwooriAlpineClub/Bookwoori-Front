@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import UserProfilImg from '@src/components/userSettings/UserProfileImg';
 import useMember from '@src/hooks/query/useMember';
 
-const UserProfile = () => {
-  const { profileData: data } = useMember();
+const UserProfile = ({ memberId }: { memberId?: number }) => {
+  const { profileData: data } = useMember(memberId);
 
   return (
     <SLayout>
