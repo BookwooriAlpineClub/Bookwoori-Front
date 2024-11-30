@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import Header from '@src/components/common/Header';
+import RecordListItem from '@src/components/book/RecordListItem';
 
 const mock: RecordListItem[] = [
   {
@@ -126,6 +127,7 @@ const mock: RecordListItem[] = [
   },
 ];
 
+type RecordListItem = Omit<Record, 'startDate' | 'endDate' | 'reviewContent'>;
 type Radio = Pick<Record, 'readingStatus'> & {
   text: '읽고 싶어요' | '읽고 있어요' | '다 읽었어요';
 };
@@ -138,10 +140,10 @@ const RecordListPage = () => {
     { readingStatus: 'FINISHED', text: '다 읽었어요' },
   ];
 
-  const data: Record[] = [];
+  const data: RecordListItem[] = mock;
 
   return (
-    <NoDataTextLayout>
+    <Container>
       <Header text='책 기록' headerType='back' />
       <Fieldset name='status'>
         {radioList.map(({ readingStatus, text }) => (
@@ -162,19 +164,27 @@ const RecordListPage = () => {
         {data.length !== 0 ? (
           <Ul>
             {data.map((item) => (
-              <li key={item.recordId}>{item.bookInfo.title}</li>
+              <RecordListItem key={item.recordId} {...item} />
             ))}
           </Ul>
         ) : (
           <strong>책을 저장해 주세요.</strong>
         )}
       </main>
-    </NoDataTextLayout>
+    </Container>
   );
 };
 
 export default RecordListPage;
 
+const Container = styled(NoDataTextLayout)`
+  gap: 1.25rem;
+
+  main {
+    padding: 0 5%;
+    overflow-y: auto;
+  }
+`;
 const Fieldset = styled.fieldset`
   position: relative;
 
@@ -183,6 +193,7 @@ const Fieldset = styled.fieldset`
   width: 22.0625rem;
   height: 2.8125rem;
   margin: 0 auto;
+  flex-shrink: 0;
 
   border: ${({ theme }) => theme.colors.white} 0.25rem solid;
   border-radius: 62.4375rem;
@@ -237,4 +248,8 @@ const Ul = styled.ul`
   display: flex;
   flex-flow: row wrap;
   gap: 1.5rem 0.75rem;
+
+  margin-bottom: 1.25rem;
+
+  overflow-y: scroll;
 `;
