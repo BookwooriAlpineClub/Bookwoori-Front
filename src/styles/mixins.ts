@@ -26,6 +26,13 @@ export const TextEllipsis = css<{ $line: number }>`
   overflow: hidden;
 `;
 /**
+ * 책 표지 공통 스타일
+ */
+export const BookImg = css`
+  flex-shrink: 0; // 크기 최적화 비활성화
+  object-fit: contain; // 이미지 비율 유지
+`;
+/**
  * @example
  * <NoDataTextLayout>
  *   <main>
