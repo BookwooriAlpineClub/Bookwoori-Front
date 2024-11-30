@@ -27,6 +27,11 @@ const ChannelAddPage = () => {
   const [date, setDate] = useState<Period>({ start: '', end: '' });
   const [description, setDescription] = useState<string>('');
 
+  const calcTomorrow = (): Date => {
+    const day = new Date();
+    day.setDate(day.getDate() + 1);
+    return day;
+  };
   const isBtnDisabled = (): boolean => {
     if (kind === '문자' || kind === '전화') return !(kind && category && name);
     if (kind === '등반') return !(kind && name && book && date && description);
@@ -92,7 +97,7 @@ const ChannelAddPage = () => {
               <InputDatepicker
                 title='등반 기간'
                 type='period'
-                min={formatDate(new Date())}
+                min={formatDate(calcTomorrow())}
                 required
                 value={date}
                 setValue={setDate}
