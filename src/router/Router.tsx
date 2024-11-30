@@ -51,6 +51,8 @@ const ChannelEditPage = React.lazy(
   () => import('@src/pages/channel/ChannelEditPage'),
 );
 
+const ChannelPage = React.lazy(() => import('@src/pages/channel/ChannelPage'));
+
 /* climbing */
 const ClimbingAddPage = React.lazy(
   () => import('@src/pages/channel/ChannelAddPage'),
@@ -186,7 +188,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.serverChannel,
-        element: <h1>Server Channel Page</h1>,
+        element: <ChannelPage />,
         loader: (args) => isParamLoader(args, 'serverId'),
       },
       {
