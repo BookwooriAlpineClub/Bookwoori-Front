@@ -21,6 +21,9 @@ const ClimbingPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingPage'),
 );
 /* library */
+const RecordDetailPage = React.lazy(
+  () => import('@src/pages/book/RecordDetailPage'),
+);
 /* settings */
 const SettingsPage = React.lazy(
   () => import('@src/pages/userSettings/SettingsPage'),
@@ -119,7 +122,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryRecordDetail,
-        element: <h1>Library Record Detail</h1>,
+        element: <RecordDetailPage />,
         loader: (args) => isParamLoader(args, 'recordId'),
       },
       {
