@@ -10,6 +10,22 @@ export const NoSelect = css`
   user-select: none;
 `;
 /**
+ * 텍스트가 지정한 줄수를 초과할 경우, 이후 내용을 말줄임표로 생략합니다.
+ * @param line 생략하지 않고 표시할 최대 줄수를 지정합니다.
+ * @example
+ * import { TextEllipsis } from '@src/styles/mixins';
+ * const Span = styled.span<{ $line: number }>`
+ *   ${TextEllipsis}
+ * `;
+ */
+export const TextEllipsis = css<{ $line: number }>`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: ${({ $line }) => $line};
+  text-overflow: ellipsis;
+  overflow: hidden;
+`;
+/**
  * @example
  * <NoDataTextLayout>
  *   <main>
