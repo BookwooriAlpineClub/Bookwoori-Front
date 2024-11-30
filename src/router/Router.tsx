@@ -20,7 +20,10 @@ const ChannelListPage = React.lazy(
 const ClimbingPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingPage'),
 );
-
+/* library */
+const RecordListPage = React.lazy(
+  () => import('@src/pages/book/RecordListPage'),
+);
 /* settings */
 const SettingsPage = React.lazy(
   () => import('@src/pages/userSettings/SettingsPage'),
@@ -115,7 +118,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryRecord,
-        element: <h1>Library Record</h1>,
+        element: <RecordListPage />,
       },
       {
         path: ROUTE_PATH.libraryRecordDetail,
