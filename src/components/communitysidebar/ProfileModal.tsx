@@ -3,13 +3,10 @@ import styled from 'styled-components';
 import SubButton from '@src/components/common/SubButton';
 import { ReactComponent as Chatting } from '@src/assets/icons/md_outline_chat_bubble.svg';
 import { ReactComponent as Hiking } from '@src/assets/icons/md_outline_auto_stories.svg';
-
-interface ProfileModalProps {
-  nickname: string;
-  mountain: string;
-  meter: number;
-  pages: number;
-}
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import useDialog from '@src/hooks/useDialog';
+import useSideBar from '@src/hooks/useSideBar';
 
 const buttons = {
   hiking: {
@@ -24,15 +21,6 @@ const buttons = {
   },
 };
 
-const ProfileModal = (data: ProfileModalProps) => (
-  <ModalContainer>
-    <UserProfile />
-    <ButtonContainer>
-      <SubButton onClick={() => {}} {...buttons.hiking} />
-      <SubButton onClick={() => {}} {...buttons.message} />
-    </ButtonContainer>
-  </ModalContainer>
-);
 // type MessageRoom = {
 //   messageRoomId: number;
 //   memberId: number;
@@ -49,6 +37,35 @@ const ProfileModal = (data: ProfileModalProps) => (
 //   const room = messageRooms.find((room) => room.memberId === memberId);
 //   return room ? room.messageRoomId : null; // 해당 memberId가 없으면 null 반환
 // }
+
+const ProfileModal = ({ memberId }: { memberId: number }) => {
+  const navigate = useNavigate();
+  const { closeDialog } = useDialog();
+  const { closeSideBar } = useSideBar();
+
+  const handleClickHiking = () => {
+    navigate(`${ROUTE_PATH.library}/${memberId}`);
+    closeDialog();
+    closeSideBar();
+  };
+
+  const handleclickMessage = () => {
+    // const roomId = getMessageRoomIdByMemberId(data.messageRooms, memberId);
+    navigate(`${ROUTE_PATH.dmChat}/${memberId}`);
+    closeDialog();
+    closeSideBar();
+  };
+
+  return (
+    <ModalContainer>
+      <UserProfile memberId={memberId} />
+      <ButtonContainer>
+        <SubButton {...buttons.hiking} onClick={handleClickHiking} />
+        <SubButton {...buttons.message} onClick={handleclickMessage} />
+      </ButtonContainer>
+    </ModalContainer>
+  );
+};
 
 export default ProfileModal;
 
