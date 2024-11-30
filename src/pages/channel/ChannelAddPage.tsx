@@ -34,103 +34,119 @@ const ChannelAddPage = () => {
   };
 
   return (
-    <Layout>
+    <Container>
       <Header text='모임 추가하기' headerType='back' />
-      <Form id='channel-add-form'>
-        <InputRadio
-          title='모임 유형'
-          items={[
-            { text: '문자', icon: <IcnHash /> },
-            { text: '전화', icon: <IcnVoice /> },
-            { text: '등반', icon: <IcnRun /> },
-          ]}
-          required
-          setValue={setKind}
-        />
-        {(kind === '문자' || kind === '전화') && (
-          <InputDropdown
-            title='모임 분류'
-            placeholder='분류 선택'
-            items={dummy}
+      <Main>
+        <Form id='channel-add-form'>
+          <InputRadio
+            title='모임 유형'
+            items={[
+              { text: '문자', icon: <IcnHash /> },
+              { text: '전화', icon: <IcnVoice /> },
+              { text: '등반', icon: <IcnRun /> },
+            ]}
             required
-            value={category}
-            setValue={setCategory}
+            setValue={setKind}
           />
-        )}
-        {kind !== '' && (
-          <InputText
-            title='모임 이름'
-            placeholder='모임 이름을 입력하세요.'
-            type='short'
-            limit={20}
-            required
-            value={name}
-            setValue={setName}
-          />
-        )}
-        {kind === '등반' && (
-          <>
-            <Fieldset title='등반할 책'>
-              <InputSearch
-                name='등반할 책'
-                placeholder='책을 선택하세요.'
-                type='text'
-                value={book.title}
-                readOnly
-                required
-                onClick={() => {
-                  openBottomsheet(
-                    <SearchBottomsheet
-                      setValue={setBook}
-                      closeBottomsheet={closeBottomsheet}
-                    />,
-                  );
-                }}
-              />
-            </Fieldset>
-            <InputDatepicker
-              title='등반 기간'
-              type='period'
-              min={formatDate(new Date())}
+          {(kind === '문자' || kind === '전화') && (
+            <InputDropdown
+              title='모임 분류'
+              placeholder='분류 선택'
+              items={dummy}
               required
-              value={date}
-              setValue={setDate}
+              value={category}
+              setValue={setCategory}
             />
+          )}
+          {kind !== '' && (
             <InputText
-              title='등반 설명'
-              placeholder='사람들에게 등반에 대해 알려주세요.'
-              type='long'
-              limit={150}
+              title='모임 이름'
+              placeholder='모임 이름을 입력하세요.'
+              type='short'
+              limit={20}
               required
-              value={description}
-              setValue={setDescription}
+              value={name}
+              setValue={setName}
             />
-          </>
-        )}
-      </Form>
-      <SButton type='submit' form='channel-add-form' disabled={isBtnDisabled()}>
-        추가하기
-      </SButton>
-    </Layout>
+          )}
+          {kind === '등반' && (
+            <>
+              <Fieldset title='등반할 책'>
+                <InputSearch
+                  name='등반할 책'
+                  placeholder='책을 선택하세요.'
+                  type='text'
+                  value={book.title}
+                  readOnly
+                  required
+                  onClick={() => {
+                    openBottomsheet(
+                      <SearchBottomsheet
+                        setValue={setBook}
+                        closeBottomsheet={closeBottomsheet}
+                      />,
+                    );
+                  }}
+                />
+              </Fieldset>
+              <InputDatepicker
+                title='등반 기간'
+                type='period'
+                min={formatDate(new Date())}
+                required
+                value={date}
+                setValue={setDate}
+              />
+              <InputText
+                title='등반 설명'
+                placeholder='사람들에게 등반에 대해 알려주세요.'
+                type='long'
+                limit={150}
+                required
+                value={description}
+                setValue={setDescription}
+              />
+            </>
+          )}
+        </Form>
+        <Button
+          type='submit'
+          form='channel-add-form'
+          disabled={isBtnDisabled()}
+        >
+          추가하기
+        </Button>
+      </Main>
+    </Container>
   );
 };
 
 export default ChannelAddPage;
 
-const Layout = styled.div`
+const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
+
   height: 100%;
+`;
+const Main = styled.main`
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.91rem;
+
+  flex-grow: 1;
+  margin: 0.91rem 5% 2.56rem;
+
+  overflow-y: auto;
 `;
 const Form = styled.form`
   display: flex;
   flex-flow: column nowrap;
-  flex: 1;
   gap: 1.25rem;
 
-  overflow: scroll;
+  flex-grow: 1;
 
-  margin: 0.91rem 5%;
+  overflow-y: scroll;
 `;
 const InputSearch = styled.input`
   width: 100%;
@@ -144,7 +160,4 @@ const InputSearch = styled.input`
   &::placeholder {
     color: ${({ theme }) => theme.colors.black200};
   }
-`;
-const SButton = styled(Button)`
-  margin: 0 auto 2.56rem;
 `;
