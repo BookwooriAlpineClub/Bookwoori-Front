@@ -9,22 +9,25 @@ export const NoSelect = css`
 `;
 /**
  * @example
- * <ListLayout>
+ * <NoDataTextLayout>
  *   <main>
- *     {data.length === 0 ? (
- *       <strong>데이터가 없어요.</strong>
+ *     {data ? (
+ *       // 데이터 표시
  *     ) : (
- *       <ul>{data.map()}</ul>
+ *       <strong>데이터가 없어요.</strong>
  *     )}
  *   </main>
- * </ListLayout>
+ * </NoDataTextLayout>
  */
-export const ListLayout = styled.div`
+export const NoDataTextLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
 
   height: 100%;
 
+  main {
+    padding: 0.94rem 5%;
+  }
   main:has(strong) {
     display: flex;
 
@@ -37,9 +40,5 @@ export const ListLayout = styled.div`
     color: ${({ theme }) => theme.colors.black200};
 
     ${NoSelect}
-  }
-  ul,
-  ol {
-    margin: 0.94rem 5%;
   }
 `;
