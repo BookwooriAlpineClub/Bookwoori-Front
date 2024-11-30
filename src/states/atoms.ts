@@ -24,6 +24,8 @@ export const serverListState = atom<Server[]>({
   key: 'serverListState',
   default: [],
 });
+export const sideBarState = atom<SideBar>({
+  key: 'SideBarState',
 export const serverbarState = atom<Omit<Serverbar, 'content'>>({
   key: 'serverbarState',
   default: {

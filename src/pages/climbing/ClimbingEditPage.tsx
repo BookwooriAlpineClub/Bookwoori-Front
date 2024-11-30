@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { formatDate } from '@src/utils/formatters';
@@ -10,9 +10,10 @@ import InputDatepicker, {
   Period,
 } from '@src/components/common/InputDatepicker';
 import InputText from '@src/components/common/InputText';
+import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 
 const ClimbingEditPage = () => {
-  const serverId = 2;
+  const serverId = 3; // 전역 서버 정보 필요
   const { id: climbingId } = useLoaderData<{ id: string }>();
   const { readyClimbingInfo, editClimbing } = useClimbingRecruit(
     Number(serverId),
@@ -32,15 +33,28 @@ const ClimbingEditPage = () => {
     readyClimbingInfo?.description ?? '',
   );
 
+  const navigate = useEncodedNavigation();
   const handleClickEdit = () => {
     const data = {
-      name: climbingName,
-      'description': description,
-      startTime: date.start,
-      endTime: date.end,
+      name: climbingName ?? '',
+      description,
+      startDate: date.start,
+      endDate: date.end,
     };
-    editClimbing.mutate(data);
+    editClimbing.mutate(data, {
+      onSuccess: () => navigate('/server', serverId),
+    });
   };
+
+  useEffect(() => {
+    setClimbingName(readyClimbingInfo?.name ?? '');
+    setBookTitle(readyClimbingInfo?.bookInfo.title ?? '');
+    setDate({
+      start: readyClimbingInfo?.startDate ?? '',
+      end: readyClimbingInfo?.endDate ?? '',
+    });
+    setDescription(readyClimbingInfo?.description ?? '');
+  }, [readyClimbingInfo]);
 
   return (
     <>
@@ -84,7 +98,7 @@ const ClimbingEditPage = () => {
           setValue={setDescription}
         />
       </SLayout>
-      <ButtonBackground>
+      <ButtonBackground color='transparent'>
         <Button
           disabled={!climbingName || !description || !date.end}
           onClick={handleClickEdit}

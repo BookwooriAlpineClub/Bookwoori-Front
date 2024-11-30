@@ -1,5 +1,7 @@
 import { getParticipants } from '@src/apis/climbingTemp';
-import { ClimbingParticipantsRes } from '@src/types/domain/climbingTemp';
+import {
+  ClimbingParticipantsRes,
+} from '@src/types/domain/climbingTemp';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
