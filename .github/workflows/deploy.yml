@@ -23,7 +23,10 @@ jobs:
           node-version: '20'
 
       - name: Set environment variables
-        run: echo "REACT_APP_SERVER_URL=${{ secrets.REACT_APP_API_URL }}" >> .env
+        run: |
+          echo "REACT_APP_SERVER_URL=${{ secrets.REACT_APP_API_URL }}" >> .env
+          echo "REACT_APP_KAKAO_URL=${{ secrets.REACT_APP_KAKAO_URL }}" >> .env
+          
 
 
       - name: Install dependencies
