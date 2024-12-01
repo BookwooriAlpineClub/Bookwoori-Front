@@ -1,6 +1,12 @@
+import { SyntheticEvent } from 'react';
 import styled from 'styled-components';
+import Profile from '@src/assets/images/userSettings/background_default.svg';
+import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import { formatChatListItemTime } from '@src/utils/formatters';
 
 interface Chatting {
+  memberId: number;
   imgUrl: string;
   nickname: string;
   time: string;
@@ -9,19 +15,31 @@ interface Chatting {
 }
 
 const ChattingListItem = ({
+  memberId,
   imgUrl,
   nickname,
   time,
   text,
   read = true,
 }: Chatting) => {
+  const handleImgError = (e: SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = Profile;
+  };
+
+  const navigate = useEncodedNavigation();
+  const handleNavigate = () => {
+    navigate(ROUTE_PATH.dmChat, memberId);
+  };
+
   return (
-    <SLayout>
-      <SImg src={imgUrl} />
+    <SLayout onClick={handleNavigate}>
+      <SImg src={imgUrl} onError={handleImgError} />
       <SContainer>
         <SWrapper>
           <SCaption $read={read}>{nickname}</SCaption>
-          <SCaption $read={read}>{time}</SCaption>
+          <SCaption $read={read}>
+            {time ? formatChatListItemTime(time) : '알 수 없음'}
+          </SCaption>
         </SWrapper>
         <SPreview $read={read}>{text}</SPreview>
       </SContainer>
