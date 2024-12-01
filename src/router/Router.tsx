@@ -21,6 +21,9 @@ const ClimbingPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingPage'),
 );
 /* library */
+const BookDetailPage = React.lazy(
+  () => import('@src/pages/book/BookDetailPage'),
+);
 const RecordDetailPage = React.lazy(
   () => import('@src/pages/book/RecordDetailPage'),
 );
@@ -113,7 +116,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryBookDetail,
-        element: <RecordDetailPage />,
+        element: <BookDetailPage />,
         loader: (args) => isParamLoader(args, 'bookId'),
       },
       {
