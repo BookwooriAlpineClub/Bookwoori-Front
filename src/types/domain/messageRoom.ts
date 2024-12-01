@@ -19,11 +19,7 @@ export interface MessageRoomRes {
   messageRoomId: number;
   title: string;
   participants: {
-    '1': {
-      nickname: string;
-      profileImg: string | null;
-    };
-    '2': {
+    [key: string]: {
       nickname: string;
       profileImg: string | null;
     };
@@ -41,4 +37,9 @@ export interface DM {
   memberId: number;
   content: string;
   createdAt: string;
+  reactions?: Reactions;
+}
+
+interface Reactions {
+  count: number;
 }
