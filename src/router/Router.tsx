@@ -60,6 +60,8 @@ const ClimbingAddPage = React.lazy(
 const ClimbingEditPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingEditPage'),
 );
+
+/* library */
 const LibraryHomePage = React.lazy(
   () => import('@src/pages/library/LibraryHomePage'),
 );
