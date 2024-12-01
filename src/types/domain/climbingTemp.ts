@@ -25,12 +25,13 @@ export interface ClimbingRecruitListRes {
 }
 
 export interface ClimbingParticipants {
+  isMine: boolean,
   memberId: number;
   nickname: string;
   profileImg: string | null;
   level: number;
   mountain: string;
-  status: 'UNREAD';
+  status: 'UNREAD' | 'FINISHED';
   currentPage: number;
   memo: string | null;
 }
@@ -62,4 +63,8 @@ export interface ClimbingInfo {
 
 export type ClimbingListRes = {
   [key in ClimbingListKey['key']]: ClimbingInfo[];
+};
+
+export type MemoReq = {
+  memo: string;
 };
