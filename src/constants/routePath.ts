@@ -39,6 +39,7 @@ export const ROUTE_PATH = {
   addCategory: '/server/:serverId/create/category',
   addChannel: '/server/:serverId/create/channel',
   editChannelOne: '/server/:serverId/:channelId/edit',
+  serverSetting: '/server/:serverId/info-setting',
   /* climbing */
   climbing: '/climbing/:climbingId',
   climbingCreate: '/climbing/create',

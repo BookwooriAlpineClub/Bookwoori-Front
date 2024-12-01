@@ -3,6 +3,8 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import React, { Suspense } from 'react';
 import isParamLoader from '@src/router/loader';
 import Bottomsheet from '@src/components/common/Bottomsheet';
+import Dialog from '@src/components/common/Dialog';
+import CommunitySideBar from '@src/components/communitysidebar/CommunitySideBar';
 
 /* example */
 const RouterExamplePage = React.lazy(
@@ -50,8 +52,10 @@ const ChattingPage = React.lazy(
 const ChannelEditPage = React.lazy(
   () => import('@src/pages/channel/ChannelEditPage'),
 );
-
 const ChannelPage = React.lazy(() => import('@src/pages/channel/ChannelPage'));
+const CommunityInfoSettingPage = React.lazy(
+  () => import('@src/pages/communityinfosetting/CommunityInfoSettingPage'),
+);
 
 /* climbing */
 const ClimbingAddPage = React.lazy(
@@ -72,6 +76,8 @@ const router = createBrowserRouter([
       <Suspense fallback={<h1>Loading</h1>}>
         <Outlet />
         <Bottomsheet />
+        <Dialog />
+        <CommunitySideBar />
       </Suspense>
     ),
     errorElement: <h1>Error</h1>,
@@ -207,6 +213,11 @@ const router = createBrowserRouter([
       {
         path: ROUTE_PATH.editChannelOne,
         element: <ChannelEditPage />,
+        loader: (args) => isParamLoader(args, 'serverId'),
+      },
+      {
+        path: ROUTE_PATH.serverSetting,
+        element: <CommunityInfoSettingPage />,
         loader: (args) => isParamLoader(args, 'serverId'),
       },
       /* climbing */

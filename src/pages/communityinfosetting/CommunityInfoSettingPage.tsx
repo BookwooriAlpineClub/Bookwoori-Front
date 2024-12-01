@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import CommunityInfoSection from '@src/components/communityinfosetting/CommunityInfoSection';
-import { delay } from '@src/utils/helpers';
+import React from 'react';
+import CommunityInfoSection, {
+  CommunityInfoProps,
+} from '@src/components/communityinfosetting/CommunityInfoSection';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import CommunitySettingSection from '@src/components/communityinfosetting/CommunitySettingSection';
-
-interface ApiResponse {
-  name: string;
-  adminName: string; // 방장 이름
-  memberCount: number; // 멤버 수
-  creationDate: string;
-  description: string;
-  imageUrl: string;
-}
+import { useQuery } from '@tanstack/react-query';
+import { Server } from '@src/types/apis/server.d';
+import { AxiosError } from 'axios';
+import { useParams } from 'react-router-dom';
+import { getServerOne } from '@src/apis/server';
 
 export interface CommunityInfoType {
   name: string;
@@ -24,76 +21,46 @@ export interface CommunityInfoType {
 
 export type CommunityRoleType = 'admin' | 'user';
 
-const mockApiResponse: ApiResponse = {
-  name: '피크민을 하자',
-  adminName: '일이삼사오육칠팔구십',
-  memberCount: 25,
-  creationDate: '2000.99.99',
-  imageUrl: '/path/to/image.jpg',
-  description:
-    '일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이' +
-    '삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사' +
-    '오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육' +
-    '칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔' +
-    '구십일이삼사오육칠팔구십',
-};
-
-const defaultCommunityData: CommunityInfoType = {
-  name: '',
-  memberInfo: '',
-  creationDate: '',
-  description: '',
-  imageUrl: '',
-} as const;
-
 const CommunityInfoSettingPage = () => {
   const headerText = '공동체 정보 및 설정 보기';
-  const [communityInfoData, setCommunityInfoData] =
-    useState<CommunityInfoType>(defaultCommunityData);
-  // api response에 역할이 없어 임의 설정
-  const communityRole: CommunityRoleType = 'admin';
+  const { serverId: id } = useParams<{ serverId: string }>();
+  if (!id)
+    throw new Error('CommunityInfoSettingPage: serverId is not provided');
+  const serverId = parseInt(id, 10);
+  const { data, error, isLoading } = useQuery<
+    Omit<Server, 'serverId'>,
+    AxiosError
+  >({
+    queryKey: ['getServerOne', serverId],
+    queryFn: () => getServerOne(serverId),
+    enabled: !!serverId,
+  });
 
-  // loading, error 상태 관리
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const mapServerToCommunityInfo = (
+    server: Omit<Server, 'serverId'>,
+  ): CommunityInfoProps => ({
+    name: server.name,
+    memberInfo: `방장 ${server.ownerNickname} · 멤버 ${server.memberCount}명`,
+    creationDate: server.createdAt,
+    description: server.description,
+    serverImg: server.serverImg || '',
+  });
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  // fetch api CommunityInfoData
-  useEffect(() => {
-    const fetchCommunityInfoData = async () => {
-      try {
-        // 추후 상태 관리 라이브러리 이용하여 loading, error 상태 관리할 예정
-        setLoading(true);
-        setError(null);
-        // 아직 api 연동 전이므로 delay 함수로 1초 후에 mockApiResponse를 받아옴
-        await delay(1000);
-        const response = mockApiResponse;
-        const formattedData: CommunityInfoType = {
-          name: response.name,
-          memberInfo: `방장 ${response.adminName} • 멤버 ${response.memberCount}명`,
-          creationDate: response.creationDate,
-          description: response.description,
-          imageUrl: response.imageUrl,
-        };
-        setCommunityInfoData(formattedData);
-      } catch {
-        setError('Failed to fetch community data');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCommunityInfoData();
-  }, []);
+  if (error || !data) {
+    return <div>Error: 데이터를 불러오지 못했습니다.</div>;
+  }
 
-  // loading, error 페이지 렌더링
-  if (loading) return <h1>Loading...</h1>;
-  if (error) return <h1>{error}</h1>;
+  const communityInfo = mapServerToCommunityInfo(data);
 
   return (
     <>
       <Header text={headerText} headerType='back' />
       <Container>
-        <CommunityInfoSection {...communityInfoData} />
-        <CommunitySettingSection communityRole={communityRole} />
+        <CommunityInfoSection {...communityInfo} />
+        <CommunitySettingSection isOwner={data?.isOwner} />
       </Container>
     </>
   );
