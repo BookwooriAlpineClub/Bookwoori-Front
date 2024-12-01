@@ -6,7 +6,13 @@ import { Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
 const remToPx = (rem: number): number =>
   rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
-const MountainImage = ({ seasonalColor }: { seasonalColor: string[] }) => {
+const MountainImage = ({
+  mountainData,
+  seasonalColor,
+}: {
+  mountainData: any;
+  seasonalColor: string[];
+}) => {
   const [progress, setProgress] = useState(0);
   const [pathLength, setPathLength] = useState(170);
   const [circlePosition, setCirclePosition] = useState({ x: 0, y: 0 });
@@ -39,7 +45,7 @@ const MountainImage = ({ seasonalColor }: { seasonalColor: string[] }) => {
           setCirclePosition({ x: point.x, y: point.y });
         }
 
-        if (progressValue < 60) {
+        if (progressValue < 35) {
           requestAnimationFrame(animate);
         } else {
           setIsAnimationComplete(true);
@@ -98,7 +104,7 @@ const MountainImage = ({ seasonalColor }: { seasonalColor: string[] }) => {
             >
               {isAnimationComplete ? (
                 <StyledTooltip
-                  title='현재 350m'
+                  title={`현재 ${mountainData?.height}m`}
                   arrow
                   placement='top'
                   open={isAnimationComplete}
@@ -110,7 +116,10 @@ const MountainImage = ({ seasonalColor }: { seasonalColor: string[] }) => {
                       transform: 'scale(0.3)',
                     }}
                   >
-                    <ProfileCircle profileImg={null} status='FINISHED' />
+                    <ProfileCircle
+                      profileImg={mountainData.profileImg ?? ''}
+                      nickname={mountainData.profileName}
+                    />
                   </div>
                 </StyledTooltip>
               ) : (
@@ -121,14 +130,16 @@ const MountainImage = ({ seasonalColor }: { seasonalColor: string[] }) => {
                     transform: 'scale(0.3)',
                   }}
                 >
-                  <ProfileCircle profileImg={null} status='FINISHED' />
+                  <ProfileCircle
+                    profileImg={mountainData.profileImg ?? ''}
+                    nickname={mountainData.profileName}
+                  />
                 </div>
               )}
             </foreignObject>
           </svg>
         </Path>
       </Mountain>
-      <ProfileCircle profileImg={null} />
     </MountainContainer>
   );
 };

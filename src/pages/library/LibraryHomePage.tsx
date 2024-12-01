@@ -5,6 +5,9 @@ import BookButton from '@src/components/library/BookButton';
 import { ReactComponent as SearchIcon } from '@src/assets/icons/md_outline_search.svg';
 import { ReactComponent as BookmarkIcon } from '@src/assets/icons/md_collection_bookmark.svg';
 import { ReactComponent as StarIcon } from '@src/assets/icons/md_star.svg';
+import useMember from '@src/hooks/query/useMember';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from '@src/constants/routePath';
 
 const seasonalColors = {
   default: ['#C1E1C1', '#D1FD57', '#A5D900'], // 부드러운 라임 그린 추가
@@ -15,24 +18,51 @@ const seasonalColors = {
 };
 
 const LibraryHomePage = () => {
-  const season = 'winter';
+  const { profileData } = useMember();
+  const navigate = useNavigate();
 
   const exp = [
-    { text: '지나온 길(m)', value: 500 },
-    { text: '읽어낸 책(p)', value: 4000 },
+    { text: '지나온 길(m)', value: profileData?.height },
+    { text: '읽어낸 책(p)', value: profileData?.totalPage },
   ];
+  const mountainData = {
+    mountainHeight: 300,
+    height: profileData?.height,
+    profileImg: profileData?.profileImg,
+    profileName: profileData?.nickname,
+  };
+  const tier = `⛰️ Lv ${profileData?.level} • ${profileData?.mountain} ${mountainData.mountainHeight}m`;
+
+  const handleButton = (text: string) => {
+    navigate(text);
+  };
 
   return (
     <>
       <Header text='서재' headerType='hamburger' />
       <MountainContainer>
-        <TierContainer>⛰️ Lv 3. 북한산 750m</TierContainer>
-        <MountainImage seasonalColor={seasonalColors[season]} />
+        <TierContainer>{tier}</TierContainer>
+        <MountainImage
+          mountainData={mountainData}
+          seasonalColor={seasonalColors[season]}
+        />
         <MountainMenu seasonalColor={seasonalColors[season][0]}>
           <ButtonContainer>
-            <BookButton icon={<SearchIcon />} text='책 검사' />
-            <BookButton icon={<BookmarkIcon />} text='책 기록' />
-            <BookButton icon={<StarIcon />} text='책 평가' />
+            <BookButton
+              onClick={() => handleButton(ROUTE_PATH.libraryBookSearch)}
+              icon={<SearchIcon />}
+              text='책 검사'
+            />
+            <BookButton
+              onClick={() => handleButton(ROUTE_PATH.libraryRecord)}
+              icon={<BookmarkIcon />}
+              text='책 기록'
+            />
+            <BookButton
+              onClick={() => handleButton(ROUTE_PATH.libraryReview)}
+              icon={<StarIcon />}
+              text='책 평가'
+            />
           </ButtonContainer>
           <ExpContainer>
             {exp.map((item) => (
@@ -97,11 +127,13 @@ const TypographyText = styled.span`
 
 const TierContainer = styled.div`
   position: absolute;
-  background-color: ${({ theme }) => theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.neonGreen};
   border-radius: 6.1875rem;
   padding: 0.625rem;
   ${({ theme }) => theme.fonts.body};
 
   top: 1.2rem;
-  left: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
 `;
