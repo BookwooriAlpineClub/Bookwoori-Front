@@ -1,7 +1,8 @@
 import { ChatEvent } from '@src/types/domain/dm';
 import { Client, Frame, IMessage } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
-const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL!;
+const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL_SECURE!;
 
 let stompClient: Client | null = null;
 type MessageHandler<T extends ChatEvent | MessageRequest> = (
@@ -16,13 +17,14 @@ export const connectHandler = <T extends ChatEvent | MessageRequest>(
   const accessToken = localStorage.getItem('accessToken');
 
   stompClient = new Client({
-    brokerURL: WEBSOCKET_URL,
+    // brokerURL: WEBSOCKET_URL,
     connectHeaders: {
       Authorization: `${accessToken}`.trim(),
     },
     forceBinaryWSFrames: true,
     webSocketFactory: () => {
-      const ws = new WebSocket(WEBSOCKET_URL);
+      // const ws = new WebSocket(WEBSOCKET_URL);
+      const ws = new SockJS(WEBSOCKET_URL);
 
       ws.onopen = () => {
         console.log('[WebSocket Open]: Connection established');
