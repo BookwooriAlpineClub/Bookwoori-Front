@@ -4,6 +4,11 @@ import Button from '@src/components/common/Button';
 import IntroSection from '@src/components/addcommunity/IntroSection';
 import React from 'react';
 import CommunityInfoCard from '@src/components/common/CommunityInfoCard';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getServerByCode, postServerJoinByCode } from '@src/apis/server';
+import Spinner from '@src/components/common/Spinner';
+import { ROUTE_PATH } from '@src/constants/routePath';
 
 const headerText = '공동체 정보 확인하기';
 const headerType = 'back';
@@ -15,26 +20,67 @@ const introBodyLines = [
 
 const CheckInvitedCommunityPage = () => {
   const name = '피크민을 하자';
-  const memberInfo = '멤버 3명';
   const creationDate = '2021.08.01';
   const description = '피크민을 하면서 즐거운 시간을 보내요!';
-  // const longDescription =
-  //   '피크민을 하면서 즐거운 시간을 보내요! 피크민을 하면서 즐거운 시간을 보내요! 피크민을 하면서 즐거운 시간을 보내요!';
   const imageUrl = '';
+
+  const { invitationCode } = useParams<{ invitationCode: string }>();
+  const navigate = useNavigate();
+
+  const {
+    data: server,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['serverByCode', invitationCode],
+    queryFn: () => getServerByCode(invitationCode as string),
+    enabled: !!invitationCode,
+  });
+
+  const joinServer = useMutation({
+    mutationFn: () => postServerJoinByCode(invitationCode as string),
+    onSuccess: () => {
+      console.log('join server success');
+      alert('가입 완료!');
+      const path = ROUTE_PATH.server.replace(
+        ':serverId',
+        server?.serverId.toString() || '',
+      );
+      navigate(path);
+    },
+    onError: () => {
+      console.error('join server error');
+      alert('가입 실패');
+    },
+  });
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (error || !server) {
+    return <div>유효하지 않은 초대 코드입니다.</div>;
+  }
+
+  const memberInfo = `방장 ${server.ownerNickname} ・ 멤버 ${server.memberCount}명`;
+
+  const handleJoinServer = () => {
+    joinServer.mutate();
+  };
   return (
     <>
       <Header text={headerText} headerType={headerType} />
       <Container>
         <IntroSection title={introTitleText} bodyLines={introBodyLines} />
         <CommunityInfoCard
-          name={name}
+          name={server.name}
           memberInfo={memberInfo}
-          creationDate={creationDate}
-          description={description}
-          imageUrl={imageUrl}
+          creationDate={server.createdAt}
+          description={server.description}
+          imageUrl={server.serverImg || ' '}
         />
         <ButtonWrapper>
-          <Button type='submit'>참여하기</Button>
+          <Button type='submit' onClick={handleJoinServer}>
+            참여하기
+          </Button>
         </ButtonWrapper>
         <BottomSpacer />
       </Container>
