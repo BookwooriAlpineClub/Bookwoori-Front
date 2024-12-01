@@ -184,7 +184,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.invitationCode,
-        element: <h1>Invitation Code Page</h1>,
+        element: <EnterInvitationPage />,
       },
       {
         path: ROUTE_PATH.invitationServer,
