@@ -15,9 +15,13 @@ const CommunitySideBar = () => {
   const { sideBar, closeSideBar } = useSideBar();
   // const { id: serverId } = useLoaderData<{ id: number }>();
   const { serverId: id } = useParams<{ serverId: string }>();
-  if (!id)
-    throw new Error('CommunityInfoSettingPage: serverId is not provided');
-  const serverId = parseInt(id, 10);
+  let serverId = 1;
+  if (!id) {
+    serverId = 1;
+  } else {
+    serverId = parseInt(id, 10);
+  }
+
   const { serverInfo, memberList, copyText } = useSideBarData(serverId);
   const { isCopied, handleCopy } = useCopyToClipboard(copyText);
   const { openDialog } = useDialog();
