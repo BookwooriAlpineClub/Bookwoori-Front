@@ -1,27 +1,51 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useDm } from '@src/hooks/query/useDm';
 import ChattingListItem from '@src/components/chatting/ChattingListItem';
 import Header from '@src/components/common/Header';
-import useDm from '@src/hooks/query/useDm';
 
 const ChattingListPage = () => {
-  const { data } = useDm();
+  const { data, isFetchingNextPage, fetchNextPage, isLoading, hasNextPage } =
+    useDm();
+
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && !isLoading && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, isLoading, hasNextPage, fetchNextPage]);
+
+  if(isLoading) {
+    <h3>로딩중...</h3>
+  }
+
   return (
     <>
       <Header text='문자' headerType='hamburger' />
       <SLayout>
-        {data ? (
-          data.map((it) => (
+        {data?.pages?.map((page) =>
+          page.messageRooms.map((it) => (
             <ChattingListItem
               key={it.messageRoomId}
+              memberId={it.memberId}
               nickname={it.nickname}
               imgUrl={it.profileImg}
               time={it.recentMessageTime}
               text={it.recentMessage}
             />
-          ))
-        ) : (
+          )),
+        )}
+        {!isLoading && data?.pages?.length === 0 && (
           <Wrapper>
             <Span>주고 받은 문자가 없습니다.</Span>
+          </Wrapper>
+        )}
+        <div ref={ref} style={{ height: 50 }} />
+        {isFetchingNextPage && (
+          <Wrapper>
+            <Span>데이터 불러오는 중...</Span>
           </Wrapper>
         )}
       </SLayout>
