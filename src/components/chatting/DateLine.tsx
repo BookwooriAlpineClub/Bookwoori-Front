@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 
 const DateLine = ({ date }: { date: string }) => {
+  const [year, month, day] = date.split('-');
+  
   return (
     <SLayout>
       <SLine />
-      <SLabel>{date}</SLabel>
+      <SLabel>
+        {year}년 {month}월 {day}일
+      </SLabel>
       <SLine />
     </SLayout>
   );
@@ -26,7 +30,7 @@ const SLine = styled.div`
   background-color: ${({ theme }) => theme.colors.black200};
 `;
 const SLabel = styled.label`
-  max-width: 4.6875rem;
+  max-width: 5.9375rem;
   width: 100%;
 
   ${({ theme }) => theme.fonts.caption};
