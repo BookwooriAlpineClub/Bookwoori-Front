@@ -57,6 +57,20 @@ const CommunityInfoSettingPage = React.lazy(
   () => import('@src/pages/communityinfosetting/CommunityInfoSettingPage'),
 );
 
+/* add-server */
+const AddCommunityPage = React.lazy(
+  () => import('@src/pages/addcommunity/AddCommunityPage'),
+);
+const CreateNewCommunityPage = React.lazy(
+  () => import('@src/pages/addcommunity/CreateNewCommunityPage'),
+);
+const EnterInvitationPage = React.lazy(
+  () => import('@src/pages/addcommunity/EnterInvitationPage'),
+);
+const CheckInvitedCommunityPage = React.lazy(
+  () => import('@src/pages/addcommunity/CheckInvitedCommunityPage'),
+);
+
 /* climbing */
 const ClimbingAddPage = React.lazy(
   () => import('@src/pages/channel/ChannelAddPage'),
@@ -173,23 +187,23 @@ const router = createBrowserRouter([
       /* add-server */
       {
         path: ROUTE_PATH.addServer,
-        element: <h1>Add Server Page</h1>,
+        element: <AddCommunityPage />,
       },
       {
         path: ROUTE_PATH.createServer,
-        element: <h1>Create Server Page</h1>,
+        element: <CreateNewCommunityPage />,
       },
       {
         path: ROUTE_PATH.invitationCode,
-        element: <h1>Invitation Code Page</h1>,
+        element: <EnterInvitationPage />,
       },
       {
         path: ROUTE_PATH.invitationServer,
-        element: <h1>Invitation Server Page</h1>,
+        element: <CheckInvitedCommunityPage />,
       },
       {
         path: ROUTE_PATH.joinServer,
-        element: <h1>Join Server Page</h1>,
+        element: <EnterInvitationPage />,
       },
       /* server */
       {
