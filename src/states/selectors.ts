@@ -9,3 +9,5 @@ export const serverbarSelector = selector<Serverbar>({
     return { content, isOpen, transition };
   },
 });
+
+export const empty = {};

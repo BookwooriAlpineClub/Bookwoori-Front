@@ -19,10 +19,10 @@ const introBodyLines = [
 ];
 
 const CheckInvitedCommunityPage = () => {
-  const name = '피크민을 하자';
-  const creationDate = '2021.08.01';
-  const description = '피크민을 하면서 즐거운 시간을 보내요!';
-  const imageUrl = '';
+  // const name = '피크민을 하자';
+  // const creationDate = '2021.08.01';
+  // const description = '피크민을 하면서 즐거운 시간을 보내요!';
+  // const imageUrl = '';
 
   const { invitationCode } = useParams<{ invitationCode: string }>();
   const navigate = useNavigate();

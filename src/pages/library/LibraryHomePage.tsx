@@ -17,6 +17,13 @@ const seasonalColors = {
   winter: ['#C2DFFF', '#E8F1F8', '#9FCFEF'],
 };
 
+export type MountainData = {
+  mountainHeight: number;
+  height?: number; // profileData?.height는 undefined일 수 있으므로 optional로 처리
+  profileImg?: string | null; // null 가능성을 고려
+  profileName?: string | null; // null 가능성을 고려
+};
+
 const LibraryHomePage = () => {
   const { profileData } = useMember();
   const navigate = useNavigate();
@@ -26,7 +33,8 @@ const LibraryHomePage = () => {
     { text: '지나온 길(m)', value: profileData?.height },
     { text: '읽어낸 책(p)', value: profileData?.totalPage },
   ];
-  const mountainData = {
+
+  const mountainData: MountainData = {
     mountainHeight: 300,
     height: profileData?.height,
     profileImg: profileData?.profileImg,

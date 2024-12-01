@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import ProfileCircle from '@src/components/common/ProfileCircle';
 import { Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
-
+import { MountainData } from '@src/pages/library/LibraryHomePage';
+/* disable-eslint */
 const remToPx = (rem: number): number =>
   rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
@@ -10,7 +11,7 @@ const MountainImage = ({
   mountainData,
   seasonalColor,
 }: {
-  mountainData: any;
+  mountainData: MountainData;
   seasonalColor: string[];
 }) => {
   const [progress, setProgress] = useState(0);
@@ -118,7 +119,7 @@ const MountainImage = ({
                   >
                     <ProfileCircle
                       profileImg={mountainData.profileImg ?? ''}
-                      nickname={mountainData.profileName}
+                      nickname={mountainData.profileName ?? ''}
                     />
                   </div>
                 </StyledTooltip>
@@ -132,7 +133,7 @@ const MountainImage = ({
                 >
                   <ProfileCircle
                     profileImg={mountainData.profileImg ?? ''}
-                    nickname={mountainData.profileName}
+                    nickname={mountainData.profileName ?? ''}
                   />
                 </div>
               )}
