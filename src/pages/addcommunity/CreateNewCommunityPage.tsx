@@ -94,15 +94,17 @@ const Container = styled.div`
   align-items: center;
   gap: 1.25rem;
   padding: 1.875rem 1.25rem 0;
-  width: 100svw;
-  min-height: calc(100svh - 4.375rem);
+  width: 100%;
+  height: calc(100svh - 4.375rem);
   background-color: ${({ theme }) => theme.colors.black300};
 `;
 const ButtonWrapper = styled.div`
   position: fixed;
-  bottom: calc(1.875rem + 2px); // Button에 px가 포함되어 있어 어쩔 수 없다
+  bottom: calc(1.875rem + 2px);
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  padding: 0 1.25rem;
 `;
 
 const BottomSpacer = styled.div`

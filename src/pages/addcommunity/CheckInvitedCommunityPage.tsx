@@ -45,14 +45,11 @@ const CheckInvitedCommunityPage = () => {
 export default CheckInvitedCommunityPage;
 
 const Container = styled.div`
-  width: 100vw;
-  width: 100svw;
-  min-height: calc(100vh - 4.375rem);
-  min-height: calc(100svh - 4.375rem);
+  min-height: calc(100% - 4.375rem);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.98rem;
+  gap: 1.5rem;
   padding: 0 1.25rem;
   padding-top: 1.875rem;
   background-color: ${({ theme }) => theme.colors.black300};
@@ -63,6 +60,8 @@ const ButtonWrapper = styled.div`
   bottom: calc(1.875rem + 2px);
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  padding: 0 1.25rem;
 `;
 
 const BottomSpacer = styled.div`
