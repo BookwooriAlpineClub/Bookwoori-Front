@@ -113,7 +113,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryBookDetail,
-        element: <h1>Library Book Detail</h1>,
+        element: <RecordDetailPage />,
         loader: (args) => isParamLoader(args, 'bookId'),
       },
       {
