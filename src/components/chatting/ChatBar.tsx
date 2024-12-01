@@ -2,12 +2,39 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import { ReactComponent as Send } from '@src/assets/icons/send.svg';
 import { ReactComponent as SendGreen } from '@src/assets/icons/send_green.svg';
+import { sendHandler } from '@src/apis/chat';
+import useLoaderData from '@src/hooks/useRoaderData';
 
 const ChatBar = ({ nickname }: { nickname: string }) => {
+  const { id: messageRoomId } = useLoaderData<{ id: number }>();
   const [chat, setChat] = useState<string>('');
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChat(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
+
+  const handleSendMessage = async () => {
+    if (!chat.trim()) return;
+
+    const message: MessageRequest = {
+      messageRoomId,
+      type: 'text',
+      content: chat,
+    };
+
+    try {
+      await sendHandler(message, '/pub/direct/send');
+      console.log('Message sent successfully');
+      setChat('');
+    } catch (error) {
+      console.error('Failed to send message:', error);
+    }
   };
 
   return (
@@ -17,8 +44,11 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
         value={chat}
         onChange={handleChangeInput}
         placeholder={`${nickname}에게 문자 보내기`}
+        onKeyDown={handleKeyDown}
       />
-      <SButton type='button'>{chat ? <SendGreen /> : <Send />}</SButton>
+      <SButton type='button' onClick={handleSendMessage}>
+        {chat ? <SendGreen /> : <Send />}
+      </SButton>
     </SLayout>
   );
 };
