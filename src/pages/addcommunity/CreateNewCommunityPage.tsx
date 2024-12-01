@@ -6,6 +6,8 @@ import InputField from '@src/components/common/InputField';
 import TextAreaField from '@src/components/common/TextAreaField';
 import Button from '@src/components/common/Button';
 import ImageUploadField from '@src/components/addcommunity/ImageUploadField';
+import { postServer } from '@src/apis/server';
+import { useMutation } from '@tanstack/react-query';
 
 const headerText = '새로운 공동체 생성하기';
 const headerType = 'back';
@@ -16,6 +18,23 @@ const CreateNewCommunityPage = () => {
   const [communityDescription, setCommunityDescription] = useState<string>('');
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
+  const { mutate: createServer } = useMutation({
+    mutationFn: (data: {
+      name: string;
+      description: string;
+      serverImg: File | null;
+    }) => postServer(data),
+    onSuccess: () => {
+      alert('성공적으로 생성되었습니다.');
+      setCommunityName('');
+      setCommunityImage(null);
+      setCommunityDescription('');
+    },
+    onError: (err) => {
+      console.error(err);
+      alert('공동체 생성에 실패했습니다.');
+    },
+  });
   useEffect(() => {
     setIsFormValid(
       communityName.trim().length > 0 && communityDescription.trim().length > 0,
@@ -42,9 +61,11 @@ const CreateNewCommunityPage = () => {
   const handleCreateCommunity = () => {
     const imageToSave = communityImage as File;
     if (isFormValid) {
-      alert(
-        `Create community with name: ${communityName}\nDescription: ${communityDescription}\nImage: ${imageToSave?.name}`,
-      );
+      createServer({
+        name: communityName,
+        description: communityDescription,
+        serverImg: imageToSave,
+      });
     }
   };
   return (
