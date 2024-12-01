@@ -11,6 +11,8 @@ const Tag = ({ children }: Props) => {
 export default Tag;
 
 const Container = styled.mark`
+  width: fit-content;
+  height: fit-content;
   padding: 0.25rem 0.625rem;
 
   border-radius: 6.1875rem;
