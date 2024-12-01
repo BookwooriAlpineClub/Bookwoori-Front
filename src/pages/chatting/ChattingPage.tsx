@@ -155,7 +155,7 @@ const ChattingPage = () => {
                   nickname={nickname}
                 />
                 {showDateLine ||
-                  (idx === messages.length - 1 && (
+                  ((idx === messages.length - 1 || idx === 0) && (
                     <DateLine date={currentDate ?? ''} />
                   ))}
               </React.Fragment>
