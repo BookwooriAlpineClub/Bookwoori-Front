@@ -1,3 +1,5 @@
+/* eslint-disable react/button-has-type */
+/* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 import { connectHandler, sendHandler, disconnectHandler } from '@src/apis/chat';
 
