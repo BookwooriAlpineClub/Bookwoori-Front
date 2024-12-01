@@ -1,0 +1,32 @@
+<svg
+  width="current"
+  height="current"
+  viewBox="0 0 20 20"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    id="Vector"
+    stroke="currentColor"
+    stroke-width="1.66667"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="M15.8333 17.5H4.16667C3.72463 17.5 3.30072 17.3243 2.98815 17.0118C2.6756 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72463 2.6756 3.30072 2.98815 2.98815C3.30072 2.6756 3.72463 2.5 4.16667 2.5H13.3333L17.5 6.66667V15.8333C17.5 16.2754 17.3243 16.6993 17.0118 17.0118C16.6993 17.3243 16.2754 17.5 15.8333 17.5Z"
+  />
+  <path
+    id="Vector_2"
+    stroke="currentColor"
+    stroke-width="1.66667"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="M14.1666 17.4997V10.833H5.83325V17.4997"
+  />
+  <path
+    id="Vector_3"
+    stroke="currentColor"
+    stroke-width="1.66667"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="M5.83325 2.5V6.66667H12.4999"
+  />
+</svg>
