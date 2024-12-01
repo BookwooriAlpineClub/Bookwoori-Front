@@ -10,7 +10,7 @@ interface ImageUploadFieldProps {
 }
 
 const ImageUploadField = ({
-  previewImg = '',
+  previewImg,
   onFileChange,
 }: ImageUploadFieldProps) => {
   const { file, preview, handleFileUpload, handleFileDelete } = useUploadFile(

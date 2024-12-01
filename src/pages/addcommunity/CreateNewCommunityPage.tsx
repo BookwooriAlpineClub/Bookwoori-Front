@@ -42,11 +42,7 @@ const CreateNewCommunityPage = () => {
   }, [communityName, communityImage, communityDescription]);
 
   const handleFileUpload = (file: File | null) => {
-    if (file) {
-      setCommunityImage(file);
-    } else {
-      setCommunityImage(null);
-    }
+    setCommunityImage(file);
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +77,12 @@ const CreateNewCommunityPage = () => {
           />
         </TitleAndFieldContainer>
         <TitleAndFieldContainer title='공동체 사진'>
-          <ImageUploadField onFileChange={handleFileUpload} />
+          <ImageUploadField
+            previewImg={
+              communityImage ? URL.createObjectURL(communityImage) : ''
+            }
+            onFileChange={handleFileUpload}
+          />
         </TitleAndFieldContainer>
         <TitleAndFieldContainer title='공동체 소개'>
           <TextAreaField
