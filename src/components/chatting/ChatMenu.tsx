@@ -1,16 +1,25 @@
 import styled from 'styled-components';
-import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
+// import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Copy } from '@src/assets/icons/copy.svg';
-import { ReactComponent as Delete } from '@src/assets/icons/trash.svg';
+// import { ReactComponent as Delete } from '@src/assets/icons/trash.svg';
 import { useState } from 'react';
+import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 
-const ChatMenu = ({ emoji }: { emoji?: string }) => {
+const ChatMenu = ({ emoji, content }: { emoji?: string; content: string }) => {
+  // const emojis = {
+  //   THUMBS_UP: '👍',
+  //   HEART: '🫶',
+  //   SMILING_FACE: '☺️',
+  //   SAD: '😢',
+  //   HMM: '🤔',
+  // };
   const emojiList = ['👍', '🫶', '☺️', '😢', '🤔'];
+  const { handleCopy } = useCopyToClipboard(content);
   const [clickedEmoji, setClickedEmoji] = useState<string | undefined>(emoji);
   const buttonData = [
-    { icon: <Edit width='20px' height='20px' />, label: '수정하기' },
-    { icon: <Copy />, label: '글자 복사하기' },
-    { icon: <Delete />, label: '삭제하기' },
+    // { icon: <Edit width='20px' height='20px' />, label: '수정하기' },
+    { icon: <Copy />, label: '글자 복사하기', onClick: handleCopy },
+    // { icon: <Delete />, label: '삭제하기' },
   ];
 
   const handleClickEmoji = (
@@ -39,8 +48,8 @@ const ChatMenu = ({ emoji }: { emoji?: string }) => {
           </SEmoji>
         ))}
       </SContainer>
-      {buttonData.map(({ icon, label }) => (
-        <SButton key={label} type='button'>
+      {buttonData.map(({ icon, label, onClick }) => (
+        <SButton key={label} type='button' onClick={onClick}>
           <Icon>{icon}</Icon>
           {label}
         </SButton>
