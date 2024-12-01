@@ -45,7 +45,17 @@ const EnterInvitationPage = () => {
   }, [invitationCode]);
 
   return (
-    <>
+    <div
+      style={{
+        transform: isTransitioning ? 'translateX(-100%)' : 'translateX(0)',
+        transition: 'transform 300ms ease-in-out',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+      }}
+    >
       <Header text={headerText} headerType={headerType} />
       <Container>
         <IntroSection title={introTitleText} bodyLines={introBodyLines} />
