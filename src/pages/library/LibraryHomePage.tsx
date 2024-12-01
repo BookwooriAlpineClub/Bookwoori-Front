@@ -10,17 +10,18 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 
 const seasonalColors = {
-  default: ['#C1E1C1', '#D1FD57', '#A5D900'], // 부드러운 라임 그린 추가
-  spring: ['#A8D5BA', '#D8F5A2', '#86C988'], // 은은한 초록빛 추가
-  summer: ['#2C5F2D', '#4CA1A3', '#299DBA'], // 차분한 청록색 추가
-  autumn: ['#F2C14E', '#F89B00', '#E07A00'], // 부드러운 오렌지톤 추가
-  winter: ['#C2DFFF', '#E8F1F8', '#9FCFEF'], // 차분한 하늘색 추가
+  december: ['#228B22', '#E8F1F8', '#FFF'],
+  spring: ['#A8D5BA', '#D8F5A2', '#86C988'],
+  summer: ['#2C5F2D', '#4CA1A3', '#299DBA'],
+  autumn: ['#F2C14E', '#F89B00', '#E07A00'],
+  winter: ['#C2DFFF', '#E8F1F8', '#9FCFEF'],
 };
 
 const LibraryHomePage = () => {
   const { profileData } = useMember();
   const navigate = useNavigate();
 
+  const season = 'spring';
   const exp = [
     { text: '지나온 길(m)', value: profileData?.height },
     { text: '읽어낸 책(p)', value: profileData?.totalPage },
