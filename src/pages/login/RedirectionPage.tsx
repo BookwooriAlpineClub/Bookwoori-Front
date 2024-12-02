@@ -6,9 +6,9 @@ import Spinner from '@src/components/common/Spinner';
 const RedirectionPage = () => {
   const [searchParams] = useSearchParams();
   const accessToken = searchParams.get('accessToken');
-  const refreshToken = searchParams.get('refreshToken') ?? '';
-
-  if (accessToken) {
+  const refreshToken = searchParams.get('refreshToken');
+        
+  if (accessToken && refreshToken) {
     localStorage.setItem('accessToken', accessToken);
     sessionStorage.setItem('refreshToken', refreshToken);
     window.location.replace(ROUTE_PATH.root);

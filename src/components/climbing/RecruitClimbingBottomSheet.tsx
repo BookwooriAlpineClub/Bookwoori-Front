@@ -1,17 +1,23 @@
 import styled from 'styled-components';
 import { ROUTE_PATH } from '@src/constants/routePath';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ReactComponent as Plus } from '@src/assets/icons/hi_outline_plus.svg';
 import RecruitClimbingItem from '@src/components/climbing/RecruitClimbingItem';
 import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
+import { decodeIdParam } from '@src/utils/formatters';
 
 const RecruitClimbingBottomSheet = ({
   closeBottomSheet,
 }: {
   closeBottomSheet: () => void;
 }) => {
-  const serverId = 3;
-  const { data = [] } = useClimbingRecruit(Number(serverId));
+  const { serverId: id } = useParams<{ serverId: string }>();
+  let serverId = id;
+  if (!id) {
+    console.error('바텀시트 서버 아이디 못 읽어옴');
+    serverId = '임시id';
+  }
+  const { data = [] } = useClimbingRecruit(decodeIdParam(serverId));
   const navigate = useNavigate();
 
   const handleClick = () => {
