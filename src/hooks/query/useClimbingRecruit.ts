@@ -42,8 +42,16 @@ const useClimbingRecruit = (serverId: number, climbingId?: number) => {
   const participateClimbing = useMutation({
     mutationKey: ['putParticipate'],
     mutationFn: () => putParticipate(climbingId ?? 0),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ['/climbs/ready'] }),
+    onSuccess: () => {
+      Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ['/climbs/ready', serverId],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['getServerClimbing'],
+        }),
+      ]);
+    },
   });
 
   const editClimbing = useMutation({
