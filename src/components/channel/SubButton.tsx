@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 
-const SubButton = ({ children }: { children: React.ReactNode }) => {
-  return <SButton>{children}</SButton>;
+const SubButton = ({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+}) => {
+  return <SButton onClick={onClick}>{children}</SButton>;
 };
 
 export default SubButton;

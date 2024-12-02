@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CameraIcon } from '@src/assets/icons/md_camera_alt.svg';
 import useUploadFile from '@src/hooks/useUploadFile';
+import { communityFileState } from '@src/states/atoms';
 
 interface ImageUploadFieldProps {
   previewImg?: string;
@@ -9,11 +10,13 @@ interface ImageUploadFieldProps {
 }
 
 const ImageUploadField = ({
-  previewImg = '',
+  previewImg,
   onFileChange,
 }: ImageUploadFieldProps) => {
-  const { file, preview, handleFileUpload, handleFileDelete } =
-    useUploadFile(previewImg);
+  const { file, preview, handleFileUpload, handleFileDelete } = useUploadFile(
+    previewImg,
+    communityFileState,
+  );
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const openFilePicker = () => {

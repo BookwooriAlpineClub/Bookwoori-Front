@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import useDialog from '@src/hooks/useDialog';
 import MemoDialog from '@src/components/climbing/MemoDialog';
 import { ReactComponent as Plus } from '@src/assets/icons/hi_outline_plus.svg';
+import useLoaderData from '@src/hooks/useRoaderData';
 
 type MemoProps = {
   memo: string;
@@ -9,16 +10,23 @@ type MemoProps = {
 };
 
 const Memo = ({ memo, isUser }: MemoProps) => {
+  const { id } = useLoaderData<{ id: number }>();
   const { openDialog, closeDialog } = useDialog();
 
   const handleClickMemo = () => {
-    openDialog(<MemoDialog memo={memo} closeDialog={closeDialog} />);
+    openDialog(<MemoDialog id={id} memo={memo} closeDialog={closeDialog} />);
   };
 
   return (
     <Layout type='button' onClick={handleClickMemo} disabled={!isUser}>
-      <Triangle />
-      <TextBox>{memo ? `${memo}` : <SPlus />}</TextBox>
+      {isUser ? (
+        <>
+          <Triangle />
+          <TextBox>{memo || <SPlus />}</TextBox>
+        </>
+      ) : (
+        <Blank />
+      )}
     </Layout>
   );
 };
@@ -59,4 +67,7 @@ const SPlus = styled(Plus)`
   height: 0.9375rem;
 
   fill: ${({ theme }) => theme.colors.blue200};
+`;
+const Blank = styled.div`
+  height: 2.725rem;
 `;

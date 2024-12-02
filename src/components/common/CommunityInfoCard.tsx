@@ -47,7 +47,6 @@ const CardContainer = styled.section`
 const ImageWrapper = styled.div`
   width: 9.375rem;
   height: 9.375rem;
-  padding: 0.875rem 0.625rem;
   justify-content: space-between;
   align-items: center;
   overflow: hidden;

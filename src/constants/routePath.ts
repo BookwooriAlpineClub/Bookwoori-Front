@@ -6,6 +6,7 @@ export const ROUTE_PATH = {
   /* auth */
   root: '/',
   signIn: '/sign-in',
+  redirection: '/auth/success',
   /* library */
   library: '/library',
   libraryMember: '/library/:memberId',
@@ -35,8 +36,10 @@ export const ROUTE_PATH = {
   /* server */
   server: '/server/:serverId',
   serverChannel: '/server/:serverId/:channelId',
-  addChannel: '/server/:serverId/create',
+  addCategory: '/server/:serverId/create/category',
+  addChannel: '/server/:serverId/create/channel',
   editChannelOne: '/server/:serverId/:channelId/edit',
+  serverSetting: '/server/:serverId/info-setting',
   /* climbing */
   climbing: '/climbing/:climbingId',
   climbingCreate: '/climbing/create',

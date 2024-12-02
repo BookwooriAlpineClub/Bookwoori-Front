@@ -2,7 +2,7 @@ import type { BookListItem } from '@src/types/apis/book.d';
 import { useNavigate, createSearchParams, useLocation } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import styled from 'styled-components';
-import { ListLayout } from '@src/styles/mixins';
+import { NoDataTextLayout } from '@src/styles/mixins';
 import BookinfoItem from '@src/components/book/BookinfoItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 import { ReactComponent as IcnClose } from '@src/assets/icons/ck_close.svg';
@@ -58,13 +58,13 @@ const SearchPage = () => {
   };
 
   return (
-    <ListLayout>
+    <NoDataTextLayout>
       <Header>
         <Form onSubmit={handleFormSubmit}>
           <IcnSearch width={20} height={20} />
           <Input
-            type='text'
             name='keyword'
+            type='search'
             placeholder='책 제목, 작가를 검색해 보세요.'
           />
         </Form>
@@ -74,9 +74,7 @@ const SearchPage = () => {
       </Header>
       {keyword && (
         <main>
-          {data.length === 0 ? (
-            <strong>검색 결과가 없어요.</strong>
-          ) : (
+          {data.length !== 0 ? (
             <Ul>
               {data.map((item) => (
                 <BookinfoItem
@@ -86,10 +84,12 @@ const SearchPage = () => {
                 />
               ))}
             </Ul>
+          ) : (
+            <strong>검색 결과가 없어요.</strong>
           )}
         </main>
       )}
-    </ListLayout>
+    </NoDataTextLayout>
   );
 };
 

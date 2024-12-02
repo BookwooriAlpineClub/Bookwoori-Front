@@ -6,6 +6,8 @@ import InputField from '@src/components/common/InputField';
 import TextAreaField from '@src/components/common/TextAreaField';
 import Button from '@src/components/common/Button';
 import ImageUploadField from '@src/components/addcommunity/ImageUploadField';
+import { postServer } from '@src/apis/server';
+import { useMutation } from '@tanstack/react-query';
 
 const headerText = '새로운 공동체 생성하기';
 const headerType = 'back';
@@ -16,6 +18,23 @@ const CreateNewCommunityPage = () => {
   const [communityDescription, setCommunityDescription] = useState<string>('');
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
+  const { mutate: createServer } = useMutation({
+    mutationFn: (data: {
+      name: string;
+      description: string;
+      serverImg: File | null;
+    }) => postServer(data),
+    onSuccess: () => {
+      alert('성공적으로 생성되었습니다.');
+      setCommunityName('');
+      setCommunityImage(null);
+      setCommunityDescription('');
+    },
+    onError: (err) => {
+      console.error(err);
+      alert('공동체 생성에 실패했습니다.');
+    },
+  });
   useEffect(() => {
     setIsFormValid(
       communityName.trim().length > 0 && communityDescription.trim().length > 0,
@@ -23,11 +42,7 @@ const CreateNewCommunityPage = () => {
   }, [communityName, communityImage, communityDescription]);
 
   const handleFileUpload = (file: File | null) => {
-    if (file) {
-      setCommunityImage(file);
-    } else {
-      setCommunityImage(null);
-    }
+    setCommunityImage(file);
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,9 +57,11 @@ const CreateNewCommunityPage = () => {
   const handleCreateCommunity = () => {
     const imageToSave = communityImage as File;
     if (isFormValid) {
-      alert(
-        `Create community with name: ${communityName}\nDescription: ${communityDescription}\nImage: ${imageToSave?.name}`,
-      );
+      createServer({
+        name: communityName,
+        description: communityDescription,
+        serverImg: imageToSave,
+      });
     }
   };
   return (
@@ -60,7 +77,12 @@ const CreateNewCommunityPage = () => {
           />
         </TitleAndFieldContainer>
         <TitleAndFieldContainer title='공동체 사진'>
-          <ImageUploadField onFileChange={handleFileUpload} />
+          <ImageUploadField
+            previewImg={
+              communityImage ? URL.createObjectURL(communityImage) : ''
+            }
+            onFileChange={handleFileUpload}
+          />
         </TitleAndFieldContainer>
         <TitleAndFieldContainer title='공동체 소개'>
           <TextAreaField
@@ -94,15 +116,17 @@ const Container = styled.div`
   align-items: center;
   gap: 1.25rem;
   padding: 1.875rem 1.25rem 0;
-  width: 100svw;
-  min-height: calc(100svh - 4.375rem);
+  width: 100%;
+  height: calc(100svh - 4.375rem);
   background-color: ${({ theme }) => theme.colors.black300};
 `;
 const ButtonWrapper = styled.div`
   position: fixed;
-  bottom: calc(1.875rem + 2px); // Button에 px가 포함되어 있어 어쩔 수 없다
+  bottom: calc(1.875rem + 2px);
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  padding: 0 1.25rem;
 `;
 
 const BottomSpacer = styled.div`
