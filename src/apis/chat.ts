@@ -4,12 +4,10 @@ import { Client, Frame, IMessage } from '@stomp/stompjs';
 const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL!;
 
 let stompClient: Client | null = null;
-type MessageHandler<T extends ChatEvent | MessageRequest> = (
-  message: T,
-) => void;
+type MessageHandler<T extends ChatEvent> = (message: T) => void;
 
 // WebSocket 연결 & 구독
-export const connectHandler = <T extends ChatEvent | MessageRequest>(
+export const connectHandler = <T extends ChatEvent>(
   onMessage: MessageHandler<T>,
   subscribeUrl: string,
 ) => {
