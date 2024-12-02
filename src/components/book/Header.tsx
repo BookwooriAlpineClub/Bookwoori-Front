@@ -25,21 +25,17 @@ const Header = ({ buttonList }: Props) => {
     // API delete 요청
     navigate(ROUTE_PATH.libraryRecord, { replace: true });
   };
-  const handleSaveClick = () => {
-    // API put 요청
-    const path = location.pathname.replace(/\/edit$/, '');
-    navigate(path, { replace: true });
-  };
 
   const buttonConfig: {
     [key: string]: {
       Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
-      onClick: () => void;
+      type: 'button' | 'submit' | 'reset';
+      onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
     };
   } = {
-    edit: { Icon: IcnPencil, onClick: handleEditClick },
-    delete: { Icon: IcnTrash, onClick: handleDeleteClick },
-    save: { Icon: IcnSave, onClick: handleSaveClick },
+    edit: { Icon: IcnPencil, type: 'button', onClick: handleEditClick },
+    delete: { Icon: IcnTrash, type: 'button', onClick: handleDeleteClick },
+    save: { Icon: IcnSave, type: 'submit', onClick: undefined },
   };
 
   return (
@@ -49,10 +45,10 @@ const Header = ({ buttonList }: Props) => {
       </Button>
       <ButtonWrapper>
         {buttonList.map((item) => {
-          const button = buttonConfig[item];
+          const { Icon, type, onClick } = buttonConfig[item];
           return (
-            <Button key={item} onClick={button.onClick}>
-              <button.Icon width={20} height={20} />
+            <Button key={item} type={type} onClick={onClick}>
+              <Icon width={20} height={20} />
             </Button>
           );
         })}
@@ -75,6 +71,6 @@ const ButtonWrapper = styled.div`
   flex-flow: row nowrap;
   gap: 1rem;
 `;
-const Button = styled.button.attrs({ type: 'button' })`
+const Button = styled.button`
   display: flex;
 `;

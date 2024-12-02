@@ -7,20 +7,25 @@ export type Period = {
   end: string;
 };
 interface Props {
-  readingStatus: 'WISH' | 'READING' | 'FINISHED';
-  readOnly: boolean;
+  name: string;
+  readOnly?: boolean;
   value: Period;
   setValue?: React.Dispatch<React.SetStateAction<Period>>;
+  readingStatus: 'WISH' | 'READING' | 'FINISHED';
 }
 
-const InputPeriod = ({ readingStatus, readOnly, value, setValue }: Props) => {
-  const title: string = '독서 기간';
-
+const InputPeriod = ({
+  name = '독서 기간',
+  readOnly = false,
+  value,
+  setValue,
+  readingStatus,
+}: Props) => {
   return (
-    <Fieldset title={title}>
+    <Fieldset title={name}>
       <Container>
         <Input
-          name={title}
+          name={name}
           value={value.start}
           max={value.end}
           pattern='\d{4}-\d{2}-\d{2}'
@@ -33,7 +38,7 @@ const InputPeriod = ({ readingStatus, readOnly, value, setValue }: Props) => {
         <Hyphen>-</Hyphen>
         {readingStatus === 'FINISHED' ? (
           <Input
-            name={title}
+            name={name}
             value={value.end}
             min={value.start}
             pattern='\d{4}-\d{2}-\d{2}'
