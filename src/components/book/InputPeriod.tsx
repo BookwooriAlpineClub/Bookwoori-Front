@@ -8,12 +8,17 @@ export type Period = {
 };
 interface Props {
   readingStatus: 'WISH' | 'READING' | 'FINISHED';
-  readOnly: boolean;
+  readOnly?: boolean;
   value: Period;
   setValue?: React.Dispatch<React.SetStateAction<Period>>;
 }
 
-const InputPeriod = ({ readingStatus, readOnly, value, setValue }: Props) => {
+const InputPeriod = ({
+  readingStatus,
+  readOnly = false,
+  value,
+  setValue,
+}: Props) => {
   const title: string = '독서 기간';
 
   return (

@@ -6,7 +6,7 @@ import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 interface Props {
   star: number;
   reviewContent: string;
-  readOnly: boolean;
+  readOnly?: boolean;
   setNum?: React.Dispatch<React.SetStateAction<number>>;
   setStr?: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -14,7 +14,7 @@ interface Props {
 const InputReview = ({
   star,
   reviewContent,
-  readOnly,
+  readOnly = false,
   setNum,
   setStr,
 }: Props) => {
