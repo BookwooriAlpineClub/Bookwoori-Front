@@ -45,10 +45,10 @@ const Header = ({ buttonList }: Props) => {
       </Button>
       <ButtonWrapper>
         {buttonList.map((item) => {
-          const button = buttonConfig[item];
+          const { Icon, type, onClick } = buttonConfig[item];
           return (
-            <Button key={item} type={button.type} onClick={button.onClick}>
-              <button.Icon width={20} height={20} />
+            <Button key={item} type={type} onClick={onClick}>
+              <Icon width={20} height={20} />
             </Button>
           );
         })}
