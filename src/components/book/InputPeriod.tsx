@@ -60,6 +60,7 @@ const Container = styled.div`
 
   padding: 0.75rem 1rem;
 
+  border-radius: 1rem;
   background-color: ${({ theme }) => theme.colors.white};
 
   &:has(input:read-only) {
@@ -82,5 +83,7 @@ const Hyphen = styled.span`
   ${NoSelect}
 `;
 const Text = styled(Hyphen)`
+  text-align: center;
+
   width: 100%;
 `;
