@@ -1,6 +1,10 @@
 import { AxiosResponse } from 'axios';
 import { authClient } from '@src/apis/index';
-import { Climbing, ReviewEmojiResponse } from '@src/types/apis/climbing.d';
+import {
+  Climbing,
+  ClimbingResponse,
+  ReviewEmojiResponse,
+} from '@src/types/apis/climbing.d';
 
 const CLIMB_BASE_URL = '/climbs';
 const buildClimbUrl = (path: string = '') => `${CLIMB_BASE_URL}${path}`;
@@ -41,15 +45,27 @@ export const getClimbing = async <Res = Climbing>(
   return response.data;
 };
 
-export const patchClimbingReview = async <Res = void, Req = Partial<Climbing>>(
+export const getClimbingReview = async <Res = ClimbingResponse>(
   climbingId: number,
-  body: Req,
   headers?: Record<string, string>,
 ): Promise<Res> => {
-  const response = await authClient.patch<Res, AxiosResponse<Res>, Req>(
+  try {
+    const response = await authClient.get<Res, AxiosResponse<Res>>(
+      buildClimbUrl(`/${climbingId}/reviews`),
+      { headers },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API error:', error);
+    throw error;
+  }
+};
+
+export const patchShareClimbingReview = async <Res = void>(
+  climbingId: number,
+): Promise<Res> => {
+  const response = await authClient.patch<Res, AxiosResponse<Res>>(
     buildClimbUrl(`/${climbingId}/reviews`),
-    body,
-    { headers: { 'Content-Type': 'application/json', ...headers } },
   );
   return response.data;
 };

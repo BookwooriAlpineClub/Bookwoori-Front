@@ -40,4 +40,5 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   min-height: calc(100% - 4.375rem);
   position: relative;
+  height: calc(100% - 4.375rem);
 `;
