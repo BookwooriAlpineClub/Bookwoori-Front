@@ -1,4 +1,3 @@
-import type { ServerListItem } from '@src/types/apis/server';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { serverbarState, currentServerIdState } from '@src/states/atoms';
@@ -6,6 +5,7 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import { decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useServerbar from '@src/hooks/useServerbar';
+import useServer from '@src/hooks/query/useServer';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 import { ReactComponent as IcnLibrary } from '@src/assets/icons/library.svg';
@@ -53,7 +53,7 @@ const Serverbar = () => {
   }
   setCurrentServerId(decodedServerId);
 
-  const serverList: ServerListItem[] = [];
+  const { serverList } = useServer();
   const isNotiRead;
   const isChatRead;
 
@@ -120,7 +120,7 @@ const Serverbar = () => {
               {(name === '서재' || name === '계정 설정') && <Hr />}
             </>
           ))}
-          {serverList.length !== 0 &&
+          {serverList &&
             serverList.map(({ serverId, serverImg }) => (
               <ImageButton key={serverId} $img={serverImg || ''}>
                 <input
