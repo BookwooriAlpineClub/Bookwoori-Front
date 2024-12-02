@@ -47,23 +47,25 @@ const RecordDetailPage = () => {
     <Container>
       <Header buttonList={['edit', 'delete']} />
       <BookInfoDetail status={status} {...bookInfo} />
-      {(status === 'READING' || status === 'FINISHED') && (
-        <InputPeriod
-          readingStatus={status}
-          readOnly
-          value={{ start: startDate, end: endDate }}
-        />
-      )}
-      {status === 'READING' && (
-        <InputPage
-          currentPage={currentPage}
-          itemPage={bookInfo.itemPage}
-          readOnly
-        />
-      )}
-      {status === 'FINISHED' && (
-        <InputReview star={star} reviewContent={reviewContent} readOnly />
-      )}
+      <Form>
+        {(status === 'READING' || status === 'FINISHED') && (
+          <InputPeriod
+            readingStatus={status}
+            readOnly
+            value={{ start: startDate, end: endDate }}
+          />
+        )}
+        {status === 'READING' && (
+          <InputPage
+            currentPage={currentPage}
+            itemPage={bookInfo.itemPage}
+            readOnly
+          />
+        )}
+        {status === 'FINISHED' && (
+          <InputReview star={star} reviewContent={reviewContent} readOnly />
+        )}
+      </Form>
       <Description>
         <h2>책 소개</h2>
         <p>{bookInfo.description}</p>
@@ -81,8 +83,7 @@ const Container = styled.div`
   flex-flow: column nowrap;
   gap: 1.56rem;
 
-  height: 100%;
-  padding: 1.875rem 7% 0;
+  padding: 1.875rem 7%;
 
   header {
     margin-bottom: 0.315rem;
@@ -97,11 +98,16 @@ const Container = styled.div`
     z-index: -1;
 
     width: 100%;
-    height: 100%;
+    height: -webkit-fill-available;
 
     border-radius: 1.125rem 1.125rem 0rem 0rem;
     background-color: ${({ theme }) => theme.colors.white};
   }
+`;
+const Form = styled.form`
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1.56rem;
 `;
 const Description = styled.section`
   display: flex;
