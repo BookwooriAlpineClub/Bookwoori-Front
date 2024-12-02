@@ -5,11 +5,11 @@ import icnCheck from '@src/assets/icons/check_circle.svg';
 
 interface Props extends Omit<InputProps, 'placeholder'> {
   items: {
-    text: string;
+    value: 'chat' | 'voice' | 'climb';
     icon: React.ReactElement;
     isRadioDisabled?: boolean;
   }[];
-  defaultValue?: string;
+  defaultValue?: 'chat' | 'voice' | 'climb' | null;
 }
 
 /**
@@ -20,26 +20,34 @@ interface Props extends Omit<InputProps, 'placeholder'> {
 const InputRadio = ({
   title,
   items,
+  defaultValue,
   required,
   setValue,
-  defaultValue,
 }: Props) => {
+  const text: {
+    [key: string]: string;
+  } = {
+    chat: '문자',
+    voice: '전화',
+    climb: '등반',
+  };
+
   return (
     <Fieldset title={title}>
       <Layout>
-        {items.map(({ text, icon, isRadioDisabled }) => (
-          <Label key={text}>
+        {items.map(({ value, icon, isRadioDisabled }) => (
+          <Label key={text[value]}>
             <Container>
               {icon}
-              {text}
+              {text[value]}
             </Container>
             <Input
               name={title}
-              value={text}
+              value={value}
               required={required}
               onChange={(e) => setValue(e.target.value)}
               disabled={isRadioDisabled}
-              defaultChecked={defaultValue === text}
+              defaultChecked={defaultValue ? defaultValue === value : false}
             />
           </Label>
         ))}

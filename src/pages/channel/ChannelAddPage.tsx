@@ -1,12 +1,13 @@
 import type { Categories } from '@src/types/domain/channel';
 import type { BookListItem } from '@src/types/apis/book.d';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
+import { formatDate, decodeIdParam } from '@src/utils/formatters';
+import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
+import useBottomsheet from '@src/hooks/useBottomsheet';
 import useCategory from '@src/hooks/query/useCategory';
 import useChannel from '@src/hooks/query/useChannel';
 import useClimbing from '@src/hooks/query/useClimbing';
-import { formatDate, encodeId, decodeIdParam } from '@src/utils/formatters';
-import useBottomsheet from '@src/hooks/useBottomsheet';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
@@ -22,16 +23,23 @@ import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
 import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
 import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
 
-const ChannelAddPage = () => {
-  const { openBottomsheet, closeBottomsheet } = useBottomsheet();
+type DefaultKind = 'chat' | 'voice' | 'climb' | null;
 
+const ChannelAddPage = () => {
+  const navigate = useEncodedNavigate();
+  const { openBottomsheet, closeBottomsheet } = useBottomsheet();
   const { serverId } = useParams<{ serverId: string }>();
-  const serverIdA = decodeIdParam(serverId);
-  const { categoryList } = useCategory(Number(serverIdA));
+  const decodedServerId = decodeIdParam(serverId);
+  const location = useLocation();
+  const defaultKind: DefaultKind = new URLSearchParams(location.search).get(
+    'kind',
+  ) as DefaultKind;
+
+  const { categoryList } = useCategory(Number(decodedServerId));
   const { createChannel } = useChannel();
   const { createClimbing } = useClimbing();
 
-  const [kind, setKind] = useState<string>('');
+  const [kind, setKind] = useState<DefaultKind>(defaultKind);
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({
@@ -47,28 +55,26 @@ const ChannelAddPage = () => {
     return day;
   };
   const isBtnDisabled = (): boolean => {
-    if (kind === '문자' || kind === '전화') return !(kind && category && name);
-    if (kind === '등반') return !(kind && name && book && date && description);
+    if (kind === 'chat' || kind === 'voice') return !(kind && category && name);
+    if (kind === 'climb') return !(kind && name && book && date && description);
     return true;
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (kind === '문자' || kind === '전화') {
-      const type = kind === '문자' ? 'chat' : 'voice';
-
+    if (kind === 'chat' || kind === 'voice') {
       createChannel.mutate(
         {
           body: {
             categoryId: Number(category),
             name,
-            type,
+            type: kind,
           },
         },
         {
           onSuccess() {
-            window.location.replace(`/server/${encodeId(Number(serverIdA))}`);
+            navigate('/server', Number(decodedServerId), { replace: true });
           },
         },
       );
@@ -76,7 +82,7 @@ const ChannelAddPage = () => {
       createClimbing.mutate(
         {
           body: {
-            serverId: Number(serverIdA),
+            serverId: Number(decodedServerId),
             name,
             isbn: book.isbn13,
             description,
@@ -86,7 +92,7 @@ const ChannelAddPage = () => {
         },
         {
           onSuccess() {
-            window.location.replace(`/server/${encodeId(Number(serverIdA))}`);
+            navigate('/server', Number(decodedServerId), { replace: true });
           },
         },
       );
@@ -101,14 +107,15 @@ const ChannelAddPage = () => {
           <InputRadio
             title='모임 유형'
             items={[
-              { text: '문자', icon: <IcnHash /> },
-              { text: '전화', icon: <IcnVoice /> },
-              { text: '등반', icon: <IcnRun /> },
+              { value: 'chat', icon: <IcnHash /> },
+              { value: 'voice', icon: <IcnVoice /> },
+              { value: 'climb', icon: <IcnRun /> },
             ]}
+            defaultValue={defaultKind}
             required
             setValue={setKind}
           />
-          {(kind === '문자' || kind === '전화') && (
+          {(kind === 'chat' || kind === 'voice') && (
             <InputDropdown
               title='모임 분류'
               placeholder='분류 선택'
@@ -118,7 +125,7 @@ const ChannelAddPage = () => {
               setValue={setCategory}
             />
           )}
-          {kind !== '' && (
+          {!!kind && (
             <InputText
               title='모임 이름'
               placeholder='모임 이름을 입력하세요.'
@@ -129,7 +136,7 @@ const ChannelAddPage = () => {
               setValue={setName}
             />
           )}
-          {kind === '등반' && (
+          {kind === 'climb' && (
             <>
               <Fieldset title='등반할 책'>
                 <InputSearch
