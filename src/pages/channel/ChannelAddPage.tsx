@@ -1,9 +1,11 @@
-import type { Channel } from '@src/types/apis/channel';
+import type { Categories } from '@src/types/domain/channel';
 import type { BookListItem } from '@src/types/apis/book.d';
 import { useState } from 'react';
 import useLoaderData from '@src/hooks/useRoaderData';
+import useCategory from '@src/hooks/query/useCategory';
 import useChannel from '@src/hooks/query/useChannel';
-import { formatDate,encodeId } from '@src/utils/formatters';
+import useClimbing from '@src/hooks/query/useClimbing';
+import { formatDate, encodeId } from '@src/utils/formatters';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
@@ -23,9 +25,11 @@ import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
 const ChannelAddPage = () => {
   const { openBottomsheet, closeBottomsheet } = useBottomsheet();
   const { id: serverId } = useLoaderData<{ id: string }>();
-  const { createChannel } = useChannel(Number());
+  const { categoryList } = useCategory(Number(serverId));
+  const { createChannel } = useChannel();
+  const { createClimbing } = useClimbing();
 
-  const [kind, setKind] = useState<>('');
+  const [kind, setKind] = useState<string>('');
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({
@@ -49,21 +53,42 @@ const ChannelAddPage = () => {
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const type: Channel['type'] = switch(kind){case '문자': return 'chat'; case '전화':case'등반':};
+    if (kind === '문자' || kind === '전화') {
+      const type = kind === '문자' ? 'chat' : 'voice';
 
-    createChannel.mutate(
-      {
-        body: {
-          categoryId: Number(category),
-          name,
-          type: kind,
+      createChannel.mutate(
+        {
+          body: {
+            categoryId: Number(category),
+            name,
+            type,
+          },
         },
-      },
-      {
-        onSuccess: () =>
-          window.location.replace(`/server/${encodeId(Number(serverId))}`),
-      },
-    );
+        {
+          onSuccess() {
+            window.location.replace(`/server/${encodeId(Number(serverId))}`);
+          },
+        },
+      );
+    } else {
+      createClimbing.mutate(
+        {
+          body: {
+            serverId: Number(serverId),
+            name,
+            isbn: book.isbn13,
+            description,
+            startDate: date.start,
+            endDate: date.end,
+          },
+        },
+        {
+          onSuccess() {
+            window.location.replace(`/server/${encodeId(Number(serverId))}`);
+          },
+        },
+      );
+    }
   };
 
   return (
@@ -85,7 +110,7 @@ const ChannelAddPage = () => {
             <InputDropdown
               title='모임 분류'
               placeholder='분류 선택'
-              items={dummy}
+              items={categoryList as Pick<Categories, 'categoryId' | 'name'>[]}
               required
               value={category}
               setValue={setCategory}

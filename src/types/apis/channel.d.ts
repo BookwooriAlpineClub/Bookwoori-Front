@@ -1,5 +1,5 @@
 export type Channel = {
-  type: 'chat' | 'voice' | '';
+  type: 'chat' | 'voice';
   categoryId: number;
   name: string;
 };

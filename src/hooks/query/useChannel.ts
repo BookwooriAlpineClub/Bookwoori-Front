@@ -7,15 +7,15 @@ import { ClimbingListRes } from '@src/types/domain/climbingTemp';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-const useChannel = (serverId: number) => {
+const useChannel = (serverId?: number) => {
   const { data: channels } = useQuery<CategoriesRes, AxiosError>({
     queryKey: ['getServerChannels', serverId],
-    queryFn: () => getServerChannels(serverId),
+    queryFn: () => getServerChannels(serverId as number),
   });
 
   const { data: climbingList } = useQuery<ClimbingListRes, AxiosError>({
     queryKey: ['getServerClimbing', serverId],
-    queryFn: () => getServerClimbing(serverId),
+    queryFn: () => getServerClimbing(serverId as number),
   });
 
   const createChannel = useMutation({

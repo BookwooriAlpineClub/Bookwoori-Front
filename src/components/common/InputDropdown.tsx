@@ -4,7 +4,7 @@ import { Categories } from '@src/types/domain/channel';
 import Fieldset from '@src/components/common/Fieldset';
 
 interface Props extends InputProps {
-  items: string[] | Pick<Categories, 'categoryId' | 'name'>[];
+  items: Pick<Categories, 'categoryId' | 'name'>[];
   value: string;
   disabled?: boolean;
 }
@@ -32,11 +32,8 @@ const InputDropdown = ({
             {placeholder}
           </Option>
           {items.map((item) => (
-            <Option
-              key={typeof item === 'string' ? item : item.categoryId}
-              value={typeof item === 'string' ? item : item.categoryId}
-            >
-              {typeof item === 'string' ? item : item.name}
+            <Option key={item.categoryId} value={item.categoryId}>
+              {item.name}
             </Option>
           ))}
         </Input>
