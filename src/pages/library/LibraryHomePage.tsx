@@ -44,7 +44,14 @@ const LibraryHomePage = () => {
       <MountainContainer>
         <TierContainer>{tier}</TierContainer>
         <MountainImage
-          mountainData={mountainData}
+          mountainData={
+            mountainData as {
+              mountainHeight: number;
+              height?: number;
+              profileImg?: string;
+              profileName?: string;
+            }
+          }
           seasonalColor={seasonalColors[season]}
         />
         <MountainMenu seasonalColor={seasonalColors[season][0]}>
