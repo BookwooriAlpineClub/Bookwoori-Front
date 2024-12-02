@@ -8,10 +8,13 @@ import { Server, ServerMembersResponse } from '@src/types/apis/server.d';
 import { AxiosError } from 'axios';
 
 const useSideBarData = (serverId: number) => {
+  const isValidServerId = serverId > 0;
+
   // 서버 정보
   const { data: serverInfo } = useQuery<Omit<Server, 'serverId'>, AxiosError>({
     queryKey: ['getServerOne', serverId],
     queryFn: () => getServerOne(serverId),
+    enabled: isValidServerId,
   });
 
   // 서버 멤버 정보
@@ -21,6 +24,7 @@ const useSideBarData = (serverId: number) => {
   >({
     queryKey: ['getServerMembers', serverId],
     queryFn: () => getServerMembers(serverId),
+    enabled: isValidServerId,
   });
 
   // 서버 초대장 코드
@@ -28,6 +32,7 @@ const useSideBarData = (serverId: number) => {
     queryKey: ['postServerCode', serverId],
     queryFn: () => postServerCode(serverId),
     initialData: 'bookWOORI1234',
+    enabled: isValidServerId,
   });
 
   return {

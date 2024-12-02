@@ -6,7 +6,7 @@ import { ReactComponent as SearchIcon } from '@src/assets/icons/md_outline_searc
 import { ReactComponent as BookmarkIcon } from '@src/assets/icons/md_collection_bookmark.svg';
 import { ReactComponent as StarIcon } from '@src/assets/icons/md_star.svg';
 import useMember from '@src/hooks/query/useMember';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 
 const seasonalColors = {
@@ -18,7 +18,9 @@ const seasonalColors = {
 };
 
 const LibraryHomePage = () => {
-  const { profileData } = useMember();
+  const { memberId: id } = useParams<{ memberId: string }>();
+  const memberId = id ? Number(id) : null;
+  const { profileData } = useMember(memberId);
   const navigate = useNavigate();
 
   const season = 'spring';
@@ -59,7 +61,7 @@ const LibraryHomePage = () => {
             <BookButton
               onClick={() => handleButton(ROUTE_PATH.libraryBookSearch)}
               icon={<SearchIcon />}
-              text='책 검사'
+              text='책 검색'
             />
             <BookButton
               onClick={() => handleButton(ROUTE_PATH.libraryRecord)}

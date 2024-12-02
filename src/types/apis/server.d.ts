@@ -6,7 +6,7 @@ export type Server = {
   serverImg: string | null;
   ownerNickname: string;
   memberCount: number;
-  createdAt: string; // (ISO 형식)
+  createdAt: string;
   description: string;
   isOwner: boolean;
 };

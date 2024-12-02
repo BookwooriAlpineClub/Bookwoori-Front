@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import React, { Suspense } from 'react';
-import isParamLoader from '@src/router/loader';
+import { checkAuthLoader, isParamLoader } from '@src/router/loader';
 import Bottomsheet from '@src/components/common/Bottomsheet';
 import Dialog from '@src/components/common/Dialog';
 import CommunitySideBar from '@src/components/communitysidebar/CommunitySideBar';
@@ -88,9 +88,6 @@ const CheckInvitedCommunityPage = React.lazy(
 );
 
 /* climbing */
-const ClimbingAddPage = React.lazy(
-  () => import('@src/pages/channel/ChannelAddPage'),
-);
 const ClimbingEditPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingEditPage'),
 );
@@ -114,6 +111,7 @@ const router = createBrowserRouter([
       </Suspense>
     ),
     errorElement: <h1>Error</h1>,
+    loader: checkAuthLoader,
     children: [
       /* example */
       {
@@ -128,7 +126,7 @@ const router = createBrowserRouter([
       /* auth */
       {
         path: ROUTE_PATH.root,
-        element: <h1>Root</h1>,
+        element: <LibraryHomePage />,
       },
       {
         path: ROUTE_PATH.redirection,
@@ -145,7 +143,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryMember,
-        element: <h1>Library Member Page</h1>,
+        element: <LibraryHomePage />,
         loader: (args) => isParamLoader(args, 'memberId'),
       },
       {
@@ -258,10 +256,6 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.climbing,
         element: <ClimbingPage />,
         loader: (args) => isParamLoader(args, 'climbingId'),
-      },
-      {
-        path: ROUTE_PATH.climbingCreate,
-        element: <ClimbingAddPage />,
       },
       {
         path: ROUTE_PATH.climbingEditOne,
