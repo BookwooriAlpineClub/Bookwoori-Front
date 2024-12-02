@@ -1,4 +1,4 @@
-import type { Review } from '@src/types/apis/record';
+// import type { Review } from '@src/types/apis/record';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Chip from '@src/components/common/Chip';

@@ -33,6 +33,7 @@ describe('Book API', () => {
       itemPage: 364,
       description:
         '작가의 핵심 작품들을 큐레이팅하여 한 권으로 엮은 스페셜 에디션 ‘디 에센셜The essential’. 문학동네에서 출시하는 디 에센셜 한국작가 편은 ‘센세이션’이라는 키워드 아래, 독자들에게 강렬한 독서 경험을 선사하며 한국문학에 센세이션을 일으킨 작가를 선정한다. 첫번째 작가는 한강이다.',
+      isbn13: '0',
       cover:
         'https://image.aladin.co.kr/product/31784/0/coversum/8954693466_2.jpg',
     });
