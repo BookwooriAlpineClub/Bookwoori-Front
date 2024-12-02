@@ -23,6 +23,9 @@ const ReviewListPage = React.lazy(
 const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
 );
+const ChannelAddPage = React.lazy(
+  () => import('@src/pages/channel/ChannelAddPage'),
+);
 const ClimbingPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingPage'),
 );
@@ -226,7 +229,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.addChannel,
-        element: <h1>Add Channel Page</h1>,
+        element: <ChannelAddPage />,
       },
       {
         path: ROUTE_PATH.editChannelOne,
