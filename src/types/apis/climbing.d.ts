@@ -1,3 +1,4 @@
+import type { BookDetail } from '@src/types/apis/book.d';
 import { ClimbingStatus } from '@src/constants/status';
 
 declare type Climbing = {
@@ -31,17 +32,6 @@ export type ReviewEmojiResponse = {
   reviewEmojiList: ReviewEmoji[];
 };
 
-export type BookInfo = {
-  title: string;
-  author: string;
-  publisher: string;
-  pubDate: string; // ISO 형식 날짜 문자열
-  itemPage: number;
-  description: string;
-  isbn13: string;
-  cover: string; // 이미지 URL
-};
-
 type ClimbingMemberReview = {
   memberId: number;
   nickname: string;
@@ -54,7 +44,7 @@ type ClimbingMemberReview = {
 export type ClimbingResponse = {
   hasShared: boolean;
   isShareable: boolean;
-  bookInfo: BookInfo;
+  bookInfo: BookDetail;
   content?: string;
   reviewId?: number;
   star?: number;

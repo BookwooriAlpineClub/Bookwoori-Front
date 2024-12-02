@@ -12,9 +12,9 @@ const BookInfoDetail = ({
   title,
   author,
   publisher,
-  pubYear,
+  pubDate,
   itemPage,
-  cover,
+  coverImg,
 }: Props) => {
   const calcStatusText = () => {
     switch (status) {
@@ -31,7 +31,7 @@ const BookInfoDetail = ({
 
   return (
     <Container>
-      <Img src={cover} alt='책 표지' />
+      <Img src={coverImg} alt='책 표지' />
       <InfoWrapper>
         {status !== 'BOOK' && <Tag>{calcStatusText()}</Tag>}
         <Title $line={2}>{title}</Title>
@@ -39,7 +39,7 @@ const BookInfoDetail = ({
         <PubWrapper>
           <CaptionEllipsis $line={1}>{publisher}</CaptionEllipsis>
           <Caption>·</Caption>
-          <Caption>{pubYear}</Caption>
+          <Caption>{pubDate}</Caption>
         </PubWrapper>
         <CaptionEllipsis $line={1}>{itemPage}쪽</CaptionEllipsis>
       </InfoWrapper>
