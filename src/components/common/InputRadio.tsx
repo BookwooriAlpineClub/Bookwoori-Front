@@ -9,7 +9,7 @@ interface Props extends Omit<InputProps, 'placeholder'> {
     icon: React.ReactElement;
     isRadioDisabled?: boolean;
   }[];
-  defaultValue?: string;
+  defaultValue?: 'chat' | 'voice' | 'climb';
 }
 
 /**
@@ -20,9 +20,9 @@ interface Props extends Omit<InputProps, 'placeholder'> {
 const InputRadio = ({
   title,
   items,
+  defaultValue,
   required,
   setValue,
-  defaultValue,
 }: Props) => {
   const text: {
     [key: string]: string;

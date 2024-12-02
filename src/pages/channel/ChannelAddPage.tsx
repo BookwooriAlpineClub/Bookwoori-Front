@@ -22,7 +22,11 @@ import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
 import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
 import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
 
-const ChannelAddPage = () => {
+interface Props {
+  defaultKind?: 'chat' | 'voice' | 'climb';
+}
+
+const ChannelAddPage = ({ defaultKind }: Props) => {
   const { openBottomsheet, closeBottomsheet } = useBottomsheet();
 
   const { serverId } = useParams<{ serverId: string }>();
@@ -31,7 +35,9 @@ const ChannelAddPage = () => {
   const { createChannel } = useChannel();
   const { createClimbing } = useClimbing();
 
-  const [kind, setKind] = useState<'chat' | 'voice' | 'climb' | null>(null);
+  const [kind, setKind] = useState<'chat' | 'voice' | 'climb' | undefined>(
+    defaultKind,
+  );
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({
@@ -103,6 +109,7 @@ const ChannelAddPage = () => {
               { value: 'voice', icon: <IcnVoice /> },
               { value: 'climb', icon: <IcnRun /> },
             ]}
+            defaultValue={defaultKind}
             required
             setValue={setKind}
           />
