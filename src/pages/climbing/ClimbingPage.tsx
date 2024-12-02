@@ -1,23 +1,31 @@
 import ClimbingProgressPage from '@src/pages/climbing/ClimbingProgressPage';
-// import ClimbingTerminatePage from '@src/pages/climbing/ClimbingTerminatePage';
-
-
-enum ClimbingState {
-  READY = 'READY',
-  RUNNING = 'RUNNING',
-  FINISHED = 'FINISHED',
-  FAILED = 'FAILED',
-}
+import ClimbingTerminatePage from '@src/pages/climbing/ClimbingTerminatePage';
+import useLoaderData from '@src/hooks/useRoaderData';
+import { useQuery } from '@tanstack/react-query';
+import { getClimbing } from '@src/apis/climbing';
 
 const ClimbingPage = () => {
-  const state = 'FINISHED' as ClimbingState;
+  const { id: climbingId } = useLoaderData<{ id: number }>();
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['climbing', climbingId],
+    queryFn: () => getClimbing(climbingId),
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError || !data) {
+    return <div>Error loading climbing data</div>;
+  }
 
   return (
     <>
-      {state === 'RUNNING' && <ClimbingProgressPage />}
-      {(state === 'FINISHED' || state === 'FAILED') && (
-        <h2>임시</h2>
-      )}
+      {data.status === 'READY' && <h1>준비중</h1>}
+      {data.status === 'RUNNING' && <ClimbingProgressPage />}
+      {data.status === 'FINISHED' ||
+        (data.status === 'FAILED' && <ClimbingTerminatePage />)}
     </>
   );
 };

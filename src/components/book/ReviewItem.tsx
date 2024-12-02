@@ -4,7 +4,21 @@ import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Chip from '@src/components/common/Chip';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
-const ReviewItem = ({ bookInfo, star, reviewContent }: Review) => {
+type ReviewItemProps<
+  T extends { title: string; author: string; cover: string },
+> = {
+  bookInfo: T;
+  star: number;
+  reviewContent: string;
+};
+
+const ReviewItem = <
+  T extends { title: string; author: string; cover: string },
+>({
+  bookInfo,
+  star,
+  reviewContent,
+}: ReviewItemProps<T>) => {
   const { title, author, cover } = bookInfo;
 
   return (

@@ -10,7 +10,12 @@ const MountainImage = ({
   mountainData,
   seasonalColor,
 }: {
-  mountainData: any;
+  mountainData: {
+    mountainHeight: number;
+    height?: number;
+    profileImg?: string;
+    profileName?: string;
+  };
   seasonalColor: string[];
 }) => {
   const [progress, setProgress] = useState(0);
@@ -132,7 +137,7 @@ const MountainImage = ({
                 >
                   <ProfileCircle
                     profileImg={mountainData.profileImg ?? ''}
-                    nickname={mountainData.profileName}
+                    nickname={mountainData.profileName ?? ''}
                   />
                 </div>
               )}
