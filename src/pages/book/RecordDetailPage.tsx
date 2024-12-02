@@ -50,20 +50,27 @@ const RecordDetailPage = () => {
       <Form>
         {(status === 'READING' || status === 'FINISHED') && (
           <InputPeriod
-            readingStatus={status}
+            name='독서 기간'
             readOnly
             value={{ start: startDate, end: endDate }}
+            readingStatus={status}
           />
         )}
         {status === 'READING' && (
           <InputPage
+            name='독서 현황'
+            readOnly
             currentPage={currentPage}
             itemPage={bookInfo.itemPage}
-            readOnly
           />
         )}
         {status === 'FINISHED' && (
-          <InputReview star={star} reviewContent={reviewContent} readOnly />
+          <InputReview
+            name={{ num: '별점', str: '줄글' }}
+            readOnly
+            num={star}
+            str={reviewContent}
+          />
         )}
       </Form>
       <Description>
