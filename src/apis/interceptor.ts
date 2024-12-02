@@ -57,6 +57,7 @@ const onError = async (error: AxiosError) => {
       }
     } catch (e) {
       localStorage.removeItem('accessToken');
+      sessionStorage.removeItem('refreshToken');
       window.location.replace(ROUTE_PATH.signIn);
       return Promise.reject(e);
     }

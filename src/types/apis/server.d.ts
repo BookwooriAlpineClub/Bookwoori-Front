@@ -1,3 +1,5 @@
+import { ServerMember } from '@src/types/domain/member';
+
 export type Server = {
   serverId: number;
   name: string;
@@ -8,3 +10,7 @@ export type Server = {
   description: string;
   isOwner: boolean;
 };
+
+export interface ServerMembersResponse {
+  members: ServerMember[];
+}

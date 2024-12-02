@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RecoilState, useRecoilState } from 'recoil';
 import useToast from './useToast';
 
@@ -38,6 +38,14 @@ const useUploadFile = (
     setPreview(undefined);
   };
 
+  useEffect(() => {
+    if (!previewImg) {
+      handleFileDelete();
+    } else {
+      setPreview(previewImg);
+    }
+  }, [previewImg]);
+  
   return { file, preview, handleFileUpload, handleFileDelete };
 };
 
