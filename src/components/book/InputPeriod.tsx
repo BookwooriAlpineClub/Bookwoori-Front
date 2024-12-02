@@ -8,12 +8,12 @@ export type Period = {
 };
 interface Props {
   readingStatus: 'WISH' | 'READING' | 'FINISHED';
-  readonly: boolean;
+  readOnly: boolean;
   value: Period;
   setValue: React.Dispatch<React.SetStateAction<Period>>;
 }
 
-const InputPeriod = ({ readingStatus, readonly, value, setValue }: Props) => {
+const InputPeriod = ({ readingStatus, readOnly, value, setValue }: Props) => {
   const title: string = '독서 기간';
 
   return (
@@ -25,7 +25,7 @@ const InputPeriod = ({ readingStatus, readonly, value, setValue }: Props) => {
           max={value.end}
           pattern='\d{4}-\d{2}-\d{2}'
           required
-          readOnly={readonly}
+          readOnly={readOnly}
           onChange={(e) =>
             setValue((prev) => ({ ...prev, start: e.target.value }))
           }
@@ -38,7 +38,7 @@ const InputPeriod = ({ readingStatus, readonly, value, setValue }: Props) => {
             min={value.start}
             pattern='\d{4}-\d{2}-\d{2}'
             required
-            readOnly={readonly}
+            readOnly={readOnly}
             onChange={(e) =>
               setValue((prev) => ({ ...prev, end: e.target.value }))
             }

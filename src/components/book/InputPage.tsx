@@ -5,7 +5,7 @@ import Fieldset from '@src/components/book/Fieldset';
 interface Props {
   currentPage: number;
   itemPage: number;
-  readonly: boolean;
+  readOnly: boolean;
   value: number;
   setValue: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -13,7 +13,7 @@ interface Props {
 const InputPage = ({
   currentPage,
   itemPage,
-  readonly,
+  readOnly,
   value,
   setValue,
 }: Props) => {
@@ -47,7 +47,7 @@ const InputPage = ({
           name={title}
           placeholder={`${currentPage}쪽`}
           required
-          readOnly={readonly}
+          readOnly={readOnly}
           value={`${value}쪽`}
           onKeyDown={handleKeydown}
           onInput={handleInput}

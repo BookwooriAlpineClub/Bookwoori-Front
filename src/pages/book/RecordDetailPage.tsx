@@ -55,7 +55,7 @@ const RecordDetailPage = () => {
       {(status === 'READING' || status === 'FINISHED') && (
         <InputPeriod
           readingStatus={status}
-          readonly
+          readOnly
           value={period}
           setValue={setPeriod}
         />
@@ -64,7 +64,7 @@ const RecordDetailPage = () => {
         <InputPage
           currentPage={currentPage}
           itemPage={bookInfo.itemPage}
-          readonly
+          readOnly
           value={page}
           setValue={setPage}
         />
