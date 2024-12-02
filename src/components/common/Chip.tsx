@@ -3,11 +3,12 @@ import styled from 'styled-components';
 interface Props {
   Icon: React.FC<React.SVGProps<SVGSVGElement>>;
   text: string | number;
+  className?: string;
 }
 
-const Chip = ({ Icon, text }: Props) => {
+const Chip = ({ Icon, text, className }: Props) => {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Icon width={12} height={12} />
       <Span>{text}</Span>
     </Wrapper>
