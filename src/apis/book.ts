@@ -14,7 +14,7 @@ export const getBookList = async <Res = BookListItem[]>(
  * @ 백엔드에 수정 요청함
  */
 export const getBookDetail = async <Res = BookDetail>(
-  isbn13: number,
+  isbn13: string,
 ): Promise<Res> => {
   const response = await authClient.get<Res>(`/books/${isbn13}`);
   return response.data;

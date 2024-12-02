@@ -1,6 +1,11 @@
+import type { Categories } from '@src/types/domain/channel';
 import type { BookListItem } from '@src/types/apis/book.d';
 import { useState } from 'react';
-import { formatDate } from '@src/utils/formatters';
+import { useParams } from 'react-router-dom';
+import useCategory from '@src/hooks/query/useCategory';
+import useChannel from '@src/hooks/query/useChannel';
+import useClimbing from '@src/hooks/query/useClimbing';
+import { formatDate, encodeId, decodeIdParam } from '@src/utils/formatters';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
@@ -17,12 +22,16 @@ import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
 import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
 import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
 
-const dummy: string[] = ['선택지1', '선택지2', '선택지3', '선택지4'];
-
-const ChannelAddPage = ({ type }: { type?: 'climb' }) => {
+const ChannelAddPage = () => {
   const { openBottomsheet, closeBottomsheet } = useBottomsheet();
 
-  const [kind, setKind] = useState<string>(type === 'climb' ? '등반' : '');
+  const { serverId } = useParams<{ serverId: string }>();
+  const serverIdA = decodeIdParam(serverId);
+  const { categoryList } = useCategory(Number(serverIdA));
+  const { createChannel } = useChannel();
+  const { createClimbing } = useClimbing();
+
+  const [kind, setKind] = useState<string>('');
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({
@@ -43,41 +52,67 @@ const ChannelAddPage = ({ type }: { type?: 'climb' }) => {
     return true;
   };
 
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (kind === '문자' || kind === '전화') {
+      const type = kind === '문자' ? 'chat' : 'voice';
+
+      createChannel.mutate(
+        {
+          body: {
+            categoryId: Number(category),
+            name,
+            type,
+          },
+        },
+        {
+          onSuccess() {
+            window.location.replace(`/server/${encodeId(Number(serverIdA))}`);
+          },
+        },
+      );
+    } else {
+      createClimbing.mutate(
+        {
+          body: {
+            serverId: Number(serverIdA),
+            name,
+            isbn: book.isbn13,
+            description,
+            startDate: date.start,
+            endDate: date.end,
+          },
+        },
+        {
+          onSuccess() {
+            window.location.replace(`/server/${encodeId(Number(serverIdA))}`);
+          },
+        },
+      );
+    }
+  };
+
   return (
     <Container>
       <Header text='모임 추가하기' headerType='back' />
       <Main>
-        <Form id='channel-add-form'>
-          {type === 'climb' ? (
-            <InputRadio
-              title='모임 유형'
-              items={[
-                { text: '문자', icon: <IcnHash />, isRadioDisabled: true },
-                { text: '전화', icon: <IcnVoice />, isRadioDisabled: true },
-                { text: '등반', icon: <IcnRun />, isRadioDisabled: false },
-              ]}
-              required
-              setValue={setKind}
-              defaultValue='등반'
-            />
-          ) : (
-            <InputRadio
-              title='모임 유형'
-              items={[
-                { text: '문자', icon: <IcnHash /> },
-                { text: '전화', icon: <IcnVoice /> },
-                { text: '등반', icon: <IcnRun /> },
-              ]}
-              required
-              setValue={setKind}
-              defaultValue={kind}
-            />
-          )}
+        <Form id='channel-add-form' onSubmit={handleFormSubmit}>
+          <InputRadio
+            title='모임 유형'
+            items={[
+              { text: '문자', icon: <IcnHash /> },
+              { text: '전화', icon: <IcnVoice /> },
+              { text: '등반', icon: <IcnRun /> },
+            ]}
+            required
+            setValue={setKind}
+          />
           {(kind === '문자' || kind === '전화') && (
             <InputDropdown
               title='모임 분류'
               placeholder='분류 선택'
-              items={dummy}
+              items={categoryList as Pick<Categories, 'categoryId' | 'name'>[]}
               required
               value={category}
               setValue={setCategory}

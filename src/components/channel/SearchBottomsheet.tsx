@@ -1,39 +1,10 @@
 import type { BookListItem } from '@src/types/apis/book.d';
 import { useState } from 'react';
+import useBook from '@src/hooks/query/useBook';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import BookinfoItem from '@src/components/book/BookinfoItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
-
-const mock: BookListItem[] = [
-  {
-    title: '디 에센셜 한강 (무선 보급판) - 2024 노벨문학상 수상작가',
-    author: '한강 (지은이)',
-    publisher: '문학동네',
-    pubYear: '2023',
-    isbn13: '9788954693462',
-    cover:
-      'https://image.aladin.co.kr/product/31784/0/coversum/8954693466_2.jpg',
-  },
-  {
-    title: '한강 : 회복하는 인간 Convalescence - 2024 노벨문학상 수상작가',
-    author: '한강 (지은이), 전승희 (옮긴이), K. E. 더핀 (감수)',
-    publisher: '도서출판 아시아',
-    pubYear: '2013',
-    isbn13: '9788994006826',
-    cover:
-      'https://image.aladin.co.kr/product/2778/68/coversum/s312934675_1.jpg',
-  },
-  {
-    title: '한강 : 회복하는 인간 Convalescence - 2024 노벨문학상 수상작가',
-    author: '한강 (지은이), 전승희 (옮긴이), K. E. 더핀 (감수)',
-    publisher: '도서출판 아시아',
-    pubYear: '2013',
-    isbn13: '9788994006826',
-    cover:
-      'https://image.aladin.co.kr/product/2778/68/coversum/s312934675_1.jpg',
-  },
-];
 
 interface Props {
   setValue: React.Dispatch<
@@ -46,7 +17,8 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
   const [keyword, setKeyword] = useState<string>('');
 
   // API 요청
-  const data: BookListItem[] = mock;
+  const { bookList } = useBook({ keyword });
+  const data: BookListItem[] = bookList as BookListItem[];
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // 새로고침 방지 (기본 기능 비활성화)

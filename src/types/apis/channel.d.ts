@@ -3,7 +3,6 @@ export type Channel = {
   categoryId: number;
   name: string;
 };
-
 export type Message = {
   id: string;
   channelId: number;

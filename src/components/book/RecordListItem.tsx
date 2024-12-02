@@ -20,7 +20,7 @@ const RecordListItem = ({
   bookInfo,
 }: Props) => {
   const navigate = useEncodedNavigate();
-  const { title, author, cover, itemPage } = bookInfo;
+  const { title, author, coverImg, itemPage } = bookInfo;
   const chips: { [key: string]: React.ReactElement | null } = {
     WISH: null,
     READING: (
@@ -38,7 +38,7 @@ const RecordListItem = ({
 
   return (
     <Container onClick={handleItemClick}>
-      <Img src={cover} alt='책 표지' />
+      <Img src={coverImg} alt='책 표지' />
       <Title $line={1}>{title}</Title>
       <Author $line={1}>{author}</Author>
       {chips[readingStatus]}

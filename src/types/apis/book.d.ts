@@ -2,10 +2,16 @@ export type BookDetail = {
   title: string;
   author: string;
   publisher: string;
-  pubYear: string;
+  pubDate: string;
   itemPage: number;
   description: string;
   isbn13: string;
+  coverImg: string;
+};
+export type BookListItem = Omit<
+  BookDetail,
+  'itemPage' | 'description' | 'pubDate' | 'coverImg'
+> & {
+  pubYear: string;
   cover: string;
 };
-export type BookListItem = Omit<BookDetail, 'itemPage' | 'description'>;
