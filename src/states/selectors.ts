@@ -1,6 +1,7 @@
 import { selector } from 'recoil';
 import { serverListState, serverbarState } from '@src/states/atoms';
 
+export const exampleSeletor = {};
 export const serverbarSelector = selector<Serverbar>({
   key: 'serverbarSelector',
   get: ({ get }) => {
