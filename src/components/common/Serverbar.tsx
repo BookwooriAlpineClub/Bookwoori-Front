@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { serverbarState, currentServerIdState } from '@src/states/atoms';
 import { ROUTE_PATH } from '@src/constants/routePath';
@@ -37,19 +37,18 @@ type buttonConfig = {
  * openServerbar();
  */
 const Serverbar = () => {
+  const { closeServerbar } = useServerbar();
   const navigate = useNavigate();
   const encodedNavigate = useEncodedNavigate();
-  const { closeServerbar } = useServerbar();
+  const { serverId: params } = useParams<{ serverId: string }>();
+  const location = useLocation();
 
   const { isOpen, transition } = useRecoilValue(serverbarState);
   const setCurrentServerId = useSetRecoilState(currentServerIdState);
-  const { serverId: params } = useParams<{ serverId: string }>();
-  let decodedServerId: number;
-  try {
+
+  let decodedServerId: number = -1;
+  if (location.pathname.includes('/server')) {
     decodedServerId = decodeIdParam(params);
-  } catch (error) {
-    console.error(error);
-    decodedServerId = -1;
   }
   setCurrentServerId(decodedServerId);
 
@@ -120,7 +119,7 @@ const Serverbar = () => {
               {(name === '서재' || name === '계정 설정') && <Hr />}
             </>
           ))}
-          {serverList &&
+          {serverList.length > 0 &&
             serverList.map(({ serverId, serverImg }) => (
               <ImageButton key={serverId} $img={serverImg || ''}>
                 <input

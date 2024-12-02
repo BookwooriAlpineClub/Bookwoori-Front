@@ -33,13 +33,10 @@ export const postServer = async <
   return response.data;
 };
 
-export const getServers = async <Res = ServerListItem>(
+export const getServers = async <Res = { servers: ServerListItem[] }>(
   headers?: Record<string, string>,
-): Promise<Res[]> => {
-  const response = await authClient.get<Res[], AxiosResponse<Res[]>>(
-    buildServerUrl(),
-    { headers },
-  );
+): Promise<Res> => {
+  const response = await authClient.get<Res>(buildServerUrl(), { headers });
   return response.data;
 };
 

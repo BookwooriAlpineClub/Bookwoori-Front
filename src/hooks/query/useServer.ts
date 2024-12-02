@@ -4,9 +4,12 @@ import { AxiosError } from 'axios';
 import { getServers } from '@src/apis/server';
 
 const useServer = () => {
-  const { data: serverList } = useQuery<ServerListItem[], AxiosError>({
+  const {
+    data: { servers: serverList },
+  } = useQuery<{ servers: ServerListItem[] }, AxiosError>({
     queryKey: ['getServers'],
     queryFn: () => getServers(),
+    initialData: { servers: [] },
   });
 
   return { serverList };
