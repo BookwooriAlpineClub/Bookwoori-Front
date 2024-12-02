@@ -34,12 +34,13 @@ const Header = ({ buttonList }: Props) => {
   const buttonConfig: {
     [key: string]: {
       Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+      type: 'button' | 'submit' | 'reset';
       onClick: () => void;
     };
   } = {
-    edit: { Icon: IcnPencil, onClick: handleEditClick },
-    delete: { Icon: IcnTrash, onClick: handleDeleteClick },
-    save: { Icon: IcnSave, onClick: handleSaveClick },
+    edit: { Icon: IcnPencil, type: 'button', onClick: handleEditClick },
+    delete: { Icon: IcnTrash, type: 'button', onClick: handleDeleteClick },
+    save: { Icon: IcnSave, type: 'submit', onClick: handleSaveClick },
   };
 
   return (
@@ -51,7 +52,7 @@ const Header = ({ buttonList }: Props) => {
         {buttonList.map((item) => {
           const button = buttonConfig[item];
           return (
-            <Button key={item} onClick={button.onClick}>
+            <Button key={item} type={button.type} onClick={button.onClick}>
               <button.Icon width={20} height={20} />
             </Button>
           );
@@ -75,6 +76,6 @@ const ButtonWrapper = styled.div`
   flex-flow: row nowrap;
   gap: 1rem;
 `;
-const Button = styled.button.attrs({ type: 'button' })`
+const Button = styled.button`
   display: flex;
 `;
