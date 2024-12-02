@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import Header from '@src/components/book/Header';
 import BookInfoDetail from '@src/components/book/BookInfoDetail';
 import InputPeriod, { type Period } from '@src/components/book/InputPeriod';
+import InputPage from '@src/components/book/InputPage';
 
 const mock: Record = {
   recordId: 1,
   memberId: 3,
-  readingStatus: 'FINISHED',
+  readingStatus: 'READING',
   star: 0,
   startDate: '2024-01-01',
   endDate: '2024-12-31',
@@ -45,6 +46,7 @@ const RecordDetailPage = () => {
     start: startDate,
     end: endDate,
   });
+  const [page, setPage] = useState<number>(currentPage);
 
   return (
     <Container>
@@ -56,6 +58,15 @@ const RecordDetailPage = () => {
           readonly
           value={period}
           setValue={setPeriod}
+        />
+      )}
+      {status === 'READING' && (
+        <InputPage
+          currentPage={currentPage}
+          itemPage={bookInfo.itemPage}
+          readonly
+          value={page}
+          setValue={setPage}
         />
       )}
       <Description>
