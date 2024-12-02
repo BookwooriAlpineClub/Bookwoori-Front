@@ -2,11 +2,12 @@ import type { Categories } from '@src/types/domain/channel';
 import type { BookListItem } from '@src/types/apis/book.d';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+import { formatDate, decodeIdParam } from '@src/utils/formatters';
+import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
+import useBottomsheet from '@src/hooks/useBottomsheet';
 import useCategory from '@src/hooks/query/useCategory';
 import useChannel from '@src/hooks/query/useChannel';
 import useClimbing from '@src/hooks/query/useClimbing';
-import { formatDate, encodeId, decodeIdParam } from '@src/utils/formatters';
-import useBottomsheet from '@src/hooks/useBottomsheet';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
@@ -25,6 +26,7 @@ import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
 type DefaultKind = 'chat' | 'voice' | 'climb' | null;
 
 const ChannelAddPage = () => {
+  const navigate = useEncodedNavigate();
   const { openBottomsheet, closeBottomsheet } = useBottomsheet();
   const { serverId } = useParams<{ serverId: string }>();
   const decodedServerId = decodeIdParam(serverId);
@@ -72,9 +74,7 @@ const ChannelAddPage = () => {
         },
         {
           onSuccess() {
-            window.location.replace(
-              `/server/${encodeId(Number(decodedServerId))}`,
-            );
+            navigate('/server', Number(decodedServerId), { replace: true });
           },
         },
       );
@@ -92,9 +92,7 @@ const ChannelAddPage = () => {
         },
         {
           onSuccess() {
-            window.location.replace(
-              `/server/${encodeId(Number(decodedServerId))}`,
-            );
+            navigate('/server', Number(decodedServerId), { replace: true });
           },
         },
       );
