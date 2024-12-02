@@ -5,15 +5,17 @@ import Header from '@src/components/book/Header';
 import BookInfoDetail from '@src/components/book/BookInfoDetail';
 import InputPeriod, { type Period } from '@src/components/book/InputPeriod';
 import InputPage from '@src/components/book/InputPage';
+import InputReview from '@src/components/book/InputReview';
 
 const mock: Record = {
   recordId: 1,
   memberId: 3,
-  readingStatus: 'READING',
+  readingStatus: 'FINISHED',
   star: 0,
   startDate: '2024-01-01',
   endDate: '2024-12-31',
-  reviewContent: '안돼~~~~~',
+  reviewContent:
+    '가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하',
   currentPage: 0,
   maxPage: 0,
   bookInfo: {
@@ -47,6 +49,8 @@ const RecordDetailPage = () => {
     end: endDate,
   });
   const [page, setPage] = useState<number>(currentPage);
+  const [num, setNum] = useState<number>(-1);
+  const [str, setStr] = useState<string>('');
 
   return (
     <Container>
@@ -67,6 +71,15 @@ const RecordDetailPage = () => {
           readOnly
           value={page}
           setValue={setPage}
+        />
+      )}
+      {status === 'FINISHED' && (
+        <InputReview
+          star={star}
+          reviewContent={reviewContent}
+          readOnly
+          setNum={setNum}
+          setStr={setStr}
         />
       )}
       <Description>
