@@ -1,39 +1,55 @@
 import styled from 'styled-components';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import useLongPress from '@src/hooks/useLongPress';
-import ChatMenu from './ChatMenu';
+import ChatMenu from '@src/components/chatting/ChatMenu';
+import Profile from '@src/assets/images/userSettings/background_default.svg';
+import { DM } from '@src/types/domain/messageRoom';
+import { SyntheticEvent, useMemo } from 'react';
+import { formatChatItemTime } from '@src/utils/formatters';
 
-interface Chatting {
+interface ChatItemProps {
+  chatItem: DM;
   imgUrl?: string;
-  emoji?: string;
   nickname: string;
-  time: string;
-  text: string;
+  createdAt: string;
 }
 
-const ChatItem = ({ chatItem }: { chatItem: Chatting }) => {
+const ChatItem = ({ chatItem, imgUrl, nickname, createdAt }: ChatItemProps) => {
   const { openBottomsheet } = useBottomsheet();
   const longPressHandler = useLongPress({
-    onLongPress: () => openBottomsheet(<ChatMenu emoji={chatItem.emoji} />),
+    onLongPress: () => openBottomsheet(<ChatMenu content={chatItem.content} />),
   });
+
+  const handleImgError = (e: SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = Profile;
+  };
 
   return (
     <SLayout {...longPressHandler}>
-      <SImg src={chatItem.imgUrl} />
+      {imgUrl ? (
+        <SImg src={imgUrl} onError={handleImgError} />
+      ) : (
+        <SImg src={Profile} />
+      )}
       <SContainer>
         <SWrapper>
-          <SNickname>{chatItem.nickname}</SNickname>
-          <STime>{chatItem.time}</STime>
+          <SNickname>{nickname}</SNickname>
+          <STime>
+            {useMemo(
+              () => createdAt && formatChatItemTime(createdAt),
+              [createdAt],
+            )}
+          </STime>
         </SWrapper>
-        <SText>{chatItem.text}</SText>
-        {chatItem.emoji && (
+        <SText>{chatItem.content}</SText>
+        {/* {chatItem.emoji && (
           <SEmoji
             type='button'
             onClick={() => openBottomsheet(<ChatMenu emoji={chatItem.emoji} />)}
           >
             {chatItem.emoji}
           </SEmoji>
-        )}
+        )} */}
       </SContainer>
     </SLayout>
   );
@@ -78,15 +94,15 @@ const SText = styled.p`
 
   cursor: default;
 `;
-const SEmoji = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// const SEmoji = styled.button`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
 
-  width: min-content;
-  min-width: 1.875rem;
-  height: 1.4375rem;
+//   width: min-content;
+//   min-width: 1.875rem;
+//   height: 1.4375rem;
 
-  border-radius: 1.875rem;
-  background-color: ${({ theme }) => theme.colors.blue300};
-`;
+//   border-radius: 1.875rem;
+//   background-color: ${({ theme }) => theme.colors.blue300};
+// `;

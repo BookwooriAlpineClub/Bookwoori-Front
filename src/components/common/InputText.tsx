@@ -6,6 +6,7 @@ interface Props extends InputProps {
   type: 'short' | 'long';
   limit: number;
   value?: string;
+  disabled?: boolean;
 }
 
 /**
@@ -18,17 +19,20 @@ const InputText = ({
   type,
   limit,
   required,
+  disabled = false,
   value,
   setValue,
 }: Props) => {
   return (
-    <Fieldset title={title}>
+    <Fieldset title={title} isDisabled={disabled}>
       <Input
         as={type === 'short' ? 'input' : 'textarea'}
         name={title}
         placeholder={placeholder}
         maxLength={limit}
         required={required}
+        disabled={disabled}
+        value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setValue(e.target.value)
         }
@@ -54,6 +58,10 @@ const Input = styled.input.attrs({ type: 'text' })<{ as: string }>`
   resize: none;
 
   &::placeholder {
+    color: ${({ theme }) => theme.colors.black200};
+  }
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.black400};
     color: ${({ theme }) => theme.colors.black200};
   }
 `;

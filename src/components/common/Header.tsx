@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import useSideBar from '@src/hooks/useSideBar';
+import useServerbar from '@src/hooks/useServerbar';
 import { ReactComponent as Hamburger } from '@src/assets/icons/menu.svg';
 import { ReactComponent as Back } from '@src/assets/icons/left_arrow.svg';
 import { ReactComponent as Users } from '@src/assets/icons/users.svg';
+import Serverbar from '@src/components/common/Serverbar';
 
 interface headerProps {
   className?: string;
@@ -12,21 +15,28 @@ interface headerProps {
 
 const Header = ({ className, text, headerType }: headerProps) => {
   const navigate = useNavigate();
+  const { openSideBar } = useSideBar();
+  const { openServerbar } = useServerbar();
 
   const handleClick = () => {
-    if (headerType === 'back') {
-      navigate(-1);
-    }
+    navigate(-1);
   };
 
   return (
     <SHeader className={className}>
-      <SButton type='button' onClick={handleClick} aria-label={headerType}>
-        {headerType === 'back' ? <Back /> : <Hamburger />}
-      </SButton>
+      {headerType === 'back' ? (
+        <SButton type='button' onClick={handleClick} aria-label={headerType}>
+          <Back />
+        </SButton>
+      ) : (
+        <SButton type='button' onClick={openServerbar} aria-label={headerType}>
+          <Hamburger />
+        </SButton>
+      )}
+      <Serverbar />
       <SLabel>{text}</SLabel>
       {headerType === 'server' && (
-        <SButton type='button' onClick={handleClick}>
+        <SButton type='button' onClick={openSideBar}>
           <Users />
         </SButton>
       )}
@@ -57,7 +67,7 @@ const SLabel = styled.label`
   transform: translate(-50%, -50%);
 
   ${({ theme }) => theme.fonts.title}
-  color:  ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.black100};
   text-align: center;
 `;
 

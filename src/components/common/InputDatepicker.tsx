@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
-import Fieldset from '@src/components/common/Fieldset';
 
 export type Period = {
   start: string;
@@ -10,6 +9,7 @@ interface Props extends Omit<InputProps, 'placeholder'> {
   type: 'date' | 'period';
   min?: string;
   max?: string;
+  disabled?: 'start' | 'end' | 'default';
   value: Period;
   setValue: React.Dispatch<React.SetStateAction<Period>>;
 }
@@ -20,11 +20,13 @@ const InputDatepicker = ({
   min,
   max,
   required,
+  disabled = 'default',
   value,
   setValue,
 }: Props) => {
   return (
-    <Fieldset title={title}>
+    <fieldset>
+      <Legend>{title}</Legend>
       <Layout>
         <Input
           name={title}
@@ -33,6 +35,7 @@ const InputDatepicker = ({
           max={value.end}
           pattern='\d{4}-\d{2}-\d{2}'
           required={required}
+          disabled={disabled === 'start'}
           onChange={(e) =>
             setValue((prev) => ({ ...prev, start: e.target.value }))
           }
@@ -47,6 +50,7 @@ const InputDatepicker = ({
               max={max}
               pattern='\d{4}-\d{2}-\d{2}'
               required={required}
+              disabled={disabled === 'end'}
               onChange={(e) =>
                 setValue((prev) => ({ ...prev, end: e.target.value }))
               }
@@ -54,7 +58,7 @@ const InputDatepicker = ({
           </>
         )}
       </Layout>
-    </Fieldset>
+    </fieldset>
   );
 };
 
@@ -64,11 +68,28 @@ const Layout = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;
+  align-items: center;
+`;
+const Legend = styled.legend`
+  margin-bottom: 0.63rem;
+
+  color: ${({ theme }) => theme.colors.black100};
+  ${({ theme }) => theme.fonts.body};
 `;
 const Input = styled.input.attrs({ type: 'date' })<{ value: string }>`
+  width: 100%;
+  padding: 0.9375rem;
+  border-radius: 0.9375rem;
+
+  text-align: center;
   color: ${({ value, theme }) =>
     value ? theme.colors.black100 : theme.colors.black200};
   ${({ theme }) => theme.fonts.body};
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.black400};
+    color: ${({ theme }) => theme.colors.black200};
+  }
 `;
 const Span = styled.span`
   ${NoSelect}

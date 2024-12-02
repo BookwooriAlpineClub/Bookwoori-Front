@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import AddCommunityButton from '@src/components/addcommunity/AddCommunityButton';
 import { useNavigate } from 'react-router-dom';
 import IntroSection from '@src/components/addcommunity/IntroSection';
+import { ROUTE_PATH } from '@src/constants/routePath';
 
 const headerText = '공동체 추가';
 const headerType = 'hamburger';
@@ -16,12 +17,12 @@ const buttonConfig = [
   {
     name: '새로운 공동체 생성하기',
     type: 'create',
-    path: 'CREATE_COMMUNITY', // router path
+    path: ROUTE_PATH.createServer,
   },
   {
     name: '기존 공동체에 참여하기',
     type: 'join',
-    path: 'JOIN_COMMUNITY', // router path
+    path: ROUTE_PATH.invitationCode,
   },
 ];
 

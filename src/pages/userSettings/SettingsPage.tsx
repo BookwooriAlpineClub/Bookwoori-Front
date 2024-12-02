@@ -1,39 +1,56 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import useDialog from '@src/hooks/useDialog';
+import useMember from '@src/hooks/query/useMember';
 import Header from '@src/components/common/Header';
 import UserProfile from '@src/components/userSettings/UserProfile';
+import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Flag } from '@src/assets/icons/flag.svg';
 import { ReactComponent as Delete } from '@src/assets/icons/trash.svg';
 
-interface ProfileData {
-  nickname: string;
-  mountain: string;
-  meter: number;
-  pages: number;
-}
-
 const SettingsPage = () => {
-  const buttonData = [
-    { icon: <Edit />, label: '인물 정보 수정하기' },
-    { icon: <Flag />, label: '지나온 길 보기' },
-    { icon: <Delete />, label: '계정 삭제하기' },
-  ];
+  const navigate = useNavigate();
+  const { delAccount } = useMember();
+  const { openDialog, closeDialog } = useDialog();
 
-  const profileData: ProfileData = {
-    nickname: '피크민',
-    mountain: '한라',
-    meter: 999,
-    pages: 9999,
+  const handleDelete = () => {
+    delAccount.mutate();
   };
+
+  const buttonData = [
+    {
+      icon: <Edit width='20px' height='20px' />,
+      label: '인물 정보 수정하기',
+      onClick: () => navigate(ROUTE_PATH.settingProfile),
+    },
+    {
+      icon: <Flag />,
+      label: '지나온 길 보기',
+      onClick: () => navigate(ROUTE_PATH.settingExp),
+    },
+    {
+      icon: <Delete />,
+      label: '계정 삭제하기',
+      onClick: () =>
+        openDialog(
+          <DeleteConfirmModal
+            closeDialog={closeDialog}
+            onClickDelete={handleDelete}
+          />,
+        ),
+    },
+  ];
 
   return (
     <>
-      <Header text='설정' headerType='hamburger' />
+      <SHeader text='설정' headerType='hamburger' />
       <SLayout>
-        <UserProfile data={profileData} />
+        <UserProfile />
         <SContainer>
-          {buttonData.map(({ icon, label }) => (
-            <SButton key={label} type='button'>
+          {buttonData.map(({ icon, label, onClick }) => (
+            <SButton key={label} type='button' onClick={onClick}>
               {icon}
               {label}
             </SButton>
@@ -46,6 +63,9 @@ const SettingsPage = () => {
 
 export default SettingsPage;
 
+const SHeader = styled(Header)`
+  z-index: 1;
+`;
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;

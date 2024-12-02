@@ -1,25 +1,46 @@
 import styled from 'styled-components';
-import ChannelItem from './ChannelItem';
-
-interface ClimbingChannel {
-  climbingId: number;
-  name: string;
-  type: 'text' | 'voice' | 'run';
-}
+import { ClimbingInfo } from '@src/types/domain/climbingTemp';
+import Item from '@src/components/channel/ChannelItem';
+import { ChannelItem } from '@src/types/domain/channel';
 
 interface ChannelListProps {
   color?: string;
-  list: ClimbingChannel[];
+  channels?: ChannelItem[];
+  climbs?: ClimbingInfo[];
+  categoryId?: number;
 }
 
-const ChannelList = ({ color, list }: ChannelListProps) => {
+const ChannelList = ({
+  color,
+  channels,
+  climbs,
+  categoryId,
+}: ChannelListProps) => {
   return (
     <SLayout>
-      {list.map((it) => (
-        <ChannelItem key={it.climbingId} color={color} type={it.type}>
-          {it.name}
-        </ChannelItem>
-      ))}
+      {channels &&
+        channels.map((it) => (
+          <Item
+            key={it.channelId}
+            channelId={it.channelId}
+            categoryId={categoryId ?? -1}
+            color={color}
+            type={it.type}
+          >
+            {it.name}
+          </Item>
+        ))}
+      {climbs &&
+        climbs.map((it) => (
+          <Item
+            key={it.climbingId}
+            channelId={it.climbingId}
+            color={color}
+            type='CLIMB'
+          >
+            {it.name}
+          </Item>
+        ))}
     </SLayout>
   );
 };
