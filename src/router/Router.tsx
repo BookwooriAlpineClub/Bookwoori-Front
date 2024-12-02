@@ -99,6 +99,9 @@ const ClimbingEditPage = React.lazy(
 const LibraryHomePage = React.lazy(
   () => import('@src/pages/library/LibraryHomePage'),
 );
+const RecordEditPage = React.lazy(
+  () => import('@src/pages/book/RecordEditPage'),
+);
 
 const router = createBrowserRouter([
   {
@@ -165,7 +168,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryEditRecordOne,
-        element: <h1>Library Record Edit</h1>,
+        element: <RecordEditPage />,
         loader: (args) => isParamLoader(args, 'recordId'),
       },
       {
