@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { serverListState } from '@src/states/atoms'; // 추후 삭제
-import { serverbarSelector } from '@src/states/selectors';
+import { serverbarState, currentServerIdState } from '@src/states/atoms';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import { decodeIdParam } from '@src/utils/formatters';
+import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useServerbar from '@src/hooks/useServerbar';
+import useServer from '@src/hooks/query/useServer';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 import { ReactComponent as IcnLibrary } from '@src/assets/icons/library.svg';
@@ -11,23 +13,6 @@ import { ReactComponent as IcnBell } from '@src/assets/icons/bell.svg';
 import { ReactComponent as IcnChat } from '@src/assets/icons/chat.svg';
 import { ReactComponent as IcnSettings } from '@src/assets/icons/settings.svg';
 import { ReactComponent as IcnPlus } from '@src/assets/icons/plus.svg';
-
-const mockNoti = false;
-const mockChat = true;
-const mockServerList: Server[] = [
-  {
-    serverId: 12,
-    name: '공동체A',
-    serverImg:
-      'https://bookwoori-image-bucket.s3.ap-northeast-2.amazonaws.com/server/0f4a8a00-3d79-48b2-8d41-80570fa3c1af_elemental-movie-v2-1536x864.jpg',
-  },
-  {
-    serverId: 13,
-    name: '공동체B',
-    serverImg:
-      'https://bookwoori-image-bucket.s3.ap-northeast-2.amazonaws.com/server/ba314415-34e5-4ccb-ab89-57dead2f79ae_WIN_20240518_16_18_46_Pro.jpg',
-  },
-];
 
 type buttonConfig = {
   name: string;
@@ -52,103 +37,108 @@ type buttonConfig = {
  * openServerbar();
  */
 const Serverbar = () => {
-  const setServerList = useSetRecoilState(serverListState); // 추후 삭제
-  const { content, isOpen, transition } = useRecoilValue(serverbarSelector);
   const { closeServerbar } = useServerbar();
   const navigate = useNavigate();
+  const encodedNavigate = useEncodedNavigate();
+  const { serverId: params } = useParams<{ serverId: string }>();
+  const location = useLocation();
 
-  const [isNotiRead, setIsNotiRead] = useState<boolean>(true);
-  const [isChatRead, setIsChatRead] = useState<boolean>(true);
+  const { isOpen, transition } = useRecoilValue(serverbarState);
+  const setCurrentServerId = useSetRecoilState(currentServerIdState);
+
+  let decodedServerId: number = -1;
+  if (location.pathname.includes('/server')) {
+    decodedServerId = decodeIdParam(params);
+  }
+  setCurrentServerId(decodedServerId);
+
+  const { serverList } = useServer();
+  const isNotiRead = true; // 나중에 수정
+  const isChatRead = true; // 나중에 수정
 
   const buttonConfigs: buttonConfig[] = [
     {
       name: '서재',
-      link: 'library',
+      link: ROUTE_PATH.library,
       icon: <IcnLibrary />,
       className: 'neongreen',
     },
     {
       name: '알림',
-      link: 'notifications',
+      link: ROUTE_PATH.notification,
       icon: <IcnBell />,
       className: isNotiRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '채팅',
-      link: 'chatting',
+      link: ROUTE_PATH.dm,
       icon: <IcnChat />,
       className: isChatRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '계정 설정',
-      link: 'settings',
+      link: ROUTE_PATH.setting,
       icon: <IcnSettings />,
       className: 'neongreen',
     },
     {
       name: '서버 추가',
-      link: 'server',
+      link: ROUTE_PATH.addServer,
       icon: <IcnPlus />,
       className: 'blue',
     },
   ];
 
-  function handleClick(link: string) {
+  const handleMyClick = (link: string) => {
     navigate(link);
     closeServerbar();
-  }
-
-  useEffect(() => {
-    setServerList(mockServerList); // 추후 삭제
-
-    const dataNoti: boolean = mockNoti; // 알림 isRead fetch
-    const dataChat: boolean = mockChat; // 채팅 isRead fetch
-
-    setIsNotiRead(dataNoti);
-    setIsChatRead(dataChat);
-  }, []);
+  };
+  const handleServerClick = (id: number) => {
+    encodedNavigate('/server', id);
+    closeServerbar();
+  };
 
   return (
     <Scrim isOpen={isOpen} transition={transition} closeModal={closeServerbar}>
-      <Layout
+      <Container
         onClick={(event) => event.stopPropagation()}
         $transition={transition}
       >
         <Fieldset>
-          {buttonConfigs.map((item) => (
+          {buttonConfigs.map(({ name, link, icon, className }) => (
             <>
-              <SButton key={item.name} className={item.className}>
+              <SButton key={name} className={className}>
                 <input
                   type='radio'
                   name='serverbar'
-                  onClick={() => handleClick(`/${item.link}`)}
-                  checked={window.location.pathname === `/${item.link}`}
+                  onClick={() => handleMyClick(link)}
+                  checked={window.location.pathname === link}
                 />
-                {item.icon}
+                {icon}
               </SButton>
-              {(item.name === '서재' || item.name === '계정 설정') && <Hr />}
+              {(name === '서재' || name === '계정 설정') && <Hr />}
             </>
           ))}
-          {content.length !== 0 &&
-            content.map((item) => (
-              <ImageButton key={item.serverId} $img={item.serverImg}>
+          {serverList.length > 0 &&
+            serverList.map(({ serverId, serverImg }) => (
+              <ImageButton key={serverId} $img={serverImg || ''}>
                 <input
                   type='radio'
                   name='serverbar'
-                  onChange={() => handleClick(`/${item.serverId}`)}
-                  checked={window.location.pathname === `/${item.serverId}`}
+                  onChange={() => handleServerClick(serverId)}
+                  checked={decodedServerId === serverId}
                 />
               </ImageButton>
             ))}
         </Fieldset>
-      </Layout>
+      </Container>
     </Scrim>
   );
 };
 
 export default Serverbar;
 
-const Layout = styled.section<{ $transition: ModalTransition }>`
+const Container = styled.section<{ $transition: ModalTransition }>`
   position: fixed;
   left: 0;
   top: 0;
@@ -160,9 +150,7 @@ const Layout = styled.section<{ $transition: ModalTransition }>`
   display: flex;
   justify-content: center;
 
-  width: 5rem;
   height: 100%;
-  padding: 1.25rem 0;
 
   background-color: ${({ theme }) => theme.colors.white};
 `;
@@ -170,6 +158,10 @@ const Fieldset = styled.fieldset`
   display: flex;
   flex-flow: column nowrap;
   gap: 0.62rem;
+
+  padding: 1.25rem 0.94rem;
+
+  overflow-y: scroll;
 `;
 const Hr = styled.hr`
   width: 2.1875rem;
@@ -184,6 +176,7 @@ const SButton = styled.label`
 
   width: 3.125rem;
   height: 3.125rem;
+  flex-shrink: 0;
 
   border-radius: 50%;
 
@@ -226,6 +219,7 @@ const SButton = styled.label`
   }
 `;
 const ImageButton = styled(SButton)<{ $img: string }>`
+  background-color: ${({ theme }) => theme.colors.blue300};
   background-image: url(${({ $img }) => $img});
   background-repeat: no-repeat;
   background-size: cover;

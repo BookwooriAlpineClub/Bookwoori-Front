@@ -9,14 +9,6 @@ declare type Modal = {
   isOpen: boolean;
   transition: ModalTransition;
 };
-declare type Server = {
-  serverId: number;
-  name: string;
-  serverImg: string;
-};
-declare type Serverbar = Omit<Modal, 'content'> & {
-  content: Server[];
-};
 
 declare interface InputProps {
   title: string;

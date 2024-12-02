@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { authClient } from '@src/apis/index';
-import { Server } from '@src/types/apis/server.d';
+import { Server, ServerListItem } from '@src/types/apis/server.d';
 
 const SERVER_BASE_URL = '/servers';
 const buildServerUrl = (path: string = '') => `${SERVER_BASE_URL}${path}`;
@@ -33,15 +33,10 @@ export const postServer = async <
   return response.data;
 };
 
-export const getServers = async <
-  Res = Pick<Server, 'name' | 'serverImg' | 'serverId'>,
->(
+export const getServers = async <Res = { servers: ServerListItem[] }>(
   headers?: Record<string, string>,
-): Promise<Res[]> => {
-  const response = await authClient.get<Res[], AxiosResponse<Res[]>>(
-    buildServerUrl(),
-    { headers },
-  );
+): Promise<Res> => {
+  const response = await authClient.get<Res>(buildServerUrl(), { headers });
   return response.data;
 };
 
