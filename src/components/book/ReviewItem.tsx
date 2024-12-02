@@ -1,5 +1,6 @@
 import type { Review } from '@src/types/apis/record';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Chip from '@src/components/common/Chip';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
@@ -11,11 +12,11 @@ const ReviewItem = ({ bookInfo, star, reviewContent }: Review) => {
       <Img src={cover} alt='책 표지' loading='lazy' />
       <TextWrapper>
         <RowLayout>
-          <Title>{title}</Title>
+          <Title $line={1}>{title}</Title>
           <Chip Icon={IcnStar} text={star} />
         </RowLayout>
-        <Author>{author}</Author>
-        <ReviewContent>{reviewContent}</ReviewContent>
+        <Author $line={1}>{author}</Author>
+        <ReviewContent $line={3}>{reviewContent}</ReviewContent>
       </TextWrapper>
     </ComponentWrapper>
   );
@@ -43,33 +44,25 @@ const TextWrapper = styled.div`
   width: 100%;
 `;
 const Img = styled.img`
-  flex-shrink: 0;
-
   width: 4.25rem;
 
-  object-fit: contain;
+  ${BookImg}
 `;
-const TextEllipsis = css`
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-
+const Title = styled.span<{ $line: number }>`
   width: 100%;
 
-  text-overflow: ellipsis;
-`;
-const Title = styled.span`
   ${({ theme }) => theme.fonts.body}
   ${TextEllipsis}
-  -webkit-line-clamp: 1;
 `;
-const Author = styled.span`
+const Author = styled.span<{ $line: number }>`
+  width: 100%;
+
   ${({ theme }) => theme.fonts.caption}
   ${TextEllipsis}
-  -webkit-line-clamp: 1;
 `;
-const ReviewContent = styled.p`
+const ReviewContent = styled.p<{ $line: number }>`
+  width: 100%;
+
   ${({ theme }) => theme.fonts.body}
   ${TextEllipsis}
-  -webkit-line-clamp: 3;
 `;
