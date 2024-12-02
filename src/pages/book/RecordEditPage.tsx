@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '@src/components/book/Header';
 import BookInfoDetail from '@src/components/book/BookInfoDetail';
+import InputStatus from '@src/components/book/InputStatus';
 import InputPeriod, { type Period } from '@src/components/book/InputPeriod';
 import InputPage from '@src/components/book/InputPage';
 import InputReview from '@src/components/book/InputReview';
@@ -57,7 +58,7 @@ const RecordEditPage = () => {
     bookInfo,
   }: Record = mock;
 
-  const status = readingStatus;
+  const [status, setStatus] = useState<Record['readingStatus']>(readingStatus);
   const [period, setPeriod] = useState<Period>({
     start: startDate,
     end: endDate,
@@ -82,6 +83,11 @@ const RecordEditPage = () => {
       <Header buttonList={['save']} />
       <BookInfoDetail status={status} {...bookInfo} />
       <Form onSubmit={handleFormSubmit}>
+        <InputStatus
+          name='status'
+          setValue={setStatus}
+          readingStatus={readingStatus}
+        />
         {(status === 'READING' || status === 'FINISHED') && (
           <InputPeriod
             name='독서 기간'
