@@ -30,3 +30,33 @@ export type ReviewEmoji = {
 export type ReviewEmojiResponse = {
   reviewEmojiList: ReviewEmoji[];
 };
+
+export type BookInfo = {
+  title: string;
+  author: string;
+  publisher: string;
+  pubDate: string; // ISO 형식 날짜 문자열
+  itemPage: number;
+  description: string;
+  isbn13: string;
+  cover: string; // 이미지 URL
+};
+
+type ClimbingMemberReview = {
+  memberId: number;
+  nickname: string;
+  star: number;
+  reviewId: number;
+  content: string;
+  reviewEmojiList: { emoji: string; emojiCount: number }[];
+};
+
+export type ClimbingResponse = {
+  hasShared: boolean;
+  isShareable: boolean;
+  bookInfo: BookInfo;
+  content?: string;
+  reviewId?: number;
+  star?: number;
+  ClimbingMemberReviewList?: ClimbingMemberReview[];
+};

@@ -8,10 +8,13 @@ const ClimbingDetail = () => {
         <ThumbnailImg />
       </Thumbnail>
       <Content>
-        <Title>
+        <BookInfo>
           <StyledBookIcon />
-          작가명, 《책 제목 책 제목》, 300p
-        </Title>
+          <BookTitle>
+            작가명, 《책 제목 책 제목 제목 제목 제목 제목제목제목제목 제목이
+            길어진다》, 300p
+          </BookTitle>
+        </BookInfo>
         <Memo>
           클라이밍에 대한 메모가 적히는 곳. 클라이밍에 대한 메모가 적히는 곳.
           클라이밍에 대한 메모가 적히는 곳. 클라이밍에 대한 메모가 적히는 곳.
@@ -53,12 +56,24 @@ const Content = styled.div`
   gap: 0.5rem;
 `;
 
-const Title = styled.div`
+const BookInfo = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+
   gap: 0.15rem;
   ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.black100};
+`;
+
+const BookTitle = styled.p`
+  ${({ theme }) => theme.fonts.body};
+  color: ${({ theme }) => theme.colors.black100};
+  text-overflow: ellipsis;
+  text-align: start;
+
+  &::first-line {
+    line-height: 1;
+  }
 `;
 
 const StyledBookIcon = styled(BookIcon)`
@@ -72,5 +87,6 @@ const Memo = styled.p`
   color: ${({ theme }) => theme.colors.black200};
   white-space: normal;
   word-wrap: break-word;
+  text-align: justify;
   min-height: 4rem;
 `;

@@ -38,27 +38,31 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 0.5rem;
+  gap: 0.625rem;
 `;
 
 const DateInfo = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.25rem;
 `;
 
 const DateText = styled.span`
   color: ${({ theme }) => theme.colors.black200};
+  ${({ theme }) => theme.fonts.caption}
 `;
 
 const HighlightText = styled.span`
   color: ${({ theme }) => theme.colors.blue100};
+  ${({ theme }) => theme.fonts.caption}
 `;
 
 const MemberInfo = styled.div`
   display: flex;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.black300};
+  ${({ theme }) => theme.fonts.caption}
+
   border-radius: 0.725rem;
   padding: 0.1875rem 0.525rem;
   justify-content: center;

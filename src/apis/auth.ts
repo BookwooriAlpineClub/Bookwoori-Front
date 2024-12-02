@@ -2,17 +2,6 @@ import { AxiosError } from 'axios';
 import client from '@src/apis/client';
 import authClient from './authClient';
 
-// const postLogin = async () => {
-//   try {
-//     const res = await client.get('auth/success');
-//     console.log(res.data);
-//   } catch (e) {
-//     if (e instanceof Error) {
-//       throw new Error(e.message);
-//     }
-//   }
-// };
-
 const postLogout = async () => {
   try {
     await authClient.post('auth/logout');
@@ -25,10 +14,14 @@ const postLogout = async () => {
 
 const postRefreshToken = async () => {
   try {
-    const cookie = document.cookie.split('=');
-    const res = await client.post('auth/token', {
-      refreshToken: cookie[1],
-    });
+    const refreshToken = sessionStorage.getItem('refreshToken');
+    const res = await client.post(
+      'auth/token',
+      {
+        refreshToken,
+      },
+      { withCredentials: true },
+    );
     localStorage.setItem('accessToken', res.data.accessToken);
   } catch (e) {
     if (e instanceof AxiosError) {

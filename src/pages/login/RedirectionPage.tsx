@@ -7,7 +7,7 @@ const RedirectionPage = () => {
   const [searchParams] = useSearchParams();
   const accessToken = searchParams.get('accessToken');
   const refreshToken = searchParams.get('refreshToken');
-
+        
   if (accessToken && refreshToken) {
     localStorage.setItem('accessToken', accessToken);
     sessionStorage.setItem('refreshToken', refreshToken);

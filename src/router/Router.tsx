@@ -16,13 +16,29 @@ const RouterExampleDetailPage = React.lazy(
 );
 
 /* lazy load */
+const SearchPage = React.lazy(() => import('@src/pages/book/SearchPage'));
+const ReviewListPage = React.lazy(
+  () => import('@src/pages/book/ReviewListPage'),
+);
 const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
+);
+const ChannelAddPage = React.lazy(
+  () => import('@src/pages/channel/ChannelAddPage'),
 );
 const ClimbingPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingPage'),
 );
-
+/* library */
+const BookDetailPage = React.lazy(
+  () => import('@src/pages/book/BookDetailPage'),
+);
+const RecordListPage = React.lazy(
+  () => import('@src/pages/book/RecordListPage'),
+);
+const RecordDetailPage = React.lazy(
+  () => import('@src/pages/book/RecordDetailPage'),
+);
 /* settings */
 const SettingsPage = React.lazy(
   () => import('@src/pages/userSettings/SettingsPage'),
@@ -83,6 +99,9 @@ const ClimbingEditPage = React.lazy(
 const LibraryHomePage = React.lazy(
   () => import('@src/pages/library/LibraryHomePage'),
 );
+const RecordEditPage = React.lazy(
+  () => import('@src/pages/book/RecordEditPage'),
+);
 
 const router = createBrowserRouter([
   {
@@ -131,30 +150,30 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryBookSearch,
-        element: <h1>Library Book Search</h1>,
+        element: <SearchPage />,
       },
       {
         path: ROUTE_PATH.libraryBookDetail,
-        element: <h1>Library Book Detail</h1>,
+        element: <BookDetailPage />,
         loader: (args) => isParamLoader(args, 'bookId'),
       },
       {
         path: ROUTE_PATH.libraryRecord,
-        element: <h1>Library Record</h1>,
+        element: <RecordListPage />,
       },
       {
         path: ROUTE_PATH.libraryRecordDetail,
-        element: <h1>Library Record Detail</h1>,
+        element: <RecordDetailPage />,
         loader: (args) => isParamLoader(args, 'recordId'),
       },
       {
         path: ROUTE_PATH.libraryEditRecordOne,
-        element: <h1>Library Record Edit</h1>,
+        element: <RecordEditPage />,
         loader: (args) => isParamLoader(args, 'recordId'),
       },
       {
         path: ROUTE_PATH.libraryReview,
-        element: <h1>Library Review</h1>,
+        element: <ReviewListPage />,
       },
       /* notification */
       {
@@ -222,7 +241,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.addChannel,
-        element: <h1>Add Channel Page</h1>,
+        element: <ChannelAddPage />,
       },
       {
         path: ROUTE_PATH.editChannelOne,
@@ -242,7 +261,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.climbingCreate,
-        element: <ClimbingAddPage type='climb' />,
+        element: <ClimbingAddPage />,
       },
       {
         path: ROUTE_PATH.climbingEditOne,
