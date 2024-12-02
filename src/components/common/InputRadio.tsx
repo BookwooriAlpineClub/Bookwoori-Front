@@ -47,7 +47,7 @@ const InputRadio = ({
               required={required}
               onChange={(e) => setValue(e.target.value)}
               disabled={isRadioDisabled}
-              defaultChecked={defaultValue === value}
+              defaultChecked={defaultValue ? defaultValue === value : false}
             />
           </Label>
         ))}
