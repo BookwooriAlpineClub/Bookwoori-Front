@@ -69,7 +69,7 @@ const RecruitClimbingItem = ({
       <SContent>
         <STitle>{item.name}</STitle>
         <SContentWrapper>
-          <SBook />
+          <SBook width='1.1875rem'/>
           <SBody>
             {item.bookInfo.author}, 《{item.bookInfo.title}》,{' '}
             {item.bookInfo.itemPage}p
@@ -156,6 +156,8 @@ const STitle = styled.label`
 const SContentWrapper = styled.div`
   display: flex;
   gap: 0.3125rem;
+
+  color: ${({ theme }) => theme.colors.black200};
 `;
 const SBook = styled(Book)`
   fill: ${({ theme }) => theme.colors.black200};
