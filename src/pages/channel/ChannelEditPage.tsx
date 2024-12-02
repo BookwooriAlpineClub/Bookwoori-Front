@@ -5,6 +5,7 @@ import useCategory from '@src/hooks/query/useCategory';
 import useChannel from '@src/hooks/query/useChannel';
 import useDialog from '@src/hooks/useDialog';
 import useLoaderData from '@src/hooks/useRoaderData';
+import useToast from '@src/hooks/useToast';
 import { encodeId } from '@src/utils/formatters';
 import Header from '@src/components/common/Header';
 import Button from '@src/components/common/Button';
@@ -29,6 +30,7 @@ const ChannelEditPage = () => {
   const [name, setName] = useState<string>(findName?.[0].name ?? '');
   const [category, setCategory] = useState<string>(categoryId);
   const { openDialog, closeDialog } = useDialog();
+  const addToast = useToast();
 
   const handleClickEdit = () => {
     editChannel.mutate(
@@ -40,8 +42,10 @@ const ChannelEditPage = () => {
         },
       },
       {
-        onSuccess: () =>
-          window.location.replace(`/server/${encodeId(Number(serverId))}`),
+        onSuccess: () => {
+          addToast({ content: '수정 완료' });
+          window.location.replace(`/server/${encodeId(Number(serverId))}`);
+        },
       },
     );
   };
@@ -50,6 +54,7 @@ const ChannelEditPage = () => {
     delChannel.mutate(Number(channelId), {
       onSuccess: () => {
         closeDialog();
+        addToast({ content: '삭제 완료' });
         window.location.replace(`/server/${encodeId(Number(serverId))}`);
       },
     });

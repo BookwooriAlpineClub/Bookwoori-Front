@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
 import useLoaderData from '@src/hooks/useRoaderData';
+import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
+import useToast from '@src/hooks/useToast';
 import { formatDate } from '@src/utils/formatters';
 import Button from '@src/components/common/Button';
 import ButtonBackground from '@src/components/common/ButtonBackground';
@@ -10,12 +12,13 @@ import InputDatepicker, {
   Period,
 } from '@src/components/common/InputDatepicker';
 import InputText from '@src/components/common/InputText';
-import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
+import useDialog from '@src/hooks/useDialog';
+import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 
 const ClimbingEditPage = () => {
   const serverId = 3; // 전역 서버 정보 필요
   const { id: climbingId } = useLoaderData<{ id: string }>();
-  const { readyClimbingInfo, editClimbing } = useClimbingRecruit(
+  const { readyClimbingInfo, editClimbing, delClimbing } = useClimbingRecruit(
     Number(serverId),
     Number(climbingId),
   );
@@ -32,8 +35,10 @@ const ClimbingEditPage = () => {
   const [description, setDescription] = useState<string>(
     readyClimbingInfo?.description ?? '',
   );
+  const { openDialog, closeDialog } = useDialog();
 
   const navigate = useEncodedNavigation();
+  const addToast = useToast();
   const handleClickEdit = () => {
     const data = {
       name: climbingName ?? '',
@@ -42,7 +47,20 @@ const ClimbingEditPage = () => {
       endDate: date.end,
     };
     editClimbing.mutate(data, {
-      onSuccess: () => navigate('/server', serverId),
+      onSuccess: () => {
+        addToast({ content: '수정 완료' });
+        navigate('/server', serverId, { replace: true });
+      },
+    });
+  };
+
+  const handleClickDelete = () => {
+    delClimbing.mutate(Number(climbingId), {
+      onSuccess: () => {
+        closeDialog();
+        addToast({ content: '삭제 완료' });
+        navigate('/server', serverId, { replace: true });
+      },
     });
   };
 
@@ -99,12 +117,26 @@ const ClimbingEditPage = () => {
         />
       </SLayout>
       <ButtonBackground color='transparent'>
-        <Button
-          disabled={!climbingName || !description || !date.end}
-          onClick={handleClickEdit}
-        >
-          편집하기
-        </Button>
+        <Container>
+          <Button
+            disabled={!climbingName || !description || !date.end}
+            onClick={handleClickEdit}
+          >
+            편집하기
+          </Button>
+          <TextButton
+            onClick={() =>
+              openDialog(
+                <DeleteConfirmModal
+                  closeDialog={closeDialog}
+                  onClickDelete={handleClickDelete}
+                />,
+              )
+            }
+          >
+            모임 삭제하기
+          </TextButton>
+        </Container>
       </ButtonBackground>
     </>
   );
@@ -122,4 +154,18 @@ const SLayout = styled.form`
 
   width: 100%;
   padding: 1.875rem 1.25rem;
+`;
+const TextButton = styled.button`
+  margin-bottom: -0.625rem;
+
+  ${({ theme }) => theme.fonts.caption};
+  text-decoration: underline;
+  color: ${({ theme }) => theme.colors.black200};
+`;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+
+  width: 100%;
 `;
