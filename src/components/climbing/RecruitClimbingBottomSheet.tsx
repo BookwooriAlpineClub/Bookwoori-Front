@@ -59,7 +59,7 @@ const SWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  padding: 0.625rem 0;
+  padding: 1.25rem 1.25rem 0.625rem;
 `;
 const SContainer = styled.div`
   display: flex;
@@ -67,6 +67,7 @@ const SContainer = styled.div`
   gap: 0.9375rem;
 
   height: 80vh;
+  padding: 0 0.9375rem;
   overflow: scroll;
 `;
 const SPlus = styled(Plus)`
