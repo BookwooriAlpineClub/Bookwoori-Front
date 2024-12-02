@@ -88,9 +88,6 @@ const CheckInvitedCommunityPage = React.lazy(
 );
 
 /* climbing */
-const ClimbingAddPage = React.lazy(
-  () => import('@src/pages/channel/ChannelAddPage'),
-);
 const ClimbingEditPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingEditPage'),
 );
@@ -259,10 +256,6 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.climbing,
         element: <ClimbingPage />,
         loader: (args) => isParamLoader(args, 'climbingId'),
-      },
-      {
-        path: ROUTE_PATH.climbingCreate,
-        element: <ClimbingAddPage type='climb' />,
       },
       {
         path: ROUTE_PATH.climbingEditOne,
