@@ -54,8 +54,8 @@ const Serverbar = () => {
   setCurrentServerId(decodedServerId);
 
   const { serverList } = useServer();
-  const isNotiRead;
-  const isChatRead;
+  const isNotiRead = true; // 나중에 수정
+  const isChatRead = true; // 나중에 수정
 
   const buttonConfigs: buttonConfig[] = [
     {
