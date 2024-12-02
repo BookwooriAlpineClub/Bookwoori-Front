@@ -98,36 +98,44 @@ const Carousel = ({
 
   return (
     <SLayout>
-      <SContainer
-        ref={ref}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onMouseDown={handleClickStart}
-        onMouseUp={handleClickEnd}
-      >
-        {list.map(({ name, cover, climbingId }) => (
-          <SItem
-            key={climbingId}
-            onClick={
-              type === 'next' ? () => handleClickNavigate(climbingId) : () => {}
-            }
-            disabled={type === 'more'}
-          >
-            <SImg src={cover} />
-            <SLayer>
-              <SLabel>{name}</SLabel>
-            </SLayer>
-          </SItem>
-        ))}
-      </SContainer>
-      {type === 'next' ? (
-        <button type='button' onClick={handClickNextButton}>
-          <Next />
-        </button>
+      {list.length === 0 ? (
+        <Span>아직 등반이 없습니다.</Span>
       ) : (
-        <button type='button' onClick={handleClickMoreButton}>
-          <More />
-        </button>
+        <>
+          <SContainer
+            ref={ref}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onMouseDown={handleClickStart}
+            onMouseUp={handleClickEnd}
+          >
+            {list.map(({ name, cover, climbingId }) => (
+              <SItem
+                key={climbingId}
+                onClick={
+                  type === 'next'
+                    ? () => handleClickNavigate(climbingId)
+                    : () => {}
+                }
+                disabled={type === 'more'}
+              >
+                <SImg src={cover} />
+                <SLayer>
+                  <SLabel>{name}</SLabel>
+                </SLayer>
+              </SItem>
+            ))}
+          </SContainer>
+          {type === 'next' ? (
+            <button type='button' onClick={handClickNextButton}>
+              <Next />
+            </button>
+          ) : (
+            <button type='button' onClick={handleClickMoreButton}>
+              <More />
+            </button>
+          )}
+        </>
       )}
     </SLayout>
   );
@@ -142,8 +150,17 @@ const SLayout = styled.div`
 
   padding: 0.625rem;
 
+  min-height: 6.25rem;
   border-radius: 0.9375rem;
   background-color: ${({ theme }) => theme.colors.blue300};
+`;
+const Span = styled.span`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  
+  ${({ theme }) => theme.fonts.caption};
+  color: ${({ theme }) => theme.colors.black200};
 `;
 const SContainer = styled.div`
   display: flex;
