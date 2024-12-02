@@ -96,8 +96,10 @@ const Carousel = ({
     navigate('/climbing', climbingId);
   };
 
+  const layoutRef = useRef<HTMLDivElement>(null);
+
   return (
-    <SLayout>
+    <SLayout ref={layoutRef}>
       {list.length === 0 ? (
         <Span>아직 등반이 없습니다.</Span>
       ) : (
@@ -127,9 +129,13 @@ const Carousel = ({
             ))}
           </SContainer>
           {type === 'next' ? (
-            <button type='button' onClick={handClickNextButton}>
-              <Next />
-            </button>
+            layoutRef.current &&
+            layoutRef.current.offsetWidth <
+              CAROUSEL_ITEM_WIDTH * list.length && (
+              <button type='button' onClick={handClickNextButton}>
+                <Next />
+              </button>
+            )
           ) : (
             <button type='button' onClick={handleClickMoreButton}>
               <More />
@@ -158,7 +164,7 @@ const Span = styled.span`
   display: flex;
   width: 100%;
   justify-content: center;
-  
+
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.black200};
 `;
