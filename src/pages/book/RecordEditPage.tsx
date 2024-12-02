@@ -33,6 +33,16 @@ const mock: Record = {
   },
 };
 
+// type RecordEdit = {
+//   isbn13: string;
+//   status: 'UNREAD' | 'WISH' | 'READING' | 'FINISHED';
+//   star: number;
+//   startDate: string;
+//   endDate: string;
+//   currentPage: number;
+//   reviewContent: string;
+// };
+
 const RecordEditPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
