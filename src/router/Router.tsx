@@ -261,7 +261,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.climbingCreate,
-        element: <ClimbingAddPage />,
+        element: <ClimbingAddPage type='climb' />,
       },
       {
         path: ROUTE_PATH.climbingEditOne,
