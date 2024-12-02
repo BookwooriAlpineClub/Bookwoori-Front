@@ -6,8 +6,8 @@ interface Props {
   currentPage: number;
   itemPage: number;
   readOnly: boolean;
-  value: number;
-  setValue: React.Dispatch<React.SetStateAction<number>>;
+  value?: number;
+  setValue?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const InputPage = ({
@@ -27,7 +27,7 @@ const InputPage = ({
       data = data.slice(0, -1); // 마지막 숫자 삭제
       const num = Number(data);
 
-      setValue(num);
+      setValue?.(num);
     }
   };
   const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
@@ -36,7 +36,7 @@ const InputPage = ({
     data = data.replace(/[^0-9]/gi, ''); // 숫자 외 모든 문자 제거
     const num = Math.min(Number(data), itemPage); // 최댓값 유효성 검증
 
-    setValue(num);
+    setValue?.(num);
   };
 
   return (

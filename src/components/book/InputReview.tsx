@@ -7,8 +7,8 @@ interface Props {
   star: number;
   reviewContent: string;
   readOnly: boolean;
-  setNum: React.Dispatch<React.SetStateAction<number>>;
-  setStr: React.Dispatch<React.SetStateAction<string>>;
+  setNum?: React.Dispatch<React.SetStateAction<number>>;
+  setStr?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const InputReview = ({
@@ -39,7 +39,7 @@ const InputReview = ({
               value={index + 1}
               required
               readOnly={readOnly}
-              onChange={(e) => setNum(Number(e.target.value))}
+              onChange={(e) => setNum?.(Number(e.target.value))}
             />
           </label>
         ))}
@@ -52,7 +52,7 @@ const InputReview = ({
           placeholder='이 책은 어떠셨나요? 감상평을 적어주세요.'
           readOnly={readOnly}
           defaultValue={reviewContent}
-          onChange={(e) => setStr(e.target.value)}
+          onChange={(e) => setStr?.(e.target.value)}
         />
       </fieldset>
     </Fieldset>

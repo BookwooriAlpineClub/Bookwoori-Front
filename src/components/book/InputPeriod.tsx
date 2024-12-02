@@ -10,7 +10,7 @@ interface Props {
   readingStatus: 'WISH' | 'READING' | 'FINISHED';
   readOnly: boolean;
   value: Period;
-  setValue: React.Dispatch<React.SetStateAction<Period>>;
+  setValue?: React.Dispatch<React.SetStateAction<Period>>;
 }
 
 const InputPeriod = ({ readingStatus, readOnly, value, setValue }: Props) => {
@@ -26,9 +26,9 @@ const InputPeriod = ({ readingStatus, readOnly, value, setValue }: Props) => {
           pattern='\d{4}-\d{2}-\d{2}'
           required
           readOnly={readOnly}
-          onChange={(e) =>
-            setValue((prev) => ({ ...prev, start: e.target.value }))
-          }
+          onChange={(e) => {
+            setValue?.((prev: Period) => ({ ...prev, start: e.target.value }));
+          }}
         />
         <Hyphen>-</Hyphen>
         {readingStatus === 'FINISHED' ? (
@@ -39,9 +39,9 @@ const InputPeriod = ({ readingStatus, readOnly, value, setValue }: Props) => {
             pattern='\d{4}-\d{2}-\d{2}'
             required
             readOnly={readOnly}
-            onChange={(e) =>
-              setValue((prev) => ({ ...prev, end: e.target.value }))
-            }
+            onChange={(e) => {
+              setValue?.((prev: Period) => ({ ...prev, end: e.target.value }));
+            }}
           />
         ) : (
           <Text>독서 중</Text>
