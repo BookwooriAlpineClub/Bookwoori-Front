@@ -1,7 +1,7 @@
 import type { Categories } from '@src/types/domain/channel';
 import type { BookListItem } from '@src/types/apis/book.d';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import useCategory from '@src/hooks/query/useCategory';
 import useChannel from '@src/hooks/query/useChannel';
 import useClimbing from '@src/hooks/query/useClimbing';
@@ -22,22 +22,22 @@ import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
 import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
 import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
 
-interface Props {
-  defaultKind?: 'chat' | 'voice' | 'climb';
-}
+type DefaultKind = 'chat' | 'voice' | 'climb' | null;
 
-const ChannelAddPage = ({ defaultKind }: Props) => {
+const ChannelAddPage = () => {
   const { openBottomsheet, closeBottomsheet } = useBottomsheet();
-
   const { serverId } = useParams<{ serverId: string }>();
-  const serverIdA = decodeIdParam(serverId);
-  const { categoryList } = useCategory(Number(serverIdA));
+  const decodedServerId = decodeIdParam(serverId);
+  const location = useLocation();
+  const defaultKind: DefaultKind = new URLSearchParams(location.search).get(
+    'kind',
+  ) as DefaultKind;
+
+  const { categoryList } = useCategory(Number(decodedServerId));
   const { createChannel } = useChannel();
   const { createClimbing } = useClimbing();
 
-  const [kind, setKind] = useState<'chat' | 'voice' | 'climb' | undefined>(
-    defaultKind,
-  );
+  const [kind, setKind] = useState<DefaultKind>(defaultKind);
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({
@@ -72,7 +72,9 @@ const ChannelAddPage = ({ defaultKind }: Props) => {
         },
         {
           onSuccess() {
-            window.location.replace(`/server/${encodeId(Number(serverIdA))}`);
+            window.location.replace(
+              `/server/${encodeId(Number(decodedServerId))}`,
+            );
           },
         },
       );
@@ -80,7 +82,7 @@ const ChannelAddPage = ({ defaultKind }: Props) => {
       createClimbing.mutate(
         {
           body: {
-            serverId: Number(serverIdA),
+            serverId: Number(decodedServerId),
             name,
             isbn: book.isbn13,
             description,
@@ -90,7 +92,9 @@ const ChannelAddPage = ({ defaultKind }: Props) => {
         },
         {
           onSuccess() {
-            window.location.replace(`/server/${encodeId(Number(serverIdA))}`);
+            window.location.replace(
+              `/server/${encodeId(Number(decodedServerId))}`,
+            );
           },
         },
       );

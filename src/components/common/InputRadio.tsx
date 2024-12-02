@@ -9,7 +9,7 @@ interface Props extends Omit<InputProps, 'placeholder'> {
     icon: React.ReactElement;
     isRadioDisabled?: boolean;
   }[];
-  defaultValue?: 'chat' | 'voice' | 'climb';
+  defaultValue?: 'chat' | 'voice' | 'climb' | null;
 }
 
 /**
