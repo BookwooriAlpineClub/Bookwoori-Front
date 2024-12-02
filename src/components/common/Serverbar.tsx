@@ -1,9 +1,9 @@
 import type { ServerListItem } from '@src/types/apis/server';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { serverbarState, currentServerIdState } from '@src/states/atoms';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { decodeIdParam } from '@src/utils/formatters';
-import { serverbarState } from '@src/states/atoms';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useServerbar from '@src/hooks/useServerbar';
 import styled from 'styled-components';
@@ -42,6 +42,7 @@ const Serverbar = () => {
   const { closeServerbar } = useServerbar();
 
   const { isOpen, transition } = useRecoilValue(serverbarState);
+  const setCurrentServerId = useSetRecoilState(currentServerIdState);
   const { serverId: params } = useParams<{ serverId: string }>();
   let decodedServerId: number;
   try {
@@ -50,6 +51,7 @@ const Serverbar = () => {
     console.error(error);
     decodedServerId = -1;
   }
+  setCurrentServerId(decodedServerId);
 
   const serverList: ServerListItem[] = [];
   const isNotiRead;

@@ -46,3 +46,7 @@ export const communityFileState = atom<File | null>({
   key: 'communityfileState',
   default: null,
 });
+export const currentServerIdState = atom<number>({
+  key: 'currentServerIdState',
+  default: -1,
+});
