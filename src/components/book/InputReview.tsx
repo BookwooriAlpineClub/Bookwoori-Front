@@ -4,20 +4,14 @@ import Fieldset from '@src/components/book/Fieldset';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
 interface Props {
-  star: number;
-  reviewContent: string;
   readOnly?: boolean;
+  num: number;
   setNum?: React.Dispatch<React.SetStateAction<number>>;
+  str: string;
   setStr?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const InputReview = ({
-  star,
-  reviewContent,
-  readOnly = false,
-  setNum,
-  setStr,
-}: Props) => {
+const InputReview = ({ readOnly = false, num, setNum, str, setStr }: Props) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [textareaHeight, setTextareaHeight] = useState<number>(0);
 
@@ -32,7 +26,7 @@ const InputReview = ({
       <StarFieldset>
         {Array.from({ length: 5 }, (_, index) => (
           <label key={index}>
-            {index < star ? <IcnStarBlue /> : <IcnStarGray />}
+            {index < num ? <IcnStarBlue /> : <IcnStarGray />}
             <input
               name='star'
               type='radio'
@@ -51,7 +45,7 @@ const InputReview = ({
           name='reviewContent'
           placeholder='이 책은 어떠셨나요? 감상평을 적어주세요.'
           readOnly={readOnly}
-          defaultValue={reviewContent}
+          defaultValue={str}
           onChange={(e) => setStr?.(e.target.value)}
         />
       </fieldset>

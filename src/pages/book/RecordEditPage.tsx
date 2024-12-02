@@ -11,7 +11,7 @@ const mock: Record = {
   recordId: 1,
   memberId: 3,
   readingStatus: 'FINISHED',
-  star: 0,
+  star: 3,
   startDate: '2024-01-01',
   endDate: '2024-12-31',
   reviewContent:
@@ -49,10 +49,8 @@ const RecordEditPage = () => {
     end: endDate,
   });
   const [page, setPage] = useState<number>(currentPage);
-  const [num, setNum] = useState<number>(-1);
-  const [str, setStr] = useState<string>('');
-  console.log(num);
-  console.log(str);
+  const [num, setNum] = useState<number>(star);
+  const [str, setStr] = useState<string>(reviewContent);
 
   const handleFormSubmit = () => {};
 
@@ -77,12 +75,7 @@ const RecordEditPage = () => {
           />
         )}
         {status === 'FINISHED' && (
-          <InputReview
-            star={star}
-            reviewContent={reviewContent}
-            setNum={setNum}
-            setStr={setStr}
-          />
+          <InputReview num={num} setNum={setNum} str={str} setStr={setStr} />
         )}
       </Form>
       <Description>
