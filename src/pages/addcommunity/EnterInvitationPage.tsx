@@ -5,6 +5,8 @@ import InputField from '@src/components/common/InputField';
 import Button from '@src/components/common/Button';
 import React, { useEffect, useState } from 'react';
 import IntroSection from '@src/components/addcommunity/IntroSection';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from '@src/constants/routePath';
 
 const headerText = '공동체 초대장 입력하기';
 const headerType = 'back';
@@ -18,6 +20,9 @@ const EnterInvitationPage = () => {
   const [invitationCode, setInvitationCode] = useState<string>('');
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const navigate = useNavigate();
+
   const handleInvitationCodeChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -25,15 +30,32 @@ const EnterInvitationPage = () => {
   };
 
   const handleFindCommunity = () => {
-    alert('찾는 중...');
+    setIsTransitioning(true);
+    setTimeout(() => {
+      navigate(
+        ROUTE_PATH.invitationServer.replace(':invitationCode', invitationCode),
+      );
+    }, 300);
   };
 
+  // 유효성 검사 추가
   useEffect(() => {
-    setIsFormValid(invitationCode.trim().length > 0);
+    const isValidCode = /^[a-z0-9]{10,12}$/.test(invitationCode.trim());
+    setIsFormValid(isValidCode);
   }, [invitationCode]);
 
   return (
-    <>
+    <div
+      style={{
+        transform: isTransitioning ? 'translateX(-100%)' : 'translateX(0)',
+        transition: 'transform 300ms ease-in-out',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+      }}
+    >
       <Header text={headerText} headerType={headerType} />
       <Container>
         <IntroSection title={introTitleText} bodyLines={introBodyLines} />
@@ -44,7 +66,13 @@ const EnterInvitationPage = () => {
             placeholder='초대장을 입력하세요.'
             onChange={handleInvitationCodeChange}
           />
+          {!isFormValid && invitationCode.trim() !== '' && (
+            <span style={{ color: '#fa6554', fontSize: '0.7rem' }}>
+              초대 코드는 숫자와 영어 소문자를 혼합한 10-12자리입니다.
+            </span>
+          )}
         </TitleAndFieldContainer>
+
         <ButtonWrapper>
           <Button
             type='submit'
@@ -55,7 +83,7 @@ const EnterInvitationPage = () => {
           </Button>
         </ButtonWrapper>
       </Container>
-    </>
+    </div>
   );
 };
 
@@ -79,4 +107,6 @@ const ButtonWrapper = styled.div`
   bottom: calc(1.875rem + 2px);
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  padding: 0 1.25rem;
 `;

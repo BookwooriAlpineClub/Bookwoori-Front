@@ -1,13 +1,15 @@
 import styled from 'styled-components';
-import SubButton from '@src/components/common/SubButton';
 import { useState } from 'react';
+import useClimbingProgress from '@src/hooks/query/useClimbingProgress';
+import SubButton from '@src/components/common/SubButton';
 
 type MemoDialogProps = {
+  id: number;
   memo: string;
   closeDialog: () => void;
 };
 
-const MemoDialog = ({ memo, closeDialog }: MemoDialogProps) => {
+const MemoDialog = ({ memo, closeDialog, id }: MemoDialogProps) => {
   const [value, setValue] = useState<string>(memo);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,6 +19,31 @@ const MemoDialog = ({ memo, closeDialog }: MemoDialogProps) => {
     }
     setValue(e.target.value);
   };
+
+  const { editMemo } = useClimbingProgress(id);
+  const handleClickEdit = () => {
+    editMemo.mutate(
+      { memo: value },
+      {
+        onSuccess: () => {
+          window.location.reload();
+          closeDialog();
+        },
+      },
+    );
+  };
+
+  const handleClickDelete = () => {
+    editMemo.mutate(
+      { memo: '' },
+      {
+        onSuccess: () => {
+          window.location.reload();
+          closeDialog();
+        },
+      },
+    );
+  }
 
   return (
     <DialogLayout>
@@ -33,8 +60,8 @@ const MemoDialog = ({ memo, closeDialog }: MemoDialogProps) => {
         </InputWrapper>
       </InputContainer>
       <ButtonContainer>
-        <SubButton label='삭제하기' onClick={closeDialog} width='39vw' />
-        <SubButton label='수정하기' width='39vw' onClick={closeDialog}/>
+        <SubButton label='삭제하기' width='39vw' onClick={handleClickDelete} />
+        <SubButton label='수정하기' width='39vw' onClick={handleClickEdit} />
       </ButtonContainer>
     </DialogLayout>
   );

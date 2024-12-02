@@ -1,7 +1,8 @@
+import { Categories } from '@src/types/domain/channel';
 import React, { useState, useCallback } from 'react';
 
 const useDraggable = (
-  channelListData: { name: string; children: React.ReactNode }[],
+  channelListData: Pick<Categories, 'categoryId' | 'name'>[],
 ) => {
   const [list, setList] = useState(channelListData);
   const [draggingIdx, setDraggingIdx] = useState<number | null>(null);

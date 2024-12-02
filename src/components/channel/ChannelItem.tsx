@@ -1,39 +1,65 @@
 import styled from 'styled-components';
-import useDialog from '@src/hooks/useDialog';
+import { useNavigate } from 'react-router-dom';
+import { encodeId } from '@src/utils/formatters';
+import useLoaderData from '@src/hooks/useRoaderData';
 import { ReactComponent as Hash } from '@src/assets/icons/hash.svg';
 import { ReactComponent as Voice } from '@src/assets/icons/voice.svg';
 import { ReactComponent as Run } from '@src/assets/icons/run.svg';
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
-import { ReactComponent as Delete } from '@src/assets/icons/trash.svg';
-import DeleteConfirmModal from '@src/components/channel/DeleteConfirmModal';
 
 interface Props {
   color?: string;
   type: string;
   children: React.ReactNode;
+  channelId: number;
+  categoryId?: number;
 }
 
-const ChannelItem = ({ color = 'grey', type, children }: Props) => {
+const ChannelItem = ({
+  color = 'grey',
+  type,
+  channelId,
+  categoryId,
+  children,
+}: Props) => {
+  const { id: serverId } = useLoaderData<{ id: number }>();
+  const navigate = useNavigate();
+  // const { openDialog, closeDialog } = useDialog();
   const iconMapping: { [key: string]: React.ReactNode } = {
-    text: <Hash />,
-    voice: <Voice />,
-    run: <Run />,
+    CHAT: <Hash />,
+    VOICE: <Voice />,
+    CLIMB: <Run />,
   };
-  const { openDialog, closeDialog } = useDialog();
+  const handleNavigateChannel: { [key: string]: () => void } = {
+    CHAT: () => navigate(`/server/${encodeId(serverId)}/${channelId}`),
+    run: () => navigate(`/climbing/${encodeId(channelId)}`),
+  };
+  const handleClickEdit = () => {
+    navigate(`/server/${encodeId(serverId)}/${channelId}/edit`, {
+      state: { categoryId },
+    });
+  };
+
+  // 클라이밍 삭제 없음
+  // const handleClickDelete = () => {};
 
   return (
     <SItem $color={color}>
-      <Wrapper>
+      <Wrapper onClick={handleNavigateChannel[type]}>
         {iconMapping[type]} {children}
       </Wrapper>
-      {type === 'run' ? (
-        <Delete
-          onClick={() =>
-            openDialog(<DeleteConfirmModal closeDialog={closeDialog} />)
-          }
-        />
-      ) : (
-        <Edit />
+      {/* // <Delete
+        //   onClick={() =>
+        //     openDialog(
+        //       <DeleteConfirmModal
+        //         closeDialog={closeDialog}
+        //         onClickDelete={handleClickDelete}
+        //       />,
+        //     )
+        //   }
+        // /> */}
+      {type !== 'CLIMB' && (
+        <Edit width='20px' height='20px' onClick={handleClickEdit} />
       )}
     </SItem>
   );

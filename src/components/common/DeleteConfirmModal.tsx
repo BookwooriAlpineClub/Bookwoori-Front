@@ -1,14 +1,22 @@
 import styled from 'styled-components';
 import SubButton from '@src/components/common/SubButton';
 
-const NOTI_TEXT = `삭제한 모임 정보는 복구할 수 없습니다.\n정말 삭제하시겠습니까?`;
+const NOTI_TEXT = `삭제한 정보는 복구할 수 없습니다.\n정말 삭제하시겠습니까?`;
 
-const DeleteConfirmModal = ({ closeDialog }: { closeDialog: () => void }) => {
+interface DeleteConfirmModalProps {
+  closeDialog: () => void;
+  onClickDelete: () => void;
+}
+
+const DeleteConfirmModal = ({
+  closeDialog,
+  onClickDelete,
+}: DeleteConfirmModalProps) => {
   return (
     <DialogLayout>
       <TextContainer>{NOTI_TEXT}</TextContainer>
       <ButtonContainer>
-        <SubButton label='삭제하기' onClick={closeDialog} width='39vw' />
+        <SubButton label='삭제하기' onClick={onClickDelete} width='39vw' />
         <SubButton label='돌아가기' width='39vw' onClick={closeDialog} />
       </ButtonContainer>
     </DialogLayout>

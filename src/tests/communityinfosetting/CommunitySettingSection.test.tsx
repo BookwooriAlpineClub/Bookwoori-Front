@@ -4,7 +4,7 @@ import renderWithProviders from '@src/tests/utils/renderWithProvider.setup';
 
 describe('CommunitySettingSection', () => {
   test('관리자 역할일 때 권한 넘기기 & 삭제하기 옵션을 렌더링한다.', () => {
-    renderWithProviders(<CommunitySettingSection communityRole='admin' />);
+    renderWithProviders(<CommunitySettingSection isOwner={true} />);
     // role 기반 검증
     expect(
       screen.getByRole('button', { name: '공동체 권한 넘기기' }),
@@ -23,7 +23,7 @@ describe('CommunitySettingSection', () => {
     ).not.toBeInTheDocument();
   });
   test('일반 사용자 역할일 때 나가기 옵션을 렌더링한다.', () => {
-    renderWithProviders(<CommunitySettingSection communityRole='user' />);
+    renderWithProviders(<CommunitySettingSection isOwner={false} />);
     // role 기반 검증
     expect(
       screen.getByRole('button', { name: '공동체 나가기' }),
