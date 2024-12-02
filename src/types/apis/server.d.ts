@@ -10,7 +10,7 @@ export type Server = {
   description: string;
   isOwner: boolean;
 };
-
+export type ServerListItem = Pick<Server, 'serverId' | 'name' | 'serverImg'>;
 export interface ServerMembersResponse {
   members: ServerMember[];
 }

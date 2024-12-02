@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import type { ServerListItem } from '@src/types/apis/server';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { serverListState } from '@src/states/atoms'; // 추후 삭제
-import { serverbarSelector } from '@src/states/selectors';
+import { useRecoilValue } from 'recoil';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import { serverbarState } from '@src/states/atoms';
 import useServerbar from '@src/hooks/useServerbar';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
@@ -11,23 +11,6 @@ import { ReactComponent as IcnBell } from '@src/assets/icons/bell.svg';
 import { ReactComponent as IcnChat } from '@src/assets/icons/chat.svg';
 import { ReactComponent as IcnSettings } from '@src/assets/icons/settings.svg';
 import { ReactComponent as IcnPlus } from '@src/assets/icons/plus.svg';
-
-const mockNoti = false;
-const mockChat = true;
-const mockServerList: Server[] = [
-  {
-    serverId: 12,
-    name: '공동체A',
-    serverImg:
-      'https://bookwoori-image-bucket.s3.ap-northeast-2.amazonaws.com/server/0f4a8a00-3d79-48b2-8d41-80570fa3c1af_elemental-movie-v2-1536x864.jpg',
-  },
-  {
-    serverId: 13,
-    name: '공동체B',
-    serverImg:
-      'https://bookwoori-image-bucket.s3.ap-northeast-2.amazonaws.com/server/ba314415-34e5-4ccb-ab89-57dead2f79ae_WIN_20240518_16_18_46_Pro.jpg',
-  },
-];
 
 type buttonConfig = {
   name: string;
@@ -52,42 +35,42 @@ type buttonConfig = {
  * openServerbar();
  */
 const Serverbar = () => {
-  const setServerList = useSetRecoilState(serverListState); // 추후 삭제
-  const { content, isOpen, transition } = useRecoilValue(serverbarSelector);
-  const { closeServerbar } = useServerbar();
   const navigate = useNavigate();
+  const { isOpen, transition } = useRecoilValue(serverbarState);
+  const { closeServerbar } = useServerbar();
 
-  const [isNotiRead, setIsNotiRead] = useState<boolean>(true);
-  const [isChatRead, setIsChatRead] = useState<boolean>(true);
+  const serverList: ServerListItem[] = [];
+  const isNotiRead;
+  const isChatRead;
 
   const buttonConfigs: buttonConfig[] = [
     {
       name: '서재',
-      link: 'library',
+      link: ROUTE_PATH.library,
       icon: <IcnLibrary />,
       className: 'neongreen',
     },
     {
       name: '알림',
-      link: 'notifications',
+      link: ROUTE_PATH.notification,
       icon: <IcnBell />,
       className: isNotiRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '채팅',
-      link: 'chatting',
+      link: ROUTE_PATH.dm,
       icon: <IcnChat />,
       className: isChatRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '계정 설정',
-      link: 'settings',
+      link: ROUTE_PATH.setting,
       icon: <IcnSettings />,
       className: 'neongreen',
     },
     {
       name: '서버 추가',
-      link: 'server',
+      link: ROUTE_PATH.addServer,
       icon: <IcnPlus />,
       className: 'blue',
     },
@@ -98,16 +81,6 @@ const Serverbar = () => {
     closeServerbar();
   }
 
-  useEffect(() => {
-    setServerList(mockServerList); // 추후 삭제
-
-    const dataNoti: boolean = mockNoti; // 알림 isRead fetch
-    const dataChat: boolean = mockChat; // 채팅 isRead fetch
-
-    setIsNotiRead(dataNoti);
-    setIsChatRead(dataChat);
-  }, []);
-
   return (
     <Scrim isOpen={isOpen} transition={transition} closeModal={closeServerbar}>
       <Layout
@@ -115,27 +88,27 @@ const Serverbar = () => {
         $transition={transition}
       >
         <Fieldset>
-          {buttonConfigs.map((item) => (
+          {buttonConfigs.map(({ name, link, icon, className }) => (
             <>
-              <SButton key={item.name} className={item.className}>
+              <SButton key={name} className={className}>
                 <input
                   type='radio'
                   name='serverbar'
-                  onClick={() => handleClick(`/${item.link}`)}
-                  checked={window.location.pathname === `/${item.link}`}
+                  onClick={() => handleClick(link)}
+                  checked={window.location.pathname === link}
                 />
-                {item.icon}
+                {icon}
               </SButton>
-              {(item.name === '서재' || item.name === '계정 설정') && <Hr />}
+              {(name === '서재' || name === '계정 설정') && <Hr />}
             </>
           ))}
-          {content.length !== 0 &&
-            content.map((item) => (
-              <ImageButton key={item.serverId} $img={item.serverImg}>
+          {serverList.length !== 0 &&
+            serverList.map(({ serverId, serverImg }) => (
+              <ImageButton key={serverId} $img={serverImg || ''}>
                 <input
                   type='radio'
                   name='serverbar'
-                  onChange={() => handleClick(`/${item.serverId}`)}
+                  onChange={() => handleClick(serverId)}
                   checked={window.location.pathname === `/${item.serverId}`}
                 />
               </ImageButton>
