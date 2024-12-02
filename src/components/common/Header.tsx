@@ -55,7 +55,7 @@ const SHeader = styled.header`
 
   width: 100%;
   height: 4.375rem;
-  padding: 0 1.4375rem;
+  padding: 1.4375rem;
 
   background: ${({ theme }) => theme.colors.white};
 `;
