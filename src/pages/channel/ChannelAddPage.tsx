@@ -31,7 +31,7 @@ const ChannelAddPage = () => {
   const { createChannel } = useChannel();
   const { createClimbing } = useClimbing();
 
-  const [kind, setKind] = useState<string>('');
+  const [kind, setKind] = useState<'chat' | 'voice' | 'climb' | null>(null);
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({
@@ -47,23 +47,21 @@ const ChannelAddPage = () => {
     return day;
   };
   const isBtnDisabled = (): boolean => {
-    if (kind === '문자' || kind === '전화') return !(kind && category && name);
-    if (kind === '등반') return !(kind && name && book && date && description);
+    if (kind === 'chat' || kind === 'voice') return !(kind && category && name);
+    if (kind === 'climb') return !(kind && name && book && date && description);
     return true;
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (kind === '문자' || kind === '전화') {
-      const type = kind === '문자' ? 'chat' : 'voice';
-
+    if (kind === 'chat' || kind === 'voice') {
       createChannel.mutate(
         {
           body: {
             categoryId: Number(category),
             name,
-            type,
+            type: kind,
           },
         },
         {
@@ -101,14 +99,14 @@ const ChannelAddPage = () => {
           <InputRadio
             title='모임 유형'
             items={[
-              { text: '문자', icon: <IcnHash /> },
-              { text: '전화', icon: <IcnVoice /> },
-              { text: '등반', icon: <IcnRun /> },
+              { value: 'chat', icon: <IcnHash /> },
+              { value: 'voice', icon: <IcnVoice /> },
+              { value: 'climb', icon: <IcnRun /> },
             ]}
             required
             setValue={setKind}
           />
-          {(kind === '문자' || kind === '전화') && (
+          {(kind === 'chat' || kind === 'voice') && (
             <InputDropdown
               title='모임 분류'
               placeholder='분류 선택'
@@ -118,7 +116,7 @@ const ChannelAddPage = () => {
               setValue={setCategory}
             />
           )}
-          {kind !== '' && (
+          {!!kind && (
             <InputText
               title='모임 이름'
               placeholder='모임 이름을 입력하세요.'
@@ -129,7 +127,7 @@ const ChannelAddPage = () => {
               setValue={setName}
             />
           )}
-          {kind === '등반' && (
+          {kind === 'climb' && (
             <>
               <Fieldset title='등반할 책'>
                 <InputSearch
