@@ -63,8 +63,8 @@ const SearchPage = () => {
         <Form onSubmit={handleFormSubmit}>
           <IcnSearch width={20} height={20} />
           <Input
-            type='text'
             name='keyword'
+            type='search'
             placeholder='책 제목, 작가를 검색해 보세요.'
           />
         </Form>
