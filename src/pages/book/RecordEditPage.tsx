@@ -61,21 +61,29 @@ const RecordEditPage = () => {
       <Form onSubmit={handleFormSubmit}>
         {(status === 'READING' || status === 'FINISHED') && (
           <InputPeriod
-            readingStatus={status}
+            name='독서 기간'
             value={period}
             setValue={setPeriod}
+            readingStatus={status}
           />
         )}
         {status === 'READING' && (
           <InputPage
-            currentPage={currentPage}
-            itemPage={bookInfo.itemPage}
+            name='독서 현황'
             value={page}
             setValue={setPage}
+            currentPage={currentPage}
+            itemPage={bookInfo.itemPage}
           />
         )}
         {status === 'FINISHED' && (
-          <InputReview num={num} setNum={setNum} str={str} setStr={setStr} />
+          <InputReview
+            name={{ num: '별점', str: '줄글' }}
+            num={num}
+            setNum={setNum}
+            str={str}
+            setStr={setStr}
+          />
         )}
       </Form>
       <Description>

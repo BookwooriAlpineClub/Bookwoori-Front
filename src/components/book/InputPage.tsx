@@ -3,22 +3,22 @@ import { NoSelect } from '@src/styles/mixins';
 import Fieldset from '@src/components/book/Fieldset';
 
 interface Props {
-  currentPage: number;
-  itemPage: number;
+  name: string;
   readOnly?: boolean;
   value?: number;
   setValue?: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+  itemPage: number;
 }
 
 const InputPage = ({
-  currentPage,
-  itemPage,
+  name = '독서 현황',
   readOnly = false,
   value,
   setValue,
+  currentPage,
+  itemPage,
 }: Props) => {
-  const title: string = '독서 현황';
-
   const handleKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Backspace') {
       let data = event.currentTarget.value;
@@ -40,11 +40,11 @@ const InputPage = ({
   };
 
   return (
-    <Fieldset title={title}>
+    <Fieldset title={name}>
       <Container>
         <Input
           type='tel'
-          name={title}
+          name={name}
           placeholder={`${currentPage}쪽`}
           required
           readOnly={readOnly}

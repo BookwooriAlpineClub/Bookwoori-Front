@@ -4,6 +4,7 @@ import Fieldset from '@src/components/book/Fieldset';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
 interface Props {
+  name: { num: string; str: string };
   readOnly?: boolean;
   num: number;
   setNum?: React.Dispatch<React.SetStateAction<number>>;
@@ -11,7 +12,14 @@ interface Props {
   setStr?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const InputReview = ({ readOnly = false, num, setNum, str, setStr }: Props) => {
+const InputReview = ({
+  name,
+  readOnly = false,
+  num,
+  setNum,
+  str,
+  setStr,
+}: Props) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [textareaHeight, setTextareaHeight] = useState<number>(0);
 
@@ -28,7 +36,7 @@ const InputReview = ({ readOnly = false, num, setNum, str, setStr }: Props) => {
           <label key={index}>
             {index < num ? <IcnStarBlue /> : <IcnStarGray />}
             <input
-              name='star'
+              name={name.num}
               type='radio'
               value={index + 1}
               required
@@ -42,7 +50,7 @@ const InputReview = ({ readOnly = false, num, setNum, str, setStr }: Props) => {
         <Textarea
           ref={textareaRef}
           $height={textareaHeight}
-          name='reviewContent'
+          name={name.str}
           placeholder='이 책은 어떠셨나요? 감상평을 적어주세요.'
           readOnly={readOnly}
           defaultValue={str}
