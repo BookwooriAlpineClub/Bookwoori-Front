@@ -1,3 +1,5 @@
+import type { Channel } from '@src/types/apis/channel';
+import { postChannel } from '@src/apis/channel';
 import { deleteChannel, patchChannel } from '@src/apis/channelTemp';
 import { getServerChannels, getServerClimbing } from '@src/apis/server';
 import { CategoriesRes } from '@src/types/domain/category';
@@ -14,6 +16,10 @@ const useChannel = (serverId: number) => {
   const { data: climbingList } = useQuery<ClimbingListRes, AxiosError>({
     queryKey: ['getServerClimbing', serverId],
     queryFn: () => getServerClimbing(serverId),
+  });
+
+  const createChannel = useMutation({
+    mutationFn: ({ body }: { body: Channel }) => postChannel(body),
   });
 
   const editChannel = useMutation({
@@ -33,6 +39,7 @@ const useChannel = (serverId: number) => {
   return {
     channels: channels?.categories,
     climbingList,
+    createChannel,
     editChannel,
     delChannel,
   };

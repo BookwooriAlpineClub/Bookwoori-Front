@@ -1,6 +1,9 @@
+import type { Channel } from '@src/types/apis/channel';
 import type { BookListItem } from '@src/types/apis/book.d';
 import { useState } from 'react';
-import { formatDate } from '@src/utils/formatters';
+import useLoaderData from '@src/hooks/useRoaderData';
+import useChannel from '@src/hooks/query/useChannel';
+import { formatDate,encodeId } from '@src/utils/formatters';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
@@ -8,22 +11,27 @@ import Fieldset from '@src/components/common/Fieldset';
 import InputRadio from '@src/components/common/InputRadio';
 import InputDropdown from '@src/components/common/InputDropdown';
 import InputText from '@src/components/common/InputText';
-import InputDatepicker, { type Period } from '@src/components/common/InputDatepicker';
+import InputDatepicker, {
+  type Period,
+} from '@src/components/common/InputDatepicker';
 import Button from '@src/components/common/Button';
 import SearchBottomsheet from '@src/components/channel/SearchBottomsheet';
 import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
 import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
 import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
 
-const dummy: string[] = ['선택지1', '선택지2', '선택지3', '선택지4'];
-
 const ChannelAddPage = () => {
   const { openBottomsheet, closeBottomsheet } = useBottomsheet();
+  const { id: serverId } = useLoaderData<{ id: string }>();
+  const { createChannel } = useChannel(Number());
 
-  const [kind, setKind] = useState<string>('');
+  const [kind, setKind] = useState<>('');
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({ title: '', isbn13: '' });
+  const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({
+    title: '',
+    isbn13: '',
+  });
   const [date, setDate] = useState<Period>({ start: '', end: '' });
   const [description, setDescription] = useState<string>('');
 
@@ -38,11 +46,31 @@ const ChannelAddPage = () => {
     return true;
   };
 
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const type: Channel['type'] = switch(kind){case '문자': return 'chat'; case '전화':case'등반':};
+
+    createChannel.mutate(
+      {
+        body: {
+          categoryId: Number(category),
+          name,
+          type: kind,
+        },
+      },
+      {
+        onSuccess: () =>
+          window.location.replace(`/server/${encodeId(Number(serverId))}`),
+      },
+    );
+  };
+
   return (
     <Container>
       <Header text='모임 추가하기' headerType='back' />
       <Main>
-        <Form id='channel-add-form'>
+        <Form id='channel-add-form' onSubmit={handleFormSubmit}>
           <InputRadio
             title='모임 유형'
             items={[
