@@ -15,7 +15,7 @@ const SearchPage = () => {
 
   // API 요청
   const { bookList } = useBook({ keyword });
-  const data: BookListItem[] = bookList as BookListItem[];
+  const data: BookListItem[] = bookList ?? [];
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // 새로고침 방지 (기본 기능 비활성화)
