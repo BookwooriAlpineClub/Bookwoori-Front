@@ -100,7 +100,7 @@ const Serverbar = () => {
 
   return (
     <Scrim isOpen={isOpen} transition={transition} closeModal={closeServerbar}>
-      <Layout
+      <Container
         onClick={(event) => event.stopPropagation()}
         $transition={transition}
       >
@@ -131,14 +131,14 @@ const Serverbar = () => {
               </ImageButton>
             ))}
         </Fieldset>
-      </Layout>
+      </Container>
     </Scrim>
   );
 };
 
 export default Serverbar;
 
-const Layout = styled.section<{ $transition: ModalTransition }>`
+const Container = styled.section<{ $transition: ModalTransition }>`
   position: fixed;
   left: 0;
   top: 0;
@@ -150,9 +150,7 @@ const Layout = styled.section<{ $transition: ModalTransition }>`
   display: flex;
   justify-content: center;
 
-  width: 5rem;
   height: 100%;
-  padding: 1.25rem 0;
 
   background-color: ${({ theme }) => theme.colors.white};
 `;
@@ -160,6 +158,10 @@ const Fieldset = styled.fieldset`
   display: flex;
   flex-flow: column nowrap;
   gap: 0.62rem;
+
+  padding: 1.25rem 0.94rem;
+
+  overflow-y: scroll;
 `;
 const Hr = styled.hr`
   width: 2.1875rem;
@@ -174,6 +176,7 @@ const SButton = styled.label`
 
   width: 3.125rem;
   height: 3.125rem;
+  flex-shrink: 0;
 
   border-radius: 50%;
 
@@ -216,6 +219,7 @@ const SButton = styled.label`
   }
 `;
 const ImageButton = styled(SButton)<{ $img: string }>`
+  background-color: ${({ theme }) => theme.colors.blue300};
   background-image: url(${({ $img }) => $img});
   background-repeat: no-repeat;
   background-size: cover;
