@@ -1,13 +1,15 @@
 interface BaseEvent {
   eventType: 'NEW_MESSAGE' | 'REACT' | 'REPLY';
-  messageRoomId: number;
+  messageRoomId?: number;
+  channelId?: number;
 }
 
 interface NewMessageEvent extends BaseEvent {
   eventType: 'NEW_MESSAGE';
   payload: {
     id: string;
-    messageRoomId: number;
+    messageRoomId?: number;
+    channelId?: number;
     memberId: number;
     type: 'TEXT' | 'IMAGE';
     content: string;

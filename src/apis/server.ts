@@ -46,7 +46,7 @@ export const getServers = async <
 };
 
 export const getServerOne = async <Res = Omit<Server, 'serverId'>>(
-  serverId: number,
+  serverId: number | null,
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res, AxiosResponse<Res>>(
