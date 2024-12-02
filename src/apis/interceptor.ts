@@ -7,7 +7,11 @@ import {
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { postRefreshToken } from '@src/apis/auth';
 import authClient from '@src/apis/authClient';
-import { isTokenExpiredMessage } from '@src/utils/validators';
+import {
+  isRefreshExpired,
+  isTokenExpiredMessage,
+  isTokenWrong,
+} from '@src/utils/validators';
 
 const onRequest = (
   config: InternalAxiosRequestConfig,
@@ -57,9 +61,20 @@ const onError = async (error: AxiosError) => {
       }
     } catch (e) {
       localStorage.removeItem('accessToken');
+      sessionStorage.removeItem('refreshToken');
       window.location.replace(ROUTE_PATH.signIn);
       return Promise.reject(e);
     }
+  }
+
+  if (status === 401 && (isTokenWrong(data) || isRefreshExpired(data))) {
+    if (window.location.pathname === '/sign-in') {
+      return Promise.reject(error);
+    }
+    localStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
+    window.location.replace(ROUTE_PATH.signIn);
+    return Promise.reject(error);
   }
 
   return Promise.reject(error);
