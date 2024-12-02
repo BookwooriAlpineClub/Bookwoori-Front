@@ -1,6 +1,7 @@
 import type { AxiosResponse } from 'axios';
-import type { Channel, Message } from '@src/types/apis/channel.d';
+import type { Channel } from '@src/types/apis/channel.d';
 import { authClient } from '@src/apis/index';
+import { ChannelMessagesRes } from '@src/types/domain/channel';
 
 /** 채널 생성 */
 export const postChannel = async <Res = void, Req = Channel>(
@@ -48,9 +49,25 @@ export const deleteChannel = async <Res = void>(
  * 채널 채팅 내역 조회
  * @ 백엔드 구현 미완료
  */
-export const getMessageList = async <Res = Message[]>(
+export const getChannelMessages = async <Res = ChannelMessagesRes>(
   channelId: number,
+  page?: number,
+  size?: number,
 ): Promise<Res> => {
-  const response = await authClient.get<Res>(`/channels/${channelId}/messages`);
+  const queryParams = new URLSearchParams({
+    channelId: String(channelId),
+  });
+
+  if (page !== undefined) {
+    queryParams.append('page', String(page));
+  }
+
+  if (size !== undefined) {
+    queryParams.append('size', String(size));
+  }
+
+  const response = await authClient.get(
+    `/channelMessages?${queryParams.toString()}`,
+  );
   return response.data;
 };

@@ -32,7 +32,7 @@ const ChannelItem = ({
   };
   const handleNavigateChannel: { [key: string]: () => void } = {
     CHAT: () => navigate(`/server/${encodeId(serverId)}/${channelId}`),
-    run: () => navigate(`/climbing/${encodeId(channelId)}`),
+    CLIMB: () => navigate(`/climbing/${encodeId(channelId)}`),
   };
   const handleClickEdit = () => {
     navigate(`/server/${encodeId(serverId)}/${channelId}/edit`, {

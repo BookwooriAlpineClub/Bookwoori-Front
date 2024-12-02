@@ -6,9 +6,10 @@ import Profile from '@src/assets/images/userSettings/background_default.svg';
 import { DM } from '@src/types/domain/messageRoom';
 import { SyntheticEvent, useMemo } from 'react';
 import { formatChatItemTime } from '@src/utils/formatters';
+import { ChannelMessage } from '@src/types/domain/channel';
 
 interface ChatItemProps {
-  chatItem: DM;
+  chatItem: DM | ChannelMessage;
   imgUrl?: string;
   nickname: string;
   createdAt: string;
