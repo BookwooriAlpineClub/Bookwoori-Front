@@ -25,22 +25,17 @@ const Header = ({ buttonList }: Props) => {
     // API delete 요청
     navigate(ROUTE_PATH.libraryRecord, { replace: true });
   };
-  const handleSaveClick = () => {
-    // API put 요청
-    const path = location.pathname.replace(/\/edit$/, '');
-    navigate(path, { replace: true });
-  };
 
   const buttonConfig: {
     [key: string]: {
       Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
       type: 'button' | 'submit' | 'reset';
-      onClick: () => void;
+      onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
     };
   } = {
     edit: { Icon: IcnPencil, type: 'button', onClick: handleEditClick },
     delete: { Icon: IcnTrash, type: 'button', onClick: handleDeleteClick },
-    save: { Icon: IcnSave, type: 'submit', onClick: handleSaveClick },
+    save: { Icon: IcnSave, type: 'submit', onClick: undefined },
   };
 
   return (

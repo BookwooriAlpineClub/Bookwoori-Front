@@ -1,5 +1,6 @@
 import type { Record } from '@src/types/apis/record';
 import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '@src/components/book/Header';
 import BookInfoDetail from '@src/components/book/BookInfoDetail';
@@ -33,6 +34,9 @@ const mock: Record = {
 };
 
 const RecordEditPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const {
     readingStatus,
     startDate,
@@ -52,7 +56,16 @@ const RecordEditPage = () => {
   const [num, setNum] = useState<number>(star);
   const [str, setStr] = useState<string>(reviewContent);
 
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    // 새로고침 방지 (기본 기능 비활성화)
+    event.preventDefault();
+
+    // API put 요청
+
+    // 요청 성공 시 리다이렉트
+    const path = location.pathname.replace(/\/edit$/, '');
+    navigate(path, { replace: true });
+  };
 
   return (
     <Container>
