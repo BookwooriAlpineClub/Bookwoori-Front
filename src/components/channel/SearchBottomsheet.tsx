@@ -1,7 +1,7 @@
 import type { BookListItem } from '@src/types/apis/book.d';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { ListLayout } from '@src/styles/mixins';
+import { NoDataTextLayout } from '@src/styles/mixins';
 import BookinfoItem from '@src/components/book/BookinfoItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 
@@ -68,7 +68,7 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
 
   return (
     <Container>
-      <ListLayout>
+      <NoDataTextLayout>
         <Header>
           <Form onSubmit={handleFormSubmit}>
             <IcnSearch width={20} height={20} />
@@ -81,9 +81,7 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
         </Header>
         {keyword && (
           <Main>
-            {data.length === 0 ? (
-              <strong>검색 결과가 없어요.</strong>
-            ) : (
+            {data.length !== 0 ? (
               <Ul>
                 {data.map((item) => (
                   <BookinfoItem
@@ -98,10 +96,12 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
                   />
                 ))}
               </Ul>
+            ) : (
+              <strong>검색 결과가 없어요.</strong>
             )}
           </Main>
         )}
-      </ListLayout>
+      </NoDataTextLayout>
     </Container>
   );
 };

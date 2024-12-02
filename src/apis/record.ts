@@ -7,7 +7,7 @@ import { authClient } from '@src/apis/index';
  * @ 백엔드에 수정 요청함
  */
 export const getRecordList = async <Res = Record[]>(
-  status: Pick<Record, 'status'>,
+  status: Pick<Record, 'readingStatus'>,
 ): Promise<Res> => {
   const response = await authClient.get<Res>(`/records?status=${status}`);
   return response.data;
