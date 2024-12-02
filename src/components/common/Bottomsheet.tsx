@@ -54,7 +54,6 @@ const Layout = styled.section<{ $transition: ModalTransition }>`
   width: 100%;
   max-width: 500px;
   max-height: 100%;
-  padding: 1.44rem 1.25rem 1.25rem 1.25rem;
 
   border-radius: 1.875rem 1.875rem 0rem 0rem;
   background-color: ${({ theme }) => theme.colors.black300};

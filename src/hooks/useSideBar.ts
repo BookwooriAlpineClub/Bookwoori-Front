@@ -9,7 +9,7 @@ const useSideBar = () => {
     setSideBar((prev) => ({ ...prev, isOpen: true }));
     setTimeout(() => {
       setSideBar((prev) => ({ ...prev, transition: 'open' }));
-    }, 30);
+    }, 1);
   };
 
   const closeSideBar = (): void => {

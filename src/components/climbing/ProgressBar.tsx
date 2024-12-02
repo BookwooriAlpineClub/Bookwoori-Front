@@ -1,11 +1,29 @@
 import styled from 'styled-components';
 import { ReactComponent as Climber } from '@src/assets/icons/climber_grey.svg';
+import { useRef, useState, useEffect } from 'react';
 
-const ProgressBar = ({ height, page }: { height: number; page: number }) => {
+const ProgressBar = ({
+  height,
+  page,
+  isChanged,
+}: {
+  height: number;
+  page: number;
+  isChanged: number;
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerHeight, setContainerHeight] = useState<number>(0);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setContainerHeight(containerRef.current.offsetHeight);
+    }
+  }, [isChanged]);
+
   return (
-    <ProgressBarContainer>
+    <ProgressBarContainer ref={containerRef}>
       <Bar>
-        <Progress height={height}>
+        <Progress height={containerHeight * height}>
           <SClimber />
           <Pages>{page}p</Pages>
         </Progress>
@@ -24,7 +42,6 @@ const ProgressBarContainer = styled.div`
 const Bar = styled.div`
   position: relative;
 
-  min-height: 21.875rem;
   width: 0.75rem;
 
   border-radius: 6.1875rem 6.1875rem 0 0;

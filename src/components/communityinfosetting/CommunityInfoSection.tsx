@@ -1,20 +1,20 @@
 import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
 import CommunityInfoCard from '@src/components/common/CommunityInfoCard';
 
-interface CommunityInfoProps {
-  name: string;
-  memberInfo: string;
-  creationDate: string;
-  description: string;
-  imageUrl: string;
+export interface CommunityInfoProps {
+  name?: string;
+  memberInfo?: string;
+  creationDate?: string;
+  description?: string;
+  serverImg?: string;
 }
 
 const CommunityInfoSection = ({
-  name,
-  memberInfo,
-  creationDate,
-  description,
-  imageUrl,
+  name = '',
+  memberInfo = '',
+  creationDate = '',
+  description = '',
+  serverImg = '',
 }: CommunityInfoProps) => {
   const subtitle = '공동체 정보';
   return (
@@ -24,7 +24,7 @@ const CommunityInfoSection = ({
         memberInfo={memberInfo}
         creationDate={creationDate}
         description={description}
-        imageUrl={imageUrl}
+        imageUrl={serverImg}
       />
     </TitleAndFieldContainer>
   );

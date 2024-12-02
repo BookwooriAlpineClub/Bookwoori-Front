@@ -1,6 +1,7 @@
 import ClimbingProgressPage from '@src/pages/climbing/ClimbingProgressPage';
 // import ClimbingTerminatePage from '@src/pages/climbing/ClimbingTerminatePage';
 
+
 enum ClimbingState {
   READY = 'READY',
   RUNNING = 'RUNNING',

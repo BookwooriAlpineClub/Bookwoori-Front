@@ -3,6 +3,8 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import React, { Suspense } from 'react';
 import isParamLoader from '@src/router/loader';
 import Bottomsheet from '@src/components/common/Bottomsheet';
+import Dialog from '@src/components/common/Dialog';
+import CommunitySideBar from '@src/components/communitysidebar/CommunitySideBar';
 
 /* example */
 const RouterExamplePage = React.lazy(
@@ -14,8 +16,15 @@ const RouterExampleDetailPage = React.lazy(
 );
 
 /* lazy load */
+const SearchPage = React.lazy(() => import('@src/pages/book/SearchPage'));
+const ReviewListPage = React.lazy(
+  () => import('@src/pages/book/ReviewListPage'),
+);
 const ChannelListPage = React.lazy(
   () => import('@src/pages/channel/ChannelListPage'),
+);
+const ChannelAddPage = React.lazy(
+  () => import('@src/pages/channel/ChannelAddPage'),
 );
 const ClimbingPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingPage'),
@@ -53,8 +62,24 @@ const ChattingPage = React.lazy(
 const ChannelEditPage = React.lazy(
   () => import('@src/pages/channel/ChannelEditPage'),
 );
-
 const ChannelPage = React.lazy(() => import('@src/pages/channel/ChannelPage'));
+const CommunityInfoSettingPage = React.lazy(
+  () => import('@src/pages/communityinfosetting/CommunityInfoSettingPage'),
+);
+
+/* add-server */
+const AddCommunityPage = React.lazy(
+  () => import('@src/pages/addcommunity/AddCommunityPage'),
+);
+const CreateNewCommunityPage = React.lazy(
+  () => import('@src/pages/addcommunity/CreateNewCommunityPage'),
+);
+const EnterInvitationPage = React.lazy(
+  () => import('@src/pages/addcommunity/EnterInvitationPage'),
+);
+const CheckInvitedCommunityPage = React.lazy(
+  () => import('@src/pages/addcommunity/CheckInvitedCommunityPage'),
+);
 
 /* climbing */
 const ClimbingAddPage = React.lazy(
@@ -64,12 +89,19 @@ const ClimbingEditPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingEditPage'),
 );
 
+/* library */
+const LibraryHomePage = React.lazy(
+  () => import('@src/pages/library/LibraryHomePage'),
+);
+
 const router = createBrowserRouter([
   {
     element: (
       <Suspense fallback={<h1>Loading</h1>}>
         <Outlet />
         <Bottomsheet />
+        <Dialog />
+        <CommunitySideBar />
       </Suspense>
     ),
     errorElement: <h1>Error</h1>,
@@ -100,7 +132,7 @@ const router = createBrowserRouter([
       /* library */
       {
         path: ROUTE_PATH.library,
-        element: <h1>Library Page</h1>,
+        element: <LibraryHomePage />,
       },
       {
         path: ROUTE_PATH.libraryMember,
@@ -109,7 +141,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryBookSearch,
-        element: <h1>Library Book Search</h1>,
+        element: <SearchPage />,
       },
       {
         path: ROUTE_PATH.libraryBookDetail,
@@ -132,7 +164,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryReview,
-        element: <h1>Library Review</h1>,
+        element: <ReviewListPage />,
       },
       /* notification */
       {
@@ -165,23 +197,23 @@ const router = createBrowserRouter([
       /* add-server */
       {
         path: ROUTE_PATH.addServer,
-        element: <h1>Add Server Page</h1>,
+        element: <AddCommunityPage />,
       },
       {
         path: ROUTE_PATH.createServer,
-        element: <h1>Create Server Page</h1>,
+        element: <CreateNewCommunityPage />,
       },
       {
         path: ROUTE_PATH.invitationCode,
-        element: <h1>Invitation Code Page</h1>,
+        element: <EnterInvitationPage />,
       },
       {
         path: ROUTE_PATH.invitationServer,
-        element: <h1>Invitation Server Page</h1>,
+        element: <CheckInvitedCommunityPage />,
       },
       {
         path: ROUTE_PATH.joinServer,
-        element: <h1>Join Server Page</h1>,
+        element: <EnterInvitationPage />,
       },
       /* server */
       {
@@ -200,11 +232,16 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.addChannel,
-        element: <h1>Add Channel Page</h1>,
+        element: <ChannelAddPage />,
       },
       {
         path: ROUTE_PATH.editChannelOne,
         element: <ChannelEditPage />,
+        loader: (args) => isParamLoader(args, 'serverId'),
+      },
+      {
+        path: ROUTE_PATH.serverSetting,
+        element: <CommunityInfoSettingPage />,
         loader: (args) => isParamLoader(args, 'serverId'),
       },
       /* climbing */

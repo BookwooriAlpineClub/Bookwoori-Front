@@ -33,7 +33,7 @@ export const postMessageRoom = async <
 >(
   body: Req,
 ): Promise<Res> => {
-  const response = await authClient.post(`messageRooms`, body);
+  const response = await authClient.post(`/messageRooms`, body);
   return response.data;
 };
 
@@ -56,7 +56,7 @@ export const getDmList = async <Res = DMListRes>(
   }
 
   const response = await authClient.get(
-    `directMessages?${queryParams.toString()}`,
+    `/directMessages?${queryParams.toString()}`,
   );
   return response.data;
 };

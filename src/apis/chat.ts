@@ -1,13 +1,16 @@
+import { ChatEvent } from '@src/types/domain/dm';
 import { Client, Frame, IMessage } from '@stomp/stompjs';
 
 const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL!;
 
 let stompClient: Client | null = null;
-type MessageHandler = (message: MessageRequest) => void;
+type MessageHandler<T extends ChatEvent | MessageRequest> = (
+  message: T,
+) => void;
 
 // WebSocket 연결 & 구독
-export const connectHandler = (
-  onMessage: MessageHandler,
+export const connectHandler = <T extends ChatEvent | MessageRequest>(
+  onMessage: MessageHandler<T>,
   subscribeUrl: string,
 ) => {
   const accessToken = localStorage.getItem('accessToken');
@@ -57,7 +60,7 @@ export const connectHandler = (
       console.error('[WebSocket Error Observed]:', event);
     },
     onStompError: (frame: Frame) => {
-      console.error('[STOMP Error]:', frame.headers['message']);
+      console.error('[STOMP Error]:', frame.headers.message);
       console.error('[STOMP Error Details]:', frame.body);
       console.error('[STOMP Headers]:', frame.headers);
     },
