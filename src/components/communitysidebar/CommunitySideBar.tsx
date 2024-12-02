@@ -8,17 +8,13 @@ import useDialog from '@src/hooks/useDialog';
 import ProfileModal from '@src/components/communitysidebar/ProfileModal';
 import useSideBar from '@src/hooks/useSideBar';
 import useSideBarData from '@src/hooks/query/useSideBarData';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 
 const CommunitySideBar = () => {
   const { sideBar, closeSideBar } = useSideBar();
-  // const { id: serverId } = useLoaderData<{ id: number }>();
-  // const { serverId: id } = useParams<{ serverId: string }>();
-  const serverId = 11;
-  // if (!id)
-  //   throw new Error('CommunityInfoSettingPage: serverId is not provided');
-  // const serverId = parseInt(id, 10);
+  const { serverId: id } = useParams<{ serverId: string }>();
+  const serverId = Number(id);
   const { serverInfo, memberList, copyText } = useSideBarData(serverId);
   const { isCopied, handleCopy } = useCopyToClipboard(copyText);
   const { openDialog } = useDialog();

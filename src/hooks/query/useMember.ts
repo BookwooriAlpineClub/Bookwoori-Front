@@ -5,7 +5,7 @@ import { ProfileResponse } from '@src/types/domain/member';
 import { deleteAccount } from '@src/apis/auth';
 import { ROUTE_PATH } from '@src/constants/routePath';
 
-const useMember = (userId?: number) => {
+const useMember = (userId?: number | null) => {
   const {
     data: profileData,
     isLoading,
@@ -36,7 +36,7 @@ const useMember = (userId?: number) => {
     isError,
     isSuccess,
     editProfile,
-    delAccount
+    delAccount,
   };
 };
 
