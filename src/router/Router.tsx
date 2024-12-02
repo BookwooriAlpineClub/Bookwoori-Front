@@ -30,8 +30,14 @@ const ClimbingPage = React.lazy(
   () => import('@src/pages/climbing/ClimbingPage'),
 );
 /* library */
+const BookDetailPage = React.lazy(
+  () => import('@src/pages/book/BookDetailPage'),
+);
 const RecordListPage = React.lazy(
   () => import('@src/pages/book/RecordListPage'),
+);
+const RecordDetailPage = React.lazy(
+  () => import('@src/pages/book/RecordDetailPage'),
 );
 /* settings */
 const SettingsPage = React.lazy(
@@ -145,7 +151,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryBookDetail,
-        element: <h1>Library Book Detail</h1>,
+        element: <BookDetailPage />,
         loader: (args) => isParamLoader(args, 'bookId'),
       },
       {
@@ -154,7 +160,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryRecordDetail,
-        element: <h1>Library Record Detail</h1>,
+        element: <RecordDetailPage />,
         loader: (args) => isParamLoader(args, 'recordId'),
       },
       {
