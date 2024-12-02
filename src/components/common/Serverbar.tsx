@@ -1,8 +1,10 @@
 import type { ServerListItem } from '@src/types/apis/server';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import { decodeIdParam } from '@src/utils/formatters';
 import { serverbarState } from '@src/states/atoms';
+import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useServerbar from '@src/hooks/useServerbar';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
@@ -36,8 +38,18 @@ type buttonConfig = {
  */
 const Serverbar = () => {
   const navigate = useNavigate();
-  const { isOpen, transition } = useRecoilValue(serverbarState);
+  const encodedNavigate = useEncodedNavigate();
   const { closeServerbar } = useServerbar();
+
+  const { isOpen, transition } = useRecoilValue(serverbarState);
+  const { serverId: params } = useParams<{ serverId: string }>();
+  let decodedServerId: number;
+  try {
+    decodedServerId = decodeIdParam(params);
+  } catch (error) {
+    console.error(error);
+    decodedServerId = -1;
+  }
 
   const serverList: ServerListItem[] = [];
   const isNotiRead;
@@ -76,10 +88,14 @@ const Serverbar = () => {
     },
   ];
 
-  function handleClick(link: string) {
+  const handleMyClick = (link: string) => {
     navigate(link);
     closeServerbar();
-  }
+  };
+  const handleServerClick = (id: number) => {
+    encodedNavigate('/server', id);
+    closeServerbar();
+  };
 
   return (
     <Scrim isOpen={isOpen} transition={transition} closeModal={closeServerbar}>
@@ -94,7 +110,7 @@ const Serverbar = () => {
                 <input
                   type='radio'
                   name='serverbar'
-                  onClick={() => handleClick(link)}
+                  onClick={() => handleMyClick(link)}
                   checked={window.location.pathname === link}
                 />
                 {icon}
@@ -108,8 +124,8 @@ const Serverbar = () => {
                 <input
                   type='radio'
                   name='serverbar'
-                  onChange={() => handleClick(serverId)}
-                  checked={window.location.pathname === `/${item.serverId}`}
+                  onChange={() => handleServerClick(serverId)}
+                  checked={decodedServerId === serverId}
                 />
               </ImageButton>
             ))}
