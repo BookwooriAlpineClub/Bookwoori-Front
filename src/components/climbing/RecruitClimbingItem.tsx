@@ -13,6 +13,7 @@ import { ReactComponent as Book } from '@src/assets/icons/md_book.svg';
 import { ReactComponent as Walk } from '@src/assets/icons/md_directions_walk.svg';
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Check } from '@src/assets/icons/md_check.svg';
+import { useParams } from 'react-router-dom';
 
 const RecruitClimbingItem = ({
   item,
@@ -21,7 +22,12 @@ const RecruitClimbingItem = ({
   item: ClimbingRecruitItem;
   closeBottomSheet: () => void;
 }) => {
-  const serverId = 3; // 서버 아이디 전역관리
+  const { serverId: id } = useParams<{ serverId: string }>();
+  let serverId = id;
+  if (!id) {
+    console.error('바텀시트 서버 아이디 못 읽어옴');
+    serverId = '임시id';
+  }
   const { participateClimbing } = useClimbingRecruit(
     Number(serverId),
     item.climbingId,
