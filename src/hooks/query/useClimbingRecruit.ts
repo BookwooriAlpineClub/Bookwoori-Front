@@ -1,4 +1,5 @@
 import {
+  deleteClimbing,
   getClimbingRecruitList,
   patchClimbing,
   putParticipate,
@@ -54,6 +55,21 @@ const useClimbingRecruit = (serverId: number, climbingId?: number) => {
       }),
   });
 
+  const delClimbing = useMutation({
+    mutationKey: ['deleteClimbing'],
+    mutationFn: (id: number) => deleteClimbing(id),
+    onSuccess: () => {
+      Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ['/climbs/ready', serverId],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['getServerClimbing'],
+        }),
+      ]);
+    },
+  });
+
   return {
     data: data?.readyClimbingList,
     isLoading,
@@ -63,6 +79,7 @@ const useClimbingRecruit = (serverId: number, climbingId?: number) => {
     isFetching,
     participateClimbing,
     editClimbing,
+    delClimbing,
   };
 };
 

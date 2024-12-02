@@ -8,7 +8,10 @@ import {
 
 /* 메모 수정 */
 export const patchMemo = async (climbingId: number, body: MemoReq) => {
-  const res = await authClient.patch(`/climbs/${climbingId}/members/memo`, body);
+  const res = await authClient.patch(
+    `/climbs/${climbingId}/members/memo`,
+    body,
+  );
   return res.data;
 };
 
@@ -46,5 +49,10 @@ export const getClimbingRecruitList = async (
   serverId: number,
 ): Promise<ClimbingRecruitListRes> => {
   const res = await authClient.get(`/servers/${serverId}/climbs/ready`);
+  return res.data;
+};
+
+export const deleteClimbing = async (climbingId: number) => {
+  const res = await authClient.delete(`/climbs/${climbingId}`);
   return res.data;
 };
