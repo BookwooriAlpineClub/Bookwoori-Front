@@ -1,11 +1,11 @@
 import type { Categories } from '@src/types/domain/channel';
 import type { BookListItem } from '@src/types/apis/book.d';
 import { useState } from 'react';
-import useLoaderData from '@src/hooks/useRoaderData';
+import { useParams } from 'react-router-dom';
 import useCategory from '@src/hooks/query/useCategory';
 import useChannel from '@src/hooks/query/useChannel';
 import useClimbing from '@src/hooks/query/useClimbing';
-import { formatDate, encodeId } from '@src/utils/formatters';
+import { formatDate, encodeId, decodeIdParam } from '@src/utils/formatters';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
@@ -24,8 +24,10 @@ import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
 
 const ChannelAddPage = () => {
   const { openBottomsheet, closeBottomsheet } = useBottomsheet();
-  const { id: serverId } = useLoaderData<{ id: string }>();
-  const { categoryList } = useCategory(Number(serverId));
+
+  const { serverId } = useParams<{ serverId: string }>();
+  const serverIdA = decodeIdParam(serverId);
+  const { categoryList } = useCategory(Number(serverIdA));
   const { createChannel } = useChannel();
   const { createClimbing } = useClimbing();
 
@@ -66,7 +68,7 @@ const ChannelAddPage = () => {
         },
         {
           onSuccess() {
-            window.location.replace(`/server/${encodeId(Number(serverId))}`);
+            window.location.replace(`/server/${encodeId(Number(serverIdA))}`);
           },
         },
       );
@@ -74,7 +76,7 @@ const ChannelAddPage = () => {
       createClimbing.mutate(
         {
           body: {
-            serverId: Number(serverId),
+            serverId: Number(serverIdA),
             name,
             isbn: book.isbn13,
             description,
@@ -84,7 +86,7 @@ const ChannelAddPage = () => {
         },
         {
           onSuccess() {
-            window.location.replace(`/server/${encodeId(Number(serverId))}`);
+            window.location.replace(`/server/${encodeId(Number(serverIdA))}`);
           },
         },
       );
