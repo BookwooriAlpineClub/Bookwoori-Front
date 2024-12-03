@@ -6,7 +6,7 @@ const SERVER_BASE_URL = '/servers';
 const buildServerUrl = (path: string = '') => `${SERVER_BASE_URL}${path}`;
 
 export const postServer = async <
-  Res = void,
+  Res = { serverId: number },
   Req extends {
     name: string;
     description: string;
