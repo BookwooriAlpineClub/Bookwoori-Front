@@ -7,11 +7,11 @@ interface Props {
   keyword?: string;
   isbn13?: string;
 }
-
 const useBook = ({ keyword, isbn13 }: Props) => {
   const { data: bookList } = useQuery<BookListItem[], AxiosError>({
     queryKey: ['getBookList', keyword],
     queryFn: () => getBookList(keyword as string),
+    initialData: [],
   });
   const { data: bookDetail } = useQuery<BookDetail, AxiosError>({
     queryKey: ['getBookDetail', isbn13],
