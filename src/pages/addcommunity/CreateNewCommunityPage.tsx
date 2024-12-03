@@ -32,6 +32,7 @@ const CreateNewCommunityPage = () => {
       setCommunityName('');
       setCommunityImage(null);
       setCommunityDescription('');
+      alert('response body have no serverId');
     },
     onError: (err) => {
       console.error(err);

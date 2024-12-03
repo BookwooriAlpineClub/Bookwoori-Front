@@ -22,6 +22,7 @@ const ReviewShareComponent = ({
     mutationFn: () => patchShareClimbingReview(climbingId),
     onSuccess: () => {
       console.log('Review shared successfully!');
+      window.location.reload();
     },
     onError: (error) => {
       console.error('Error sharing review:', error);
@@ -45,9 +46,7 @@ const ReviewShareComponent = ({
             reviewContent={content ?? ''}
           />
         )}
-        {!isShareable && (
-          <div>아직 감상평을 작성하지 않았어요. 감상평 작성하러가기</div>
-        )}
+        {!isShareable && <div>아직 감상평을 작성하지 않았어요.</div>}
       </ItemWrapper>
       <Button type='submit' onClick={handleSubmit} disabled={!isShareable}>
         나도 공유하기
@@ -77,6 +76,7 @@ const SubText = styled.p`
 `;
 
 const ItemWrapper = styled.div`
-  border: solid 0.1rem ${({ theme }) => theme.colors.black200};
-  border-radius: 0.625rem;
+  border: solid 0.06rem ${({ theme }) => theme.colors.black100};
+  border-radius: 0.1rem;
+  padding: 0.9375rem;
 `;
