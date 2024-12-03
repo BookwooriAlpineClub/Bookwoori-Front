@@ -73,6 +73,9 @@ const ChannelPage = React.lazy(() => import('@src/pages/channel/ChannelPage'));
 const CommunityInfoSettingPage = React.lazy(
   () => import('@src/pages/communityinfosetting/CommunityInfoSettingPage'),
 );
+const CategoryAddPage = React.lazy(
+  () => import('@src/pages/channel/CategoryAddPage'),
+);
 
 /* add-server */
 const AddCommunityPage = React.lazy(
@@ -236,7 +239,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.addCategory,
-        element: <h1>Add Category Page</h1>,
+        element: <CategoryAddPage />,
       },
       {
         path: ROUTE_PATH.addChannel,
