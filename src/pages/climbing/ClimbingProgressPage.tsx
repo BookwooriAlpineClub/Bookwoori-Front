@@ -1,12 +1,9 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import ClimbingBoard from '@src/components/climbing/ClimbingBoard';
 import Header from '@src/components/common/Header';
 import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 
-const ClimbingProgressPage = () => {
-  const [headerText] = useState<string>('클라이밍 제목');
-
+const ClimbingProgressPage = ({ name: headerText }: { name: string }) => {
   return (
     <>
       <SHeader text={headerText} headerType='back' />

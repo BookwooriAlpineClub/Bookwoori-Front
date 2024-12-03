@@ -6,7 +6,6 @@ import { getClimbing } from '@src/apis/climbing';
 
 const ClimbingPage = () => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ['climbing', climbingId],
     queryFn: () => getClimbing(climbingId),
@@ -23,9 +22,10 @@ const ClimbingPage = () => {
   return (
     <>
       {data.status === 'READY' && <h1>준비중</h1>}
-      {data.status === 'RUNNING' && <ClimbingProgressPage />}
-      {data.status === 'FINISHED' ||
-        (data.status === 'FAILED' && <ClimbingTerminatePage />)}
+      {data.status === 'RUNNING' && <ClimbingProgressPage name={data.name} />}
+      {(data.status === 'FINISHED' || data.status === 'FAILED') && (
+        <ClimbingTerminatePage name={data.name} />
+      )}
     </>
   );
 };

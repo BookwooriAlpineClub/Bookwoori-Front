@@ -51,7 +51,6 @@ const ImageWrapper = styled.div`
   align-items: center;
   overflow: hidden;
   border-radius: 0.625rem;
-  background-color: ${({ theme }) => theme.colors.black200};
 
   img {
     width: 100%;

@@ -1,25 +1,20 @@
 import styled from 'styled-components';
 import BookIcon from '@mui/icons-material/Book';
+import { Climbing } from '@src/types/apis/climbing.d';
 
-const ClimbingDetail = () => {
+const ClimbingDetail = ({ data }: { data: Climbing }) => {
+  console.log(data);
   return (
     <Container>
       <Thumbnail>
-        <ThumbnailImg />
+        <ThumbnailImg src={data.bookInfo.cover} />
       </Thumbnail>
       <Content>
         <BookInfo>
           <StyledBookIcon />
-          <BookTitle>
-            작가명, 《책 제목 책 제목 제목 제목 제목 제목제목제목제목 제목이
-            길어진다》, 300p
-          </BookTitle>
+          <BookTitle>{`${data.name}, 《${data.bookInfo.title}》, ${data.bookInfo.itemPage}p`}</BookTitle>
         </BookInfo>
-        <Memo>
-          클라이밍에 대한 메모가 적히는 곳. 클라이밍에 대한 메모가 적히는 곳.
-          클라이밍에 대한 메모가 적히는 곳. 클라이밍에 대한 메모가 적히는 곳.
-          클라이밍에 대한 메모가 적히는 곳. 클라이밍에 대한 메모가 적히는 곳.
-        </Memo>
+        <Memo>{data.description}</Memo>
       </Content>
     </Container>
   );
@@ -36,9 +31,8 @@ const Container = styled.div`
 `;
 
 const Thumbnail = styled.div`
-  width: 2.625rem;
-  height: 3.9375rem;
-  background-color: ${({ theme }) => theme.colors.black200};
+  width: 3.2rem;
+  height: auto;
   border-radius: 0.25rem;
   flex-shrink: 0;
 `;
@@ -89,4 +83,5 @@ const Memo = styled.p`
   word-wrap: break-word;
   text-align: justify;
   min-height: 4rem;
+  padding: 0 0 0 0.2rem;
 `;
