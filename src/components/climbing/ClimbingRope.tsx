@@ -6,27 +6,31 @@ import { ReactComponent as FlagBefore } from '@src/assets/icons/climbing_flag_be
 import ProfileImg from '@src/assets/images/userSettings/background_default.svg';
 import Memo from '@src/components/climbing/Memo';
 import ProgressBar from '@src/components/climbing/ProgressBar';
+import useClimbing from '@src/hooks/query/useClimbing';
+import useLoaderData from '@src/hooks/useRoaderData';
 
 interface Props {
   item: ClimbingParticipants;
 }
 
 const ClimbingRope = ({ item }: Props) => {
+  const { id } = useLoaderData<{ id: number }>();
+  const { climbingInfo, isLoading } = useClimbing(id);
   // 전역으로 클라이밍 정보를 저장하고 해당 정보를 가져올 예정
-  const totalPage: number = 500;
+  // const totalPage: number = 500;
   // 전역으로 클라이밍 상태 가져옴
-  const status: string = 'PROGRESS';
+  // const status: string = 'PROGRESS';
   const [height, setHeight] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState<number>(0);
 
   const calculatePercentage = (): number => {
-    return item.currentPage / totalPage;
+    return item.currentPage / (climbingInfo?.bookInfo.itemPage ?? 500);
   };
 
   useEffect(() => {
     setHeight(calculatePercentage());
-  }, [item, totalPage]);
+  }, [item, climbingInfo?.bookInfo.itemPage]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -48,6 +52,9 @@ const ClimbingRope = ({ item }: Props) => {
     e.currentTarget.src = ProfileImg;
   };
 
+  if (isLoading) {
+    return <h3>loading...</h3>;
+  }
   return (
     <Layout>
       <Background>
@@ -64,7 +71,10 @@ const ClimbingRope = ({ item }: Props) => {
           {item.profileImg ? (
             <Img
               src={item.profileImg}
-              outline={status === 'FINISHED' && item.status === 'FINISHED'}
+              outline={
+                climbingInfo?.status === 'FINISHED' &&
+                item.status === 'FINISHED'
+              }
               onError={handleImgError}
             />
           ) : (
@@ -72,9 +82,10 @@ const ClimbingRope = ({ item }: Props) => {
           )}
           <Nickname>{item.nickname}</Nickname>
         </Profile>
-        {status !== 'FINISHED' && (
-          <Memo isUser={item.isMine} memo={item.memo ? item.memo : ''} />
-        )}
+        {climbingInfo?.status !== 'FINISHED' &&
+          climbingInfo?.status !== 'FAILED' && (
+            <Memo isUser={item.isMine} memo={item.memo ? item.memo : ''} />
+          )}
       </Container>
     </Layout>
   );
