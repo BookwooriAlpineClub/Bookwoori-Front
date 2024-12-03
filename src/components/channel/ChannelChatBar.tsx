@@ -16,13 +16,8 @@ const ChannelChatBar = ({ channelName, channelId }: ChannelChatBarProps) => {
     setChat(e.target.value);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSendMessage();
-    }
-  };
-
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!chat.trim()) return;
 
     const message: MessageRequest = {
@@ -40,24 +35,21 @@ const ChannelChatBar = ({ channelName, channelId }: ChannelChatBarProps) => {
     }
   };
   return (
-    <SLayout>
+    <SLayout onSubmit={handleSendMessage}>
       <SInput
         type='text'
         value={chat}
         onChange={handleChangeInput}
         placeholder={`${channelName}에 문자 보내기`}
-        onKeyDown={handleKeyDown}
       />
-      <SButton type='button' onClick={handleSendMessage}>
-        {chat ? <SendGreen /> : <Send />}
-      </SButton>
+      <SButton type='submit'>{chat ? <SendGreen /> : <Send />}</SButton>
     </SLayout>
   );
 };
 
 export default ChannelChatBar;
 
-const SLayout = styled.div`
+const SLayout = styled.form`
   display: flex;
   gap: 0.625rem;
   position: sticky;

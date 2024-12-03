@@ -10,13 +10,14 @@ import useSideBar from '@src/hooks/useSideBar';
 import useSideBarData from '@src/hooks/query/useSideBarData';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import { decodeIdParam, encodeId } from '@src/utils/formatters';
 
 const CommunitySideBar = () => {
   const { sideBar, closeSideBar } = useSideBar();
   const { serverId: id } = useParams<{ serverId: string }>();
-  const serverId = Number(id);
+  const serverId = decodeIdParam(id ?? '-1');
   const { serverInfo, memberList, copyText } = useSideBarData(serverId);
-  const { isCopied, handleCopy } = useCopyToClipboard(copyText);
+  const { handleCopy } = useCopyToClipboard(copyText);
   const { openDialog } = useDialog();
 
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const CommunitySideBar = () => {
   const handleClickInfoSetting = () => {
     const serverSetting = ROUTE_PATH.serverSetting.replace(
       ':serverId',
-      String(serverId),
+      encodeId(serverId),
     );
     navigate(`${serverSetting}`);
     closeSideBar();
@@ -57,7 +58,6 @@ const CommunitySideBar = () => {
           />
           <CommunityButton type='copyInvitation' onClick={handleCopy} />
         </TitleAndFieldContainer>
-        {isCopied && <p>초대 코드가 복사되었습니다.</p>}
         <TitleAndFieldContainer
           title={`멤버 목록 (${serverInfo?.memberCount})`}
         >

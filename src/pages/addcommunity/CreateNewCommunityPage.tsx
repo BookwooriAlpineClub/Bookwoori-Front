@@ -8,6 +8,7 @@ import Button from '@src/components/common/Button';
 import ImageUploadField from '@src/components/addcommunity/ImageUploadField';
 import { postServer } from '@src/apis/server';
 import { useMutation } from '@tanstack/react-query';
+import useToast from '@src/hooks/useToast';
 
 const headerText = '새로운 공동체 생성하기';
 const headerType = 'back';
@@ -18,6 +19,8 @@ const CreateNewCommunityPage = () => {
   const [communityDescription, setCommunityDescription] = useState<string>('');
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
+  const addToast = useToast();
+
   const { mutate: createServer } = useMutation({
     mutationFn: (data: {
       name: string;
@@ -25,10 +28,11 @@ const CreateNewCommunityPage = () => {
       serverImg: File | null;
     }) => postServer(data),
     onSuccess: () => {
-      alert('성공적으로 생성되었습니다.');
+      addToast({ content: '공동체 생성 완료' });
       setCommunityName('');
       setCommunityImage(null);
       setCommunityDescription('');
+      alert('response body have no serverId');
     },
     onError: (err) => {
       console.error(err);

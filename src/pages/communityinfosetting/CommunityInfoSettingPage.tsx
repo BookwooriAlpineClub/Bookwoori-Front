@@ -8,8 +8,8 @@ import CommunitySettingSection from '@src/components/communityinfosetting/Commun
 import { useQuery } from '@tanstack/react-query';
 import { Server } from '@src/types/apis/server.d';
 import { AxiosError } from 'axios';
-import { useParams } from 'react-router-dom';
 import { getServerOne } from '@src/apis/server';
+import useLoaderData from '@src/hooks/useRoaderData';
 
 export interface CommunityInfoType {
   name: string;
@@ -23,10 +23,11 @@ export type CommunityRoleType = 'admin' | 'user';
 
 const CommunityInfoSettingPage = () => {
   const headerText = '공동체 정보 및 설정 보기';
-  const { serverId: id } = useParams<{ serverId: string }>();
-  if (!id)
+  // const { serverId: id } = useParams<{ serverId: string }>();
+  const { id: serverId } = useLoaderData<{ id: number }>();
+  if (!serverId)
     throw new Error('CommunityInfoSettingPage: serverId is not provided');
-  const serverId = parseInt(id, 10);
+  // const serverId = parseInt(id, 10);
   const { data, error, isLoading } = useQuery<
     Omit<Server, 'serverId'>,
     AxiosError

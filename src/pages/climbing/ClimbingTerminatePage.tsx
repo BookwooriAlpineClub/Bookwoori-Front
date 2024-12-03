@@ -7,9 +7,8 @@ import ReviewBoard from '@src/components/climbing/ReviewBoard';
 
 export type ViewType = 'climbing' | 'review';
 
-const ClimbingTerminatePage = () => {
+const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
   const [selectedView, setSelectedView] = useState<ViewType>('climbing');
-  const headerText = '클라이밍 제목';
   const handleSegmentChange = (value: ViewType) => {
     setSelectedView(value);
   };
