@@ -1,15 +1,16 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import ClimbingBoard from '@src/components/climbing/ClimbingBoard';
 import Header from '@src/components/common/Header';
 import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
+import { useLocation } from 'react-router-dom';
 
 const ClimbingProgressPage = () => {
-  const [headerText] = useState<string>('클라이밍 제목');
+  const location = useLocation();
+  const { children: climbingTitle } = location.state;
 
   return (
     <>
-      <SHeader text={headerText} headerType='back' />
+      <SHeader text={climbingTitle ?? '등반'} headerType='back' />
       <Layout>
         <Wrapper>
           <ClimbingDescription />
