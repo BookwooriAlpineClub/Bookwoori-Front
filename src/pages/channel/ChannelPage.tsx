@@ -11,10 +11,10 @@ import { useInView } from 'react-intersection-observer';
 import { useEffect, useRef, useState } from 'react';
 import { ChannelMessage } from '@src/types/domain/channel';
 import DateLine from '@src/components/chatting/DateLine';
-import ChatItem from '@src/components/chatting/ChatItem';
 import ChannelChatBar from '@src/components/channel/ChannelChatBar';
 import { connectHandler, disconnectHandler } from '@src/apis/chat';
 import { ChatEvent } from '@src/types/domain/dm';
+import ChannelChatItem from '@src/components/channel/ChannelChatItem';
 
 function preprocess(data: ChannelMessage[]) {
   const result: {
@@ -107,7 +107,7 @@ const ChannelPage = () => {
     if (!containerRef.current) return;
     const container = containerRef.current;
 
-    container.scrollTop = container.scrollHeight - container.clientHeight;
+    container.scrollTop = container.scrollHeight;
   }, [chattings]);
 
   useEffect(() => {
@@ -154,17 +154,11 @@ const ChannelPage = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  console.log(chattings);
   return (
     <>
       <SHeader text={channelName ?? ''} headerType='back' />
       <Container ref={containerRef}>
-        {totalMessageCount > 8 && (
-          <div
-            ref={ref}
-            style={{ backgroundColor: 'orange', height: '20px' }}
-          />
-        )}
+        {totalMessageCount > 8 && <div ref={ref} style={{ height: '20px' }} />}
         {Object.entries(chattings)
           .sort((a, b) => (a[0] < b[0] ? 1 : -1))
           .map((date) => (
@@ -173,12 +167,11 @@ const ChannelPage = () => {
               {date[1]
                 .sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
                 .map((it) => (
-                  <ChatItem
+                  <ChannelChatItem
                     key={it.id}
                     chatItem={it}
                     createdAt={it.createdAt.split('T')[1]}
-                    imgUrl=''
-                    nickname='ncik'
+                    memberId={it.memberId}
                   />
                 ))}
             </>
