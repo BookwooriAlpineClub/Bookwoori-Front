@@ -20,19 +20,15 @@ export const dialogState = atom<Modal>({
     transition: 'close',
   },
 });
-export const serverListState = atom<Server[]>({
-  key: 'serverListState',
-  default: [],
-});
-export const sideBarState = atom<SideBar>({
-  key: 'SideBarState',
+export const serverbarState = atom<Omit<Modal, 'content'>>({
+  key: 'serverbarState',
   default: {
     isOpen: false,
     transition: 'close',
   },
 });
-export const serverbarState = atom<Omit<Serverbar, 'content'>>({
-  key: 'serverbarState',
+export const sideBarState = atom<SideBar>({
+  key: 'SideBarState',
   default: {
     isOpen: false,
     transition: 'close',
@@ -49,4 +45,8 @@ export const bgFileState = atom<File | null>({
 export const communityFileState = atom<File | null>({
   key: 'communityfileState',
   default: null,
+});
+export const currentServerIdState = atom<number>({
+  key: 'currentServerIdState',
+  default: -1,
 });
