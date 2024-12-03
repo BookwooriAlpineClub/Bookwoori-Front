@@ -11,16 +11,18 @@ const ClimbingBoard = () => {
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
     const container = event.currentTarget;
     if (event.deltaY !== 0) {
-      container.scrollLeft += event.deltaY; 
-      event.preventDefault(); 
+      container.scrollLeft += event.deltaY;
+      event.preventDefault();
     }
   };
 
   return (
     <Layout onWheel={handleWheel}>
-      {participants?.map((it: ClimbingParticipants) => (
-        <ClimbingRope key={it.memberId} item={it} />
-      ))}
+      {participants
+        ?.sort((a, b) => b.currentPage - a.currentPage)
+        .map((it: ClimbingParticipants) => (
+          <ClimbingRope key={it.memberId} item={it} />
+        ))}
     </Layout>
   );
 };
