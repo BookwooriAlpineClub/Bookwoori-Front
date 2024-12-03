@@ -45,6 +45,7 @@ export type ReviewEmojiResponse = {
 
 type ClimbingMemberReview = {
   memberId: number;
+  profileImg: string;
   nickname: string;
   star: number;
   reviewId: number;

@@ -9,6 +9,9 @@ import ImageUploadField from '@src/components/addcommunity/ImageUploadField';
 import { postServer } from '@src/apis/server';
 import { useMutation } from '@tanstack/react-query';
 import useToast from '@src/hooks/useToast';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import { encodeId } from '@src/utils/formatters';
 
 const headerText = '새로운 공동체 생성하기';
 const headerType = 'back';
@@ -21,18 +24,21 @@ const CreateNewCommunityPage = () => {
 
   const addToast = useToast();
 
+  const navigate = useNavigate();
+
   const { mutate: createServer } = useMutation({
     mutationFn: (data: {
       name: string;
       description: string;
       serverImg: File | null;
     }) => postServer(data),
-    onSuccess: () => {
+    onSuccess: (response) => {
       addToast({ content: '공동체 생성 완료' });
       setCommunityName('');
       setCommunityImage(null);
       setCommunityDescription('');
-      alert('response body have no serverId');
+      const encodedId = encodeId(response.serverId);
+      navigate(ROUTE_PATH.server.replace(':serverId', encodedId));
     },
     onError: (err) => {
       console.error(err);

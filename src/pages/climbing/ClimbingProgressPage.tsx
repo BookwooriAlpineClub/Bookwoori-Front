@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import ClimbingBoard from '@src/components/climbing/ClimbingBoard';
 import Header from '@src/components/common/Header';
 import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
-const ClimbingProgressPage = () => {
-  const location = useLocation();
-  const { children: climbingTitle } = location.state;
-  
+const ClimbingProgressPage = ({ name: headerText }: { name: string }) => {
+  // const location = useLocation();
+  // const { children: climbingTitle } = location.state;
+
   return (
     <>
-      <SHeader text={climbingTitle ?? '등반'} headerType='back' />
+      <SHeader text={headerText} headerType='back' />
       <Layout>
         <Wrapper>
           <ClimbingDescription />
