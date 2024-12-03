@@ -14,9 +14,12 @@ import InputDatepicker, {
 import InputText from '@src/components/common/InputText';
 import useDialog from '@src/hooks/useDialog';
 import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
+import { useRecoilValue } from 'recoil';
+import { currentServerIdState } from '@src/states/atoms';
 
 const ClimbingEditPage = () => {
-  const serverId = 3; // 전역 서버 정보 필요
+  const serverId = useRecoilValue(currentServerIdState);
+  // const serverId = 3; // 전역 서버 정보 필요
   const { id: climbingId } = useLoaderData<{ id: string }>();
   const { readyClimbingInfo, editClimbing, delClimbing } = useClimbingRecruit(
     Number(serverId),
@@ -76,11 +79,11 @@ const ClimbingEditPage = () => {
 
   return (
     <>
-      <SHeader text='채널 편집하기' headerType='back' />
+      <SHeader text='등반 편집하기' headerType='back' />
       <SLayout>
         <InputText
-          title='채널 이름'
-          placeholder='채널 이름을 입력하세요.'
+          title='등반 이름'
+          placeholder='등반 이름을 입력하세요.'
           type='short'
           limit={20}
           required

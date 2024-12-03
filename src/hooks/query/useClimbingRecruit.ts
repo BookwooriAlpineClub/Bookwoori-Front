@@ -1,3 +1,4 @@
+import { getClimbing } from '@src/apis/climbing';
 import {
   deleteClimbing,
   getClimbingRecruitList,
@@ -30,10 +31,10 @@ const useClimbingRecruit = (serverId: number, climbingId?: number) => {
     AxiosError,
     ClimbingRecruitItem | undefined
   >({
-    queryKey: ['/climbs/ready', serverId],
-    queryFn: () => getClimbingRecruitList(serverId),
-    select: (getData) =>
-      getData.readyClimbingList.find((item) => item.climbingId === climbingId),
+    queryKey: ['getClimbing', climbingId],
+    queryFn: () => getClimbing(climbingId ?? 0),
+    // select: (getData) =>
+    //   getData.readyClimbingList.find((item) => item.climbingId === climbingId),
     refetchOnWindowFocus: true,
     refetchOnMount: true,
   });
