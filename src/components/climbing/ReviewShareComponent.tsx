@@ -5,6 +5,8 @@ import ReviewItem from '@src/components/book/ReviewItem';
 import { useMutation } from '@tanstack/react-query';
 import { patchShareClimbingReview } from '@src/apis/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from '@src/constants/routePath';
 
 /*
  *
@@ -32,6 +34,15 @@ const ReviewShareComponent = ({
     mutation.mutate();
   };
 
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    const path = ROUTE_PATH.libraryBookDetail.replace(
+      ':bookId',
+      bookInfo.isbn13,
+    );
+    navigate(path);
+  };
+
   return (
     <>
       <TextContainer>
@@ -46,7 +57,23 @@ const ReviewShareComponent = ({
             reviewContent={content ?? ''}
           />
         )}
-        {!isShareable && <div>아직 감상평을 작성하지 않았어요.</div>}
+        {!isShareable && (
+          <Wrapper>
+            <div>아직 감상평을 작성하지 않았어요.</div>
+            <button
+              type='button'
+              onClick={handleNavigate}
+              style={{
+                textDecoration: 'underline',
+                color: '#A5A5A5',
+                cursor: 'pointer',
+                marginTop: '8px',
+              }}
+            >
+              감상평 작성하러가기
+            </button>
+          </Wrapper>
+        )}
       </ItemWrapper>
       <Button type='submit' onClick={handleSubmit} disabled={!isShareable}>
         나도 공유하기
@@ -79,4 +106,11 @@ const ItemWrapper = styled.div`
   border: solid 0.06rem ${({ theme }) => theme.colors.black100};
   border-radius: 0.1rem;
   padding: 0.9375rem;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `;
