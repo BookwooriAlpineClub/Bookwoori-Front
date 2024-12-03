@@ -13,7 +13,9 @@ import { ReactComponent as Book } from '@src/assets/icons/md_book.svg';
 import { ReactComponent as Walk } from '@src/assets/icons/md_directions_walk.svg';
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Check } from '@src/assets/icons/md_check.svg';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { currentServerIdState } from '@src/states/atoms';
 
 const RecruitClimbingItem = ({
   item,
@@ -22,12 +24,13 @@ const RecruitClimbingItem = ({
   item: ClimbingRecruitItem;
   closeBottomSheet: () => void;
 }) => {
-  const { serverId: id } = useParams<{ serverId: string }>();
-  let serverId = id;
-  if (!id) {
-    console.error('바텀시트 서버 아이디 못 읽어옴');
-    serverId = '임시id';
-  }
+  // const { serverId: id } = useParams<{ serverId: string }>();
+  // let serverId = id;
+  // if (!id) {
+  //   console.error('바텀시트 서버 아이디 못 읽어옴');
+  //   serverId = '임시id';
+  // }
+  const serverId = useRecoilValue(currentServerIdState);
   const { participateClimbing } = useClimbingRecruit(
     Number(serverId),
     item.climbingId,
@@ -41,6 +44,7 @@ const RecruitClimbingItem = ({
 
   const handleClickEdit = () => {
     closeBottomSheet();
+    sessionStorage.setItem('currentServer', serverId.toString());
     navigate(ROUTE_PATH.climbingEdit, item.climbingId);
   };
 
@@ -69,7 +73,7 @@ const RecruitClimbingItem = ({
       <SContent>
         <STitle>{item.name}</STitle>
         <SContentWrapper>
-          <SBook width='1.1875rem'/>
+          <SBook width='1.1875rem' />
           <SBody>
             {item.bookInfo.author}, 《{item.bookInfo.title}》,{' '}
             {item.bookInfo.itemPage}p

@@ -12,8 +12,10 @@ import { useNavigate } from 'react-router-dom';
 import { encodeId } from '@src/utils/formatters';
 import useChannel from '@src/hooks/query/useChannel';
 import useCategory from '@src/hooks/query/useCategory';
-import useLoaderData from '@src/hooks/useRoaderData';
+// import useLoaderData from '@src/hooks/useRoaderData';
 import useSideBarData from '@src/hooks/query/useSideBarData';
+import { useRecoilValue } from 'recoil';
+import { currentServerIdState } from '@src/states/atoms';
 
 interface ButtonData {
   icon: React.ReactNode;
@@ -22,7 +24,8 @@ interface ButtonData {
 }
 
 const ChannelListPage = () => {
-  const { id: serverId } = useLoaderData<{ id: number }>();
+  const serverId = useRecoilValue(currentServerIdState);
+  // const { id: serverId } = useLoaderData<{ id: number }>();'
   const navigate = useNavigate();
   const buttonData: ButtonData[] = [
     {

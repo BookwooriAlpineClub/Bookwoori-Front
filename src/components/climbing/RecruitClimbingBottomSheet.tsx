@@ -20,7 +20,9 @@ const RecruitClimbingBottomSheet = ({
 
   const handleClick = () => {
     closeBottomSheet();
-    navigate(`/server/${encodeId(serverId)}/create/channel?kind=climb`);
+    navigate(`/server/${encodeId(serverId)}/create/channel?kind=climb`, {
+      state: serverId,
+    });
   };
 
   return (
