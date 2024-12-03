@@ -82,10 +82,10 @@ const ClimbingRope = ({ item }: Props) => {
           )}
           <Nickname>{item.nickname}</Nickname>
         </Profile>
-        {climbingInfo?.status !== 'FINISHED' &&
-          climbingInfo?.status !== 'FAILED' && (
-            <Memo isUser={item.isMine} memo={item.memo ? item.memo : ''} />
-          )}
+        {!(
+          climbingInfo?.status === 'FINISHED' ||
+          climbingInfo?.status === 'FAILED'
+        ) && <Memo isUser={item.isMine} memo={item.memo ? item.memo : ''} />}
       </Container>
     </Layout>
   );
