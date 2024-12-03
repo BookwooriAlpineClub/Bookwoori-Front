@@ -192,4 +192,6 @@ const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
   & .${tooltipClasses.arrow} {
     color: #fff;
   }
+
+  z-index: 1;
 `;

@@ -145,7 +145,7 @@ const ReviewItemWrapper = styled.div`
     gap: 0.625rem;
     padding: 0.9375rem;
 
-    align-items: center;
+    align-items: flex-start;
 
     width: 100%;
     background-color: ${({ theme }) => theme.colors.blue200 + '10'};
@@ -170,10 +170,10 @@ const NicknameContainer = styled.div`
 
 const ContentContainer = styled.div`
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column;
   gap: 0.3rem;
 
-  width: 100%;
+  //width: 100%;
 `;
 
 const EmojiButton = styled.button`
@@ -194,6 +194,7 @@ const StyledAddReactionIcon = styled(AddReactionIcon)`
 `;
 
 const ImageWrapper = styled.div`
+  flex-shrink: 0;
   width: 3.1rem;
   height: 3.1rem;
   border-radius: 50%;
@@ -201,7 +202,7 @@ const ImageWrapper = styled.div`
   img {
     width: 100%;
     height: 100%;
-
+    border-radius: 50%;
     object-fit: cover;
   }
 `;

@@ -10,7 +10,6 @@ import useChattingLog from '@src/hooks/query/useChattingLog';
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useRef, useState } from 'react';
 import { ChannelMessage } from '@src/types/domain/channel';
-import DateLine from '@src/components/chatting/DateLine';
 import ChannelChatBar from '@src/components/channel/ChannelChatBar';
 import { connectHandler, disconnectHandler } from '@src/apis/chat';
 import { ChatEvent } from '@src/types/domain/dm';
@@ -163,7 +162,6 @@ const ChannelPage = () => {
           .sort((a, b) => (a[0] < b[0] ? 1 : -1))
           .map((date) => (
             <>
-              <DateLine date={`${date[0].split('T')[0]}`} />
               {date[1]
                 .sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
                 .map((it) => (
