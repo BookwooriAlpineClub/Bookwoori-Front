@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import styled from 'styled-components';
 import useDialog from '@src/hooks/useDialog';
 import MemoDialog from '@src/components/climbing/MemoDialog';
@@ -24,6 +25,11 @@ const Memo = ({ memo, isUser }: MemoProps) => {
           <Triangle />
           <TextBox>{memo || <SPlus />}</TextBox>
         </>
+      ) : memo ? (
+        <>
+          <Triangle />
+          <TextBox>{memo}</TextBox>
+        </>
       ) : (
         <Blank />
       )}
@@ -38,6 +44,10 @@ const Layout = styled.button`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  &:disabled {
+    cursor: default;
+  }
 `;
 const Triangle = styled.div`
   width: 0rem;
