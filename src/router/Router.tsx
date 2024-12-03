@@ -5,6 +5,7 @@ import { checkAuthLoader, isParamLoader } from '@src/router/loader';
 import Bottomsheet from '@src/components/common/Bottomsheet';
 import Dialog from '@src/components/common/Dialog';
 import CommunitySideBar from '@src/components/communitysidebar/CommunitySideBar';
+import LoadingPage from '@src/components/common/LoadingPage';
 
 /* example */
 const RouterExamplePage = React.lazy(
@@ -103,7 +104,7 @@ const RecordEditPage = React.lazy(
 const router = createBrowserRouter([
   {
     element: (
-      <Suspense fallback={<h1>Loading</h1>}>
+      <Suspense fallback={<LoadingPage />}>
         <Outlet />
         <Bottomsheet />
         <Dialog />

@@ -9,7 +9,7 @@ import ChatBar from '@src/components/chatting/ChatBar';
 import ChatItem from '@src/components/chatting/ChatItem';
 import DateLine from '@src/components/chatting/DateLine';
 import Header from '@src/components/common/Header';
-import Spinner from '@src/components/common/Spinner';
+import LoadingPage from '@src/components/common/LoadingPage';
 
 const ChattingPage = () => {
   const { id: memberId } = useLoaderData<{ id: number }>();
@@ -120,7 +120,7 @@ const ChattingPage = () => {
   }, [messages]);
 
   if (!data || isLoading) {
-    return <Spinner />;
+    return <LoadingPage />;
   }
 
   return (
