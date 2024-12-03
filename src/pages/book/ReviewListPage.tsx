@@ -1,11 +1,11 @@
-import type { ReviewListItem } from '@src/types/apis/record';
+import useRecord from '@src/hooks/query/useRecord';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import Header from '@src/components/common/Header';
 import ReviewItem from '@src/components/book/ReviewItem';
 
 const ReviewListPage = () => {
-  const reviewList: ReviewListItem[] = mock;
+  const { reviewList } = useRecord({});
 
   return (
     <NoDataTextLayout>
