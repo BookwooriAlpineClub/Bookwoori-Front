@@ -1,13 +1,13 @@
 export interface ClimbingRecruitItem {
   climbingId: number;
-  status: 'READY';
+  status: 'READY' | 'RUNNING' | 'FINISHED' | 'FAILED';
   name: string;
   startDate: string;
   endDate: string;
   description: string;
   memberCount: number;
-  isJoined: true;
-  isOWner: false;
+  isJoined: boolean;
+  isOWner: boolean;
   bookInfo: {
     title: string;
     author: string;
@@ -25,7 +25,7 @@ export interface ClimbingRecruitListRes {
 }
 
 export interface ClimbingParticipants {
-  isMine: boolean,
+  isMine: boolean;
   memberId: number;
   nickname: string;
   profileImg: string | null;

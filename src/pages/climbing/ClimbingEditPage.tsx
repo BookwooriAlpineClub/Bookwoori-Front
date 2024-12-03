@@ -4,7 +4,7 @@ import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
 import useLoaderData from '@src/hooks/useRoaderData';
 import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 import useToast from '@src/hooks/useToast';
-import { formatDate } from '@src/utils/formatters';
+import { encodeId, formatDate } from '@src/utils/formatters';
 import Button from '@src/components/common/Button';
 import ButtonBackground from '@src/components/common/ButtonBackground';
 import Header from '@src/components/common/Header';
@@ -16,7 +16,8 @@ import useDialog from '@src/hooks/useDialog';
 import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 
 const ClimbingEditPage = () => {
-  const serverId = 3; // 전역 서버 정보 필요
+  const serverId = sessionStorage.getItem('currentServer') ?? '-1';
+  // const serverId = 3; // 전역 서버 정보 필요
   const { id: climbingId } = useLoaderData<{ id: string }>();
   const { readyClimbingInfo, editClimbing, delClimbing } = useClimbingRecruit(
     Number(serverId),
@@ -49,7 +50,8 @@ const ClimbingEditPage = () => {
     editClimbing.mutate(data, {
       onSuccess: () => {
         addToast({ content: '수정 완료' });
-        navigate('/server', serverId, { replace: true });
+        console.log(serverId);
+        window.location.replace(`/server/${encodeId(Number(serverId))}`);
       },
     });
   };
@@ -59,7 +61,7 @@ const ClimbingEditPage = () => {
       onSuccess: () => {
         closeDialog();
         addToast({ content: '삭제 완료' });
-        navigate('/server', serverId, { replace: true });
+        navigate('/server', Number(serverId), { replace: true });
       },
     });
   };
@@ -76,11 +78,11 @@ const ClimbingEditPage = () => {
 
   return (
     <>
-      <SHeader text='채널 편집하기' headerType='back' />
+      <SHeader text='등반 편집하기' headerType='back' />
       <SLayout>
         <InputText
-          title='채널 이름'
-          placeholder='채널 이름을 입력하세요.'
+          title='등반 이름'
+          placeholder='등반 이름을 입력하세요.'
           type='short'
           limit={20}
           required

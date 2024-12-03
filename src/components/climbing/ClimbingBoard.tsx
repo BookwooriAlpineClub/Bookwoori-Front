@@ -8,8 +8,16 @@ const ClimbingBoard = () => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
   const { participants } = useClimbing(climbingId);
 
+  const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    const container = event.currentTarget;
+    if (event.deltaY !== 0) {
+      container.scrollLeft += event.deltaY; 
+      event.preventDefault(); 
+    }
+  };
+
   return (
-    <Layout>
+    <Layout onWheel={handleWheel}>
       {participants?.map((it: ClimbingParticipants) => (
         <ClimbingRope key={it.memberId} item={it} />
       ))}
@@ -25,5 +33,5 @@ const Layout = styled.div`
 
   height: 100%;
 
-  overflow: scroll;
+  overflow-x: scroll;
 `;

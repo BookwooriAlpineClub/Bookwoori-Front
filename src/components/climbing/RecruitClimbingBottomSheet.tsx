@@ -1,23 +1,28 @@
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Plus } from '@src/assets/icons/hi_outline_plus.svg';
 import RecruitClimbingItem from '@src/components/climbing/RecruitClimbingItem';
 import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
-import { encodeId, decodeIdParam } from '@src/utils/formatters';
+import { encodeId } from '@src/utils/formatters';
+import { useRecoilValue } from 'recoil';
+import { currentServerIdState } from '@src/states/atoms';
 
 const RecruitClimbingBottomSheet = ({
   closeBottomSheet,
 }: {
   closeBottomSheet: () => void;
 }) => {
-  const { serverId } = useParams<{ serverId: string }>();
-  const decodedServerId = decodeIdParam(serverId);
-  const { data = [] } = useClimbingRecruit(decodedServerId);
+  // const { serverId } = useParams<{ serverId: string }>();
+  // const decodedServerId = decodeIdParam(serverId);
+  const serverId = useRecoilValue(currentServerIdState);
+  const { data = [] } = useClimbingRecruit(serverId);
   const navigate = useNavigate();
 
   const handleClick = () => {
     closeBottomSheet();
-    navigate(`/server/${encodeId(decodedServerId)}/create/channel?kind=climb`);
+    navigate(`/server/${encodeId(serverId)}/create/channel?kind=climb`, {
+      state: serverId,
+    });
   };
 
   return (

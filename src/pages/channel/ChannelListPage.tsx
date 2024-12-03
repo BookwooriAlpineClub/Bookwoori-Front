@@ -12,7 +12,10 @@ import { useNavigate } from 'react-router-dom';
 import { encodeId } from '@src/utils/formatters';
 import useChannel from '@src/hooks/query/useChannel';
 import useCategory from '@src/hooks/query/useCategory';
-import useLoaderData from '@src/hooks/useRoaderData';
+// import useLoaderData from '@src/hooks/useRoaderData';
+import useSideBarData from '@src/hooks/query/useSideBarData';
+import { useRecoilValue } from 'recoil';
+import { currentServerIdState } from '@src/states/atoms';
 
 interface ButtonData {
   icon: React.ReactNode;
@@ -21,7 +24,8 @@ interface ButtonData {
 }
 
 const ChannelListPage = () => {
-  const { id: serverId } = useLoaderData<{ id: number }>();
+  const serverId = useRecoilValue(currentServerIdState);
+  // const { id: serverId } = useLoaderData<{ id: number }>();'
   const navigate = useNavigate();
   const buttonData: ButtonData[] = [
     {
@@ -38,6 +42,7 @@ const ChannelListPage = () => {
   const { channels, climbingList } = useChannel(serverId);
   const { categoryList: channelNameData = [] } = useCategory(serverId);
   const { list, handleDraggable } = useDraggable(channelNameData);
+  const { serverInfo } = useSideBarData(serverId);
   const ref = useRef(channelNameData);
 
   useEffect(() => {
@@ -48,7 +53,7 @@ const ChannelListPage = () => {
 
   return (
     <>
-      <SHeader headerType='server' text='채널' />
+      <SHeader headerType='server' text={serverInfo?.name ?? '서버'} />
       <SLayout>
         <SButtonContainer>
           {buttonData.map((buttonItem) => (

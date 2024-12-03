@@ -1,7 +1,10 @@
 import type { Climbing } from '@src/types/apis/climbing';
-import { postClimbing } from '@src/apis/climbing';
+import { getClimbing, postClimbing } from '@src/apis/climbing';
 import { getParticipants } from '@src/apis/climbingTemp';
-import { ClimbingParticipantsRes } from '@src/types/domain/climbingTemp';
+import {
+  ClimbingParticipantsRes,
+  ClimbingRecruitItem,
+} from '@src/types/domain/climbingTemp';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
@@ -20,9 +23,16 @@ const useClimbing = (climbingId?: number) => {
     mutationFn: ({ body }: { body: A }) => postClimbing(body),
   });
 
+  const { data: climbingInfo, isLoading } = useQuery<ClimbingRecruitItem, AxiosError>({
+    queryKey: ['getClimbing', climbingId],
+    queryFn: () => getClimbing(climbingId as number),
+  });
+
   return {
     participants: participants?.climbingMemberList,
     createClimbing,
+    climbingInfo,
+    isLoading
   };
 };
 

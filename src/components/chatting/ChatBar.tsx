@@ -4,9 +4,11 @@ import { ReactComponent as Send } from '@src/assets/icons/send.svg';
 import { ReactComponent as SendGreen } from '@src/assets/icons/send_green.svg';
 import { sendHandler } from '@src/apis/chat';
 import useLoaderData from '@src/hooks/useRoaderData';
+import { useRoomInfo } from '@src/hooks/query/useDm';
 
 const ChatBar = ({ nickname }: { nickname: string }) => {
-  const { id: messageRoomId } = useLoaderData<{ id: number }>();
+  const { id: memberId } = useLoaderData<{ id: number }>();
+  const { roomInfo } = useRoomInfo(memberId);
   const [chat, setChat] = useState<string>('');
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +25,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
     if (!chat.trim()) return;
 
     const message: MessageRequest = {
-      messageRoomId,
+      messageRoomId: roomInfo?.messageRoomId,
       type: 'text',
       content: chat,
     };

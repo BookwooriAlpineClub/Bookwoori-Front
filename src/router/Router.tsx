@@ -5,6 +5,7 @@ import { checkAuthLoader, isParamLoader } from '@src/router/loader';
 import Bottomsheet from '@src/components/common/Bottomsheet';
 import Dialog from '@src/components/common/Dialog';
 import CommunitySideBar from '@src/components/communitysidebar/CommunitySideBar';
+import LoadingPage from '@src/components/common/LoadingPage';
 
 /* example */
 const RouterExamplePage = React.lazy(
@@ -72,6 +73,9 @@ const ChannelPage = React.lazy(() => import('@src/pages/channel/ChannelPage'));
 const CommunityInfoSettingPage = React.lazy(
   () => import('@src/pages/communityinfosetting/CommunityInfoSettingPage'),
 );
+const CategoryAddPage = React.lazy(
+  () => import('@src/pages/channel/CategoryAddPage'),
+);
 
 /* add-server */
 const AddCommunityPage = React.lazy(
@@ -103,7 +107,7 @@ const RecordEditPage = React.lazy(
 const router = createBrowserRouter([
   {
     element: (
-      <Suspense fallback={<h1>Loading</h1>}>
+      <Suspense fallback={<LoadingPage />}>
         <Outlet />
         <Bottomsheet />
         <Dialog />
@@ -235,7 +239,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.addCategory,
-        element: <h1>Add Category Page</h1>,
+        element: <CategoryAddPage />,
       },
       {
         path: ROUTE_PATH.addChannel,

@@ -8,6 +8,7 @@ import UserProfilImg from '@src/components/userSettings/UserProfileImg';
 import Button from '@src/components/common/Button';
 import Header from '@src/components/common/Header';
 import ButtonBackground from '@src/components/common/ButtonBackground';
+import LoadingPage from '@src/components/common/LoadingPage';
 
 const EditUserInfoPage = () => {
   const { profileData, isLoading, isError, editProfile } = useMember();
@@ -63,11 +64,11 @@ const EditUserInfoPage = () => {
   }, [profileData]);
 
   if (isLoading) {
-    return <h1>로딩중</h1>;
+    return <LoadingPage />;
   }
 
   if (isError) {
-    throw new Error('데이터를 불러오는데 실패했습니다.');
+    console.error('데이터를 불러오는데 실패했습니다.');
   }
 
   return (
