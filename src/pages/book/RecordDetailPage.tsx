@@ -1,4 +1,7 @@
 import type { RecordDetail } from '@src/types/apis/record';
+import { useParams } from 'react-router-dom';
+import { decodeIdParam } from '@src/utils/formatters';
+import useRecord from '@src/hooks/query/useRecord';
 import styled from 'styled-components';
 import Header from '@src/components/book/Header';
 import BookInfoDetail from '@src/components/book/BookInfoDetail';
@@ -7,6 +10,9 @@ import InputPage from '@src/components/book/InputPage';
 import InputReview from '@src/components/book/InputReview';
 
 const RecordDetailPage = () => {
+  const { recordId: params } = useParams<{ recordId: string }>();
+  const recordId = decodeIdParam(params);
+  const { recordDetail } = useRecord({ recordId });
   const {
     readingStatus,
     startDate,
@@ -14,7 +20,7 @@ const RecordDetailPage = () => {
     star,
     review,
     bookInfo,
-  }: RecordDetail = mock;
+  }: RecordDetail = recordDetail as RecordDetail;
   const { endDate } = review.record;
   const reviewContent = review.content;
 
