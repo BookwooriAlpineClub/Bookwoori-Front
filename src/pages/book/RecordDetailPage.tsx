@@ -1,5 +1,7 @@
 import type { RecordDetail } from '@src/types/apis/record';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import { SESSION_STORAGE } from '@src/constants/sessionStorage';
 import { decodeIdParam } from '@src/utils/formatters';
 import useRecord from '@src/hooks/query/useRecord';
 import styled from 'styled-components';
@@ -10,6 +12,8 @@ import InputPage from '@src/components/book/InputPage';
 import InputReview from '@src/components/book/InputReview';
 
 const RecordDetailPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { recordId: params } = useParams<{ recordId: string }>();
   const recordId = decodeIdParam(params);
   const { recordDetail } = useRecord({ recordId });
@@ -24,9 +28,34 @@ const RecordDetailPage = () => {
   const { endDate } = review.record;
   const reviewContent = review.content;
 
+  const handleEditClick = () => {
+    const jsonData = JSON.stringify({
+      type: 'record',
+      isbn13: bookInfo.isbn13,
+      status: readingStatus,
+      startDate,
+      endDate: review.record.endDate,
+      currentPage,
+      star,
+      reviewContent: review.content,
+      bookInfo,
+    });
+    sessionStorage.setItem(SESSION_STORAGE.RECORD_EDIT, jsonData);
+    navigate(`${location.pathname}/edit`);
+  };
+  const handleDeleteClick = () => {
+    // 나중에 "삭제하시겠습니까?" 다이얼로그 띄우기
+    // API delete 요청
+    navigate(ROUTE_PATH.libraryRecord, { replace: true });
+  };
+
   return (
     <Container>
-      <Header buttonList={['edit', 'delete']} />
+      <Header
+        buttonList={['edit', 'delete']}
+        handleEditClick={handleEditClick}
+        handleDeleteClick={handleDeleteClick}
+      />
       <BookInfoDetail readingStatus={readingStatus} {...bookInfo} />
       <Form>
         {(readingStatus === 'READING' || readingStatus === 'FINISHED') && (

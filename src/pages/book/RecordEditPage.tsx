@@ -1,6 +1,8 @@
 import type { RecordDetail, RecordEdit } from '@src/types/apis/record';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+// import { SESSION_STORAGE } from '@src/constants/sessionStorage';
+// import useRecord from '@src/hooks/query/useRecord';
 import styled from 'styled-components';
 import Header from '@src/components/book/Header';
 import BookInfoDetail from '@src/components/book/BookInfoDetail';
@@ -15,30 +17,34 @@ type Data = RecordEdit &
   };
 
 const mock: Data = {
-  type: 'record',
-  isbn13: '9788936434595',
-  status: 'FINISHED',
-  startDate: '2024-01-01',
-  endDate: '2024-12-31',
-  currentPage: 0,
-  star: 3,
+  type: 'book',
+  isbn13: '',
+  status: 'UNREAD',
+  startDate: '',
+  endDate: '',
+  currentPage: -1,
+  star: -1,
   reviewContent: '',
   bookInfo: {
-    title: '',
-    author: 'string',
-    publisher: 'string',
-    pubDate: 'string',
-    itemPage: 0,
-    description: 'string',
-    isbn13: 'string',
-    cover: 'string',
+    title: '채식주의자 (리마스터판) - 2024 노벨문학상 수상작가',
+    author: '한강 (지은이)',
+    publisher: '창비',
+    pubDate: '2022-03-28',
+    itemPage: 276,
+    description:
+      '2016년 인터내셔널 부커상을 수상하며 한국문학의 입지를 한단계 확장시킨 한강의 장편소설. 상처받은 영혼의 고통과 식물적 상상력의 강렬한 결합을 정교한 구성과 흡인력 있는 문체로 보여주며 섬뜩한 아름다움의 미학을 한강만의 방식으로 완성한 역작이다.',
+    isbn13: '9788936434595',
+    cover:
+      'https://image.aladin.co.kr/product/29137/2/coversum/8936434594_2.jpg',
   },
 };
 
 const RecordEditPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  // const { createRecord, updateRecord } = useRecord({ recordId });
 
+  // const jsonData = sessionStorage.getItem(SESSION_STORAGE.RECORD_EDIT);
   const {
     type,
     isbn13,
@@ -50,6 +56,7 @@ const RecordEditPage = () => {
     reviewContent,
     bookInfo,
   }: Data = mock;
+  // }: Data = JSON.parse(jsonData as string);
 
   const [status, setStatus] = useState<RecordEdit['status']>(readingStatus);
   const [period, setPeriod] = useState<Period>({
@@ -65,6 +72,8 @@ const RecordEditPage = () => {
     event.preventDefault();
 
     // API put 요청
+    console.log(type);
+    console.log(isbn13);
 
     // 요청 성공 시 리다이렉트
     const path = location.pathname.replace(/\/edit$/, '');
