@@ -13,6 +13,7 @@ import { encodeId } from '@src/utils/formatters';
 import useChannel from '@src/hooks/query/useChannel';
 import useCategory from '@src/hooks/query/useCategory';
 import useLoaderData from '@src/hooks/useRoaderData';
+import useSideBarData from '@src/hooks/query/useSideBarData';
 
 interface ButtonData {
   icon: React.ReactNode;
@@ -38,6 +39,7 @@ const ChannelListPage = () => {
   const { channels, climbingList } = useChannel(serverId);
   const { categoryList: channelNameData = [] } = useCategory(serverId);
   const { list, handleDraggable } = useDraggable(channelNameData);
+  const { serverInfo } = useSideBarData(serverId);
   const ref = useRef(channelNameData);
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const ChannelListPage = () => {
 
   return (
     <>
-      <SHeader headerType='server' text='채널' />
+      <SHeader headerType='server' text={serverInfo?.name ?? '서버'} />
       <SLayout>
         <SButtonContainer>
           {buttonData.map((buttonItem) => (
