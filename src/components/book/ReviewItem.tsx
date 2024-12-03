@@ -1,4 +1,6 @@
 import type { ReviewListItem } from '@src/types/apis/record';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Chip from '@src/components/common/Chip';
@@ -10,10 +12,15 @@ const ReviewItem = ({
   reviewContent,
   bookInfo,
 }: ReviewListItem) => {
+  const navigate = useEncodedNavigate();
   const { title, author, cover } = bookInfo;
 
+  const handleItemClick = () => {
+    navigate(ROUTE_PATH.libraryRecord, recordId);
+  };
+
   return (
-    <ComponentWrapper>
+    <ComponentWrapper as='li' onClick={handleItemClick}>
       <Img src={cover} alt='책 표지' loading='lazy' />
       <TextWrapper>
         <RowLayout>
