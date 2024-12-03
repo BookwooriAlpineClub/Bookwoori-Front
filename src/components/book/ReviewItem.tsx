@@ -6,17 +6,16 @@ import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Chip from '@src/components/common/Chip';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
-const ReviewItem = ({
-  recordId,
-  star,
-  reviewContent,
-  bookInfo,
-}: ReviewListItem) => {
+type Props = Omit<ReviewListItem, 'recordId' | 'memberId'> & {
+  recordId?: ReviewListItem['recordId'];
+};
+
+const ReviewItem = ({ recordId, star, reviewContent, bookInfo }: Props) => {
   const navigate = useEncodedNavigate();
   const { title, author, cover } = bookInfo;
 
   const handleItemClick = () => {
-    navigate(ROUTE_PATH.libraryRecord, recordId);
+    if (recordId) navigate(ROUTE_PATH.libraryRecord, recordId);
   };
 
   return (

@@ -1,4 +1,3 @@
-import type { BookDetail } from '@src/types/apis/book.d';
 import type { Record } from '@src/types/apis/record';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { SESSION_STORAGE } from '@src/constants/sessionStorage';
@@ -11,8 +10,7 @@ const BookDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { bookId: isbn13 } = useParams<{ bookId: string }>();
-  const { bookDetail } = useBook({ isbn13 });
-  const bookInfo = bookDetail as BookDetail;
+  const { bookDetail: bookInfo } = useBook({ isbn13 });
 
   const readingStatus: Record['readingStatus'] = 'UNREAD';
 
@@ -68,6 +66,21 @@ const Container = styled.div`
 
   header {
     margin-bottom: 0.315rem;
+  }
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 6.69rem;
+    left: 0;
+    z-index: -1;
+
+    width: 100%;
+    height: -webkit-fill-available;
+
+    border-radius: 1.125rem 1.125rem 0rem 0rem;
+    background-color: ${({ theme }) => theme.colors.white};
   }
 `;
 const Description = styled.section`

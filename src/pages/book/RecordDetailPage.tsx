@@ -24,9 +24,11 @@ const RecordDetailPage = () => {
     star,
     review,
     bookInfo,
-  }: RecordDetail = recordDetail as RecordDetail;
-  const { endDate } = review.record;
-  const reviewContent = review.content;
+  }: RecordDetail = recordDetail;
+  const endDate = '2024-12-31'; // 나중에 수정
+  // const { endDate } = review.record;
+  const reviewContent = '';
+  // const reviewContent = review.content;
 
   const handleEditClick = () => {
     const jsonData = JSON.stringify({
@@ -44,7 +46,7 @@ const RecordDetailPage = () => {
     navigate(`${location.pathname}/edit`);
   };
   const handleDeleteClick = () => {
-    // 나중에 "삭제하시겠습니까?" 다이얼로그 띄우기
+    // 나중에 삭제하시겠습니까? 다이얼로그 띄우기
     // API delete 요청
     navigate(ROUTE_PATH.libraryRecord, { replace: true });
   };

@@ -15,6 +15,40 @@ import {
   getReviewList,
 } from '@src/apis/record';
 
+const initRecordDetail: RecordDetail = {
+  recordId: -1,
+  readingStatus: 'UNREAD',
+  startDate: '',
+  currentPage: -1,
+  maxPage: -1,
+  star: -1,
+  review: {
+    createdAt: '',
+    modifiedAt: '',
+    reviewId: -1,
+    record: {
+      recordId: -1,
+      status: 'UNREAD',
+      startDate: '',
+      endDate: '',
+      currentPage: -1,
+      maxPage: -1,
+      star: -1,
+    },
+    content: '',
+  },
+  bookInfo: {
+    title: '',
+    author: '',
+    publisher: '',
+    pubDate: '',
+    itemPage: -1,
+    description: '',
+    isbn13: '',
+    cover: '',
+  },
+};
+
 interface Props {
   status?: RecordListItem['readingStatus'];
   recordId?: RecordDetail['recordId'];
@@ -29,6 +63,7 @@ const useRecord = ({ status = 'UNREAD', recordId = -1 }: Props) => {
   const { data: recordDetail } = useQuery<RecordDetail, AxiosError>({
     queryKey: ['getRecordDetail', recordId],
     queryFn: () => getRecordDetail(recordId),
+    initialData: initRecordDetail,
   });
 
   const createRecord = useMutation({
