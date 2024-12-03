@@ -1,29 +1,52 @@
-import type { BookDetail } from '@src/types/apis/book';
+import type { Record } from '@src/types/apis/record';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { SESSION_STORAGE } from '@src/constants/sessionStorage';
+import useBook from '@src/hooks/query/useBook';
 import styled from 'styled-components';
 import Header from '@src/components/book/Header';
 import BookInfoDetail from '@src/components/book/BookInfoDetail';
 
-const mock: BookDetail = {
-  title: '누가 내 머리에 똥 쌌어?',
-  author: '베르너 홀츠바르트 (글), 볼프 에를브루흐 (그림)',
-  publisher: '사계절',
-  pubDate: '2002',
-  itemPage: 20,
-  description:
-    '어느 날, 두더지는 기분 좋게 땅 위로 올라왔다가 그만 똥세례를 받는다. 화가 난 두더지는 누가 자기 머리 위에 똥을 쌌는지 알아내려고 길을 나선다. 하지만, 만나는 동물마다 자신의 똥을 직접 보여주면서, 자신이 범인이 아니라고 한다. 그러는 과정에서 두더지는 정육점집 개 한스가 자신의 머리 위에 똥을 쌌다는 것을 알게 된다.',
-  isbn13: '-1',
-  coverImg: 'https://image.aladin.co.kr/product/3/34/cover500/8971968419_2.jpg',
-};
+const BookDetailPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { bookId: isbn13 } = useParams<{ bookId: string }>();
+  const { bookDetail: bookInfo } = useBook({ isbn13 });
 
-const RecordDetailPage = () => {
-  const bookInfo: BookDetail = mock;
+  const readingStatus: Record['readingStatus'] = 'UNREAD';
 
-  const status = 'BOOK';
+  const handleEditClick = () => {
+    const jsonData = JSON.stringify({
+      type: 'book',
+      isbn13: bookInfo.isbn13,
+      status: 'UNREAD',
+      startDate: '',
+      endDate: '',
+      currentPage: -1,
+      star: -1,
+      reviewContent: '',
+      bookInfo: {
+        title: bookInfo.title,
+        author: bookInfo.author,
+        publisher: bookInfo.publisher,
+        pubDate: bookInfo.pubDate,
+        itemPage: bookInfo.itemPage,
+        description: bookInfo.description,
+        isbn13: bookInfo.isbn13,
+        cover: bookInfo.coverImg,
+      },
+    });
+    sessionStorage.setItem(SESSION_STORAGE.RECORD_EDIT, jsonData);
+    navigate(`${location.pathname.replace('/book', '/record')}/edit`);
+  };
 
   return (
     <Container>
-      <Header buttonList={['edit']} />
-      <BookInfoDetail status={status} {...bookInfo} />
+      <Header buttonList={['edit']} handleEditClick={handleEditClick} />
+      <BookInfoDetail
+        readingStatus={readingStatus}
+        cover={bookInfo.coverImg}
+        {...bookInfo}
+      />
       <Description>
         <h2>책 소개</h2>
         <p>{bookInfo.description}</p>
@@ -32,7 +55,7 @@ const RecordDetailPage = () => {
   );
 };
 
-export default RecordDetailPage;
+export default BookDetailPage;
 
 const Container = styled.div`
   display: flex;
@@ -43,6 +66,21 @@ const Container = styled.div`
 
   header {
     margin-bottom: 0.315rem;
+  }
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 6.69rem;
+    left: 0;
+    z-index: -1;
+
+    width: 100%;
+    height: -webkit-fill-available;
+
+    border-radius: 1.125rem 1.125rem 0rem 0rem;
+    background-color: ${({ theme }) => theme.colors.white};
   }
 `;
 const Description = styled.section`

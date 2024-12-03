@@ -1,6 +1,8 @@
-import type { Record } from '@src/types/apis/record';
+import type { RecordDetail, RecordEdit } from '@src/types/apis/record';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+// import { SESSION_STORAGE } from '@src/constants/sessionStorage';
+// import useRecord from '@src/hooks/query/useRecord';
 import styled from 'styled-components';
 import Header from '@src/components/book/Header';
 import BookInfoDetail from '@src/components/book/BookInfoDetail';
@@ -9,56 +11,54 @@ import InputPeriod, { type Period } from '@src/components/book/InputPeriod';
 import InputPage from '@src/components/book/InputPage';
 import InputReview from '@src/components/book/InputReview';
 
-const mock: Record = {
-  recordId: 1,
-  memberId: 3,
-  readingStatus: 'FINISHED',
-  star: 3,
-  startDate: '2024-01-01',
-  endDate: '2024-12-31',
-  reviewContent:
-    '가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하',
-  currentPage: 0,
-  maxPage: 0,
+type Data = RecordEdit &
+  Pick<RecordDetail, 'bookInfo'> & {
+    type: 'book' | 'record';
+  };
+
+const mock: Data = {
+  type: 'book',
+  isbn13: '',
+  status: 'UNREAD',
+  startDate: '',
+  endDate: '',
+  currentPage: -1,
+  star: -1,
+  reviewContent: '',
   bookInfo: {
     title: '채식주의자 (리마스터판) - 2024 노벨문학상 수상작가',
     author: '한강 (지은이)',
     publisher: '창비',
-    pubDate: '2022',
+    pubDate: '2022-03-28',
     itemPage: 276,
     description:
       '2016년 인터내셔널 부커상을 수상하며 한국문학의 입지를 한단계 확장시킨 한강의 장편소설. 상처받은 영혼의 고통과 식물적 상상력의 강렬한 결합을 정교한 구성과 흡인력 있는 문체로 보여주며 섬뜩한 아름다움의 미학을 한강만의 방식으로 완성한 역작이다.',
     isbn13: '9788936434595',
-    coverImg:
+    cover:
       'https://image.aladin.co.kr/product/29137/2/coversum/8936434594_2.jpg',
   },
 };
 
-// type RecordEdit = {
-//   isbn13: string;
-//   status: 'UNREAD' | 'WISH' | 'READING' | 'FINISHED';
-//   star: number;
-//   startDate: string;
-//   endDate: string;
-//   currentPage: number;
-//   reviewContent: string;
-// };
-
 const RecordEditPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  // const { createRecord, updateRecord } = useRecord({ recordId });
 
+  // const jsonData = sessionStorage.getItem(SESSION_STORAGE.RECORD_EDIT);
   const {
-    readingStatus,
+    type,
+    isbn13,
+    status: readingStatus,
     startDate,
     endDate,
     currentPage,
     star,
     reviewContent,
     bookInfo,
-  }: Record = mock;
+  }: Data = mock;
+  // }: Data = JSON.parse(jsonData as string);
 
-  const [status, setStatus] = useState<Record['readingStatus']>(readingStatus);
+  const [status, setStatus] = useState<RecordEdit['status']>(readingStatus);
   const [period, setPeriod] = useState<Period>({
     start: startDate,
     end: endDate,
@@ -72,6 +72,8 @@ const RecordEditPage = () => {
     event.preventDefault();
 
     // API put 요청
+    console.log(type);
+    console.log(isbn13);
 
     // 요청 성공 시 리다이렉트
     const path = location.pathname.replace(/\/edit$/, '');
@@ -81,7 +83,7 @@ const RecordEditPage = () => {
   return (
     <Container>
       <Header buttonList={['save']} />
-      <BookInfoDetail status={status} {...bookInfo} />
+      <BookInfoDetail readingStatus='UNREAD' {...bookInfo} />
       <Form onSubmit={handleFormSubmit}>
         <InputStatus
           name='status'

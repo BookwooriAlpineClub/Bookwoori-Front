@@ -1,4 +1,4 @@
-import type { BookDetail } from '@src/types/apis/book.d';
+import type { BookInfo } from '@src/types/apis/book.d';
 import { ClimbingStatus } from '@src/constants/status';
 
 export type book = {
@@ -56,7 +56,7 @@ type ClimbingMemberReview = {
 export type ClimbingResponse = {
   hasShared: boolean;
   isShareable: boolean;
-  bookInfo: BookDetail;
+  bookInfo: BookInfo;
   content?: string;
   reviewId?: number;
   star?: number;

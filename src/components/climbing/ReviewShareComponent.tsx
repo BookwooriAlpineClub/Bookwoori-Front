@@ -52,9 +52,9 @@ const ReviewShareComponent = ({
       <ItemWrapper>
         {isShareable && (
           <ReviewItem
-            bookInfo={bookInfo}
             star={star ?? 0}
             reviewContent={content ?? ''}
+            bookInfo={bookInfo}
           />
         )}
         {!isShareable && (
