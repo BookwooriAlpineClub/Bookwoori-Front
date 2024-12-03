@@ -8,20 +8,45 @@ interface ClimbingSummaryProps {
   memberCount?: number;
 }
 
+function calculateDday(endDate: string): string {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const end = new Date(endDate);
+
+  // 유효한 날짜인지 확인
+  if (Number.isNaN(end.getTime())) {
+    return '유효하지 않은 날짜입니다.';
+  }
+
+  // 두 날짜 간의 차이 계산 (밀리초 단위)
+  const diffInMilliseconds = end.getTime() - today.getTime();
+
+  // 밀리초를 일 단위로 변환
+  const diffInDays = Math.ceil(diffInMilliseconds / (1000 * 60 * 60 * 24));
+
+  // 결과 반환
+  if (diffInDays > 0) {
+    return `D - ${diffInDays}`;
+  }
+  if (diffInDays === 0) {
+    return 'D - Day';
+  }
+  return `D + ${Math.abs(diffInDays)}`; // 종료 날짜가 과거인 경우
+}
+
 const ClimbingSummary = ({
   startDate = '2024-00-00',
   endDate = '2025-00-00',
   memberCount = 6,
 }: ClimbingSummaryProps) => {
-  const dDay = 100;
+  const dDay = calculateDday(endDate);
   return (
     <Container>
       <DateInfo>
         <StyledCalendarIcon />
-        <DateText>
-          {startDate} - {endDate},
-        </DateText>
-        <HighlightText>{`D-${dDay}`}</HighlightText>
+        <DateText>${`${startDate} - ${endDate}, `}</DateText>
+        <HighlightText>{`${dDay}`}</HighlightText>
       </DateInfo>
       <MemberInfo>
         <StyledGroupIcon />
@@ -54,13 +79,14 @@ const DateText = styled.span`
 
 const HighlightText = styled.span`
   color: ${({ theme }) => theme.colors.blue100};
-  ${({ theme }) => theme.fonts.caption}
+  font-weight: 1000;
+  font-size: 0.6875rem;
 `;
 
 const MemberInfo = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.blue300};
   ${({ theme }) => theme.fonts.caption}
 
   border-radius: 0.725rem;

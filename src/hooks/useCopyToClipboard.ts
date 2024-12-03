@@ -5,14 +5,17 @@ handleCopy : 클립보드에 복사하는 함수입니다. 버튼의 onClick, on
  */
 
 import { useState } from 'react';
+import useToast from '@src/hooks/useToast';
 
 const useCopyToClipboard = (copyText: string) => {
   const [isCopied, setIsCopied] = useState(false);
+  const addToast = useToast();
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(copyText);
       setIsCopied(true);
+      addToast({ content: '초대코드 복사완료' });
       setTimeout(() => {
         setIsCopied(false);
       }, 1000);

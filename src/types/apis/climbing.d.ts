@@ -1,6 +1,17 @@
 import type { BookDetail } from '@src/types/apis/book.d';
 import { ClimbingStatus } from '@src/constants/status';
 
+export type book = {
+  author: string;
+  cover: string;
+  description: string;
+  isbn13: string;
+  itemPage: string;
+  pubDate: string;
+  publisher: string;
+  title: string;
+};
+
 declare type Climbing = {
   climbingId: number;
   status: ClimbingStatus;
@@ -11,7 +22,7 @@ declare type Climbing = {
   memberCount: number;
   isJoined: boolean;
   isOwner: boolean;
-  bookInfo: []; // book 타입에서 import 예정
+  bookInfo: book;
 };
 
 // member에서 가져올 것

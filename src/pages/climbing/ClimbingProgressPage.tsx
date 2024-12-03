@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 const ClimbingProgressPage = () => {
   const location = useLocation();
   const { children: climbingTitle } = location.state;
-
+  
   return (
     <>
       <SHeader text={climbingTitle ?? '등반'} headerType='back' />
