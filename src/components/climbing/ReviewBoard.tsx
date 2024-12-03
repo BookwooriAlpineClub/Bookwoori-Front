@@ -74,7 +74,10 @@ const ReviewBoard = () => {
             {data.ClimbingMemberReviewList?.map((review) => (
               <ReviewItemWrapper key={review.reviewId}>
                 <ImageWrapper>
-                  <img src='abc.com' alt={`${review.nickname}`} />
+                  <img
+                    src={`${review.profileImg}`}
+                    alt={`${review.nickname}`}
+                  />
                 </ImageWrapper>
                 <ReviewBox>
                   <NicknameContainer>
@@ -133,7 +136,7 @@ const ReviewListContainer = styled.div`
   border-radius: 0.9375rem;
   background-color: ${({ theme }) => theme.colors.white};
   border: solid 0.12rem ${({ theme }) => theme.colors.black400};
-  min-height: 24rem;
+  min-height: 30rem;
   overflow-y: scroll;
 `;
 
