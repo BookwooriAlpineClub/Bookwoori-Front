@@ -9,6 +9,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { getServerByCode, postServerJoinByCode } from '@src/apis/server';
 import Spinner from '@src/components/common/Spinner';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import useToast from '@src/hooks/useToast';
+import { encodeId } from '@src/utils/formatters';
 
 const headerText = '공동체 정보 확인하기';
 const headerType = 'back';
@@ -21,6 +23,8 @@ const introBodyLines = [
 const CheckInvitedCommunityPage = () => {
   const { invitationCode } = useParams<{ invitationCode: string }>();
   const navigate = useNavigate();
+
+  const addToast = useToast();
 
   const {
     data: server,
@@ -36,11 +40,9 @@ const CheckInvitedCommunityPage = () => {
     mutationFn: () => postServerJoinByCode(invitationCode as string),
     onSuccess: () => {
       console.log('join server success');
-      alert('가입 완료!');
-      const path = ROUTE_PATH.server.replace(
-        ':serverId',
-        server?.serverId.toString() || '',
-      );
+      addToast({ content: '가입 완료' });
+      const serverId = server?.serverId || -1;
+      const path = ROUTE_PATH.server.replace(':serverId', encodeId(serverId));
       navigate(path);
     },
     onError: () => {
