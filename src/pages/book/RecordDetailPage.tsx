@@ -1,4 +1,4 @@
-import type { Record } from '@src/types/apis/record';
+import type { RecordDetail } from '@src/types/apis/record';
 import styled from 'styled-components';
 import Header from '@src/components/book/Header';
 import BookInfoDetail from '@src/components/book/BookInfoDetail';
@@ -6,57 +6,32 @@ import InputPeriod from '@src/components/book/InputPeriod';
 import InputPage from '@src/components/book/InputPage';
 import InputReview from '@src/components/book/InputReview';
 
-const mock: Record = {
-  recordId: 1,
-  memberId: 3,
-  readingStatus: 'FINISHED',
-  star: 0,
-  startDate: '2024-01-01',
-  endDate: '2024-12-31',
-  reviewContent: '',
-  currentPage: 0,
-  maxPage: 0,
-  bookInfo: {
-    title: '채식주의자 (리마스터판) - 2024 노벨문학상 수상작가',
-    author: '한강 (지은이)',
-    publisher: '창비',
-    pubDate: '2022',
-    itemPage: 276,
-    description:
-      '2016년 인터내셔널 부커상을 수상하며 한국문학의 입지를 한단계 확장시킨 한강의 장편소설. 상처받은 영혼의 고통과 식물적 상상력의 강렬한 결합을 정교한 구성과 흡인력 있는 문체로 보여주며 섬뜩한 아름다움의 미학을 한강만의 방식으로 완성한 역작이다.',
-    isbn13: '9788936434595',
-    coverImg:
-      'https://image.aladin.co.kr/product/29137/2/coversum/8936434594_2.jpg',
-  },
-};
-
 const RecordDetailPage = () => {
   const {
     readingStatus,
     startDate,
-    endDate,
     currentPage,
     star,
-    reviewContent,
+    review,
     bookInfo,
-  }: Record = mock;
-
-  const status = readingStatus;
+  }: RecordDetail = mock;
+  const { endDate } = review.record;
+  const reviewContent = review.content;
 
   return (
     <Container>
       <Header buttonList={['edit', 'delete']} />
-      <BookInfoDetail status={status} {...bookInfo} />
+      <BookInfoDetail readingStatus={readingStatus} {...bookInfo} />
       <Form>
-        {(status === 'READING' || status === 'FINISHED') && (
+        {(readingStatus === 'READING' || readingStatus === 'FINISHED') && (
           <InputPeriod
             name='독서 기간'
             readOnly
             value={{ start: startDate, end: endDate }}
-            readingStatus={status}
+            readingStatus={readingStatus}
           />
         )}
-        {status === 'READING' && (
+        {readingStatus === 'READING' && (
           <InputPage
             name='독서 현황'
             readOnly
@@ -64,7 +39,7 @@ const RecordDetailPage = () => {
             itemPage={bookInfo.itemPage}
           />
         )}
-        {status === 'FINISHED' && (
+        {readingStatus === 'FINISHED' && (
           <InputReview
             name={{ num: '별점', str: '줄글' }}
             readOnly

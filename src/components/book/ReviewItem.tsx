@@ -1,29 +1,20 @@
-// import type { Review } from '@src/types/apis/record';
+import type { ReviewListItem } from '@src/types/apis/record';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Chip from '@src/components/common/Chip';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
-type ReviewItemProps<
-  T extends { title: string; author: string; coverImg: string },
-> = {
-  bookInfo: T;
-  star: number;
-  reviewContent: string;
-};
-
-const ReviewItem = <
-  T extends { title: string; author: string; coverImg: string },
->({
-  bookInfo,
+const ReviewItem = ({
+  recordId,
   star,
   reviewContent,
-}: ReviewItemProps<T>) => {
-  const { title, author, coverImg } = bookInfo;
+  bookInfo,
+}: ReviewListItem) => {
+  const { title, author, cover } = bookInfo;
 
   return (
     <ComponentWrapper>
-      <Img src={coverImg} alt='책 표지' loading='lazy' />
+      <Img src={cover} alt='책 표지' loading='lazy' />
       <TextWrapper>
         <RowLayout>
           <Title $line={1}>{title}</Title>

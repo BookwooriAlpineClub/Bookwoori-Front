@@ -1,17 +1,23 @@
-export type BookDetail = {
+type Book = {
   title: string;
   author: string;
   publisher: string;
-  pubDate: string;
   itemPage: number;
   description: string;
   isbn13: string;
-  coverImg: string;
 };
-export type BookListItem = Omit<
-  BookDetail,
-  'itemPage' | 'description' | 'pubDate' | 'coverImg'
+export type BookListItem = Pick<
+  Book,
+  'title' | 'author' | 'publisher' | 'isbn13'
 > & {
   pubYear: string;
+  cover: string;
+};
+export type BookDetail = Book & {
+  pubDate: string;
+  coverImg: string;
+};
+export type BookInfo = Book & {
+  pubDate: string;
   cover: string;
 };

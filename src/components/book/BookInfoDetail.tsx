@@ -1,23 +1,22 @@
-import type { BookDetail } from '@src/types/apis/book';
+import type { BookInfo } from '@src/types/apis/book';
+import type { Record } from '@src/types/apis/record';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Tag from '@src/components/common/Tag';
 
-interface Props extends BookDetail {
-  status: 'BOOK' | 'WISH' | 'READING' | 'FINISHED';
-}
+type Props = BookInfo & Pick<Record, 'readingStatus'>;
 
 const BookInfoDetail = ({
-  status,
+  readingStatus,
   title,
   author,
   publisher,
   pubDate,
   itemPage,
-  coverImg,
+  cover,
 }: Props) => {
   const calcStatusText = () => {
-    switch (status) {
+    switch (readingStatus) {
       case 'WISH':
         return '읽고 싶어요';
       case 'READING':
@@ -31,9 +30,9 @@ const BookInfoDetail = ({
 
   return (
     <Container>
-      <Img src={coverImg} alt='책 표지' />
+      <Img src={cover} alt='책 표지' />
       <InfoWrapper>
-        {status !== 'BOOK' && <Tag>{calcStatusText()}</Tag>}
+        {readingStatus !== 'UNREAD' && <Tag>{calcStatusText()}</Tag>}
         <Title $line={2}>{title}</Title>
         <CaptionEllipsis $line={1}>{author}</CaptionEllipsis>
         <PubWrapper>

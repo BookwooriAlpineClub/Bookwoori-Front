@@ -1,4 +1,5 @@
 import type { BookDetail } from '@src/types/apis/book';
+import type { Record } from '@src/types/apis/record';
 import styled from 'styled-components';
 import Header from '@src/components/book/Header';
 import BookInfoDetail from '@src/components/book/BookInfoDetail';
@@ -18,12 +19,12 @@ const mock: BookDetail = {
 const RecordDetailPage = () => {
   const bookInfo: BookDetail = mock;
 
-  const status = 'BOOK';
+  const readingStatus: Record['readingStatus'] = 'UNREAD';
 
   return (
     <Container>
       <Header buttonList={['edit']} />
-      <BookInfoDetail status={status} {...bookInfo} />
+      <BookInfoDetail readingStatus={readingStatus} {...bookInfo} />
       <Description>
         <h2>책 소개</h2>
         <p>{bookInfo.description}</p>
