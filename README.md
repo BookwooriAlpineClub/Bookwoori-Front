@@ -1,2 +1,1 @@
-# Bookwoori-Front
-북우리 프론트엔드 레포지토리
+![표지](https://github.com/user-attachments/assets/9e7f6199-7a7b-45b9-8a0e-fa885e02b325)
