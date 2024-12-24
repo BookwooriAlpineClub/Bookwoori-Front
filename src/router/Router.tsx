@@ -40,6 +40,9 @@ const RecordEditPage = React.lazy(
   () => import('@src/pages/book/RecordEditPage'),
 );
 /* notification */
+const NotificationPage = React.lazy(
+  () => import('@src/pages/notification/NotificationPage'),
+);
 /* dm */
 const ChattingListPage = React.lazy(
   () => import('@src/pages/chatting/ChattingListPage'),
@@ -170,7 +173,7 @@ const router = createBrowserRouter([
       /* notification */
       {
         path: ROUTE_PATH.notification,
-        element: <h1>Notification Page</h1>,
+        element: <NotificationPage />,
       },
       /* dm */
       {
