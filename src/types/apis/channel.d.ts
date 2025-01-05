@@ -1,12 +1,12 @@
-export type Channel = {
-  type: 'chat' | 'voice';
+import { Channel, ChannelMessage } from '@src/types/channel.d';
+
+export type ChannelPostRequest = Channel;
+
+export interface ChannelPatchRequest {
   categoryId: number;
   name: string;
-};
-export type Message = {
-  id: string;
-  channelId: number;
-  memberId: number;
-  content: string;
-  createdAt: string;
-};
+}
+
+export interface ChannelMessagesRes {
+  messages: ChannelMessage[];
+}

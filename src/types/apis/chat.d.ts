@@ -1,11 +1,11 @@
-declare type MessageRequest = {
+export interface MessageRequest {
   messageRoomId?: number;
   channelId?: number;
   type: 'text' | 'image';
   content: string;
-};
+}
 
-declare type ReactionRequest = {
+export interface ReactionRequest {
   id: string;
   emoji:
     | 'thumps_up'
@@ -14,8 +14,8 @@ declare type ReactionRequest = {
     | 'crying_face'
     | 'thinking_face';
   action: 'add' | 'remove';
-};
+}
 
-declare type ReplyRequest = MessageRequest & {
+export interface ReplyRequest extends MessageRequest {
   parentId: string;
-};
+}
