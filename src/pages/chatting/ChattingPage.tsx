@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
 import { connectHandler, disconnectHandler } from '@src/apis/chat';
-import { DM } from '@src/types/domain/messageRoom';
+import type { DM } from '@src/types/messageRoom';
+import type { ChatEvent } from '@src/types/chat';
 import useLoaderData from '@src/hooks/useRoaderData';
-import { ChatEvent } from '@src/types/domain/dm';
 import { useMessage, useRoomInfo } from '@src/hooks/query/useDm';
 import ChatBar from '@src/components/chatting/ChatBar';
 import ChatItem from '@src/components/chatting/ChatItem';

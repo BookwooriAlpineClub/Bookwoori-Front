@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
-import { Categories } from '@src/types/domain/channel';
+import type { Category } from '@src/types//category';
 import Fieldset from '@src/components/common/Fieldset';
 
 interface Props extends InputProps {
-  items: Pick<Categories, 'categoryId' | 'name'>[];
+  items: Pick<Category, 'categoryId' | 'name'>[];
   value: string;
   disabled?: boolean;
 }

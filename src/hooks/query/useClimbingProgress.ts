@@ -1,5 +1,5 @@
 import { patchMemo } from '@src/apis/climbingTemp';
-import { MemoReq } from '@src/types/domain/climbingTemp';
+import type { MemoReq } from '@src/types/domain/climbingTemp';
 import { useMutation } from '@tanstack/react-query';
 
 const useClimbingProgress = (climbingId: number) => {
