@@ -1,18 +1,18 @@
 import { Category } from "@src/types/category";
 
-export interface CategoryRequest {
+export interface CategoryReq {
   serverId: number;
   name: string;
 }
 
-export interface CategoryNameRequest {
+export interface CategoryNameReq {
   name: string;
 }
 
-export interface CategoryMoveRequest {
+export interface CategoryMoveReq {
   beforeCategoryId: number;
 }
 
-export interface CategoryResponse {
+export interface CategoryRes {
   categories: Category[];
 }

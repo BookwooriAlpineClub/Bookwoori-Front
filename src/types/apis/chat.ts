@@ -1,11 +1,11 @@
-export interface MessageRequest {
+export interface MessageReq {
   messageRoomId?: number;
   channelId?: number;
   type: 'text' | 'image';
   content: string;
 }
 
-export interface ReactionRequest {
+export interface ReactionReq {
   id: string;
   emoji:
     | 'thumps_up'
@@ -16,6 +16,6 @@ export interface ReactionRequest {
   action: 'add' | 'remove';
 }
 
-export interface ReplyRequest extends MessageRequest {
+export interface ReplyReq extends MessageReq {
   parentId: string;
 }

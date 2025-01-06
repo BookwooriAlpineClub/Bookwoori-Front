@@ -1,10 +1,10 @@
 import { MessageRoom, DM } from '@src/types/messageRoom';
 
-export interface MessageRoomListResponse {
+export interface MessageRoomListRes {
   messageRooms: MessageRoom[];
 }
 
-export interface MessageRoomResponse {
+export interface MessageRoomRes {
   messageRoomId: number;
   title: string;
   participants: {
@@ -16,10 +16,10 @@ export interface MessageRoomResponse {
   createdAt: string;
 }
 
-export interface MessageRoomRequest {
+export interface MessageRoomReq {
   memberId: number;
 }
 
-export interface DMListResponse {
+export interface DMListRes {
   messages: DM[];
 }

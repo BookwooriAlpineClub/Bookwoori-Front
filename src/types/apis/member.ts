@@ -1,11 +1,11 @@
 import { Exp, User } from '@src/types/user';
 
-export interface ProfilePatchRequest {
+export interface ProfilePatchReq {
   nickname: 'string';
   profileImg: string | null;
   backgroundImg: string | null;
 }
 
-export type ProfileResponse = User;
+export type ProfileRes = User;
 
-export type ExpResponse = Exp;
+export type ExpRes = Exp;
