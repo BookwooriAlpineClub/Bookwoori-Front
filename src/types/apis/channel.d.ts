@@ -7,6 +7,6 @@ export interface ChannelPatchRequest {
   name: string;
 }
 
-export interface ChannelMessagesRes {
+export interface ChannelMessagesResponse {
   messages: ChannelMessage[];
 }

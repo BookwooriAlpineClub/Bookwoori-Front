@@ -4,7 +4,7 @@ interface BaseEvent {
   channelId?: number;
 }
 
-interface Payload {
+export interface Payload {
   messageRoomId?: number;
   channelId?: number;
   id: string;
@@ -39,6 +39,7 @@ interface ReplyEvent extends BaseEvent {
 
 export type ChatEvent = NewMessageEvent | ReactEvent | ReplyEvent;
 
+// 상수 파일 추가 후 삭제 필요
 export const EmojiType = {
   GOOD: 'good',
   HEART: 'heart',
