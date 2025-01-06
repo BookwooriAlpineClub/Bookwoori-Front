@@ -1,6 +1,10 @@
-import { Channel, ChannelMessage } from '@src/types/channel';
+import { ChannelMessage } from '@src/types/channel';
 
-export type ChannelPostRequest = Channel;
+export interface ChannelPostRequest {
+  type: 'chat' | 'voice';
+  categoryId: number;
+  name: string;
+}
 
 export interface ChannelPatchRequest {
   categoryId: number;
