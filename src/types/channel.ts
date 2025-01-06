@@ -1,4 +1,4 @@
-import { Payload, Reactions } from "@src/types/chat.d";
+import { Payload, Reactions } from "@src/types/chat";
 
 export interface Channel {
   type: 'chat' | 'voice';

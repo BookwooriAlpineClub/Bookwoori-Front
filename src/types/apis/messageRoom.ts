@@ -1,4 +1,4 @@
-import { MessageRoom, DM } from '@src/types/messageRoom.d';
+import { MessageRoom, DM } from '@src/types/messageRoom';
 
 export interface MessageRoomListResponse {
   messageRooms: MessageRoom[];

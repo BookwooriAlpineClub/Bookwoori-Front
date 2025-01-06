@@ -1,4 +1,4 @@
-import { Channel, ChannelMessage } from '@src/types/channel.d';
+import { Channel, ChannelMessage } from '@src/types/channel';
 
 export type ChannelPostRequest = Channel;
 

@@ -1,4 +1,4 @@
-import { Exp, User } from '@src/types/user.d';
+import { Exp, User } from '@src/types/user';
 
 export interface ProfilePatchRequest {
   nickname: 'string';

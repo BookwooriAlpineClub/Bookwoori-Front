@@ -1,4 +1,4 @@
-import { Channel } from "@src/types/channel.d";
+import { Channel } from "@src/types/channel";
 
 export interface Category {
   categoryId: string;

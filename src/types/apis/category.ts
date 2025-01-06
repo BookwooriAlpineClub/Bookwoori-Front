@@ -1,4 +1,4 @@
-import { Category } from "@src/types/category.d";
+import { Category } from "@src/types/category";
 
 export interface CategoryRequest {
   serverId: number;
