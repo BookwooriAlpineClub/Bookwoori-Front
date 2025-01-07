@@ -30,6 +30,5 @@ const Container = styled.div<{ isDisabled: boolean }>`
   width: 100%;
 
   border-radius: 0.9375rem;
-  background-color: ${({ theme, isDisabled }) =>
-    isDisabled ? theme.colors.black400 : theme.colors.white}};
+  background-color: ${({ theme, isDisabled }) => isDisabled ? theme.colors.black400 : theme.colors.white};
 `;
