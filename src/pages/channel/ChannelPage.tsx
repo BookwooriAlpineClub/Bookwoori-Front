@@ -3,7 +3,7 @@ import Header from '@src/components/common/Header';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import type { CategoryRes } from '@src/types/apis/category';
-import type { ChatEvent } from '@src/types/chat';
+import type { ChatEventRes } from '@src/types/apis/chat';
 import type { ChannelMessage } from '@src/types/channel';
 import { AxiosError } from 'axios';
 import { getServerChannels } from '@src/apis/server';
@@ -110,8 +110,11 @@ const ChannelPage = () => {
   }, [chattings]);
 
   useEffect(() => {
-    const onMessage = (message: ChatEvent) => {
-      if (message.eventType === 'NEW_MESSAGE') {
+    const onMessage = (message: ChatEventRes) => {
+      if (
+        message.eventType === 'NEW_MESSAGE' &&
+        'channelId' in message.payload
+      ) {
         const newMessage: ChannelMessage = {
           id: message.payload.id,
           channelId: message.payload.channelId || 0,

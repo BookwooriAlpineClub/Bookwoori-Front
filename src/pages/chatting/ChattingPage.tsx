@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
 import { connectHandler, disconnectHandler } from '@src/apis/chat';
 import type { DM } from '@src/types/messageRoom';
-import type { ChatEvent } from '@src/types/chat';
+import type { ChatEventRes } from '@src/types/apis/chat';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useMessage, useRoomInfo } from '@src/hooks/query/useDm';
 import ChatBar from '@src/components/chatting/ChatBar';
@@ -50,13 +50,16 @@ const ChattingPage = () => {
 
   useEffect(() => {
     // 메시지 핸들러 정의 (새로운 메시지가 도착할 때 호출)
-    const onMessage = (message: ChatEvent) => {
+    const onMessage = (message: ChatEventRes) => {
       if (message.messageRoomId !== roomInfo!.messageRoomId) return;
       if (message.eventType === 'REACT') {
         console.log('반응');
       }
 
-      if (message.eventType === 'NEW_MESSAGE') {
+      if (
+        message.eventType === 'NEW_MESSAGE' &&
+        'messageRoomId' in message.payload
+      ) {
         const newMessage: DM = {
           id: message.payload.id,
           messageRoomId: message.payload.messageRoomId || 0,

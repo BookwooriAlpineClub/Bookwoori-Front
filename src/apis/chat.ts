@@ -1,14 +1,18 @@
-import type { MessageReq, ReactionReq, ReplyReq } from '@src/types/apis/chat';
-import type { ChatEvent } from '@src/types/chat';
+import type {
+  MessageReq,
+  ReactionReq,
+  ReplyReq,
+  ChatEventRes,
+} from '@src/types/apis/chat';
 import { Client, Frame, IMessage } from '@stomp/stompjs';
 
 const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL!;
 
 let stompClient: Client | null = null;
-type MessageHandler<T extends ChatEvent> = (message: T) => void;
+type MessageHandler<T extends ChatEventRes> = (message: T) => void;
 
 // WebSocket 연결 & 구독
-export const connectHandler = <T extends ChatEvent>(
+export const connectHandler = <T extends ChatEventRes>(
   onMessage: MessageHandler<T>,
   subscribeUrl: string,
 ) => {
