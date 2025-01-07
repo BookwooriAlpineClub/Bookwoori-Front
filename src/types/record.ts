@@ -1,4 +1,4 @@
-interface Record {
+export default interface Record {
   readonly recordId: number;
   status: 'UNREAD' | 'WISH' | 'READING' | 'FINISHED';
   startDate: string | null;
@@ -7,5 +7,3 @@ interface Record {
   starReview: number | null;
   contentReview: string | null;
 }
-
-export default Record;

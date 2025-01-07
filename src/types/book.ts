@@ -1,4 +1,4 @@
-interface Book {
+export default interface Book {
   readonly isbn13: string;
   readonly title: string;
   readonly author: string;
@@ -8,5 +8,3 @@ interface Book {
   readonly description: string;
   readonly itemPage: number;
 }
-
-export default Book;
