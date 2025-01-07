@@ -5,6 +5,7 @@ import { ReactComponent as SendGreen } from '@src/assets/icons/send_green.svg';
 import { sendHandler } from '@src/apis/chat';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useRoomInfo } from '@src/hooks/query/useDm';
+import type { MessageReq } from '@src/types/apis/chat';
 
 const ChatBar = ({ nickname }: { nickname: string }) => {
   const { id: memberId } = useLoaderData<{ id: number }>();
@@ -24,7 +25,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
   const handleSendMessage = async () => {
     if (!chat.trim()) return;
 
-    const message: MessageRequest = {
+    const message: MessageReq = {
       messageRoomId: roomInfo?.messageRoomId,
       type: 'text',
       content: chat,

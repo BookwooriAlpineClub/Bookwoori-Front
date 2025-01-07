@@ -2,17 +2,17 @@ import useLoaderData from '@src/hooks/useRoaderData';
 import Header from '@src/components/common/Header';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { CategoriesRes } from '@src/types/domain/category';
+import type { CategoryRes } from '@src/types/apis/category';
+import type { ChatEventRes } from '@src/types/apis/chat';
+import type { ChannelMessage } from '@src/types/channel';
 import { AxiosError } from 'axios';
 import { getServerChannels } from '@src/apis/server';
 import styled from 'styled-components';
 import useChattingLog from '@src/hooks/query/useChattingLog';
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useRef, useState } from 'react';
-import { ChannelMessage } from '@src/types/domain/channel';
 import ChannelChatBar from '@src/components/channel/ChannelChatBar';
 import { connectHandler, disconnectHandler } from '@src/apis/chat';
-import { ChatEvent } from '@src/types/domain/dm';
 import ChannelChatItem from '@src/components/channel/ChannelChatItem';
 
 function preprocess(data: ChannelMessage[]) {
@@ -52,7 +52,7 @@ const ChannelPage = () => {
   } = useQuery<string, AxiosError>({
     queryKey: ['channelName', channelId, serverId],
     queryFn: async () => {
-      const data = await getServerChannels<CategoriesRes>(serverId);
+      const data = await getServerChannels<CategoryRes>(serverId);
       const matchChannel = data.categories
         .flatMap((category) => category.channels)
         .find((channel) => channel.channelId === channelId);
@@ -110,8 +110,11 @@ const ChannelPage = () => {
   }, [chattings]);
 
   useEffect(() => {
-    const onMessage = (message: ChatEvent) => {
-      if (message.eventType === 'NEW_MESSAGE') {
+    const onMessage = (message: ChatEventRes) => {
+      if (
+        message.eventType === 'NEW_MESSAGE' &&
+        'channelId' in message.payload
+      ) {
         const newMessage: ChannelMessage = {
           id: message.payload.id,
           channelId: message.payload.channelId || 0,

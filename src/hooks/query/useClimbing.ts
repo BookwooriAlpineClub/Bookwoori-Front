@@ -1,7 +1,7 @@
 import type { Climbing } from '@src/types/apis/climbing';
 import { getClimbing, postClimbing } from '@src/apis/climbing';
 import { getParticipants } from '@src/apis/climbingTemp';
-import {
+import type {
   ClimbingParticipantsRes,
   ClimbingRecruitItem,
 } from '@src/types/domain/climbingTemp';

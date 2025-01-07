@@ -5,7 +5,7 @@ import {
   patchClimbing,
   putParticipate,
 } from '@src/apis/climbingTemp';
-import {
+import type {
   ClimbingEditReq,
   ClimbingRecruitItem,
   ClimbingRecruitListRes,
