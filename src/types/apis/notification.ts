@@ -7,16 +7,16 @@ type Success = {
 };
 
 // 기기 등록 조회
-export type ResDeviceQuery = Success & {
+export type DeviceQueryRes = Success & {
   result: Device;
 };
 
 // 기기 등록 추가
-export type ResDeviceAdd = Success;
-export type ReqDeviceAdd = Omit<Device, 'status'>;
+export type DeviceAddRes = Success;
+export type DeviceAddReq = Omit<Device, 'status'>;
 
 // 기기 등록 삭제
-export type ResDeviceDelete = Success;
+export type DeviceDeleteRes = Success;
 
 // 푸시 알림 pub/sub
 // 백엔드 개발 중
