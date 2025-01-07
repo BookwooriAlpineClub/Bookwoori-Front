@@ -5,10 +5,12 @@ export type Period = {
   start: string;
   end: string;
 };
-interface Props extends Omit<InputProps, 'placeholder'> {
+interface Props {
+  title: string;
   type: 'date' | 'period';
   min?: string;
   max?: string;
+  required: boolean;
   disabled?: 'start' | 'end' | 'default';
   value: Period;
   setValue: React.Dispatch<React.SetStateAction<Period>>;
