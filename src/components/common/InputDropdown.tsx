@@ -3,10 +3,14 @@ import { NoSelect } from '@src/styles/mixins';
 import type { Category } from '@src/types//category';
 import Fieldset from '@src/components/common/Fieldset';
 
-interface Props extends InputProps {
+interface Props {
+  title: string;
+  placeholder: string;
   items: Pick<Category, 'categoryId' | 'name'>[];
-  value: string;
+  required: boolean;
   disabled?: boolean;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const InputDropdown = ({

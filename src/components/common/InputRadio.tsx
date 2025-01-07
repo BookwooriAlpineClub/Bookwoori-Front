@@ -3,13 +3,16 @@ import { NoSelect } from '@src/styles/mixins';
 import Fieldset from '@src/components/common/Fieldset';
 import icnCheck from '@src/assets/icons/check_circle.svg';
 
-interface Props extends Omit<InputProps, 'placeholder'> {
+interface Props {
+  title: string;
   items: {
     value: 'chat' | 'voice' | 'climb';
     icon: React.ReactElement;
     isRadioDisabled?: boolean;
   }[];
   defaultValue?: 'chat' | 'voice' | 'climb' | null;
+  required: boolean;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**

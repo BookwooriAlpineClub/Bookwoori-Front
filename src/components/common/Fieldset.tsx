@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-interface Props extends Pick<InputProps, 'title'> {
+interface Props {
+  title: string;
   children: React.ReactNode;
   isDisabled?: boolean;
 }
