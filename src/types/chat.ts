@@ -1,43 +1,23 @@
-interface BaseEvent {
-  eventType: 'NEW_MESSAGE' | 'REACT' | 'REPLY';
-  messageRoomId?: number;
-  channelId?: number;
-}
+export type Payload =
+  | ({ messageRoomId: number } & BasePayload)
+  | ({ channelId: number } & BasePayload);
 
-export interface Payload {
-  messageRoomId?: number;
-  channelId?: number;
+export interface BasePayload {
+  parentId?: string;
+  parentContent?: string;
   id: string;
   memberId: number;
   content: string;
   createdAt: string;
-  type?: 'TEXT' | 'IMAGE';
+  reactions?: Reactions;
 }
 
-interface NewMessageEvent extends BaseEvent {
-  eventType: 'NEW_MESSAGE';
-  payload: Payload;
-}
+export type Reactions = Partial<Record<EmojiTypeType, ReactionDetail>>;
 
-interface ReactEvent extends BaseEvent {
-  eventType: 'REACT';
-  payload: {
-    id: string;
-    emoji: string;
-    emojiCount: number;
-    members: number[];
-  };
+interface ReactionDetail {
+  count: number;
+  members: number[];
 }
-
-interface ReplyEvent extends BaseEvent {
-  eventType: 'REPLY';
-  payload: Payload & {
-    parentId: string;
-    parentContent: string;
-  };
-}
-
-export type ChatEvent = NewMessageEvent | ReactEvent | ReplyEvent;
 
 // 상수 파일 추가 후 삭제 필요
 export const EmojiType = {
@@ -49,10 +29,3 @@ export const EmojiType = {
 } as const;
 
 export type EmojiTypeType = (typeof EmojiType)[keyof typeof EmojiType];
-
-interface ReactionDetail {
-  count: number;
-  members: number[];
-}
-
-export type Reactions = Partial<Record<EmojiTypeType, ReactionDetail>>;

@@ -1,4 +1,4 @@
-import { Payload, Reactions } from "@src/types/chat";
+import type { BasePayload } from '@src/types/chat';
 
 export interface Channel {
   type: 'chat' | 'voice';
@@ -6,8 +6,6 @@ export interface Channel {
   name: string;
 }
 
-export interface ChannelMessage extends Payload {
-  parentId?: string;
-  parentContent?: string;
-  reactions?: Reactions;
-};
+export interface ChannelMessage extends BasePayload {
+  channelId: number;
+}
