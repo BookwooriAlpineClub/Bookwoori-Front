@@ -1,15 +1,15 @@
 import type Device from '@src/types/device';
 
-type Success = {
+interface Success {
   isSuccess: boolean;
   code: number;
   message: string;
-};
+}
 
 // 기기 등록 조회
-export type DeviceQueryRes = Success & {
+export interface DeviceQueryRes extends Success {
   result: Device;
-};
+}
 
 // 기기 등록 추가
 export type DeviceAddRes = Success;
