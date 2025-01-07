@@ -1,5 +1,5 @@
 import type { BookInfo } from '@src/types/apis/book.d';
-import { ClimbingStatus } from '@src/constants/status';
+import { ClimbingStatus } from '@src/constants/constants';
 
 export type book = {
   author: string;
