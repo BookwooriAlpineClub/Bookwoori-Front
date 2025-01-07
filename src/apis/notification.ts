@@ -1,5 +1,11 @@
 import type { AxiosResponse } from 'axios';
-import type { Notification } from '@src/types/apis/notification.d';
+import type Notification from '@src/types/notification';
+import type {
+  DeviceQueryRes,
+  DeviceAddRes,
+  DeviceAddReq,
+  DeviceDeleteRes,
+} from '@src/types/apis/notification';
 import { authClient } from '@src/apis/index';
 
 /**

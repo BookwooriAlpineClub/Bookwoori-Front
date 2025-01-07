@@ -1,5 +1,5 @@
-import type { BookInfo } from '@src/types/apis/book';
-import type { Record } from '@src/types/apis/record';
+import type Record from '@src/types/record';
+import type { BookDetailQueryRes } from '@src/types/apis/book';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Tag from '@src/components/common/Tag';

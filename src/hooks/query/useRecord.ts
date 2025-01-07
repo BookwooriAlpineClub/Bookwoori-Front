@@ -1,9 +1,10 @@
 import type {
-  RecordListItem,
-  RecordDetail,
-  RecordEdit,
-  ReviewListItem,
-} from '@src/types/apis/record.d';
+  RecordListitemQueryRes,
+  ReviewListitemQueryRes,
+  RecordDetailQueryRes,
+  RecordAddReq,
+  RecordEditReq,
+} from '@src/types/apis/record';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import {

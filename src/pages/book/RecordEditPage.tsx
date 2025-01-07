@@ -1,4 +1,8 @@
-import type { RecordDetail, RecordEdit } from '@src/types/apis/record';
+import type {
+  RecordDetailQueryRes,
+  RecordAddReq,
+  RecordEditReq,
+} from '@src/types/apis/record';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 // import { SESSION_STORAGE } from '@src/constants/sessionStorage';

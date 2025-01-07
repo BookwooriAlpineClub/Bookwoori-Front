@@ -1,4 +1,4 @@
-import type { BookListItem } from '@src/types/apis/book.d';
+import type { BookListitemQueryRes } from '@src/types/apis/book';
 import { useState } from 'react';
 import useBook from '@src/hooks/query/useBook';
 import styled from 'styled-components';
