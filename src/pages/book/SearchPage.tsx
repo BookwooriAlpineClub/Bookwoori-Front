@@ -1,4 +1,4 @@
-import type { BookListItem } from '@src/types/apis/book.d';
+import type { BookListitemQueryRes } from '@src/types/apis/book';
 import { useNavigate, createSearchParams, useLocation } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useBook from '@src/hooks/query/useBook';

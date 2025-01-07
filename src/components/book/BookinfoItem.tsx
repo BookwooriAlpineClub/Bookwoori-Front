@@ -1,4 +1,4 @@
-import type { BookListItem } from '@src/types/apis/book.d';
+import type { BookListitemQueryRes } from '@src/types/apis/book';
 import styled, { css } from 'styled-components';
 
 interface Props extends Omit<BookListItem, 'isbn13'> {

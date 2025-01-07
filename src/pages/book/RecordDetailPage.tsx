@@ -1,4 +1,4 @@
-import type { RecordDetail } from '@src/types/apis/record';
+import type { RecordDetailQueryRes } from '@src/types/apis/record';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { SESSION_STORAGE } from '@src/constants/sessionStorage';

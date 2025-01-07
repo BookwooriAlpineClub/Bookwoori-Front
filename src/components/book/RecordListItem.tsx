@@ -1,4 +1,4 @@
-import type { Record } from '@src/types/apis/record';
+import type { RecordListitemQueryRes } from '@src/types/apis/record';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';

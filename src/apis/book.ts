@@ -1,4 +1,8 @@
-import type { BookListItem, BookDetail } from '@src/types/apis/book.d';
+import type Book from '@src/types/book';
+import type {
+  BookListitemQueryRes,
+  BookDetailQueryRes,
+} from '@src/types/apis/book';
 import { authClient } from '@src/apis/index';
 
 /**

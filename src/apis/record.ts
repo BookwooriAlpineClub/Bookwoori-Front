@@ -1,10 +1,12 @@
 import type { AxiosResponse } from 'axios';
+import type Record from '@src/types/record';
 import type {
-  RecordListItem,
-  RecordDetail,
-  RecordEdit,
-  ReviewListItem,
-} from '@src/types/apis/record.d';
+  RecordListitemQueryRes,
+  ReviewListitemQueryRes,
+  RecordDetailQueryRes,
+  RecordAddReq,
+  RecordEditReq,
+} from '@src/types/apis/record';
 import { authClient } from '@src/apis/index';
 
 /**
