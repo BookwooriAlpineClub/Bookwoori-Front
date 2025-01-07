@@ -12,7 +12,7 @@ export type book = {
   title: string;
 };
 
-declare type Climbing = {
+export type Climbing = {
   climbingId: number;
   status: ClimbingStatus;
   name: string;

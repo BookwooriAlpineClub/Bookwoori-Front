@@ -1,16 +1,16 @@
-declare type Toast = {
+export type Toast = {
   id: number;
   content: string;
   kind?: 'default' | 'success' | 'error';
 };
-declare type ModalTransition = 'open' | 'close';
-declare type Modal = {
+export type ModalTransition = 'open' | 'close';
+export type Modal = {
   content: React.ReactNode;
   isOpen: boolean;
   transition: ModalTransition;
 };
 
-declare interface InputProps {
+export interface InputProps {
   title: string;
   placeholder: string;
   required: boolean;
