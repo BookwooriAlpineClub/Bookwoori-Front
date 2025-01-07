@@ -1,13 +1,18 @@
-import { ChatEvent } from '@src/types/domain/dm';
+import type {
+  MessageReq,
+  ReactionReq,
+  ReplyReq,
+  ChatEventRes,
+} from '@src/types/apis/chat';
 import { Client, Frame, IMessage } from '@stomp/stompjs';
 
 const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL!;
 
 let stompClient: Client | null = null;
-type MessageHandler<T extends ChatEvent> = (message: T) => void;
+type MessageHandler<T extends ChatEventRes> = (message: T) => void;
 
 // WebSocket 연결 & 구독
-export const connectHandler = <T extends ChatEvent>(
+export const connectHandler = <T extends ChatEventRes>(
   onMessage: MessageHandler<T>,
   subscribeUrl: string,
 ) => {
@@ -71,7 +76,7 @@ export const connectHandler = <T extends ChatEvent>(
 
 // 메세지 전송
 export const sendHandler = async (
-  message: MessageRequest,
+  message: MessageReq,
   sendUrl: string,
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
@@ -89,7 +94,7 @@ export const sendHandler = async (
 
 // 메세지 반응 전송
 export const reactHandler = async (
-  reaction: ReactionRequest,
+  reaction: ReactionReq,
   reactionUrl: string,
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
@@ -107,7 +112,7 @@ export const reactHandler = async (
 
 // 메세지 답장 전송
 export const replyHandler = async (
-  reply: ReplyRequest,
+  reply: ReplyReq,
   replyUrl: string,
 ): Promise<void> => {
   return new Promise((resolve, reject) => {

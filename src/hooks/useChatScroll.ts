@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { ChannelMessage } from '@src/types/domain/channel';
+import type { ChannelMessage } from '@src/types/channel';
 
 const useChatScroll = (messages: ChannelMessage[]) => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -31,6 +31,7 @@ const useChatScroll = (messages: ChannelMessage[]) => {
     const ref = scrollRef.current;
     if (!ref) return;
     ref.addEventListener('scroll', handleScroll);
+    // eslint-disable-next-line consistent-return
     return () => {
       ref.removeEventListener('scroll', handleScroll);
     };

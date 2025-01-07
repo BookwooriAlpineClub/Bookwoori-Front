@@ -1,12 +1,12 @@
-import {
-  CategoryMoveRequest,
-  CategoryNameRequest,
-  CategoryRequest,
-} from '@src/types/domain/category';
+import type {
+  CategoryMoveReq,
+  CategoryNameReq,
+  CategoryReq,
+} from '@src/types/apis/category';
 import { authClient } from '@src/apis/index';
 
 /* 카테고리 생성 */
-export const postCategory = async <Res = void, Req = CategoryRequest>(
+export const postCategory = async <Res = void, Req = CategoryReq>(
   data: Req,
 ): Promise<Res> => {
   const res = await authClient.post('categories', data);
@@ -14,7 +14,7 @@ export const postCategory = async <Res = void, Req = CategoryRequest>(
 };
 
 /* 카테고리 이름 변경 */
-export const patchCategory = async <Res = void, Req = CategoryNameRequest>(
+export const patchCategory = async <Res = void, Req = CategoryNameReq>(
   categoryId: number,
   data: Req,
 ): Promise<Res> => {
@@ -29,7 +29,7 @@ export const deleteCategory = async (categoryId: number) => {
 };
 
 /* 카테고리 위치 변경 */
-export const patchCategoryMove = async <Res = void, Req = CategoryMoveRequest>(
+export const patchCategoryMove = async <Res = void, Req = CategoryMoveReq>(
   categoryId: number,
   data: Req,
 ): Promise<Res> => {

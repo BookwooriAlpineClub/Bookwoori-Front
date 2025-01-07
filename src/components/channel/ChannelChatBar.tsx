@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { sendHandler } from '@src/apis/chat';
 import { ReactComponent as Send } from '@src/assets/icons/send.svg';
 import { ReactComponent as SendGreen } from '@src/assets/icons/send_green.svg';
+import type { MessageReq } from '@src/types/apis/chat';
 
 interface ChannelChatBarProps {
   channelName: string;
@@ -20,7 +21,7 @@ const ChannelChatBar = ({ channelName, channelId }: ChannelChatBarProps) => {
     e.preventDefault();
     if (!chat.trim()) return;
 
-    const message: MessageRequest = {
+    const message: MessageReq = {
       channelId,
       type: 'text',
       content: chat,

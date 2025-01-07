@@ -1,4 +1,4 @@
-import type { Categories } from '@src/types/domain/channel';
+import type { Category } from '@src/types/category';
 import type { BookListItem } from '@src/types/apis/book.d';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
@@ -119,7 +119,7 @@ const ChannelAddPage = () => {
             <InputDropdown
               title='모임 분류'
               placeholder='분류 선택'
-              items={categoryList as Pick<Categories, 'categoryId' | 'name'>[]}
+              items={categoryList as Pick<Category, 'categoryId' | 'name'>[]}
               required
               value={category}
               setValue={setCategory}

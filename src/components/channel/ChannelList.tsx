@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { ClimbingInfo } from '@src/types/domain/climbingTemp';
+import type { ClimbingInfo } from '@src/types/domain/climbingTemp';
+import type { Channel } from '@src/types/channel';
 import Item from '@src/components/channel/ChannelItem';
-import { ChannelItem } from '@src/types/domain/channel';
 
 interface ChannelListProps {
   color?: string;
-  channels?: ChannelItem[];
+  channels?: Channel[];
   climbs?: ClimbingInfo[];
   categoryId?: number;
 }

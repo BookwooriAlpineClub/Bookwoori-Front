@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getProfile, patchProfile } from '@src/apis/member';
-import { ProfileResponse } from '@src/types/domain/member';
+import type { ProfileRes } from '@src/types/apis/member';
 import { deleteAccount } from '@src/apis/auth';
 import { ROUTE_PATH } from '@src/constants/routePath';
 
@@ -11,7 +11,7 @@ const useMember = (userId?: number | null) => {
     isLoading,
     isError,
     isSuccess,
-  } = useQuery<ProfileResponse, AxiosError>({
+  } = useQuery<ProfileRes, AxiosError>({
     queryKey: ['getProfile', userId],
     queryFn: () => getProfile(userId),
   });

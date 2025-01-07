@@ -4,7 +4,7 @@ import { ReactComponent as More } from '@src/assets/images/channel/carousel_more
 import { useEffect, useRef, useState } from 'react';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import RecruitClimbingBottomSheet from '@src/components/climbing/RecruitClimbingBottomSheet';
-import { ClimbingInfo } from '@src/types/domain/climbingTemp';
+import type { ClimbingInfo } from '@src/types/domain/climbingTemp';
 import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 
 const Carousel = ({

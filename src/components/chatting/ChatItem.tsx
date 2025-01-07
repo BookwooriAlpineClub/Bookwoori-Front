@@ -3,10 +3,10 @@ import useBottomsheet from '@src/hooks/useBottomsheet';
 import useLongPress from '@src/hooks/useLongPress';
 import ChatMenu from '@src/components/chatting/ChatMenu';
 import Profile from '@src/assets/images/userSettings/background_default.svg';
-import { DM } from '@src/types/domain/messageRoom';
+import type { DM } from '@src/types/messageRoom';
+import type { ChannelMessage } from '@src/types/channel';
 import { SyntheticEvent, useMemo } from 'react';
 import { formatChatItemTime } from '@src/utils/formatters';
-import { ChannelMessage } from '@src/types/domain/channel';
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;
