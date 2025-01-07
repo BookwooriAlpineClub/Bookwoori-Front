@@ -2,11 +2,15 @@ import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 import Fieldset from '@src/components/common/Fieldset';
 
-interface Props extends InputProps {
+interface Props {
+  title: string;
+  placeholder: string;
   type: 'short' | 'long';
   limit: number;
-  value?: string;
+  required: boolean;
   disabled?: boolean;
+  value?: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**

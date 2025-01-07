@@ -15,6 +15,7 @@ const ConfirmDialog: React.ReactNode = (
 openDialog(ConfirmDialog);
 */
 
+import type { ModalTransition } from '@src/types/modal';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { dialogState } from '@src/states/atoms';

@@ -1,3 +1,4 @@
+import type { Toast, Modal } from '@src/types/modal';
 import { atom } from 'recoil';
 
 export const toastState = atom<Toast[]>({
@@ -27,7 +28,7 @@ export const serverbarState = atom<Omit<Modal, 'content'>>({
     transition: 'close',
   },
 });
-export const sideBarState = atom<SideBar>({
+export const sideBarState = atom<Omit<Modal, 'content'>>({
   key: 'SideBarState',
   default: {
     isOpen: false,
