@@ -1,3 +1,4 @@
+import type { ModalTransition } from '@src/types/modal';
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
 

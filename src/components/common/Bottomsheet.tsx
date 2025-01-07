@@ -15,6 +15,7 @@ const ConfirmBottomsheet: React.ReactNode = (
 openBottomsheet(ConfirmBottomsheet);
 */
 
+import type { ModalTransition } from '@src/types/modal';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { bottomsheetState } from '@src/states/atoms';
