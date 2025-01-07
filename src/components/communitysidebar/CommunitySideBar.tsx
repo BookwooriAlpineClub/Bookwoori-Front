@@ -1,3 +1,4 @@
+import type { ModalTransition } from '@src/types/modal';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';

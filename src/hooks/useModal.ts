@@ -1,4 +1,5 @@
 import type { SetterOrUpdater } from 'recoil';
+import type { Modal } from '@src/types/modal';
 
 const useModal = (setModal: SetterOrUpdater<Modal>, transitionMs: number) => {
   const openModal = (content: React.ReactNode): void => {

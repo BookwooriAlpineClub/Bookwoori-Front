@@ -1,3 +1,4 @@
+import type { ModalTransition } from '@src/types/modal';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { serverbarState, currentServerIdState } from '@src/states/atoms';
