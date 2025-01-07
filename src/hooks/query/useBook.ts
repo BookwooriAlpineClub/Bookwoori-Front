@@ -1,4 +1,7 @@
-import type { BookListItem, BookDetail } from '@src/types/apis/book';
+import type {
+  BookListitemQueryRes,
+  BookDetailQueryRes,
+} from '@src/types/apis/book';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { getBookList, getBookDetail } from '@src/apis/book';

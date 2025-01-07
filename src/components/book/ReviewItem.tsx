@@ -1,4 +1,4 @@
-import type { ReviewListItem } from '@src/types/apis/record';
+import type { ReviewListitemQueryRes } from '@src/types/apis/record';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';

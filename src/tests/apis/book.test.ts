@@ -3,7 +3,10 @@
  * @jest-environment-options {}
  */
 
-import type { BookListItem, BookDetail } from '@src/types/apis/book.d';
+import type {
+  BookListitemQueryRes,
+  BookDetailQueryRes,
+} from '@src/types/apis/book';
 import { getBookList, getBookDetail } from '@src/apis/book';
 
 describe('Book API', () => {

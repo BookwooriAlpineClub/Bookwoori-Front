@@ -1,4 +1,4 @@
-import type { RecordListItem } from '@src/types/apis/record';
+import type { RecordListitemQueryRes } from '@src/types/apis/record';
 import useRecord from '@src/hooks/query/useRecord';
 import { useState } from 'react';
 import styled from 'styled-components';

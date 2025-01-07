@@ -1,5 +1,5 @@
 import type { Category } from '@src/types/category';
-import type { BookListItem } from '@src/types/apis/book.d';
+import type { BookListitemQueryRes } from '@src/types/apis/book';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { formatDate, decodeIdParam } from '@src/utils/formatters';

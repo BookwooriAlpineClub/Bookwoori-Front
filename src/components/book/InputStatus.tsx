@@ -1,4 +1,4 @@
-import type { Record } from '@src/types/apis/record';
+import type Record from '@src/types/record';
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 import { ReactComponent as IcnWish } from '@src/assets/icons/md_book.svg';
