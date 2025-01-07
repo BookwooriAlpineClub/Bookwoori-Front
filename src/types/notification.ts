@@ -1,4 +1,4 @@
-interface Notification {
+export default interface Notification {
   readonly id: number;
   readonly createdAt: string;
   readonly name: string;
@@ -7,5 +7,3 @@ interface Notification {
   readonly link: string;
   readonly isRead: boolean;
 }
-
-export default Notification;
