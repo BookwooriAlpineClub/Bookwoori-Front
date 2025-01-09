@@ -1,4 +1,4 @@
-import type { Categories } from '@src/types/domain/channel';
+import type { Category } from '@src/types/category';
 import type { BookListitemQueryRes } from '@src/types/apis/book';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
