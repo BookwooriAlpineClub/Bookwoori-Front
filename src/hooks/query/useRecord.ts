@@ -1,88 +1,68 @@
+import type { Record } from '@src/types/record';
 import type {
-  RecordListitemQueryRes,
-  ReviewListitemQueryRes,
-  RecordDetailQueryRes,
-  RecordAddReq,
-  RecordEditReq,
+  GetRecordListRes,
+  GetReviewListRes,
+  GetRecordDetailRes,
+  PostRecordReq,
+  PatchRecordReq,
 } from '@src/types/apis/record';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import {
   getRecordList,
+  getReviewList,
   getRecordDetail,
   postRecord,
   putRecord,
   deleteRecord as delRecord,
-  getReviewList,
 } from '@src/apis/record';
 
-const initRecordDetail: RecordDetail = {
-  recordId: -1,
-  readingStatus: 'UNREAD',
-  startDate: '',
-  currentPage: -1,
-  maxPage: -1,
-  star: -1,
-  review: {
-    createdAt: '',
-    modifiedAt: '',
-    reviewId: -1,
-    record: {
-      recordId: -1,
-      status: 'UNREAD',
-      startDate: '',
-      endDate: '',
-      currentPage: -1,
-      maxPage: -1,
-      star: -1,
-    },
-    content: '',
-  },
-  bookInfo: {
-    title: '',
-    author: '',
-    publisher: '',
-    pubDate: '',
-    itemPage: -1,
-    description: '',
-    isbn13: '',
-    cover: '',
-  },
+const initRecordDetail: GetRecordDetailRes = {
+  isbn13: '',
+  title: '',
+  author: '',
+  cover: '',
+  publisher: '',
+  pubYear: '',
+  description: '',
+  itemPage: -1,
+  records: [],
 };
 
 interface Props {
-  status?: RecordListItem['readingStatus'];
-  recordId?: RecordDetail['recordId'];
+  status?: Record['status'];
+  recordId?: Record['recordId'];
 }
 const useRecord = ({ status = 'UNREAD', recordId = -1 }: Props) => {
-  const { data: recordList } = useQuery<RecordListItem[], AxiosError>({
+  const { data: recordList } = useQuery<GetRecordListRes, AxiosError>({
     queryKey: ['getRecordList', status],
     queryFn: () => getRecordList(status),
     initialData: [],
   });
 
-  const { data: recordDetail } = useQuery<RecordDetail, AxiosError>({
+  const { data: reviewList } = useQuery<GetReviewListRes, AxiosError>({
+    queryKey: ['getReviewList'],
+    queryFn: () => getReviewList(),
+    initialData: [],
+  });
+
+  const { data: recordDetail } = useQuery<GetRecordDetailRes, AxiosError>({
     queryKey: ['getRecordDetail', recordId],
     queryFn: () => getRecordDetail(recordId),
     initialData: initRecordDetail,
   });
 
   const createRecord = useMutation({
-    mutationFn: ({ body }: { body: RecordEdit }) => postRecord(body),
+    mutationFn: ({ body }: { body: PostRecordReq }) => postRecord(body),
   });
 
   const updateRecord = useMutation({
-    mutationFn: ({ body }: { body: RecordEdit }) => putRecord(recordId, body),
+    mutationFn: ({ body }: { body: PatchRecordReq }) =>
+      putRecord(recordId, body),
   });
 
   const deleteRecord = useMutation({
     mutationFn: () => delRecord(recordId),
-  });
-
-  const { data: reviewList } = useQuery<ReviewListItem[], AxiosError>({
-    queryKey: ['getReviewList'],
-    queryFn: () => getReviewList(),
-    initialData: [],
   });
 
   return {
