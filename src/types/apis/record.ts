@@ -4,15 +4,11 @@ import type { Record, RecordListitem, ReviewListitem } from '@src/types/record';
 /**
  * 책 기록 목록 조회
  */
-export interface GetRecordListRes extends BookGridListitem {
-  records: RecordListitem[];
-}
+export type GetRecordListRes = (BookGridListitem & { records: RecordListitem[]; })[];
 /**
  * 책 평가 목록 조회
  */
-export interface GetReviewListRes extends BookColumnListitem {
-  records: ReviewListitem[];
-}
+export type GetReviewListRes = (BookColumnListitem & { records: ReviewListitem[]; })[];
 /**
  * 책 기록 상세 조회
  */
