@@ -1,10 +1,10 @@
 // import type { AxiosResponse } from 'axios';
 // import type Notification from '@src/types/notification';
 // import type {
-//   DeviceGetRes,
-//   DevicePostRes,
-//   DevicePostReq,
-//   DeviceDeleteRes,
+//   GetDeviceRes,
+//   PostDeviceRes,
+//   PostDeviceReq,
+//   DeleteDeviceRes,
 // } from '@src/types/apis/notification';
 // import { authClient } from '@src/apis/index';
 
