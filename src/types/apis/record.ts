@@ -1,14 +1,39 @@
-import type { Book, BookColumnListitem, BookGridListitem } from '@src/types/book';
-import type { Record, RecordListitem, ReviewListitem } from '@src/types/record';
+import type Book from '@src/types/book';
+import type Record from '@src/types/record';
 
 /**
  * 책 기록 목록 조회
  */
-export type GetRecordListRes = (BookGridListitem & { records: RecordListitem[]; })[];
+export type GetRecordListRes = {
+  readonly isbn13: Book['isbn13'];
+  readonly title: Book['title'];
+  readonly author: Book['author'];
+  readonly cover: Book['cover'];
+  readonly itemPage?: Book['itemPage'];
+  records: {
+    readonly recordId: Record['recordId'];
+    status: Record['status'];
+    currentPage?: NonNullable<Record['currentPage']>;
+    starReview?: NonNullable<Record['starReview']>;
+  }[];
+}[];
 /**
  * 책 평가 목록 조회
  */
-export type GetReviewListRes = (BookColumnListitem & { records: ReviewListitem[]; })[];
+export type GetReviewListRes = {
+  readonly isbn13: Book['isbn13'];
+  readonly title: Book['title'];
+  readonly author: Book['author'];
+  readonly cover: Book['cover'];
+  readonly publisher: Book['publisher'];
+  readonly pubYear: Book['pubYear'];
+  records: {
+    readonly recordId: Record['recordId'];
+    status: Record['status'];
+    starReview: NonNullable<Record['starReview']>;
+    contentReview: NonNullable<Record['contentReview']>;
+  }[];
+}[];
 /**
  * 책 기록 상세 조회
  */
