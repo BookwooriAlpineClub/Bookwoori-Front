@@ -1,5 +1,5 @@
 import type { AxiosResponse } from 'axios';
-import type { Record } from '@src/types/record';
+import type Record from '@src/types/record';
 import type {
   GetRecordListRes,
   GetReviewListRes,

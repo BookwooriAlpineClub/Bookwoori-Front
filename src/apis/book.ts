@@ -1,4 +1,4 @@
-import type { Book } from '@src/types/book';
+import type Book from '@src/types/book';
 import type { GetBookListRes, GetBookDetailRes } from '@src/types/apis/book';
 import { authClient } from '@src/apis/index';
 
