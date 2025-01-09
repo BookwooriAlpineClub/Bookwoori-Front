@@ -1,48 +1,38 @@
-import type { AxiosResponse } from 'axios';
-import type Notification from '@src/types/notification';
-import type {
-  DeviceQueryRes,
-  DeviceAddRes,
-  DeviceAddReq,
-  DeviceDeleteRes,
-} from '@src/types/apis/notification';
-import { authClient } from '@src/apis/index';
+// import type { AxiosResponse } from 'axios';
+// import type Notification from '@src/types/notification';
+// import type {
+//   DeviceGetRes,
+//   DevicePostRes,
+//   DevicePostReq,
+//   DeviceDeleteRes,
+// } from '@src/types/apis/notification';
+// import { authClient } from '@src/apis/index';
 
 /**
- * 알림 구독
- * @ 백엔드 구현 미완료
+ * 기기 등록 조회
  */
-export const getNotification = async <Res>(): Promise<Res> => {
-  const response = await authClient.get<Res>(`/notification`);
-  return response.data;
-};
-
+export {};
 /**
- * 알림 리스트 조회
- * @ 백엔드 구현 미완료
+ * 기기 등록 추가
  */
-export const getNotificationList = async <
-  Res = Notification[],
->(): Promise<Res> => {
-  const response = await authClient.get<Res>(`/notification`);
-  return response.data;
-};
-
+export {};
 /**
- * 알림 읽기
- * @ 백엔드 구현 미완료
+ * 기기 등록 삭제
  */
-export const patchNotification = async <
-  Res = void,
-  Req = Pick<Notification, 'isRead'>,
->(
-  id: number,
-  body: Req,
-): Promise<Res> => {
-  const response = await authClient.patch<Res, AxiosResponse<Res>, Req>(
-    `/notification/${id}`,
-    body,
-    { headers: { 'Content-Type': 'application/json' } },
-  );
-  return response.data;
-};
+export {};
+/**
+ * 푸시 알림 pub/sub
+ */
+export {};
+/**
+ * 안 읽은 알림 pub/sub
+ */
+export {};
+/**
+ * 알림 목록 조회
+ */
+export {};
+/**
+ * 알림 isRead 수정
+ */
+export {};
