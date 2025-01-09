@@ -1,10 +1,10 @@
-import type Book from '@src/types/book';
+import type { Book, BookColumnListitem } from '@src/types/book';
 
 /**
  * 도서 검색 목록 조회
  */
-export type BookListitemQueryRes = Omit<Book, 'description' | 'itemPage'>;
+export type BookListGetRes = BookColumnListitem[];
 /**
  * 도서 상세 조회
  */
-export type BookDetailQueryRes = Book;
+export type BookDetailGetRes = Book;

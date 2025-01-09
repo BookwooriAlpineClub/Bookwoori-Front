@@ -1,39 +1,32 @@
-import type Book from '@src/types/book';
-import type Record from '@src/types/record';
+import type { Book, BookColumnListitem, BookGridListitem } from '@src/types/book';
+import type { Record, RecordListitem, ReviewListitem } from '@src/types/record';
 
 /**
  * 책 기록 목록 조회
  */
-export interface RecordListitemQueryRes
-  extends Omit<Book, 'publisher' | 'pubYear' | 'description' | 'itemPage'> {
-  records: NonNullable<
-    | Pick<Record, 'recordId' | 'status'>
-    | Partial<Pick<Record, 'currentPage' | 'starReview'>>
-  >[];
+export interface RecordListGetRes extends BookGridListitem {
+  records: RecordListitem[];
 }
 /**
  * 책 평가 목록 조회
  */
-export interface ReviewListitemQueryRes
-  extends Omit<Book, 'description' | 'itemPage'> {
-  records: NonNullable<
-    Pick<Record, 'recordId' | 'status' | 'currentPage' | 'starReview'>
-  >[];
+export interface ReviewListGetRes extends BookColumnListitem {
+  records: ReviewListitem[];
 }
 /**
  * 책 기록 상세 조회
  */
-export interface RecordDetailQueryRes extends Book {
+export interface RecordDetailGetRes extends Book {
   records: Record[];
 }
 /**
  * 책 기록 추가
  */
-export type RecordAddReq = Pick<Book, 'isbn13'> & Omit<Record, 'recordId'>;
+export type RecordPostReq = Pick<Book, 'isbn13'> & Omit<Record, 'recordId'>;
 /**
  * 책 기록 수정
  */
-export type RecordEditReq = Partial<Omit<RecordAddReq, 'isbn'>>;
+export type RecordPatchReq = Partial<Omit<Record, 'recordId'>>;
 /**
  * 책 기록 삭제
  */

@@ -8,14 +8,14 @@ interface Success {
 /**
  * 기기 등록 조회
  */
-export interface DeviceQueryRes extends Success {
+export interface DeviceGetRes extends Success {
   result: Device;
 }
 /**
  * 기기 등록 추가
  */
-export type DeviceAddRes = Success;
-export type DeviceAddReq = Omit<Device, 'status'>;
+export type DevicePostRes = Success;
+export type DevicePostReq = Omit<Device, 'status'>;
 /**
  * 기기 등록 삭제
  */
