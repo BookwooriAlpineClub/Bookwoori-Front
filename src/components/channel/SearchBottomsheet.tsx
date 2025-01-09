@@ -1,4 +1,5 @@
-import type { BookListitemQueryRes } from '@src/types/apis/book';
+import type Book from '@src/types/book';
+import type { GetBookListRes } from '@src/types/apis/book';
 import { useState } from 'react';
 import useBook from '@src/hooks/query/useBook';
 import styled from 'styled-components';
@@ -6,10 +7,9 @@ import { NoDataTextLayout } from '@src/styles/mixins';
 import BookinfoItem from '@src/components/book/BookinfoItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 
+type BookReturnData = Pick<Book, 'isbn13' | 'title'>;
 interface Props {
-  setValue: React.Dispatch<
-    React.SetStateAction<Pick<BookListItem, 'title' | 'isbn13'>>
-  >;
+  setValue: React.Dispatch<React.SetStateAction<BookReturnData>>;
   closeBottomsheet: () => void;
 }
 
@@ -18,7 +18,7 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
 
   // API 요청
   const { bookList } = useBook({ keyword });
-  const data: BookListItem[] = bookList as BookListItem[];
+  const data: GetBookListRes = bookList as GetBookListRes;
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // 새로고침 방지 (기본 기능 비활성화)
@@ -31,9 +31,7 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
     // 쿼리 업데이트
     setKeyword(input);
   };
-  const handleItemClick = (
-    item: Pick<BookListItem, 'title' | 'isbn13'>,
-  ): void => {
+  const handleItemClick = (item: BookReturnData): void => {
     setValue?.(item);
     closeBottomsheet?.();
   };
