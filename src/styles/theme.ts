@@ -1,16 +1,21 @@
 import { DefaultTheme } from 'styled-components';
 
 const colors = {
-  neonGreen: '#D1FD57',
-  blue100: '#3660F9',
-  blue200: '#96B8FF',
-  blue300: '#EEF2FF',
-  black100: '#0F1015',
-  black200: '#A5A5A5',
-  black300: '#FAFAFA',
-  black400: '#E9EAEB',
-  white: '#FFFFFF',
-  blackOverlay: 'rgba(15, 16, 21, 0.40)',
+  lime100: '#ecfccb',
+  lime300: '#bef264',
+  blue100: '#dbeafe',
+  blue300: '#93c5fd',
+  blue500: '#3b82f6',
+  blue700: '#1d4ed8',
+  blue900: '#1e3a8a',
+  neutral0: '#ffffff',
+  neutral50: '#fafafa',
+  neutral200: '#e5e5e5',
+  neutral400: '#a3a3a3',
+  neutral600: '#525252',
+  neutral800: '#262626',
+  neutral950: '#0a0a0a',
+  overlay: '#0a0a0a66',
 } as const;
 
 const fonts = {
