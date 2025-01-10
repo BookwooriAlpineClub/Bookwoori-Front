@@ -37,11 +37,11 @@ const GlobalStyle = createGlobalStyle`
   }
   #toast {
     position: fixed;
-    z-index: 900;
+    z-index: ${({ theme }) => theme.zIndex.toast};
   }
   #modal {
     position: fixed;
-    z-index: 800;
+    z-index: ${({ theme }) => theme.zIndex.modal};
   }
 `;
 
