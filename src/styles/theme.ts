@@ -63,7 +63,50 @@ const fonts = {
   `,
 } as const;
 
+const rounded = {
+  4: '0.25rem',
+  6: '0.375rem',
+  8: '0.5rem',
+  12: '0.75rem',
+  16: '1rem',
+  24: '1.5rem',
+} as const;
+
+const padding = {
+  4: '0.25rem',
+  6: '0.375rem',
+  8: '0.5rem',
+  12: '0.75rem',
+  16: '1rem',
+  24: '1.5rem',
+} as const;
+
+const gap = {
+  2: '0.125rem',
+  4: '0.25rem',
+  6: '0.375rem',
+  8: '0.5rem',
+  10: '0.625rem',
+  12: '0.75rem',
+} as const;
+
+const zIndex = {
+  toast: '900',
+  modal: '800',
+} as const;
+
 export type ColorsTypes = typeof colors;
 export type FontsTypes = typeof fonts;
+export type RoundedTypes = typeof rounded;
+export type PaddingTypes = typeof padding;
+export type GapTypes = typeof gap;
+export type ZIndexTypes = typeof zIndex;
 
-export const theme: DefaultTheme = { colors, fonts };
+export const theme: DefaultTheme = {
+  colors,
+  fonts,
+  rounded,
+  padding,
+  gap,
+  zIndex,
+};
