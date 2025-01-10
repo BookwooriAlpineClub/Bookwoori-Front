@@ -128,7 +128,7 @@ const Container = styled.div`
   padding: 1.875rem 1.25rem 0;
   width: 100%;
   height: calc(100svh - 4.375rem);
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const ButtonWrapper = styled.div`
   position: fixed;

@@ -69,7 +69,7 @@ const Container = styled.div`
   padding: 0.75rem 1rem;
 
   border-radius: 1rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   &:has(input:read-only) {
     background-color: transparent;
@@ -83,10 +83,10 @@ const Input = styled.input`
   background-color: transparent;
 
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.black200};
+    color: ${({ theme }) => theme.colors.neutral400};
   }
 `;
 const Body = styled.span`

@@ -52,7 +52,7 @@ const Container = styled.header`
   flex-flow: row nowrap;
   justify-content: space-between;
 
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 const ButtonWrapper = styled.div`
   display: flex;

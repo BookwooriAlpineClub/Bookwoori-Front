@@ -64,7 +64,7 @@ const SLayout = styled.div`
 
   width: 100%;
   border-radius: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   cursor: pointer;
 `;
@@ -75,7 +75,7 @@ const SContainer = styled.div`
 `;
 const SLabel = styled.label`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 const SButton = styled.button`
   display: flex;
@@ -84,6 +84,6 @@ const SButton = styled.button`
 `;
 const SDown = styled(Down)<{ $open: boolean }>`
   fill: ${({ theme, $open }) =>
-    $open ? `${theme.colors.black100}` : `${theme.colors.black200}`};
+    $open ? `${theme.colors.neutral950}` : `${theme.colors.neutral400}`};
   transform: ${({ $open }) => ($open ? 'rotate(180deg)' : 'rotate(0)')};
 `;

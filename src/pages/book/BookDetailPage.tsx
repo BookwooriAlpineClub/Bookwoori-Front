@@ -80,7 +80,7 @@ const Container = styled.div`
     height: -webkit-fill-available;
 
     border-radius: 1.125rem 1.125rem 0rem 0rem;
-    background-color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.neutral0};
   }
 `;
 const Description = styled.section`

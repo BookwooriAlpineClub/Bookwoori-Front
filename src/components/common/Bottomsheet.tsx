@@ -57,7 +57,7 @@ const Layout = styled.section<{ $transition: ModalTransition }>`
   max-height: 100%;
 
   border-radius: 1.875rem 1.875rem 0rem 0rem;
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 
   transition: transform 0.3s ease;
 `;
@@ -71,5 +71,5 @@ const HandleBar = styled.button`
   height: 0.1875rem;
 
   border-radius: 6.1875rem;
-  background-color: ${({ theme }) => theme.colors.blue200};
+  background-color: ${({ theme }) => theme.colors.blue300};
 `;

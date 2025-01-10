@@ -69,7 +69,7 @@ const ButtonContainer = styled.button`
   gap: 0.625rem;
   align-self: stretch;
   border-radius: 6.1875rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 
 const IconWrapper = styled.div`
@@ -79,6 +79,6 @@ const IconWrapper = styled.div`
 
 const TextWrapper = styled.span`
   font-family: ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   width: fit-content;
 `;

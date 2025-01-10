@@ -65,8 +65,8 @@ const ImageWrapper = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 0.625rem;
-  background-color: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.black200};
+  background-color: ${({ theme }) => theme.colors.neutral0};
+  color: ${({ theme }) => theme.colors.neutral400};
   cursor: pointer;
 
   img {
@@ -84,9 +84,9 @@ const HiddenInput = styled.input`
 
 const DeleteButton = styled.button`
   width: fit-content;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
   font-family: ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   padding: 0.3rem;
   border-radius: 0.2rem;
   margin-top: 0.5rem;

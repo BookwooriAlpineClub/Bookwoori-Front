@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
       width: 100vw;
       height: 100vh;
     }
-    background-color: ${({ theme }) => theme.colors.black300};
+    background-color: ${({ theme }) => theme.colors.neutral50};
     ${({ theme }) => theme.fonts.body}
   }
   button {

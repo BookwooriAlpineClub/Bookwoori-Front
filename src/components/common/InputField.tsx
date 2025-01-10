@@ -43,23 +43,23 @@ const InputContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
   padding: 0.88rem 0.62rem;
   border-radius: 0.31rem;
 `;
 
 const Input = styled.input`
   width: 80%;
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   font-family: ${({ theme }) => theme.fonts.body};
 
   &::placeholder {
     font-family: ${({ theme }) => theme.fonts.body};
-    color: ${({ theme }) => theme.colors.black200};
+    color: ${({ theme }) => theme.colors.neutral400};
   }
 `;
 
 const CharacterCount = styled.span`
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
   font-family: ${({ theme }) => theme.fonts.body};
 `;

@@ -72,12 +72,12 @@ const StarFieldset = styled.fieldset`
 const IcnStarBlue = styled(IcnStar)`
   width: 40px;
   height: 40px;
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
 `;
 const IcnStarGray = styled(IcnStar)`
   width: 40px;
   height: 40px;
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const Textarea = styled.textarea<{ $height: number }>`
   width: 100%;
@@ -85,10 +85,10 @@ const Textarea = styled.textarea<{ $height: number }>`
   padding: 0.75rem 1rem;
 
   border-radius: 1rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   ${({ theme }) => theme.fonts.body}
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 
   resize: none;
 
@@ -96,7 +96,7 @@ const Textarea = styled.textarea<{ $height: number }>`
     text-align: center;
     align-content: center;
 
-    color: ${({ theme }) => theme.colors.black200};
+    color: ${({ theme }) => theme.colors.neutral400};
   }
 
   &:read-only {

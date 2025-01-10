@@ -109,7 +109,7 @@ const SLayout = styled.div`
 
   padding: 1.25rem 0.9375rem;
   border-radius: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const SContainer = styled.div`
   display: flex;
@@ -125,13 +125,13 @@ const SWrapper = styled.div`
   gap: 0.3125rem;
 `;
 const SCalendar = styled(Calendar)`
-  fill: ${({ theme }) => theme.colors.blue100};
+  fill: ${({ theme }) => theme.colors.blue500};
 `;
 const SCaption = styled.span`
   width: 100%;
 
   ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const SGroupButton = styled.button`
   display: flex;
@@ -142,10 +142,10 @@ const SGroupButton = styled.button`
   width: 2.25rem;
   height: 1.5625rem;
   border-radius: 0.625rem;
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 
   ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 const SContent = styled.div`
   display: flex;
@@ -161,19 +161,19 @@ const SContentWrapper = styled.div`
   display: flex;
   gap: 0.3125rem;
 
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const SBook = styled(Book)`
-  fill: ${({ theme }) => theme.colors.black200};
+  fill: ${({ theme }) => theme.colors.neutral400};
 `;
 const SBody = styled.label`
   width: 100%;
 
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const SWalk = styled(Walk)`
-  fill: ${({ theme }) => theme.colors.black200};
+  fill: ${({ theme }) => theme.colors.neutral400};
 `;
 const SButton = styled(Button)<{ $color: boolean }>`
   gap: 0.25rem;
@@ -181,9 +181,9 @@ const SButton = styled(Button)<{ $color: boolean }>`
   font-size: 0.75rem;
 
   color: ${({ theme, $color }) =>
-    $color ? theme.colors.blue200 : theme.colors.white};
+    $color ? theme.colors.blue300 : theme.colors.neutral0};
   background-color: ${({ theme, $color }) =>
-    $color ? theme.colors.blue300 : theme.colors.blue100};
+    $color ? theme.colors.blue100 : theme.colors.blue500};
 `;
 const SEdit = styled(Edit)`
   width: 12px;

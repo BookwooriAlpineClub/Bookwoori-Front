@@ -45,7 +45,7 @@ const SLayout = styled.div`
   padding: 0 0 1.25rem;
 
   border-radius: 1.875rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   text-align: center;
 `;
@@ -58,12 +58,12 @@ const SContainer = styled.div`
 `;
 const SNickname = styled.label`
   ${({ theme }) => theme.fonts.nickname};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   cursor: default;
 `;
 const SMountain = styled.label`
   ${({ theme }) => theme.fonts.mountain};
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
   cursor: default;
 `;
 const SBox = styled.div`
@@ -82,16 +82,16 @@ const SWrapper = styled.div`
 `;
 const SNicknameBlue = styled.label`
   ${({ theme }) => theme.fonts.nickname};
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
   cursor: default;
 `;
 const SCaption = styled.label`
   ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   cursor: default;
 `;
 const SLine = styled.div`
   width: 0.0938rem;
   height: 2.1875rem;
-  background-color: ${({ theme }) => theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.blue100};
 `;

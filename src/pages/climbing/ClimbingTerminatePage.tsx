@@ -36,7 +36,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: 1.25rem 1.875rem;
   gap: 1.25rem;
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
   min-height: calc(100% - 4.375rem);
   position: relative;
   height: calc(100% - 4.375rem);

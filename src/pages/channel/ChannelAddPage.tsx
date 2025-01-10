@@ -220,11 +220,11 @@ const InputSearch = styled.input`
   height: 1.25rem;
 
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 
   cursor: pointer;
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.black200};
+    color: ${({ theme }) => theme.colors.neutral400};
   }
 `;
