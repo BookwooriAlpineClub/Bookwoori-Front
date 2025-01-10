@@ -1,4 +1,4 @@
-import type { BookListitemQueryRes } from '@src/types/apis/book';
+import type { GetBookListRes } from '@src/types/apis/book';
 import { useNavigate, createSearchParams, useLocation } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useBook from '@src/hooks/query/useBook';
@@ -15,7 +15,7 @@ const SearchPage = () => {
 
   // API 요청
   const { bookList } = useBook({ keyword });
-  const data: BookListItem[] = bookList ?? [];
+  const data: GetBookListRes = bookList ?? [];
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // 새로고침 방지 (기본 기능 비활성화)

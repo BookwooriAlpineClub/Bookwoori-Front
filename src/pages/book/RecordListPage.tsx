@@ -1,4 +1,4 @@
-import type { RecordListitemQueryRes } from '@src/types/apis/record';
+import type Record from '@src/types/record';
 import useRecord from '@src/hooks/query/useRecord';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -7,15 +7,14 @@ import Header from '@src/components/common/Header';
 import Li from '@src/components/book/RecordListItem';
 
 const RecordListPage = () => {
-  const [status, setStatus] =
-    useState<RecordListItem['readingStatus']>('READING');
+  const [status, setStatus] = useState<Record['status']>('READING');
   const radioConfigs: {
-    readingStatus: RecordListItem['readingStatus'];
+    status: Record['status'];
     text: '읽고 싶어요' | '읽고 있어요' | '다 읽었어요';
   }[] = [
-    { readingStatus: 'WISH', text: '읽고 싶어요' },
-    { readingStatus: 'READING', text: '읽고 있어요' },
-    { readingStatus: 'FINISHED', text: '다 읽었어요' },
+    { status: 'WISH', text: '읽고 싶어요' },
+    { status: 'READING', text: '읽고 있어요' },
+    { status: 'FINISHED', text: '다 읽었어요' },
   ];
 
   const { recordList: data } = useRecord({ status });
@@ -24,17 +23,15 @@ const RecordListPage = () => {
     <Container>
       <Header text='책 기록' headerType='back' />
       <Fieldset name='status'>
-        {radioConfigs.map(({ readingStatus, text }) => (
-          <Label key={readingStatus}>
-            {text}
+        {radioConfigs.map((item) => (
+          <Label key={item.status}>
+            {item.text}
             <input
               name='status'
               type='radio'
-              value={readingStatus}
-              onChange={(e) =>
-                setStatus(e.target.value as RecordListItem['readingStatus'])
-              }
-              defaultChecked={readingStatus === 'READING'}
+              value={item.status}
+              onChange={(e) => setStatus(e.target.value as Record['status'])}
+              defaultChecked={item.status === 'READING'}
             />
           </Label>
         ))}
@@ -44,7 +41,7 @@ const RecordListPage = () => {
         {data.length !== 0 ? (
           <Ul>
             {data.map((item) => (
-              <Li key={item.recordId} {...item} />
+              <Li key={item.records[0].recordId} {...item} />
             ))}
           </Ul>
         ) : (
@@ -101,7 +98,7 @@ const Label = styled.label`
 
   transition: color 0.3s ease-out;
 `;
-const Background = styled.div<{ status: RecordListItem['readingStatus'] }>`
+const Background = styled.div<{ status: Record['status'] }>`
   position: absolute;
   left: ${({ status }) => {
     switch (status) {
