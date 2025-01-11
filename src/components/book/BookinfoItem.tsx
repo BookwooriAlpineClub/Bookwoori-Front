@@ -1,7 +1,7 @@
-import type { BookColumnListitem } from '@src/types/book';
+import type { GetBookListRes } from '@src/types/apis/book';
 import styled, { css } from 'styled-components';
 
-interface Props extends Omit<BookColumnListitem, 'isbn13'> {
+interface Props extends Omit<ElementOfArray<GetBookListRes>, 'isbn13'> {
   onClick?: () => void;
 }
 
