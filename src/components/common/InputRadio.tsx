@@ -6,7 +6,7 @@ interface Props {
   title: string;
   items: {
     value: 'chat' | 'voice' | 'climb';
-    icon: React.ReactElement;
+    Icon: React.FC<React.SVGProps<SVGSVGElement>>;
     text: string;
     disabled?: boolean;
   }[];
@@ -34,7 +34,7 @@ const InputRadio = ({
       {items.map((item) => (
         <Label key={item.value}>
           <Container>
-            {item.icon}
+            <item.Icon width={20} height={20} />
             {item.text}
           </Container>
           <Input
