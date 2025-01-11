@@ -70,6 +70,8 @@ const Label = styled.label`
 
   color: ${({ theme }) => theme.colors.black200};
 
+  ${NoSelect}
+
   &:has(input[type='radio']:checked) {
     background-color: ${({ theme }) => theme.colors.blue300};
 
@@ -80,8 +82,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
   gap: 0.62rem;
-
-  ${NoSelect}
 `;
 const Input = styled.input.attrs({ type: 'radio' })`
   width: 1.0625rem;
