@@ -7,10 +7,11 @@ interface Props {
   items: {
     value: 'chat' | 'voice' | 'climb';
     icon: React.ReactElement;
-    isRadioDisabled?: boolean;
+    disabled?: boolean;
   }[];
   defaultValue?: 'chat' | 'voice' | 'climb' | null;
   required: boolean;
+  disabled: boolean;
   setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -24,6 +25,7 @@ const InputRadio = ({
   items,
   defaultValue,
   required,
+  disabled,
   setValue,
 }: Props) => {
   const text: {
@@ -36,19 +38,19 @@ const InputRadio = ({
 
   return (
     <Layout>
-      {items.map(({ value, icon, isRadioDisabled }) => (
-        <Label key={text[value]}>
+      {items.map((item) => (
+        <Label key={text[item.value]}>
           <Container>
-            {icon}
-            {text[value]}
+            {item.icon}
+            {text[item.value]}
           </Container>
           <Input
             name={title}
-            value={value}
+            value={item.value}
             required={required}
             onChange={(e) => setValue(e.target.value)}
-            disabled={isRadioDisabled}
-            defaultChecked={defaultValue ? defaultValue === value : false}
+            disabled={disabled || item.disabled}
+            defaultChecked={defaultValue ? defaultValue === item.value : false}
           />
         </Label>
       ))}
