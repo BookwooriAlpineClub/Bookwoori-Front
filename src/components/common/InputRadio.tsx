@@ -30,13 +30,13 @@ const InputRadio = <ValueType extends string>({
   setValue,
 }: Props<ValueType>) => {
   return (
-    <Layout>
+    <Container>
       {items.map((item) => (
         <Label key={item.value}>
-          <Container>
+          <Wrapper>
             <item.Icon width={20} height={20} />
             {item.text}
-          </Container>
+          </Wrapper>
           <Input
             name={title}
             value={item.value}
@@ -47,13 +47,13 @@ const InputRadio = <ValueType extends string>({
           />
         </Label>
       ))}
-    </Layout>
+    </Container>
   );
 };
 
 export default InputRadio;
 
-const Layout = styled.div`
+const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
   gap: 0.3125rem;
@@ -76,7 +76,7 @@ const Label = styled.label`
     color: ${({ theme }) => theme.colors.black100};
   }
 `;
-const Container = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
   gap: 0.62rem;
