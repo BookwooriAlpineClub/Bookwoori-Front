@@ -56,7 +56,16 @@ export default InputRadio;
 const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.3125rem;
+  gap: ${({ theme }) => theme.gap.6};
+
+  padding: ${({ theme }) => theme.padding.16};
+
+  border-radius: ${({ theme }) => theme.rounded.16};
+  background-color: ${({ theme }) => theme.colors.neutral0};
+
+  &:not(:has(input:enabled)) {
+    background-color: ${({ theme }) => theme.colors.neutral200};
+  }
 `;
 const Label = styled.label`
   display: flex;
