@@ -3,14 +3,13 @@ import styled from 'styled-components';
 interface Props {
   title: string;
   children: React.ReactNode;
-  isDisabled?: boolean;
 }
 
-const Fieldset = ({ title, children, isDisabled = false }: Props) => {
+const Fieldset = ({ title, children }: Props) => {
   return (
     <fieldset name={title}>
       <Legend>{title}</Legend>
-      <Container isDisabled={isDisabled}>{children}</Container>
+      {children}
     </fieldset>
   );
 };
@@ -18,17 +17,8 @@ const Fieldset = ({ title, children, isDisabled = false }: Props) => {
 export default Fieldset;
 
 const Legend = styled.legend`
-  margin-bottom: 0.63rem;
+  margin-bottom: ${({ theme }) => theme.gap.10};
 
-  color: ${({ theme }) => theme.colors.black100};
   ${({ theme }) => theme.fonts.body};
-`;
-const Container = styled.div<{ isDisabled: boolean }>`
-  position: relative;
-
-  padding: 0.9375rem;
-  width: 100%;
-
-  border-radius: 0.9375rem;
-  background-color: ${({ theme, isDisabled }) => isDisabled ? theme.colors.black400 : theme.colors.white};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
