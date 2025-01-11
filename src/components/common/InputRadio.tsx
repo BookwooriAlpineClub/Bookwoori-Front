@@ -2,18 +2,18 @@ import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 import icnCheck from '@src/assets/icons/check_circle.svg';
 
-interface Props {
+interface Props<ValueType> {
   title: string;
   items: {
-    value: 'chat' | 'voice' | 'climb';
+    value: ValueType;
     Icon: React.FC<React.SVGProps<SVGSVGElement>>;
     text: string;
     disabled?: boolean;
   }[];
-  defaultValue?: 'chat' | 'voice' | 'climb' | null;
+  defaultValue?: ValueType;
   required: boolean;
   disabled: boolean;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  setValue: React.Dispatch<React.SetStateAction<ValueType>>;
 }
 
 /**
@@ -21,14 +21,14 @@ interface Props {
  * @ text - 중앙 텍스트
  * @ icon - 좌측 svg 아이콘
  */
-const InputRadio = ({
+const InputRadio = <ValueType extends string>({
   title,
   items,
   defaultValue,
   required,
   disabled,
   setValue,
-}: Props) => {
+}: Props<ValueType>) => {
   return (
     <Layout>
       {items.map((item) => (
@@ -41,7 +41,7 @@ const InputRadio = ({
             name={title}
             value={item.value}
             required={required}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) => setValue(e.target.value as ValueType)}
             disabled={disabled || item.disabled}
             defaultChecked={defaultValue ? defaultValue === item.value : false}
           />
