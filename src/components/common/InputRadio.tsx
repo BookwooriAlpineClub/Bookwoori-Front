@@ -7,6 +7,7 @@ interface Props {
   items: {
     value: 'chat' | 'voice' | 'climb';
     icon: React.ReactElement;
+    text: string;
     disabled?: boolean;
   }[];
   defaultValue?: 'chat' | 'voice' | 'climb' | null;
@@ -28,21 +29,13 @@ const InputRadio = ({
   disabled,
   setValue,
 }: Props) => {
-  const text: {
-    [key: string]: string;
-  } = {
-    chat: '문자',
-    voice: '전화',
-    climb: '등반',
-  };
-
   return (
     <Layout>
       {items.map((item) => (
-        <Label key={text[item.value]}>
+        <Label key={item.value}>
           <Container>
             {item.icon}
-            {text[item.value]}
+            {item.text}
           </Container>
           <Input
             name={title}
