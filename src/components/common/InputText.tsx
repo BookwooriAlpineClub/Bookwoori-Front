@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
-import Fieldset from '@src/components/common/Fieldset';
 
 interface Props {
   title: string;
@@ -28,7 +27,7 @@ const InputText = ({
   setValue,
 }: Props) => {
   return (
-    <Fieldset title={title} isDisabled={disabled}>
+    <div>
       <Input
         as={type === 'short' ? 'input' : 'textarea'}
         name={title}
@@ -46,7 +45,7 @@ const InputText = ({
           {value ? value.length : 0}/{limit}
         </Limit>
       )}
-    </Fieldset>
+    </div>
   );
 };
 

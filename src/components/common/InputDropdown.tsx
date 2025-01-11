@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 import type { Category } from '@src/types//category';
-import Fieldset from '@src/components/common/Fieldset';
 
 interface Props {
   title: string;
@@ -23,26 +22,24 @@ const InputDropdown = ({
   setValue,
 }: Props) => {
   return (
-    <Fieldset title={title}>
-      <Layout>
-        <Input
-          name={title}
-          value={value}
-          required={required}
-          disabled={disabled}
-          onChange={(e) => setValue(e.target.value)}
-        >
-          <Option value='' disabled>
-            {placeholder}
+    <Layout>
+      <Input
+        name={title}
+        value={value}
+        required={required}
+        disabled={disabled}
+        onChange={(e) => setValue(e.target.value)}
+      >
+        <Option value='' disabled>
+          {placeholder}
+        </Option>
+        {items.map((item) => (
+          <Option key={item.categoryId} value={item.categoryId}>
+            {item.name}
           </Option>
-          {items.map((item) => (
-            <Option key={item.categoryId} value={item.categoryId}>
-              {item.name}
-            </Option>
-          ))}
-        </Input>
-      </Layout>
-    </Fieldset>
+        ))}
+      </Input>
+    </Layout>
   );
 };
 

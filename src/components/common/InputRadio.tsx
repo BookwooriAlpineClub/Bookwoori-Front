@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
-import Fieldset from '@src/components/common/Fieldset';
 import icnCheck from '@src/assets/icons/check_circle.svg';
 
 interface Props {
@@ -36,26 +35,24 @@ const InputRadio = ({
   };
 
   return (
-    <Fieldset title={title}>
-      <Layout>
-        {items.map(({ value, icon, isRadioDisabled }) => (
-          <Label key={text[value]}>
-            <Container>
-              {icon}
-              {text[value]}
-            </Container>
-            <Input
-              name={title}
-              value={value}
-              required={required}
-              onChange={(e) => setValue(e.target.value)}
-              disabled={isRadioDisabled}
-              defaultChecked={defaultValue ? defaultValue === value : false}
-            />
-          </Label>
-        ))}
-      </Layout>
-    </Fieldset>
+    <Layout>
+      {items.map(({ value, icon, isRadioDisabled }) => (
+        <Label key={text[value]}>
+          <Container>
+            {icon}
+            {text[value]}
+          </Container>
+          <Input
+            name={title}
+            value={value}
+            required={required}
+            onChange={(e) => setValue(e.target.value)}
+            disabled={isRadioDisabled}
+            defaultChecked={defaultValue ? defaultValue === value : false}
+          />
+        </Label>
+      ))}
+    </Layout>
   );
 };
 
