@@ -1,22 +1,25 @@
 import styled from 'styled-components';
 
 interface Props {
+  as?: 'fieldset' | 'section';
   title: string;
   children: React.ReactNode;
 }
 
-const Fieldset = ({ title, children }: Props) => {
+const Fieldset = ({ as = 'fieldset', title, children }: Props) => {
+  const Container = as;
+
   return (
-    <fieldset name={title}>
-      <Legend>{title}</Legend>
+    <Container name={title}>
+      <Title as={as === 'fieldset' ? 'legend' : 'h3'}>{title}</Title>
       {children}
-    </fieldset>
+    </Container>
   );
 };
 
 export default Fieldset;
 
-const Legend = styled.legend`
+const Title = styled.legend`
   margin-bottom: ${({ theme }) => theme.gap.10};
 
   ${({ theme }) => theme.fonts.body};
