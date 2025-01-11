@@ -75,9 +75,9 @@ const Fieldset = styled.fieldset`
   margin: 0 auto;
   flex-shrink: 0;
 
-  border: ${({ theme }) => theme.colors.white} 0.25rem solid;
+  border: ${({ theme }) => theme.colors.neutral0} 0.25rem solid;
   border-radius: 62.4375rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   overflow: hidden;
 `;
@@ -93,10 +93,10 @@ const Label = styled.label`
   height: 100%;
 
   ${({ theme }) => theme.fonts.mountain}
-  color: ${({ theme }) => theme.colors.blue200};
+  color: ${({ theme }) => theme.colors.blue300};
 
   &:has(input[type='radio']:checked) {
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.neutral0};
   }
 
   transition: color 0.3s ease-out;
@@ -120,7 +120,7 @@ const Background = styled.div<{ status: RecordListItem['readingStatus'] }>`
   width: 33.3%;
   height: 100%;
 
-  background-color: ${({ theme }) => theme.colors.blue100};
+  background-color: ${({ theme }) => theme.colors.blue500};
 
   transition: left 0.3s ease-out;
 `;

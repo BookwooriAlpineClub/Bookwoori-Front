@@ -43,7 +43,7 @@ const MemoDialog = ({ memo, closeDialog, id }: MemoDialogProps) => {
         },
       },
     );
-  }
+  };
 
   return (
     <DialogLayout>
@@ -79,10 +79,10 @@ const InputContainer = styled.div`
   padding: 2.5rem 1.5rem;
 
   border-radius: 1.875rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const Span = styled.span`
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 const InputWrapper = styled.div`
   display: flex;
@@ -98,13 +98,13 @@ const Input = styled.input`
   border-radius: 1.875rem;
 
   ${({ theme }) => theme.fonts.body};
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const Counter = styled.span`
   position: absolute;
   right: 0.625rem;
 
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const ButtonContainer = styled.div`
   display: flex;

@@ -40,7 +40,7 @@ const CardContainer = styled.section`
   gap: 1.25rem;
   width: 100%;
   border-radius: 1.25rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
   padding: 2.19rem 1.88rem;
 `;
 
@@ -57,7 +57,7 @@ const ImageWrapper = styled.div`
     height: 100%;
     object-fit: cover;
     font-family: ${({ theme }) => theme.fonts.caption};
-    color: ${({ theme }) => theme.colors.black300};
+    color: ${({ theme }) => theme.colors.neutral50};
   }
 `;
 
@@ -72,15 +72,15 @@ const ContentWrapper = styled.div`
 
 const Name = styled.span`
   font-family: ${({ theme }) => theme.fonts.nickname};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 
 const MemberInfo = styled.span`
   font-family: ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
 `;
 
 const Caption = styled.span`
   font-family: ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;

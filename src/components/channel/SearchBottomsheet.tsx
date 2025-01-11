@@ -107,9 +107,9 @@ const Form = styled.form`
   padding: 0.75rem;
 
   border-radius: 1.875rem;
-  background-color: ${({ theme }) => theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.blue100};
 
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
 `;
 const Input = styled.input`
   width: 100%;
@@ -117,11 +117,11 @@ const Input = styled.input`
   background-color: transparent;
 
   ${({ theme }) => theme.fonts.body}
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   text-overflow: ellipsis;
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.blue200};
+    color: ${({ theme }) => theme.colors.blue300};
   }
 `;
 const Ul = styled.ul`

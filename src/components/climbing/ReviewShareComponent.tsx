@@ -94,16 +94,16 @@ const TextContainer = styled.div`
 
 const Text = styled.p`
   ${({ theme }) => theme.fonts.header};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 
 const SubText = styled.p`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 
 const ItemWrapper = styled.div`
-  border: solid 0.06rem ${({ theme }) => theme.colors.black100};
+  border: solid 0.06rem ${({ theme }) => theme.colors.neutral950};
   border-radius: 0.1rem;
   padding: 0.9375rem;
 `;

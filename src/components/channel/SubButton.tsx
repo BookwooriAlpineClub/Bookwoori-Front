@@ -22,8 +22,8 @@ const SButton = styled.button`
   width: calc(100% - 30px);
 
   border-radius: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.blue100};
+  background-color: ${({ theme }) => theme.colors.blue500};
 
   ${({ theme }) => theme.fonts.body}
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.neutral0};
 `;

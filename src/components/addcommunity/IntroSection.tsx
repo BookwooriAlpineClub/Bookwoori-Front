@@ -29,12 +29,12 @@ const IntroContainer = styled.div`
 
 const IntroTitle = styled.h1`
   font-family: ${({ theme }) => theme.fonts.header};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 
 const IntroBody = styled.div`
   font-family: ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
   display: flex;
   flex-direction: column;
   align-items: center;

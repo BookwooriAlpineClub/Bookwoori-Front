@@ -25,7 +25,7 @@ const ButtonContainer = styled.button`
   flex: 1;
   padding: 0.75rem;
   ${({ theme }) => theme.fonts.mountain};
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
   border-radius: 4.125rem;
   gap: 0.3rem;
 `;

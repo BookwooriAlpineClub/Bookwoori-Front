@@ -49,7 +49,7 @@ const TextAreaContainer = styled.div`
   flex-direction: column;
   padding: 0.88rem 0.62rem;
   padding-right: 0.42rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
   border-radius: 0.31rem;
   position: relative;
 `;
@@ -57,13 +57,13 @@ const TextAreaContainer = styled.div`
 const TextArea = styled.textarea`
   border: none;
   outline: none;
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   font-family: ${({ theme }) => theme.fonts.body};
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   &::placeholder {
     font-family: ${({ theme }) => theme.fonts.body};
-    color: ${({ theme }) => theme.colors.black200};
+    color: ${({ theme }) => theme.colors.neutral400};
   }
 
   &::-webkit-scrollbar {
@@ -72,13 +72,13 @@ const TextArea = styled.textarea`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.black200};
+    background-color: ${({ theme }) => theme.colors.neutral400};
     border-radius: 0.2rem;
   }
 `;
 
 const CharacterCount = styled.span`
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
   font-family: ${({ theme }) => theme.fonts.body};
   position: absolute;
   bottom: 0.88rem;

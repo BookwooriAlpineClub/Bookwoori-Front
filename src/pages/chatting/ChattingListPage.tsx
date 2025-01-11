@@ -18,8 +18,8 @@ const ChattingListPage = () => {
     }
   }, [inView, isLoading, hasNextPage, fetchNextPage]);
 
-  if(isLoading) {
-    <LoadingPage />
+  if (isLoading) {
+    <LoadingPage />;
   }
 
   return (
@@ -73,5 +73,5 @@ const Wrapper = styled.div`
 const Span = styled.span`
   margin: auto;
   ${({ theme }) => theme.fonts.body}
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;

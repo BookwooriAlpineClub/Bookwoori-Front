@@ -92,8 +92,8 @@ const SButton = styled.button`
   padding: 1.0625rem 0.9375rem;
 
   border-radius: 6.1875rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;

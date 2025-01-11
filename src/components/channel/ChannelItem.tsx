@@ -76,15 +76,15 @@ const SItem = styled.div<{ $color: string }>`
 
   ${({ theme }) => theme.fonts.body};
   color: ${({ theme, $color }) =>
-    $color === 'black' ? theme.colors.black100 : theme.colors.black200};
+    $color === 'black' ? theme.colors.neutral950 : theme.colors.neutral400};
 `;
 const Wrapper = styled.div`
   display: flex;
   gap: 0.625rem;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.black100};
-    background-color: ${({ theme }) => theme.colors.neonGreen};
+    color: ${({ theme }) => theme.colors.neutral950};
+    background-color: ${({ theme }) => theme.colors.lime300};
     cursor: pointer;
   }
 `;

@@ -62,7 +62,7 @@ export const NoDataTextLayout = styled.div`
     margin: auto;
 
     ${({ theme }) => theme.fonts.body}
-    color: ${({ theme }) => theme.colors.black200};
+    color: ${({ theme }) => theme.colors.neutral400};
 
     ${NoSelect}
   }

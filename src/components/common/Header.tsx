@@ -57,7 +57,7 @@ const SHeader = styled.header`
   height: 4.375rem;
   padding: 1.4375rem;
 
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.neutral0};
 `;
 
 const SLabel = styled.label`
@@ -67,7 +67,7 @@ const SLabel = styled.label`
   transform: translate(-50%, -50%);
 
   ${({ theme }) => theme.fonts.title}
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   text-align: center;
 `;
 

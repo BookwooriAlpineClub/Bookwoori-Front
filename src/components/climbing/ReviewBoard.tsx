@@ -134,8 +134,8 @@ const ReviewListContainer = styled.div`
   justify-content: space-between;
   padding: 0.9375rem;
   border-radius: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.white};
-  border: solid 0.12rem ${({ theme }) => theme.colors.black400};
+  background-color: ${({ theme }) => theme.colors.neutral0};
+  border: solid 0.12rem ${({ theme }) => theme.colors.neutral200};
   min-height: 30rem;
   overflow-y: scroll;
 `;
@@ -148,10 +148,10 @@ const ReviewItemWrapper = styled.div`
     align-items: flex-start;
 
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.blue200 + '10'};
-    border: solid 0.05rem ${({ theme }) => theme.colors.blue200};
+    background-color: ${({ theme }) => theme.colors.blue300 + '10'};
+    border: solid 0.05rem ${({ theme }) => theme.colors.blue300};
     border-radius: 0.2rem;
-    box-shadow: 0 0 0.08rem ${({ theme }) => theme.colors.blue200};
+    box-shadow: 0 0 0.08rem ${({ theme }) => theme.colors.blue300};
 /
 `;
 
@@ -182,15 +182,15 @@ const EmojiButton = styled.button`
   justify-content: center;
   padding: 0.125rem 0.325rem;
   gap: 0.325rem;
-  background-color: ${({ theme }) => theme.colors.black300};
-  border: solid 0.0625rem ${({ theme }) => theme.colors.black400};
+  background-color: ${({ theme }) => theme.colors.neutral50};
+  border: solid 0.0625rem ${({ theme }) => theme.colors.neutral200};
   border-radius: 0.225rem;
   ${({ theme }) => theme.fonts.caption};
 `;
 
 const StyledAddReactionIcon = styled(AddReactionIcon)`
   ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 
 const ImageWrapper = styled.div`
