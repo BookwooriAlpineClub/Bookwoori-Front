@@ -17,9 +17,11 @@ interface Props<ValueType> {
 }
 
 /**
- * @prop items
- * @ text - 중앙 텍스트
- * @ icon - 좌측 svg 아이콘
+ * @typeDef {Array<Object>} items
+ * @property {ValueType} value - 데이터
+ * @property {React.FC<React.SVGProps<SVGSVGElement>>} icon - 좌측 svg 아이콘
+ * @property {string} text - 중앙 텍스트
+ * @property {boolean} disabled - 선택지 비활성화 여부
  */
 const InputRadio = <ValueType extends string>({
   title,
