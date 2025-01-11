@@ -11,78 +11,79 @@
 // import InputPage from '@src/components/book/InputPage';
 // import InputReview from '@src/components/book/InputReview';
 
-// const RecordDetailPage = () => {
-//   const navigate = useNavigate();
-//   const location = useLocation();
-//   const { recordId: params } = useParams<{ recordId: string }>();
-//   const recordId = decodeIdParam(params);
-//   const { recordDetail } = useRecord({ recordId });
-//   const {
-//     isbn13,
-//     title,
-//     author,
-//     cover,
-//     publisher,
-//     pubYear,
-//     description,
-//     itemPage,
-//     records,
-//   }: GetRecordDetailRes = recordDetail;
+const RecordDetailPage = () => {
+  //   const navigate = useNavigate();
+  //   const location = useLocation();
+  //   const { recordId: params } = useParams<{ recordId: string }>();
+  //   const recordId = decodeIdParam(params);
+  //   const { recordDetail } = useRecord({ recordId });
+  //   const {
+  //     isbn13,
+  //     title,
+  //     author,
+  //     cover,
+  //     publisher,
+  //     pubYear,
+  //     description,
+  //     itemPage,
+  //     records,
+  //   }: GetRecordDetailRes = recordDetail;
 
-//   const handleEditClick = () => {
-//     const jsonData = JSON.stringify({});
-//     sessionStorage.setItem(SESSION_STORAGE.RECORD_EDIT, jsonData);
-//     navigate(`${location.pathname}/edit`);
-//   };
-//   const handleDeleteClick = () => {
-//     // 나중에 삭제하시겠습니까? 다이얼로그 띄우기
-//     // API delete 요청
-//     navigate(ROUTE_PATH.libraryRecord, { replace: true });
-//   };
+  //   const handleEditClick = () => {
+  //     const jsonData = JSON.stringify({});
+  //     sessionStorage.setItem(SESSION_STORAGE.RECORD_EDIT, jsonData);
+  //     navigate(`${location.pathname}/edit`);
+  //   };
+  //   const handleDeleteClick = () => {
+  //     // 나중에 삭제하시겠습니까? 다이얼로그 띄우기
+  //     // API delete 요청
+  //     navigate(ROUTE_PATH.libraryRecord, { replace: true });
+  //   };
 
-//   return (
-//     <Container>
-//       <Header
-//         buttonList={['edit', 'delete']}
-//         handleEditClick={handleEditClick}
-//         handleDeleteClick={handleDeleteClick}
-//       />
-//       <BookInfoDetail status={status} {...recordDetail} />
-//       <Form>
-//         {(status === 'READING' || status === 'FINISHED') && (
-//           <InputPeriod
-//             name='독서 기간'
-//             readOnly
-//             value={{ start: startDate, end: endDate }}
-//             status={status}
-//           />
-//         )}
-//         {status === 'READING' && (
-//           <InputPage
-//             name='독서 현황'
-//             readOnly
-//             currentPage={currentPage}
-//             itemPage={itemPage}
-//           />
-//         )}
-//         {status === 'FINISHED' && (
-//           <InputReview
-//             name={{ num: '별점', str: '줄글' }}
-//             readOnly
-//             num={starReview}
-//             str={contentReview}
-//           />
-//         )}
-//       </Form>
-//       <Description>
-//         <h2>책 소개</h2>
-//         <p>{description}</p>
-//       </Description>
-//     </Container>
-//   );
-// };
+  return (
+    <div />
+    // <Container>
+    //   <Header
+    //     buttonList={['edit', 'delete']}
+    //     handleEditClick={handleEditClick}
+    //     handleDeleteClick={handleDeleteClick}
+    //   />
+    //   <BookInfoDetail status={status} {...recordDetail} />
+    //   <Form>
+    //     {(status === 'READING' || status === 'FINISHED') && (
+    //       <InputPeriod
+    //         name='독서 기간'
+    //         readOnly
+    //         value={{ start: startDate, end: endDate }}
+    //         status={status}
+    //       />
+    //     )}
+    //     {status === 'READING' && (
+    //       <InputPage
+    //         name='독서 현황'
+    //         readOnly
+    //         currentPage={currentPage}
+    //         itemPage={itemPage}
+    //       />
+    //     )}
+    //     {status === 'FINISHED' && (
+    //       <InputReview
+    //         name={{ num: '별점', str: '줄글' }}
+    //         readOnly
+    //         num={starReview}
+    //         str={contentReview}
+    //       />
+    //     )}
+    //   </Form>
+    //   <Description>
+    //     <h2>책 소개</h2>
+    //     <p>{description}</p>
+    //   </Description>
+    // </Container>
+  );
+};
 
-// export default RecordDetailPage;
+export default RecordDetailPage;
 
 // const Container = styled.div`
 //   position: relative;

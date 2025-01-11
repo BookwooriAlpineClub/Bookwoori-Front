@@ -41,7 +41,7 @@ const RecordListPage = () => {
         {data.length !== 0 ? (
           <Ul>
             {data.map((item) => (
-              <Li key={item.records[0].recordId} {...item} />
+              <Li key={item.isbn13} {...item} />
             ))}
           </Ul>
         ) : (
