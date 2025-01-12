@@ -72,8 +72,7 @@ const Container = styled.div`
 `;
 const Input = styled.input.attrs({ type: 'date' })<{ value: string }>`
   width: 100%;
-  padding: ${({ theme }) => theme.padding[16]};
-  border-radius: ${({ theme }) => theme.rounded[16]};
+  border-radius: ${({ theme }) => theme.rounded[8]};
 
   ${({ theme }) => theme.fonts.body};
   color: ${({ value, theme }) =>
@@ -82,9 +81,12 @@ const Input = styled.input.attrs({ type: 'date' })<{ value: string }>`
 
   &:disabled {
     background-color: ${({ theme }) => theme.colors.neutral200};
+
     color: ${({ theme }) => theme.colors.neutral400};
   }
 `;
 const Span = styled.span`
+  padding: 0 ${({ theme }) => theme.padding[12]};
+
   ${NoSelect}
 `;
