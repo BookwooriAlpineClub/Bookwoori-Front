@@ -23,13 +23,13 @@ const Wrapper = styled.mark<{ color: TagColor }>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  gap: ${({ theme }) => theme.gap.2};
+  gap: ${({ theme }) => theme.gap[2]};
 
   width: fit-content;
   height: fit-content;
-  padding: ${({ theme }) => `${theme.padding.4} ${theme.padding.8}`};
+  padding: ${({ theme }) => `${theme.padding[4]} ${theme.padding[8]}`};
 
-  border-radius: ${({ theme }) => theme.rounded.24};
+  border-radius: ${({ theme }) => theme.rounded[24]};
 
   ${({ theme }) => theme.fonts.caption};
 
