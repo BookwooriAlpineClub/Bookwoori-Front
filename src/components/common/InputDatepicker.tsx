@@ -76,12 +76,12 @@ const Input = styled.input.attrs({ type: 'date' })<{ value: string }>`
 
   text-align: center;
   color: ${({ value, theme }) =>
-    value ? theme.colors.black100 : theme.colors.black200};
+    value ? theme.colors.neutral950 : theme.colors.neutral400};
   ${({ theme }) => theme.fonts.body};
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.black400};
-    color: ${({ theme }) => theme.colors.black200};
+    background-color: ${({ theme }) => theme.colors.neutral200};
+    color: ${({ theme }) => theme.colors.neutral400};
   }
 `;
 const Span = styled.span`

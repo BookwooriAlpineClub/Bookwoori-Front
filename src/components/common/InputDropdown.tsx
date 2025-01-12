@@ -53,7 +53,7 @@ const Layout = styled.div`
 `;
 const Input = styled.select<{ value: string }>`
   color: ${({ value, theme }) =>
-    value ? theme.colors.black100 : theme.colors.black200};
+    value ? theme.colors.neutral950 : theme.colors.neutral400};
   ${({ theme }) => theme.fonts.body};
 `;
 const Option = styled.option`
