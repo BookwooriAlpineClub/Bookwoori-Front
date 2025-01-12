@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 
 interface Props {
@@ -27,32 +27,29 @@ const InputText = ({
   setValue,
 }: Props) => {
   return (
-    <>
-      <Input
-        as={as}
-        type='text'
-        name={name}
-        placeholder={placeholder}
-        maxLength={maxLength}
-        required={required}
-        disabled={disabled}
-        value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setValue(e.target.value)
-        }
-      />
-      {limit >= 0 && (
-        <Limit>
-          {value ? value.length : 0}/{limit}
-        </Limit>
-      )}
-    </>
+    <Input
+      as={as}
+      type='text'
+      name={name}
+      placeholder={placeholder}
+      maxLength={maxLength}
+      required={required}
+      disabled={disabled}
+      value={value}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        setValue(e.target.value)
+      }
+    />
   );
 };
 
 export default InputText;
 
-const Input = styled.input<{ as: string }>`
+const Input = styled.input<{ as: string; value: string; maxLength: number }>`
+  display: flex;
+  flex-flow: column nowrap;
+  gap: ${({ theme }) => theme.gap[4]};
+
   width: 100%;
   height: ${({ as }) => (as === 'input' ? '1.25rem' : '8.75rem')};
 
@@ -64,19 +61,23 @@ const Input = styled.input<{ as: string }>`
   &::placeholder {
     color: ${({ theme }) => theme.colors.neutral400};
   }
+  ${({ value, maxLength }) =>
+    maxLength >= 0 &&
+    css`
+      &::after {
+        content: '${value ? value.length : 0} / ${maxLength}';
+
+        align-self: flex-end;
+
+        ${({ theme }) => theme.fonts.body};
+        color: ${({ theme }) => theme.colors.neutral400};
+
+        ${NoSelect}
+      }
+    `}
   &:disabled {
     background-color: ${({ theme }) => theme.colors.neutral200};
 
     color: ${({ theme }) => theme.colors.neutral400};
   }
-`;
-const Limit = styled.span`
-  position: absolute;
-  bottom: 0.885rem;
-  right: 0.625rem;
-
-  color: ${({ theme }) => theme.colors.neutral400};
-  ${({ theme }) => theme.fonts.body};
-
-  ${NoSelect}
 `;
