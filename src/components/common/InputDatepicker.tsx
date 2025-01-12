@@ -71,8 +71,8 @@ const Layout = styled.div`
 `;
 const Input = styled.input.attrs({ type: 'date' })<{ value: string }>`
   width: 100%;
-  padding: 0.9375rem;
-  border-radius: 0.9375rem;
+  padding: ${({ theme }) => theme.padding[16]};
+  border-radius: ${({ theme }) => theme.rounded[16]};
 
   text-align: center;
   color: ${({ value, theme }) =>

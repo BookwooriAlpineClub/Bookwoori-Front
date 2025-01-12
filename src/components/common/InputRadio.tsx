@@ -58,11 +58,11 @@ export default InputRadio;
 const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: ${({ theme }) => theme.gap.6};
+  gap: ${({ theme }) => theme.gap[6]};
 
-  padding: ${({ theme }) => theme.padding.16};
+  padding: ${({ theme }) => theme.padding[16]};
 
-  border-radius: ${({ theme }) => theme.rounded.16};
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral0};
 
   &:not(:has(input:enabled)) {
@@ -74,9 +74,9 @@ const Label = styled.label`
   justify-content: space-between;
 
   width: 100%;
-  padding: 0.63rem;
+  padding: ${({ theme }) => theme.padding[8]};
 
-  border-radius: 0.9375rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background: none;
 
   color: ${({ theme }) => theme.colors.neutral400};
@@ -92,7 +92,7 @@ const Label = styled.label`
 const Wrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  gap: 0.62rem;
+  gap: ${({ theme }) => theme.gap[10]};
 `;
 const Input = styled.input.attrs({ type: 'radio' })`
   width: 1.0625rem;
