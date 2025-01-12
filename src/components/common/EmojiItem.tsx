@@ -70,6 +70,7 @@ const EmojiItem = ({
       const timer = setTimeout(() => setAnimationDirection(null), 200); // 애니메이션 지속 시간과 동일
       return () => clearTimeout(timer);
     }
+    return () => {};
   }, [animationDirection]);
 
   return emojiState.count ? (
