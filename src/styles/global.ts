@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
       width: 100vw;
       height: 100vh;
     }
+    padding-top: 4.375rem;
     background-color: ${({ theme }) => theme.colors.neutral50};
     ${({ theme }) => theme.fonts.body}
   }
