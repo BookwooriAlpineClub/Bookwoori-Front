@@ -7,6 +7,7 @@ import { ReactComponent as BIUserPlus } from '@src/assets/icons/bi_user_plus.svg
 import { ReactComponent as FiSettings } from '@src/assets/icons/fi_settings.svg';
 import { ReactComponent as HiOutlinePencil } from '@src/assets/icons/hi_outline_pencil.svg';
 import { ReactComponent as HiOutlineFlag } from '@src/assets/icons/hi_outline_flag.svg';
+import { ReactComponent as MdOutlineContentCopy } from '@src/assets/icons/md_outline_content_copy.svg';
 
 type SettingType = 'transferAuthority' | 'deleteCommunity' | 'leaveCommunity';
 
@@ -14,7 +15,9 @@ type FunctionType = 'copyInvitation' | 'detailInfoSetting';
 
 type UserSettingType = 'editUserInfo' | 'navigateExp' | 'deleteAccount';
 
-export type IconButtonType = SettingType | FunctionType | UserSettingType;
+type EmojiBottomsheetType = 'editMessage' | 'deleteMessage' | 'copyMessage' ;
+
+export type IconButtonType = SettingType | FunctionType | UserSettingType | EmojiBottomsheetType;
 
 interface IconButtonProps {
   type: IconButtonType;
@@ -55,6 +58,18 @@ const buttonConfig = {
     name: '계정 삭제하기',
     icon: <FiTrash />,
   },
+  editMessage: {
+    name: '수정하기',
+    icon: <HiOutlinePencil />,
+  },
+  deleteMessage: {
+    name: '삭제하기',
+    icon: <FiTrash />,
+  },
+  copyMessage: {
+    name:'복사하기',
+    icon: <MdOutlineContentCopy />
+  }
 };
 
 const IconButton: React.FC<IconButtonProps> = ({ type, onClick, testId }) => {
