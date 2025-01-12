@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
 import { useEffect, useRef } from 'react';
 import useDraggable from '@src/hooks/useDraggable';
-import SubButton from '@src/components/channel/SubButton';
 import Header from '@src/components/common/Header';
 import Accordion from '@src/components/channel/Accordion';
 import Carousel from '@src/components/channel/Carousel';
+import SubButton from '@src/components/common/SubButton';
 import ChannelList from '@src/components/channel/ChannelList';
 import { ReactComponent as CategoryAdd } from '@src/assets/icons/category_add.svg';
 import { ReactComponent as ChannelAdd } from '@src/assets/icons/channel_add.svg';
@@ -57,9 +57,12 @@ const ChannelListPage = () => {
       <SLayout>
         <SButtonContainer>
           {buttonData.map((buttonItem) => (
-            <SubButton key={buttonItem.label} onClick={buttonItem.onClick}>
-              {buttonItem.icon} {buttonItem.label}
-            </SubButton>
+            <SubButton
+              key={buttonItem.label}
+              icon={buttonItem.icon}
+              label={buttonItem.label}
+              onClick={buttonItem.onClick}
+            />
           ))}
         </SButtonContainer>
         <SContainer>
