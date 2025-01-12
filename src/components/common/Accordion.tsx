@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import { ReactComponent as Down } from '@src/assets/icons/hi_outline_chevron_down.svg';
 
+/**
+ * title - 아코디언이 접혀있을 때 보여줄 내용을 넣어주세요.
+ * children - 아코디언을 펼쳤을 때 title 하단에 보여줄 내용을 넣어주세요.
+ */
+
 type AccordionProps = {
   id?: number;
   title: React.ReactNode;
