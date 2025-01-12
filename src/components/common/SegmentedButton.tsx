@@ -1,9 +1,25 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
+/**
+ * Props for SegmentedButton component
+ * @template T - Type of value in config, must be string
+ */
 interface SegmentedButtonProps<T extends string> {
+  /**
+   * Configuration for segmented buttons.
+   * Each object includes a value and a label.
+   */
   config: { value: T; label: string }[];
+  /**
+   * Callback function that is called when a button is clicked.
+   * @param value - Value of the clicked button
+   */
   onSegmentChange: (value: T) => void;
+  /**
+   * Default value of the segmented button.
+   * If not provided, the first value in config will be selected.
+   */
   defaultValue?: T;
 }
 
