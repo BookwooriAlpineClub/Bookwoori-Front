@@ -28,7 +28,11 @@ const SegmentedButton = <T extends string>({
   onSegmentChange,
   defaultValue,
 }: SegmentedButtonProps<T>) => {
-  const initialValue = defaultValue ?? config[0].value;
+  const initialValue =
+    defaultValue !== undefined &&
+    config.some((option) => option.value === defaultValue)
+      ? defaultValue
+      : config[0].value;
 
   const [selected, setSelected] = useState<T>(initialValue);
 
