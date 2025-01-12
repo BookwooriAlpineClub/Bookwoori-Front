@@ -22,7 +22,7 @@ const InputText = ({
   as,
   limit,
   required,
-  disabled = false,
+  disabled,
   value,
   setValue,
 }: Props) => {
