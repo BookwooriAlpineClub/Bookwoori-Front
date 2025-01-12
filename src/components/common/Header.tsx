@@ -2,44 +2,36 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import useSideBar from '@src/hooks/useSideBar';
 import useServerbar from '@src/hooks/useServerbar';
+import Serverbar from '@src/components/common/Serverbar';
 import { ReactComponent as Hamburger } from '@src/assets/icons/menu.svg';
 import { ReactComponent as Back } from '@src/assets/icons/left_arrow.svg';
 import { ReactComponent as Users } from '@src/assets/icons/users.svg';
-import Serverbar from '@src/components/common/Serverbar';
 
-interface headerProps {
-  className?: string;
+interface HeaderProps {
   text: string;
   headerType: 'hamburger' | 'back' | 'server';
 }
 
-const Header = ({ className, text, headerType }: headerProps) => {
-  const navigate = useNavigate();
-  const { openSideBar } = useSideBar();
-  const { openServerbar } = useServerbar();
+const renderButton = (type: string, onClick: () => void, Icon: React.FC) => (
+  <Button type='button' onClick={onClick} aria-label={type}>
+    <Icon />
+  </Button>
+);
 
-  const handleClick = () => {
-    navigate(-1);
-  };
+const Header = ({ text, headerType }: HeaderProps) => {
+  const navigate = useNavigate();
+  const handleClick = () => navigate(-1);
+  const { openServerbar } = useServerbar();
+  const { openSideBar } = useSideBar();
 
   return (
-    <Layout className={className}>
-      {headerType === 'back' ? (
-        <Button type='button' onClick={handleClick} aria-label={headerType}>
-          <Back />
-        </Button>
-      ) : (
-        <Button type='button' onClick={openServerbar} aria-label={headerType}>
-          <Hamburger />
-        </Button>
-      )}
+    <Layout>
+      {headerType === 'back' && renderButton('back', handleClick, Back)}
+      {(headerType === 'hamburger' || headerType === 'server') &&
+        renderButton('hamburger', openServerbar, Hamburger)}
       <Serverbar />
       <Label>{text}</Label>
-      {headerType === 'server' && (
-        <Button type='button' onClick={openSideBar}>
-          <Users />
-        </Button>
-      )}
+      {headerType === 'server' && renderButton('server', openSideBar, Users)}
     </Layout>
   );
 };
