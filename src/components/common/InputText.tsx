@@ -30,6 +30,7 @@ const InputText = ({
     <div>
       <Input
         as={as}
+        type='text'
         name={title}
         placeholder={placeholder}
         maxLength={limit}
@@ -51,7 +52,7 @@ const InputText = ({
 
 export default InputText;
 
-const Input = styled.input.attrs({ type: 'text' })<{ as: string }>`
+const Input = styled.input<{ as: string }>`
   width: 100%;
   height: ${({ as }) => (as === 'input' ? '1.25rem' : '8.75rem')};
 
