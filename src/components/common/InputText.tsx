@@ -56,8 +56,8 @@ const Input = styled.input<{ as: string }>`
   width: 100%;
   height: ${({ as }) => (as === 'input' ? '1.25rem' : '8.75rem')};
 
-  color: ${({ theme }) => theme.colors.neutral950};
   ${({ theme }) => theme.fonts.body};
+  color: ${({ theme }) => theme.colors.neutral950};
 
   resize: none;
 
@@ -66,6 +66,7 @@ const Input = styled.input<{ as: string }>`
   }
   &:disabled {
     background-color: ${({ theme }) => theme.colors.neutral200};
+
     color: ${({ theme }) => theme.colors.neutral400};
   }
 `;
