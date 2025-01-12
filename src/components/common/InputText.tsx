@@ -27,7 +27,7 @@ const InputText = ({
   setValue,
 }: Props) => {
   return (
-    <div>
+    <>
       <Input
         as={as}
         type='text'
@@ -46,7 +46,7 @@ const InputText = ({
           {value ? value.length : 0}/{limit}
         </Limit>
       )}
-    </div>
+    </>
   );
 };
 
