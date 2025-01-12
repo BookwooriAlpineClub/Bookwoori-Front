@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 
 interface Props {
-  title: string;
+  name: string;
   placeholder: string;
-  items: {
+  options: {
     id: number;
     text: string;
   }[];
@@ -15,9 +15,9 @@ interface Props {
 }
 
 const InputDropdown = ({
-  title,
+  name,
   placeholder,
-  items,
+  options,
   required,
   disabled = false,
   value,
@@ -26,7 +26,7 @@ const InputDropdown = ({
   return (
     <Container>
       <Input
-        name={title}
+        name={name}
         value={value}
         required={required}
         disabled={disabled}
@@ -35,7 +35,7 @@ const InputDropdown = ({
         <Option value='' disabled>
           {placeholder}
         </Option>
-        {items.map(({ id, text }) => (
+        {options.map(({ id, text }) => (
           <Option key={id} value={id}>
             {text}
           </Option>

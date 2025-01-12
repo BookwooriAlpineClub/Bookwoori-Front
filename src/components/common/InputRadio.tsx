@@ -3,8 +3,8 @@ import { NoSelect } from '@src/styles/mixins';
 import icnCheck from '@src/assets/icons/check_circle.svg';
 
 interface Props<ValueType> {
-  title: string;
-  items: {
+  name: string;
+  options: {
     value: ValueType;
     Icon: React.FC<React.SVGProps<SVGSVGElement>>;
     text: string;
@@ -17,15 +17,15 @@ interface Props<ValueType> {
 }
 
 /**
- * @typeDef {Array<Object>} items
+ * @typeDef {object[]} options
  * @property {ValueType} value - 데이터
  * @property {React.FC<React.SVGProps<SVGSVGElement>>} icon - 좌측 svg 아이콘
  * @property {string} text - 중앙 텍스트
  * @property {boolean} disabled - 선택지 비활성화 여부
  */
 const InputRadio = <ValueType extends string>({
-  title,
-  items,
+  name,
+  options,
   defaultValue,
   required,
   disabled,
@@ -33,14 +33,14 @@ const InputRadio = <ValueType extends string>({
 }: Props<ValueType>) => {
   return (
     <Container>
-      {items.map((item) => (
+      {options.map((item) => (
         <Label key={item.value}>
           <Wrapper>
             <item.Icon width={20} height={20} />
             {item.text}
           </Wrapper>
           <Input
-            name={title}
+            name={name}
             value={item.value}
             required={required}
             onChange={(e) => setValue(e.target.value as ValueType)}

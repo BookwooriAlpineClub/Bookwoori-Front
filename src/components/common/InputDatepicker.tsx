@@ -6,8 +6,8 @@ interface Period {
   end: string;
 }
 interface Props {
-  title: string;
   type: 'date' | 'period';
+  name: string;
   min?: string;
   max?: string;
   required: boolean;
@@ -17,8 +17,8 @@ interface Props {
 }
 
 const InputDatepicker = ({
-  title,
   type,
+  name,
   min,
   max,
   required,
@@ -29,7 +29,7 @@ const InputDatepicker = ({
   return (
     <Container>
       <Input
-        name={title}
+        name={name}
         value={value.start}
         min={min}
         max={value.end}
@@ -44,7 +44,7 @@ const InputDatepicker = ({
         <>
           <Span>-</Span>
           <Input
-            name={title}
+            name={name}
             value={value.end}
             min={value.start}
             max={max}
