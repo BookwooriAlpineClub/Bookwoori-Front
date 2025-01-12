@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { UnderlineButton } from '@src/styles/mixins';
 import { useEffect, useState } from 'react';
 import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
 import useLoaderData from '@src/hooks/useRoaderData';
@@ -157,12 +158,8 @@ const SLayout = styled.form`
   width: 100%;
   padding: 1.875rem 1.25rem;
 `;
-const TextButton = styled.button`
-  margin-bottom: -0.625rem;
-
+const TextButton = styled(UnderlineButton)`
   ${({ theme }) => theme.fonts.caption};
-  text-decoration: underline;
-  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const Container = styled.div`
   display: flex;

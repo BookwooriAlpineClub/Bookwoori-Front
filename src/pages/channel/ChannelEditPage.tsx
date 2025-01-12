@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { UnderlineButton } from '@src/styles/mixins';
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import useCategory from '@src/hooks/query/useCategory';
@@ -128,13 +129,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
+  padding-bottom: -0.625rem;
 
   width: 100%;
 `;
-const TextButton = styled.button`
-  margin-bottom: -0.625rem;
-
+const TextButton = styled(UnderlineButton)`
   ${({ theme }) => theme.fonts.caption};
-  text-decoration: underline;
-  color: ${({ theme }) => theme.colors.neutral400};
 `;

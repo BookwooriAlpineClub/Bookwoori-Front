@@ -1,6 +1,7 @@
 import Button from '@src/components/common/Button';
 import styled from 'styled-components';
-import { ClimbingResponse } from '@src/types/apis/climbing.d';
+import { UnderlineButton } from '@src/styles/mixins';
+import { ClimbingResponse } from '@src/types/apis/climbing';
 import ReviewItem from '@src/components/book/ReviewItem';
 import { useMutation } from '@tanstack/react-query';
 import { patchShareClimbingReview } from '@src/apis/climbing';
@@ -60,18 +61,9 @@ const ReviewShareComponent = ({
         {!isShareable && (
           <Wrapper>
             <div>아직 감상평을 작성하지 않았어요.</div>
-            <button
-              type='button'
-              onClick={handleNavigate}
-              style={{
-                textDecoration: 'underline',
-                color: '#A5A5A5',
-                cursor: 'pointer',
-                marginTop: '8px',
-              }}
-            >
+            <UnderlineButton onClick={handleNavigate}>
               감상평 작성하러가기
-            </button>
+            </UnderlineButton>
           </Wrapper>
         )}
       </ItemWrapper>
@@ -113,4 +105,5 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  gap: 0.5rem;
 `;
