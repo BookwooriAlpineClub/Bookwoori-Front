@@ -78,7 +78,7 @@ const ClimbingEditPage = () => {
 
   return (
     <>
-      <SHeader text='등반 편집하기' headerType='back' />
+      <Header text='등반 편집하기' headerType='back' />
       <SLayout>
         <InputText
           title='등반 이름'
@@ -146,9 +146,6 @@ const ClimbingEditPage = () => {
 
 export default ClimbingEditPage;
 
-const SHeader = styled(Header)`
-  z-index: 2;
-`;
 const SLayout = styled.form`
   display: flex;
   flex-direction: column;

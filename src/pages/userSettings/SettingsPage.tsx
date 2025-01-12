@@ -45,7 +45,7 @@ const SettingsPage = () => {
 
   return (
     <>
-      <SHeader text='설정' headerType='hamburger' />
+      <Header text='설정' headerType='hamburger' />
       <SLayout>
         <UserProfile />
         <SContainer>
@@ -63,9 +63,6 @@ const SettingsPage = () => {
 
 export default SettingsPage;
 
-const SHeader = styled(Header)`
-  z-index: 1;
-`;
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
