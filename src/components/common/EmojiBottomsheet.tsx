@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-// import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
-import { ReactComponent as Copy } from '@src/assets/icons/copy.svg';
-// import { ReactComponent as Delete } from '@src/assets/icons/trash.svg';
 import { useState } from 'react';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
+import IconButton from '@src/components/common/IconButton';
 
 const EmojiBottomsheet = ({
   emoji = [],
@@ -12,21 +10,9 @@ const EmojiBottomsheet = ({
   emoji?: string[];
   content: string;
 }) => {
-  // const emojis = {
-  //   THUMBS_UP: '👍',
-  //   HEART: '🫶',
-  //   SMILING_FACE: '☺️',
-  //   SAD: '😢',
-  //   HMM: '🤔',
-  // };
   const emojiList = ['👍', '🫶', '☺️', '😢', '🤔'];
   const { handleCopy } = useCopyToClipboard(content);
   const [clickedEmoji, setClickedEmoji] = useState<string[]>(emoji);
-  const buttonData = [
-    // { icon: <Edit width='20px' height='20px' />, label: '수정하기' },
-    { icon: <Copy />, label: '글자 복사하기', onClick: handleCopy },
-    // { icon: <Delete />, label: '삭제하기' },
-  ];
 
   const handleClickEmoji = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -54,12 +40,7 @@ const EmojiBottomsheet = ({
           </Emoji>
         ))}
       </Container>
-      {buttonData.map(({ icon, label, onClick }) => (
-        <Button key={label} type='button' onClick={onClick}>
-          <Icon>{icon}</Icon>
-          {label}
-        </Button>
-      ))}
+      <IconButton type='copyMessage' onClick={handleCopy} />
     </Layout>
   );
 };
@@ -90,20 +71,4 @@ const Emoji = styled.button<{ isClicked: boolean }>`
     isClicked ? theme.colors.blue100 : theme.colors.neutral0};
 
   font-size: 1.5rem;
-`;
-const Button = styled.button`
-  display: flex;
-  gap: 0.625rem;
-
-  width: 100%;
-  padding: 1.0625rem 0.9375rem;
-
-  border-radius: 6.1875rem;
-  background-color: ${({ theme }) => theme.colors.neutral0};
-
-  ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.neutral950};
-`;
-const Icon = styled.span`
-  color: ${({ theme }) => theme.colors.blue500};
 `;
