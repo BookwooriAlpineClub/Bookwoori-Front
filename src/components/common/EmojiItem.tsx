@@ -72,24 +72,22 @@ const EmojiItem = ({
     }
   }, [animationDirection]);
 
-  return (
-    emojiState.count && (
-      <Item
-        isSelected={emojiState.isSelected}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onClick={handleClick}
-      >
-        <span>{emoji}</span>
-        {emojiState.count > 0 && (
-          <Count animationDirection={animationDirection}>
-            {emojiState.count}
-          </Count>
-        )}
-      </Item>
-    )
-  );
+  return emojiState.count ? (
+    <Item
+      isSelected={emojiState.isSelected}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onClick={handleClick}
+    >
+      <Emoji>{emoji}</Emoji>
+      {emojiState.count > 0 && (
+        <Count animationDirection={animationDirection}>
+          {emojiState.count}
+        </Count>
+      )}
+    </Item>
+  ) : null;
 };
 export default EmojiItem;
 
@@ -99,15 +97,14 @@ const Item = styled.div<{ isSelected: boolean }>`
   align-items: center;
   justify-content: center;
   ${({ theme }) => theme.fonts.caption}
-  padding: ${({ theme }) => theme.padding[4]} ${({ theme }) =>
-    theme.padding[8]};
-  gap: ${({ theme }) => theme.gap[4]};
+  color: ${({ theme }) => theme.colors.neutral600};
+  padding: ${({ theme }) => theme.padding[4]} ${({ theme }) => theme.padding[6]};
   width: fit-content;
   border: ${({ isSelected, theme }) =>
     isSelected
       ? `0.05rem solid ${theme.colors.blue500}`
       : '0.05rem solid transparent'};
-  border-radius: ${({ theme }) => theme.rounded[16]};
+  border-radius: ${({ theme }) => theme.rounded[24]};
   background-color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.blue100 : theme.colors.neutral0};
   transition: 50ms ease-in;
@@ -126,8 +123,16 @@ const Item = styled.div<{ isSelected: boolean }>`
   }
 `;
 
+const Emoji = styled.div`
+  width: 0.9rem;
+  height: 0.9rem;
+`;
+
 const Count = styled.span<{ animationDirection: 'up' | 'down' | null }>`
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.5rem;
   position: relative;
   transition:
     transform 0.2s ease-in-out,
