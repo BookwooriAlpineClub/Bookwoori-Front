@@ -4,7 +4,7 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useDialog from '@src/hooks/useDialog';
 import useMember from '@src/hooks/query/useMember';
 import Header from '@src/components/common/Header';
-import UserProfile from '@src/components/userSettings/UserProfile';
+import UserProfile from '@src/components/common/UserProfile';
 import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
 import { ReactComponent as Flag } from '@src/assets/icons/flag.svg';
