@@ -1,6 +1,6 @@
+import type { Category } from '@src/types/category';
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
-import type { Category } from '@src/types//category';
 
 interface Props {
   title: string;
