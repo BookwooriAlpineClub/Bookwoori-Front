@@ -1,9 +1,9 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import type { EmojiTypeType } from '@src/constants/constants';
 
-interface EmojiItemProps {
-  emoji: EmojiTypeType | ReactNode;
+export interface EmojiItemProps {
+  emoji: EmojiTypeType | ReactElement;
   initialIsSelected?: boolean;
   count?: number;
   onClick: () => void;
