@@ -75,10 +75,10 @@ const Input = styled.input.attrs({ type: 'date' })<{ value: string }>`
   padding: ${({ theme }) => theme.padding[16]};
   border-radius: ${({ theme }) => theme.rounded[16]};
 
-  text-align: center;
+  ${({ theme }) => theme.fonts.body};
   color: ${({ value, theme }) =>
     value ? theme.colors.neutral950 : theme.colors.neutral400};
-  ${({ theme }) => theme.fonts.body};
+  text-align: center;
 
   &:disabled {
     background-color: ${({ theme }) => theme.colors.neutral200};
