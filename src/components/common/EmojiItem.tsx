@@ -1,19 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-export const EmojiType = {
-  GOOD: 'good',
-  HEART: 'heart',
-  SMILE: 'smile',
-  CRY: 'cry',
-  THINK: 'think',
-} as const;
-
-export type EmojiTypeType = (typeof EmojiType)[keyof typeof EmojiType];
+import type { EmojiTypeType } from '@src/constants/constants';
 
 interface EmojiItemProps {
-  emoji: EmojiTypeType;
-  initialIsSelected: boolean;
+  emoji: EmojiTypeType | ReactNode;
+  initialIsSelected?: boolean;
   count?: number;
   onClick: () => void;
   onLongPress?: () => void;
@@ -23,7 +14,7 @@ const LONG_PRESS_DURATION = 500;
 
 const EmojiItem = ({
   emoji,
-  initialIsSelected,
+  initialIsSelected = false,
   count = -1,
   onClick,
   onLongPress,
