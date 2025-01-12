@@ -7,7 +7,7 @@ import useLoaderData from '@src/hooks/useRoaderData';
 import { useMessage, useRoomInfo } from '@src/hooks/query/useDm';
 import ChatBar from '@src/components/chatting/ChatBar';
 import ChatItem from '@src/components/chatting/ChatItem';
-import DateLine from '@src/components/chatting/DateLine';
+import DateLine from '@src/components/common/DateLine';
 import Header from '@src/components/common/Header';
 import LoadingPage from '@src/components/common/LoadingPage';
 
