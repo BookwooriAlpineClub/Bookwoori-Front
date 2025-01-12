@@ -1,12 +1,12 @@
 import { fireEvent, screen } from '@testing-library/react';
 import renderWithProviders from '@src/tests/utils/renderWithProvider.setup';
 import CommunityButton, {
-  CommunityButtonType,
+  IconButtonType,
 } from '@src/components/common/IconButton';
 
 describe('CommunityButton', () => {
   const buttonTypes: {
-    type: CommunityButtonType;
+    type: IconButtonType;
     name: string;
     iconAltText: string;
   }[] = [
