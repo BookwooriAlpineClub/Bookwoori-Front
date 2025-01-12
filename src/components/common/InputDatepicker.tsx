@@ -11,7 +11,7 @@ interface Props {
   min?: string;
   max?: string;
   required: boolean;
-  disabled?: 'start' | 'end' | 'default';
+  disabled?: true | 'start' | 'end';
   value: Period;
   setValue: React.Dispatch<React.SetStateAction<Period>>;
 }
@@ -22,7 +22,7 @@ const InputDatepicker = ({
   min,
   max,
   required,
-  disabled = 'default',
+  disabled,
   value,
   setValue,
 }: Props) => {
@@ -35,7 +35,7 @@ const InputDatepicker = ({
         max={value.end}
         pattern='\d{4}-\d{2}-\d{2}'
         required={required}
-        disabled={disabled === 'start'}
+        disabled={disabled === true || disabled === 'start'}
         onChange={(e) =>
           setValue((prev) => ({ ...prev, start: e.target.value }))
         }
@@ -50,7 +50,7 @@ const InputDatepicker = ({
             max={max}
             pattern='\d{4}-\d{2}-\d{2}'
             required={required}
-            disabled={disabled === 'end'}
+            disabled={disabled === true || disabled === 'end'}
             onChange={(e) =>
               setValue((prev) => ({ ...prev, end: e.target.value }))
             }
