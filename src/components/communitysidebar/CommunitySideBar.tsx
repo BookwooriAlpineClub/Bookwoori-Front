@@ -2,7 +2,7 @@ import type { ModalTransition } from '@src/types/modal';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
-import CommunityButton from '@src/components/common/CommunityButton';
+import CommunityButton from '@src/components/common/IconButton';
 import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 import useDialog from '@src/hooks/useDialog';

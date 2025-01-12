@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as IcnBack } from '@src/assets/icons/ck_arrow_back.svg';
-import { ReactComponent as IcnPencil } from '@src/assets/icons/edit.svg';
+import { ReactComponent as IcnPencil } from '@src/assets/icons/hi_outline_pencil.svg';
 import { ReactComponent as IcnTrash } from '@src/assets/icons/ai_outline_delete.svg';
 import { ReactComponent as IcnSave } from '@src/assets/icons/fi_save.svg';
 
