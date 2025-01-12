@@ -20,7 +20,7 @@ const Fieldset = ({ as = 'fieldset', title, children }: Props) => {
 export default Fieldset;
 
 const Title = styled.legend`
-  margin-bottom: ${({ theme }) => theme.gap.10};
+  margin-bottom: ${({ theme }) => theme.gap[10]};
 
   ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.neutral950};
