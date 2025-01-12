@@ -4,7 +4,7 @@ import { NoSelect } from '@src/styles/mixins';
 interface Props {
   title: string;
   placeholder: string;
-  type: 'short' | 'long';
+  as: 'input' | 'textarea';
   limit: number;
   required: boolean;
   disabled?: boolean;
@@ -13,13 +13,13 @@ interface Props {
 }
 
 /**
- * @props type - 'short'는 input[type='text'] 태그, 'long'은 textarea 태그를 사용합니다.
+ * @props as - 'input'은 input[type='text'] 태그, 'textarea'는 textarea 태그를 사용합니다.
  * @props limit - 입력 가능한 최대 글자 수를 제한합니다. -1로 설정 시 제한이 없으며 글자 수를 표시하지 않습니다.
  */
 const InputText = ({
   title,
   placeholder,
-  type,
+  as,
   limit,
   required,
   disabled = false,
@@ -29,7 +29,7 @@ const InputText = ({
   return (
     <div>
       <Input
-        as={type === 'short' ? 'input' : 'textarea'}
+        as={as}
         name={title}
         placeholder={placeholder}
         maxLength={limit}
