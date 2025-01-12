@@ -1,11 +1,13 @@
-import type { Category } from '@src/types/category';
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 
 interface Props {
   title: string;
   placeholder: string;
-  items: Pick<Category, 'categoryId' | 'name'>[];
+  items: {
+    id: number;
+    text: string;
+  }[];
   required: boolean;
   disabled?: boolean;
   value: string;
@@ -33,9 +35,9 @@ const InputDropdown = ({
         <Option value='' disabled>
           {placeholder}
         </Option>
-        {items.map((item) => (
-          <Option key={item.categoryId} value={item.categoryId}>
-            {item.name}
+        {items.map(({ id, text }) => (
+          <Option key={id} value={id}>
+            {text}
           </Option>
         ))}
       </Input>
