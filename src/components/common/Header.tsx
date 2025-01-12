@@ -23,35 +23,36 @@ const Header = ({ className, text, headerType }: headerProps) => {
   };
 
   return (
-    <SHeader className={className}>
+    <Layout className={className}>
       {headerType === 'back' ? (
-        <SButton type='button' onClick={handleClick} aria-label={headerType}>
+        <Button type='button' onClick={handleClick} aria-label={headerType}>
           <Back />
-        </SButton>
+        </Button>
       ) : (
-        <SButton type='button' onClick={openServerbar} aria-label={headerType}>
+        <Button type='button' onClick={openServerbar} aria-label={headerType}>
           <Hamburger />
-        </SButton>
+        </Button>
       )}
       <Serverbar />
-      <SLabel>{text}</SLabel>
+      <Label>{text}</Label>
       {headerType === 'server' && (
-        <SButton type='button' onClick={openSideBar}>
+        <Button type='button' onClick={openSideBar}>
           <Users />
-        </SButton>
+        </Button>
       )}
-    </SHeader>
+    </Layout>
   );
 };
 
 export default Header;
 
-const SHeader = styled.header`
+const Layout = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: sticky;
+  position: fixed;
   top: 0;
+  z-index: 100;
 
   width: 100%;
   height: 4.375rem;
@@ -60,7 +61,7 @@ const SHeader = styled.header`
   background: ${({ theme }) => theme.colors.neutral0};
 `;
 
-const SLabel = styled.label`
+const Label = styled.label`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -71,7 +72,7 @@ const SLabel = styled.label`
   text-align: center;
 `;
 
-const SButton = styled.button`
+const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
