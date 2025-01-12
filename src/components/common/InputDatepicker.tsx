@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 
-export type Period = {
+interface Period {
   start: string;
   end: string;
-};
+}
 interface Props {
   title: string;
   type: 'date' | 'period';
@@ -62,6 +62,7 @@ const InputDatepicker = ({
 };
 
 export default InputDatepicker;
+export type { Period };
 
 const Container = styled.div`
   display: flex;
