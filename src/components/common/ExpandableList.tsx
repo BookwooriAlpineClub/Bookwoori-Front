@@ -9,8 +9,8 @@ interface ExpandedListProps<T> {
 const ExpandableList = <T,>({ items, renderItem }: ExpandedListProps<T>) => {
   return (
     <ListContainer>
-      {items.map((item) => (
-        <ListItem>{renderItem(item)}</ListItem>
+      {items.map((item, index) => (
+        <ListItem key={index}>{renderItem(item)}</ListItem>
       ))}
     </ListContainer>
   );
