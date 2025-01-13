@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { useDm } from '@src/hooks/query/useDm';
 import ChattingListItem from '@src/components/chatting/ChattingListItem';
 import Header from '@src/components/common/Header';
-import LoadingPage from '@src/components/common/LoadingPage';
+import LoadingPage from '@src/pages/fallback/LoadingPage';
 
 const ChattingListPage = () => {
   const { data, isFetchingNextPage, fetchNextPage, isLoading, hasNextPage } =

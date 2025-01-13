@@ -5,7 +5,7 @@ import { checkAuthLoader, isParamLoader } from '@src/router/loader';
 import Bottomsheet from '@src/components/common/Bottomsheet';
 import Dialog from '@src/components/common/Dialog';
 import CommunitySideBar from '@src/components/communitysidebar/CommunitySideBar';
-import LoadingPage from '@src/components/common/LoadingPage';
+import LoadingPage from '@src/pages/fallback/LoadingPage';
 
 /* example */
 const RouterExamplePage = React.lazy(

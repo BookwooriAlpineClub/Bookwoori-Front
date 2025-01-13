@@ -8,7 +8,7 @@ import UserProfilImg from '@src/components/userSettings/UserProfileImg';
 import Button from '@src/components/common/Button';
 import Header from '@src/components/common/Header';
 import ButtonBackground from '@src/components/common/ButtonBackground';
-import LoadingPage from '@src/components/common/LoadingPage';
+import LoadingPage from '@src/pages/fallback/LoadingPage';
 
 const EditUserInfoPage = () => {
   const { profileData, isLoading, isError, editProfile } = useMember();

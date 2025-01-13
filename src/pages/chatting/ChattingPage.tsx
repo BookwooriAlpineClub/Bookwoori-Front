@@ -9,7 +9,7 @@ import ChatBar from '@src/components/chatting/ChatBar';
 import ChatItem from '@src/components/chatting/ChatItem';
 import DateLine from '@src/components/chatting/DateLine';
 import Header from '@src/components/common/Header';
-import LoadingPage from '@src/components/common/LoadingPage';
+import LoadingPage from '@src/pages/fallback/LoadingPage';
 
 const ChattingPage = () => {
   const { id: memberId } = useLoaderData<{ id: number }>();
