@@ -122,12 +122,14 @@ export const ErrorCode = {
   },
 } as const;
 
-export type ErrorCodeType =
-  | keyof typeof ErrorCode.CLIENT
-  | keyof typeof ErrorCode.FILE
-  | keyof typeof ErrorCode.AUTH
-  | keyof typeof ErrorCode.RESOURCE
-  | keyof typeof ErrorCode.CHATTING;
+type ExtractErrorCodes<T> =
+  T extends Record<string, infer U>
+    ? U extends Record<string, number>
+      ? U[keyof U]
+      : never
+    : never;
+
+export type ErrorCodeType = ExtractErrorCodes<typeof ErrorCode>;
 
 export const ERROR_MESSAGES = {
   [ErrorCode.CLIENT.BAD_REQUEST]: '요청의 형식이나 내용이 잘못되었습니다.',
