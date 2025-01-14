@@ -103,8 +103,8 @@ const SideBarContainer = styled.div<{
   right: 0;
   height: 100%;
   width: 80%;
-  background-color: ${({ theme }) => theme.colors.black300};
-  border-left: 0.05rem solid ${({ theme }) => theme.colors.black200};
+  background-color: ${({ theme }) => theme.colors.neutral50};
+  border-left: 0.05rem solid ${({ theme }) => theme.colors.neutral400};
   box-shadow: -0.1rem 0 0.3rem rgba(0, 0, 0, 0.2);
   transform: ${({ transition }) =>
     transition === 'open' ? 'translateX(0)' : 'translateX(100%)'};
@@ -130,12 +130,12 @@ const CommunityTitleContainer = styled.div`
     width: 1.875rem;
     height: 1.875rem;
     border-radius: 0.625rem;
-    background-color: ${({ theme }) => theme.colors.black200};
+    background-color: ${({ theme }) => theme.colors.neutral400};
   }
 
   span {
     ${({ theme }) => theme.fonts.title}
-    color: ${({ theme }) => theme.colors.black100};
+    color: ${({ theme }) => theme.colors.neutral950};
   }
 `;
 
@@ -146,7 +146,7 @@ const MemberListContainer = styled.div`
   align-items: flex-start;
   align-self: stretch;
   border-radius: 1.25rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 
 const MemberItem = styled.div`
@@ -165,7 +165,7 @@ const MemberItem = styled.div`
   }
 
   &:not(:first-child) {
-    border-top: 0.1rem solid ${({ theme }) => theme.colors.black300};
+    border-top: 0.1rem solid ${({ theme }) => theme.colors.neutral50};
   }
 
   img {
@@ -180,12 +180,12 @@ const MemberItem = styled.div`
 
 const Nickname = styled.p`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 
 const Mountain = styled.p`
   font-family: ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
 `;
 
 const IconWrapper = styled.div`

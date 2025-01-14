@@ -26,9 +26,9 @@ const Wrapper = styled.mark`
   padding: 0.125rem 0.375rem;
 
   border-radius: 0.625rem;
-  background-color: ${({ theme }) => theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.blue100};
 
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
 `;
 const Span = styled.span`
   align-self: end;

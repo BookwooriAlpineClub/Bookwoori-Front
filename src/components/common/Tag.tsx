@@ -16,9 +16,9 @@ const Container = styled.mark`
   padding: 0.25rem 0.625rem;
 
   border-radius: 6.1875rem;
-  border: 1px solid ${({ theme }) => theme.colors.blue100};
-  background-color: ${({ theme }) => theme.colors.blue300};
+  border: 1px solid ${({ theme }) => theme.colors.blue500};
+  background-color: ${({ theme }) => theme.colors.blue100};
 
   ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
 `;

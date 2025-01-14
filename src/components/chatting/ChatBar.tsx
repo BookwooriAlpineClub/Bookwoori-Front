@@ -67,7 +67,7 @@ const SLayout = styled.div`
   width: 100%;
   padding: 0.9375rem;
 
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const SInput = styled.input`
   padding: 0 0.625rem;
@@ -76,7 +76,7 @@ const SInput = styled.input`
   border-radius: 1.875rem;
 
   ${({ theme }) => theme.fonts.body};
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const SButton = styled.button`
   display: flex;

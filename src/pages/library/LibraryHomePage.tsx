@@ -122,7 +122,7 @@ const ExpContainer = styled.div`
   display: flex;
   padding: 1.88rem 2.5rem;
   justify-content: space-around;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
   border-radius: 1.3125rem;
 `;
 
@@ -138,12 +138,12 @@ const TypographyNumber = styled.span`
 
 const TypographyText = styled.span`
   ${({ theme }) => theme.fonts.mountain};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 
 const TierContainer = styled.div`
   position: absolute;
-  background-color: ${({ theme }) => theme.colors.neonGreen};
+  background-color: ${({ theme }) => theme.colors.lime300};
   border-radius: 6.1875rem;
   padding: 0.625rem;
   ${({ theme }) => theme.fonts.body};

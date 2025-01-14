@@ -162,7 +162,7 @@ const TextButton = styled.button`
 
   ${({ theme }) => theme.fonts.caption};
   text-decoration: underline;
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const Container = styled.div`
   display: flex;

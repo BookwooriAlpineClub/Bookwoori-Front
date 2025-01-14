@@ -25,7 +25,7 @@ const ButtonContainer = styled.button`
   align-items: center;
   align-self: stretch;
   border-radius: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
   border: none;
   transition:
     background-color 0.3s,
@@ -34,8 +34,8 @@ const ButtonContainer = styled.button`
   &:hover,
   &:focus,
   &:active {
-    background-color: ${({ theme }) => theme.colors.blue300};
-    border: 1px solid ${({ theme }) => theme.colors.blue100};
+    background-color: ${({ theme }) => theme.colors.blue100};
+    border: 1px solid ${({ theme }) => theme.colors.blue500};
   }
 
   // 버튼 active 상태에서 browser 기본 효과 제거
@@ -44,12 +44,12 @@ const ButtonContainer = styled.button`
 
 const TextWrapper = styled.span`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   width: fit-content;
 `;
 
 const IconWrapper = styled.div`
   width: 1.5rem;
   height: 1.5rem;
-  color: ${({ theme }) => theme.colors.black200}; // icon 색상
+  color: ${({ theme }) => theme.colors.neutral400}; // icon 색상
 `;

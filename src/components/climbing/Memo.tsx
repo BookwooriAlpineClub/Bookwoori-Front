@@ -52,7 +52,7 @@ const Layout = styled.button`
 const Triangle = styled.div`
   width: 0rem;
   height: 0rem;
-  border-bottom: 0.625rem solid ${({ theme }) => theme.colors.blue300};
+  border-bottom: 0.625rem solid ${({ theme }) => theme.colors.blue100};
   border-left: 0.375rem solid transparent;
   border-right: 0.375rem solid transparent;
 `;
@@ -67,7 +67,7 @@ const TextBox = styled.div`
 
   padding: 0.25rem 0.4375rem;
   border-radius: 0.375rem;
-  background-color: ${({ theme }) => theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.blue100};
 
   ${({ theme }) => theme.fonts.caption};
   text-align: center;
@@ -76,7 +76,7 @@ const SPlus = styled(Plus)`
   width: 0.9375rem;
   height: 0.9375rem;
 
-  fill: ${({ theme }) => theme.colors.blue200};
+  fill: ${({ theme }) => theme.colors.blue300};
 `;
 const Blank = styled.div`
   height: 2.725rem;

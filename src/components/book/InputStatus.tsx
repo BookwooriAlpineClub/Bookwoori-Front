@@ -65,7 +65,7 @@ const Label = styled.label`
   flex-shrink: 0;
 
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 
   ${NoSelect};
 
@@ -74,14 +74,14 @@ const Label = styled.label`
     padding: 0.625rem;
 
     border-radius: 0.5rem;
-    background-color: ${({ theme }) => theme.colors.black300};
+    background-color: ${({ theme }) => theme.colors.neutral50};
   }
 
   &:has(input[type='radio']:checked) {
-    color: ${({ theme }) => theme.colors.blue100};
+    color: ${({ theme }) => theme.colors.blue500};
 
     div {
-      background-color: ${({ theme }) => theme.colors.blue300};
+      background-color: ${({ theme }) => theme.colors.blue100};
     }
   }
 `;

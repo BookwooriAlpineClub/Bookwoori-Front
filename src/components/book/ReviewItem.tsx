@@ -55,7 +55,7 @@ const ComponentWrapper = styled(RowLayout)`
   padding: 0.9375rem;
 
   border-radius: 0.5rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const TextWrapper = styled.div`
   display: flex;

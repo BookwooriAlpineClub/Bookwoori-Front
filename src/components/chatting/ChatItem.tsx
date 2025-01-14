@@ -69,7 +69,7 @@ const SImg = styled.img`
   height: 2.5rem;
 
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.blue100};
 `;
 const SContainer = styled.div`
   display: flex;
@@ -89,7 +89,7 @@ const STime = styled.label`
   color: var(--400, #9496a1);
 `;
 const SText = styled.p`
-  ${({ theme }) => theme.colors.black100};
+  ${({ theme }) => theme.colors.neutral950};
   line-height: 1.25rem;
   font-weight: 600;
 
@@ -105,5 +105,5 @@ const SText = styled.p`
 //   height: 1.4375rem;
 
 //   border-radius: 1.875rem;
-//   background-color: ${({ theme }) => theme.colors.blue300};
+//   background-color: ${({ theme }) => theme.colors.blue100};
 // `;

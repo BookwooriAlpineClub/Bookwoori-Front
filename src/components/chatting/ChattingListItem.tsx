@@ -57,7 +57,7 @@ const SLayout = styled.div`
   padding: 0.9375rem 0.625rem;
 
   border-radius: 1.25rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   cursor: pointer;
 `;
@@ -65,7 +65,7 @@ const SImg = styled.img`
   width: 2.5rem;
   height: 2.5rem;
 
-  background-color: ${({ theme }) => theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.blue100};
   border-radius: 50%;
 `;
 const SContainer = styled.div`
@@ -83,12 +83,12 @@ const SWrapper = styled.div`
 const SCaption = styled.label<{ $read: boolean }>`
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme, $read }) =>
-    $read ? theme.colors.black100 : theme.colors.blue100};
+    $read ? theme.colors.neutral950 : theme.colors.blue500};
 `;
 const SPreview = styled.label<{ $read: boolean }>`
   ${({ theme }) => theme.fonts.body};
   color: ${({ theme, $read }) =>
-    $read ? theme.colors.black200 : theme.colors.black100};
+    $read ? theme.colors.neutral400 : theme.colors.neutral950};
 
   overflow: hidden;
   text-overflow: ellipsis;
@@ -99,5 +99,5 @@ const SCircle = styled.div`
   height: 0.375rem;
 
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.blue100};
+  background-color: ${({ theme }) => theme.colors.blue500};
 `;

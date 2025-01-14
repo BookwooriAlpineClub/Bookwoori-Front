@@ -36,7 +36,7 @@ const Background = styled.div<{ $transition: ModalTransition }>`
   width: 100%;
   height: 100%;
 
-  background-color: ${({ theme }) => theme.colors.blackOverlay};
+  background-color: ${({ theme }) => theme.colors.overlay};
 
   transition: opacity 0.3s ease;
 `;
