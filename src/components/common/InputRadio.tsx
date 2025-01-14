@@ -3,6 +3,7 @@ import { NoSelect } from '@src/styles/mixins';
 import Fieldset from '@src/components/common/Fieldset';
 import icnCheck from '@src/assets/icons/check_circle.svg';
 
+type Kind = 'chat' | 'voice' | 'climb' | null;
 interface Props {
   title: string;
   items: {
@@ -10,9 +11,9 @@ interface Props {
     icon: React.ReactElement;
     isRadioDisabled?: boolean;
   }[];
-  defaultValue?: 'chat' | 'voice' | 'climb' | null;
+  defaultValue?: Kind;
   required: boolean;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  setValue: React.Dispatch<React.SetStateAction<Kind>>;
 }
 
 /**
@@ -48,7 +49,7 @@ const InputRadio = ({
               name={title}
               value={value}
               required={required}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => setValue(e.target.value as Kind)}
               disabled={isRadioDisabled}
               defaultChecked={defaultValue ? defaultValue === value : false}
             />

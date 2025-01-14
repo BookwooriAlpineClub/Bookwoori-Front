@@ -1,5 +1,5 @@
+import type Book from '@src/types/book';
 import type { Category } from '@src/types/category';
-import type { BookListitemQueryRes } from '@src/types/apis/book';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { formatDate, decodeIdParam } from '@src/utils/formatters';
@@ -42,7 +42,7 @@ const ChannelAddPage = () => {
   const [kind, setKind] = useState<DefaultKind>(defaultKind);
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({
+  const [book, setBook] = useState<Pick<Book, 'title' | 'isbn13'>>({
     title: '',
     isbn13: '',
   });

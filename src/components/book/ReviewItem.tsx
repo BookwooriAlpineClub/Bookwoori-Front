@@ -1,4 +1,4 @@
-import type { ReviewListitemQueryRes } from '@src/types/apis/record';
+import type { GetReviewListRes } from '@src/types/apis/record';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
@@ -6,28 +6,38 @@ import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Chip from '@src/components/common/Chip';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
-type Props = Omit<ReviewListItem, 'recordId' | 'memberId'> & {
-  recordId?: ReviewListItem['recordId'];
-};
+type Props = ElementOfArray<GetReviewListRes>;
+// type Listitem = ElementOfArray<ElementOfArray<GetReviewListRes>['records']>;
 
-const ReviewItem = ({ recordId, star, reviewContent, bookInfo }: Props) => {
+const ReviewItem = ({
+  isbn13,
+  title,
+  author,
+  cover,
+  publisher,
+  pubYear,
+  records,
+}: Props) => {
   const navigate = useEncodedNavigate();
-  const { title, author, cover } = bookInfo;
 
   const handleItemClick = () => {
-    if (recordId) navigate(ROUTE_PATH.libraryRecord, recordId);
+    navigate(ROUTE_PATH.libraryRecord, Number(isbn13));
   };
 
+  console.log(publisher);
+  console.log(pubYear);
+
+  // 추후 배열로 수정
   return (
     <ComponentWrapper as='li' onClick={handleItemClick}>
       <Img src={cover} alt='책 표지' loading='lazy' />
       <TextWrapper>
         <RowLayout>
           <Title $line={1}>{title}</Title>
-          <Chip Icon={IcnStar} text={star} />
+          <Chip Icon={IcnStar} text={records[0].starReview} />
         </RowLayout>
         <Author $line={1}>{author}</Author>
-        <ReviewContent $line={3}>{reviewContent}</ReviewContent>
+        <ReviewContent $line={3}>{records[0].contentReview}</ReviewContent>
       </TextWrapper>
     </ComponentWrapper>
   );
