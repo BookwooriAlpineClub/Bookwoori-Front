@@ -90,8 +90,8 @@ const ButtonContainer = styled.button`
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  padding: 1.0625rem 0.9375rem;
-  gap: 0.625rem;
+  padding: ${({ theme }) => theme.padding[16]};
+  gap: ${({ theme }) => theme.gap[10]};
   align-self: stretch;
   border-radius: 6.1875rem;
   background-color: ${({ theme }) => theme.colors.neutral0};
