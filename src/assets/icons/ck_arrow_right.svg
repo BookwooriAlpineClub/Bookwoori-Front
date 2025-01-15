@@ -7,7 +7,7 @@
 >
   <g id="CkArrowUp">
     <rect
-      fill="#D1FD57"
+      fill="#bef264"
       x="40"
       y="0.5"
       width="40"
@@ -17,7 +17,7 @@
     />
     <path
       id="Vector"
-      fill="#0F1015"
+      fill="#0a0a0a"
       d="M20 12.5L18.59 13.91L24.17 19.5L12 19.5L12 21.5L24.17 21.5L18.58 27.08L20 28.5L28 20.5L20 12.5Z"
     />
   </g>
