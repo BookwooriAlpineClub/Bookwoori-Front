@@ -1,13 +1,13 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useEffect, useRef } from 'react';
 import useDraggable from '@src/hooks/useDraggable';
-import SubButton from '@src/components/channel/SubButton';
 import Header from '@src/components/common/Header';
 import Accordion from '@src/components/channel/Accordion';
 import Carousel from '@src/components/channel/Carousel';
+import SubButton from '@src/components/common/SubButton';
 import ChannelList from '@src/components/channel/ChannelList';
-import { ReactComponent as CategoryAdd } from '@src/assets/icons/category_add.svg';
-import { ReactComponent as ChannelAdd } from '@src/assets/icons/channel_add.svg';
+import { ReactComponent as CategoryAdd } from '@src/assets/icons/bi_book_add.svg';
+import { ReactComponent as ChannelAdd } from '@src/assets/icons/md_outline_playlist_add.svg';
 import { useNavigate } from 'react-router-dom';
 import { encodeId } from '@src/utils/formatters';
 import useChannel from '@src/hooks/query/useChannel';
@@ -29,12 +29,12 @@ const ChannelListPage = () => {
   const navigate = useNavigate();
   const buttonData: ButtonData[] = [
     {
-      icon: <SCategoryAdd />,
+      icon: <CategoryAdd width='16' height='16' />,
       label: '분류 추가',
       onClick: () => navigate(`/server/${encodeId(serverId)}/create/category`),
     },
     {
-      icon: <SChannelAdd />,
+      icon: <ChannelAdd width='18' height='18' />,
       label: '모임 추가',
       onClick: () => navigate(`/server/${encodeId(serverId)}/create/channel`),
     },
@@ -57,9 +57,12 @@ const ChannelListPage = () => {
       <SLayout>
         <SButtonContainer>
           {buttonData.map((buttonItem) => (
-            <SubButton key={buttonItem.label} onClick={buttonItem.onClick}>
-              {buttonItem.icon} {buttonItem.label}
-            </SubButton>
+            <SubButton
+              key={buttonItem.label}
+              icon={buttonItem.icon}
+              label={buttonItem.label}
+              onClick={buttonItem.onClick}
+            />
           ))}
         </SButtonContainer>
         <SContainer>
@@ -116,16 +119,6 @@ const SButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 0.625rem;
-`;
-const IconSize = css`
-  width: 1rem;
-  height: 1rem;
-`;
-const SChannelAdd = styled(ChannelAdd)`
-  ${IconSize}
-`;
-const SCategoryAdd = styled(CategoryAdd)`
-  ${IconSize}
 `;
 const SContainer = styled.div`
   display: flex;

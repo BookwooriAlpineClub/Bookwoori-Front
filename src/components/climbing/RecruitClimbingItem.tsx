@@ -11,7 +11,7 @@ import { ReactComponent as Calendar } from '@src/assets/icons/md_insert_invitati
 import { ReactComponent as Group } from '@src/assets/icons/md_group.svg';
 import { ReactComponent as Book } from '@src/assets/icons/md_book.svg';
 import { ReactComponent as Walk } from '@src/assets/icons/md_directions_walk.svg';
-import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
+import { ReactComponent as Edit } from '@src/assets/icons/hi_outline_pencil.svg';
 import { ReactComponent as Check } from '@src/assets/icons/md_check.svg';
 // import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';

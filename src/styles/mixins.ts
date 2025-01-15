@@ -67,3 +67,7 @@ export const NoDataTextLayout = styled.div`
     ${NoSelect}
   }
 `;
+export const UnderlineButton = styled.button`
+  text-decoration: underline;
+  color: ${({ theme }) => theme.colors.neutral400};
+`;
