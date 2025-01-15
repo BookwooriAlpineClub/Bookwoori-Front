@@ -44,7 +44,7 @@ const Layout = styled.header`
   justify-content: space-between;
   position: fixed;
   top: 0;
-  z-index: 100;
+  z-index: ${({theme}) => theme.zIndex.header};
 
   width: 100%;
   height: 4.375rem;
