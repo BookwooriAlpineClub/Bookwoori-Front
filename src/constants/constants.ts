@@ -194,3 +194,65 @@ export const ERROR_MESSAGES = {
   [ErrorCode.CHATTING.CHANNEL_MESSAGE_NOT_FOUND]:
     '해당 채널 메시지를 찾을 수 없습니다.',
 } as const;
+
+type ErrorHandlingType = {
+  [K in ErrorCodeType]: {
+    type: 'toast' | 'confirm' | 'errorBoundary';
+    func?: () => void;
+  };
+};
+
+export const ERROR_HANDLING: ErrorHandlingType = {
+  [ErrorCode.CLIENT.BAD_REQUEST]: {
+    type: 'toast',
+  },
+  [ErrorCode.CLIENT.MISSING_PARAMETER]: { type: 'toast' },
+  [ErrorCode.CLIENT.INVALID_ENUM_VALUE]: { type: 'toast' },
+
+  [ErrorCode.FILE.INVALID_FILE_FORMAT]: { type: 'toast' },
+  [ErrorCode.FILE.UNSUPPORTED_FILE_FORMAT]: { type: 'toast' },
+  [ErrorCode.FILE.FILE_UPLOAD_FAIL]: { type: 'toast' },
+  [ErrorCode.FILE.FILE_COMPARISON_FAIL]: { type: 'toast' },
+
+  [ErrorCode.AUTH.UNAUTHORIZED]: { type: 'toast' },
+  [ErrorCode.AUTH.ACCESS_DENIED]: { type: 'confirm' },
+  [ErrorCode.AUTH.INVALID_JWT_SIGNATURE]: { type: 'confirm' },
+  [ErrorCode.AUTH.INVALID_TOKEN]: { type: 'confirm' },
+  [ErrorCode.AUTH.NO_COOKIE]: { type: 'confirm' },
+  [ErrorCode.AUTH.EXPIRED_ACCESS_TOKEN]: { type: 'confirm' },
+  [ErrorCode.AUTH.EXPIRED_REFRESH_TOKEN]: { type: 'confirm' },
+
+  [ErrorCode.RESOURCE.MEMBER_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.RESOURCE.MEMBER_INACTIVE]: { type: 'confirm' },
+  [ErrorCode.RESOURCE.SERVER_NOT_FOUND]: { type: 'confirm', func: () => {} },
+  [ErrorCode.RESOURCE.ALREADY_JOINED_SERVER]: { type: 'toast' },
+  [ErrorCode.RESOURCE.DELEGATION_REQUIRED]: { type: 'toast' },
+  [ErrorCode.RESOURCE.SERVER_MEMBER_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.RESOURCE.SERVER_OWNER_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.RESOURCE.INVALID_INVITE_CODE]: { type: 'errorBoundary' },
+  [ErrorCode.RESOURCE.CATEGORY_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.RESOURCE.CATEGORY_LOCATE_EXCEPTION]: { type: 'toast' },
+  [ErrorCode.RESOURCE.DEFAULT_CATEGORY_EXCEPTION]: { type: 'toast' },
+  [ErrorCode.RESOURCE.CHANNEL_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.RESOURCE.CLIMBING_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.RESOURCE.ALREADY_JOINED_CLIMBING]: { type: 'toast' },
+  [ErrorCode.RESOURCE.CLIMBING_NOT_READY]: { type: 'toast' },
+  [ErrorCode.RESOURCE.OWNER_CANNOT_LEAVE]: { type: 'toast' },
+  [ErrorCode.RESOURCE.CLIMBING_MEMBER_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.RESOURCE.CLIMBING_NOT_RUNNING]: { type: 'toast' },
+  [ErrorCode.RESOURCE.BOOK_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.RESOURCE.ALADIN_API_EXCEPTION]: {
+    type: 'confirm',
+  },
+  [ErrorCode.RESOURCE.RECORD_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.RESOURCE.RECORD_NOT_FINISHED]: { type: 'toast' },
+  [ErrorCode.RESOURCE.ALREADY_EXIST_RECORD]: { type: 'toast' },
+  [ErrorCode.RESOURCE.REVIEW_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.RESOURCE.REVIEW_ALREADY_SHARED]: { type: 'toast' },
+  [ErrorCode.RESOURCE.REVIEW_EMOJI_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.RESOURCE.ALREADY_EXIST_REVIEW]: { type: 'toast' },
+  [ErrorCode.RESOURCE.MESSAGE_ROOM_NOT_FOUND]: { type: 'toast' },
+
+  [ErrorCode.CHATTING.DIRECT_MESSAGE_NOT_FOUND]: { type: 'toast' },
+  [ErrorCode.CHATTING.CHANNEL_MESSAGE_NOT_FOUND]: { type: 'toast' },
+};
