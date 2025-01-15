@@ -1,0 +1,22 @@
+<svg
+  width="40"
+  height="41"
+  viewBox="0 0 40 41"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g id="CkArrowUp">
+    <rect
+      fill="#FAFAFA"
+      y="0.5"
+      width="40"
+      height="40"
+      rx="20"
+    />
+    <path
+      id="Vector"
+      fill="#A5A5A5"
+      d="M12 20.5L13.41 21.91L19 16.33V28.5H21V16.33L26.58 21.92L28 20.5L20 12.5L12 20.5Z"
+    />
+  </g>
+</svg>

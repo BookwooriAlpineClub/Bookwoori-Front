@@ -1,0 +1,24 @@
+<svg
+  width="40"
+  height="41"
+  viewBox="0 0 40 41"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g id="CkArrowUp">
+    <rect
+      fill="#D1FD57"
+      x="40"
+      y="0.5"
+      width="40"
+      height="40"
+      rx="20"
+      transform="rotate(90 40 0.5)"
+    />
+    <path
+      id="Vector"
+      fill="#0F1015"
+      d="M20 12.5L18.59 13.91L24.17 19.5L12 19.5L12 21.5L24.17 21.5L18.58 27.08L20 28.5L28 20.5L20 12.5Z"
+    />
+  </g>
+</svg>
