@@ -5,7 +5,10 @@ import { checkAuthLoader, isParamLoader } from '@src/router/loader';
 import Bottomsheet from '@src/components/common/Bottomsheet';
 import Dialog from '@src/components/common/Dialog';
 import CommunitySideBar from '@src/components/communitysidebar/CommunitySideBar';
+import RootErrorBoundary from '@src/RootErrorBoundary';
+import ErrorCatcher from '@src/components/errorBoundary/ErrorCatcher';
 import LoadingPage from '@src/pages/fallback/LoadingPage';
+import QueryClientBoundary from '@src/components/queryClient/QueryClientBoundary';
 
 /* example */
 const RouterExamplePage = React.lazy(
@@ -101,10 +104,16 @@ const router = createBrowserRouter([
   {
     element: (
       <Suspense fallback={<LoadingPage />}>
-        <Outlet />
-        <Bottomsheet />
-        <Dialog />
-        <CommunitySideBar />
+        <QueryClientBoundary>
+          <RootErrorBoundary>
+            <ErrorCatcher>
+              <Outlet />
+              <Bottomsheet />
+              <Dialog />
+              <CommunitySideBar />
+            </ErrorCatcher>
+          </RootErrorBoundary>
+        </QueryClientBoundary>
       </Suspense>
     ),
     errorElement: <h1>Error</h1>,
