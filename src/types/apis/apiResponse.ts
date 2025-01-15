@@ -4,7 +4,7 @@ type ApiSuccessResponse<T> = {
   data: T;
 };
 
-export type ApiErrorResponse = {
+export type ApiErrorResponse = Error & {
   timestamp: string;
   status: number;
   code: ErrorCodeType;
