@@ -15,7 +15,7 @@ export interface GetDeviceRes extends Success {
  * 기기 등록 추가
  */
 export type PostDeviceRes = Success;
-export type PostDeviceReq = Omit<Device, 'status'>;
+export type PostDeviceReq = Pick<Device, 'platform' | 'token'>;
 /**
  * 기기 등록 삭제
  */
