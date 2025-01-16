@@ -10,7 +10,7 @@ const Fieldset = ({ as = 'fieldset', title, children }: Props) => {
   const Container = as;
 
   return (
-    <Container name={title}>
+    <Container name={as === 'fieldset' ? title : undefined}>
       <Title as={as === 'fieldset' ? 'legend' : 'h3'}>{title}</Title>
       {children}
     </Container>
