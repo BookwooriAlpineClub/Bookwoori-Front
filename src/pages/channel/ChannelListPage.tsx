@@ -53,7 +53,7 @@ const ChannelListPage = () => {
 
   return (
     <>
-      <SHeader headerType='server' text={serverInfo?.name ?? '서버'} />
+      <Header headerType='server' text={serverInfo?.name ?? '서버'} />
       <SLayout>
         <SButtonContainer>
           {buttonData.map((buttonItem) => (
@@ -102,9 +102,6 @@ const ChannelListPage = () => {
 
 export default ChannelListPage;
 
-const SHeader = styled(Header)`
-  z-index: 1;
-`;
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;

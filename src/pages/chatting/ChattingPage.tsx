@@ -128,7 +128,7 @@ const ChattingPage = () => {
 
   return (
     <>
-      <SHeader text={roomInfo?.title ?? ''} headerType='back' />
+      <Header text={roomInfo?.title ?? ''} headerType='back' />
       <SLayout ref={chatRef}>
         <div ref={targetRef} />
         <Container>
@@ -173,10 +173,6 @@ const ChattingPage = () => {
 
 export default ChattingPage;
 
-const SHeader = styled(Header)`
-  position: fixed;
-  z-index: 1;
-`;
 const SLayout = styled.div`
   display: flex;
   position: relative;
