@@ -119,7 +119,7 @@ const ChannelAddPage = () => {
             <InputDropdown
               title='모임 분류'
               placeholder='분류 선택'
-              items={categoryList as Pick<Category, 'categoryId' | 'name'>[]}
+              items={categoryList as Pick<Categories, 'categoryId' | 'name'>[]}
               required
               value={category}
               setValue={setCategory}
