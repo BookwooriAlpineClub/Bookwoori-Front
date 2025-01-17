@@ -56,12 +56,12 @@ const BookInfo = styled.div`
 
   gap: 0.15rem;
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 
 const BookTitle = styled.p`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   text-overflow: ellipsis;
   text-align: start;
 
@@ -73,12 +73,12 @@ const BookTitle = styled.p`
 const StyledBookIcon = styled(BookIcon)`
   width: 1rem;
   height: 1rem;
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 
 const Memo = styled.p`
   ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
   white-space: normal;
   word-wrap: break-word;
   text-align: justify;

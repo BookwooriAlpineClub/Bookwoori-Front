@@ -29,5 +29,5 @@ const Container = styled.div`
 
 const Title = styled.label`
   font-family: ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;

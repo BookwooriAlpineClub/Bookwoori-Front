@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
       width: 100vw;
       height: 100vh;
     }
-    background-color: ${({ theme }) => theme.colors.black300};
+    background-color: ${({ theme }) => theme.colors.neutral50};
     ${({ theme }) => theme.fonts.body}
   }
   button {
@@ -37,11 +37,11 @@ const GlobalStyle = createGlobalStyle`
   }
   #toast {
     position: fixed;
-    z-index: 900;
+    z-index: ${({ theme }) => theme.zIndex.toast};
   }
   #modal {
     position: fixed;
-    z-index: 800;
+    z-index: ${({ theme }) => theme.zIndex.modal};
   }
 `;
 

@@ -35,7 +35,7 @@ const TextContainer = styled.p`
   padding: 2.5rem 1.5rem;
 
   border-radius: 1.875rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   white-space: pre;
   text-align: center;

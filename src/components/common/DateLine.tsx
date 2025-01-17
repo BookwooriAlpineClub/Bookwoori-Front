@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const DateLine = ({ date }: { date: string }) => {
   const [year, month, day] = date.split('-');
-  
+
   return (
     <SLayout>
       <SLine />
@@ -27,7 +27,7 @@ const SLayout = styled.div`
 const SLine = styled.div`
   width: 100%;
   height: 0.0625rem;
-  background-color: ${({ theme }) => theme.colors.black200};
+  background-color: ${({ theme }) => theme.colors.neutral400};
 `;
 const SLabel = styled.label`
   max-width: 5.9375rem;
@@ -35,5 +35,5 @@ const SLabel = styled.label`
 
   ${({ theme }) => theme.fonts.caption};
   text-align: center;
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;

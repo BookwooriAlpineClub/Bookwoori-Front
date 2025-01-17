@@ -3,6 +3,7 @@ import { NoSelect } from '@src/styles/mixins';
 import Fieldset from '@src/components/common/Fieldset';
 import icnCheck from '@src/assets/icons/check_circle.svg';
 
+type Kind = 'chat' | 'voice' | 'climb' | null;
 interface Props {
   title: string;
   items: {
@@ -10,9 +11,9 @@ interface Props {
     icon: React.ReactElement;
     isRadioDisabled?: boolean;
   }[];
-  defaultValue?: 'chat' | 'voice' | 'climb' | null;
+  defaultValue?: Kind;
   required: boolean;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  setValue: React.Dispatch<React.SetStateAction<Kind>>;
 }
 
 /**
@@ -48,7 +49,7 @@ const InputRadio = ({
               name={title}
               value={value}
               required={required}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => setValue(e.target.value as Kind)}
               disabled={isRadioDisabled}
               defaultChecked={defaultValue ? defaultValue === value : false}
             />
@@ -76,12 +77,12 @@ const Label = styled.label`
   border-radius: 0.9375rem;
   background: none;
 
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 
   &:has(input[type='radio']:checked) {
-    background-color: ${({ theme }) => theme.colors.blue300};
+    background-color: ${({ theme }) => theme.colors.blue100};
 
-    color: ${({ theme }) => theme.colors.black100};
+    color: ${({ theme }) => theme.colors.neutral950};
   }
 `;
 const Container = styled.div`
@@ -97,7 +98,7 @@ const Input = styled.input.attrs({ type: 'radio' })`
   margin: 0.09rem;
 
   border-radius: 50%;
-  background: ${({ theme }) => theme.colors.black300};
+  background: ${({ theme }) => theme.colors.neutral50};
 
   &:checked {
     background: url(${icnCheck}) no-repeat;

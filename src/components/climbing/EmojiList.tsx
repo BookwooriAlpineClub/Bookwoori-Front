@@ -40,7 +40,7 @@ const EmojiListContainer = styled.div`
   display: flex;
   gap: 0.5rem;
   padding: 1rem;
-  background-color: ${({ theme }) => theme.colors.black400};
+  background-color: ${({ theme }) => theme.colors.neutral200};
 `;
 
 const EmojiButton = styled.div<{ isSelected: boolean }>`
@@ -49,26 +49,26 @@ const EmojiButton = styled.div<{ isSelected: boolean }>`
   justify-content: space-between;
   padding: 0.225rem 0.625rem;
   gap: 0.325rem;
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
   border-radius: 0.5rem;
   border: ${({ isSelected, theme }) =>
     isSelected
-      ? `0.1rem solid ${theme.colors.blue200}`
+      ? `0.1rem solid ${theme.colors.blue300}`
       : '0.1rem solid transparent'};
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.neutral0};
 `;
 
 const EmojiTypography = styled.span`
   ${({ theme }) => theme.fonts.header};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 
 const EmojiMemberListContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   padding: 1rem;
   height: 15rem;

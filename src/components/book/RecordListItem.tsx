@@ -1,4 +1,4 @@
-import type { RecordListitemQueryRes } from '@src/types/apis/record';
+import type { GetRecordListRes } from '@src/types/apis/record';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
@@ -7,33 +7,30 @@ import Chip from '@src/components/common/Chip';
 import { ReactComponent as IcnBook } from '@src/assets/icons/md_auto_stories.svg';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
-type Props = Pick<
-  Record,
-  'recordId' | 'readingStatus' | 'currentPage' | 'star' | 'bookInfo'
->;
+type Props = ElementOfArray<GetRecordListRes>;
 
 const RecordListItem = ({
-  recordId,
-  readingStatus,
-  currentPage,
-  star,
-  bookInfo,
+  isbn13,
+  title,
+  author,
+  cover,
+  itemPage,
+  records,
 }: Props) => {
   const navigate = useEncodedNavigate();
-  const { title, author, cover, itemPage } = bookInfo;
   const chips: { [key: string]: React.ReactElement | null } = {
     WISH: null,
     READING: (
       <SChip
         Icon={IcnBook}
-        text={`${Math.round((currentPage / itemPage) * 100)}%`}
+        text={`${Math.round(((records[0].currentPage as number) / (itemPage as number)) * 100)}%`}
       />
     ),
-    FINISHED: <SChip Icon={IcnStar} text={star} />,
+    FINISHED: <SChip Icon={IcnStar} text={records[0].starReview as number} />, // 추후 평균값으로 수정
   };
 
   const handleItemClick = () => {
-    navigate(ROUTE_PATH.libraryRecord, recordId);
+    navigate(ROUTE_PATH.libraryRecord, Number(isbn13));
   };
 
   return (
@@ -41,7 +38,7 @@ const RecordListItem = ({
       <Img src={cover} alt='책 표지' />
       <Title $line={1}>{title}</Title>
       <Author $line={1}>{author}</Author>
-      {chips[readingStatus]}
+      {chips[records[0].status]}
     </Container>
   );
 };

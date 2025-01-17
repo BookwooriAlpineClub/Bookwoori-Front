@@ -1,4 +1,4 @@
-import type { Record } from '@src/types/apis/record';
+import type Record from '@src/types/record';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { SESSION_STORAGE } from '@src/constants/sessionStorage';
 import useBook from '@src/hooks/query/useBook';
@@ -10,30 +10,21 @@ const BookDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { bookId: isbn13 } = useParams<{ bookId: string }>();
-  const { bookDetail: bookInfo } = useBook({ isbn13 });
+  const { bookDetail } = useBook({ isbn13 });
 
-  const readingStatus: Record['readingStatus'] = 'UNREAD';
+  const status: Record['status'] = 'UNREAD';
 
   const handleEditClick = () => {
     const jsonData = JSON.stringify({
-      type: 'book',
-      isbn13: bookInfo.isbn13,
-      status: 'UNREAD',
-      startDate: '',
-      endDate: '',
-      currentPage: -1,
-      star: -1,
-      reviewContent: '',
-      bookInfo: {
-        title: bookInfo.title,
-        author: bookInfo.author,
-        publisher: bookInfo.publisher,
-        pubDate: bookInfo.pubDate,
-        itemPage: bookInfo.itemPage,
-        description: bookInfo.description,
-        isbn13: bookInfo.isbn13,
-        cover: bookInfo.coverImg,
-      },
+      isbn13: '',
+      title: '',
+      author: '',
+      cover: '',
+      publisher: '',
+      pubYear: '',
+      description: '',
+      itemPage: -1,
+      records: [],
     });
     sessionStorage.setItem(SESSION_STORAGE.RECORD_EDIT, jsonData);
     navigate(`${location.pathname.replace('/book', '/record')}/edit`);
@@ -42,14 +33,10 @@ const BookDetailPage = () => {
   return (
     <Container>
       <Header buttonList={['edit']} handleEditClick={handleEditClick} />
-      <BookInfoDetail
-        readingStatus={readingStatus}
-        cover={bookInfo.coverImg}
-        {...bookInfo}
-      />
+      <BookInfoDetail status={status} {...bookDetail} />
       <Description>
         <h2>책 소개</h2>
-        <p>{bookInfo.description}</p>
+        <p>{bookDetail.description}</p>
       </Description>
     </Container>
   );
@@ -80,7 +67,7 @@ const Container = styled.div`
     height: -webkit-fill-available;
 
     border-radius: 1.125rem 1.125rem 0rem 0rem;
-    background-color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.neutral0};
   }
 `;
 const Description = styled.section`

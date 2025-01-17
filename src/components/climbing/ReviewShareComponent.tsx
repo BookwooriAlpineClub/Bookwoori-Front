@@ -1,12 +1,13 @@
 import Button from '@src/components/common/Button';
 import styled from 'styled-components';
-import { ClimbingResponse } from '@src/types/apis/climbing.d';
+import { ClimbingResponse } from '@src/types/apis/climbing';
 import ReviewItem from '@src/components/book/ReviewItem';
 import { useMutation } from '@tanstack/react-query';
 import { patchShareClimbingReview } from '@src/apis/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import UnderlineButton from '@src/components/common/UnderlineButton';
 
 /*
  *
@@ -60,18 +61,10 @@ const ReviewShareComponent = ({
         {!isShareable && (
           <Wrapper>
             <div>아직 감상평을 작성하지 않았어요.</div>
-            <button
-              type='button'
+            <UnderlineButton
+              text='감상평 작성하러가기'
               onClick={handleNavigate}
-              style={{
-                textDecoration: 'underline',
-                color: '#A5A5A5',
-                cursor: 'pointer',
-                marginTop: '8px',
-              }}
-            >
-              감상평 작성하러가기
-            </button>
+            />
           </Wrapper>
         )}
       </ItemWrapper>
@@ -94,16 +87,16 @@ const TextContainer = styled.div`
 
 const Text = styled.p`
   ${({ theme }) => theme.fonts.header};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 
 const SubText = styled.p`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 
 const ItemWrapper = styled.div`
-  border: solid 0.06rem ${({ theme }) => theme.colors.black100};
+  border: solid 0.06rem ${({ theme }) => theme.colors.neutral950};
   border-radius: 0.1rem;
   padding: 0.9375rem;
 `;
@@ -113,4 +106,5 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  gap: 0.5rem;
 `;

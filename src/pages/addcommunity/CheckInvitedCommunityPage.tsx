@@ -95,7 +95,7 @@ const Container = styled.div`
   gap: 1.5rem;
   padding: 0 1.25rem;
   padding-top: 1.875rem;
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 
 const ButtonWrapper = styled.div`

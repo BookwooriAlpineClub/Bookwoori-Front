@@ -23,15 +23,15 @@ const SButton = styled.button`
   padding: 0.9375rem 0.3125rem;
 
   border-radius: 0.9375rem;
-  border: ${({ theme }) => `1px solid ${theme.colors.blue200}`};
-  background: ${({ theme }) => theme.colors.blue100};
+  border: ${({ theme }) => `1px solid ${theme.colors.blue300}`};
+  background: ${({ theme }) => theme.colors.blue500};
 
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.neutral0};
   text-align: center;
 
   &:disabled {
-    background: ${({ theme }) => theme.colors.blue300};
-    color: ${({ theme }) => theme.colors.blue200};
+    background: ${({ theme }) => theme.colors.blue100};
+    color: ${({ theme }) => theme.colors.blue300};
     cursor: default;
   }
 `;

@@ -14,7 +14,7 @@ const ReviewListPage = () => {
         {reviewList.length !== 0 ? (
           <Ul>
             {reviewList.map((item) => (
-              <ReviewItem key={item.recordId} {...item} />
+              <ReviewItem key={item.isbn13} {...item} />
             ))}
           </Ul>
         ) : (

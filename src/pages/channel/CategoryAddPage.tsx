@@ -82,7 +82,7 @@ const SBox = styled.div`
 `;
 const SLabel = styled.label`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 const SWrapper = styled.div`
   display: flex;
@@ -91,7 +91,7 @@ const SWrapper = styled.div`
   padding: 0.875rem 0.625rem;
 
   border-radius: 0.3125rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const SInput = styled.input`
   width: 100%;
@@ -100,5 +100,5 @@ const SInput = styled.input`
 `;
 const SSmallLabel = styled.label`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;

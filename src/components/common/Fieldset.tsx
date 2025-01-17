@@ -20,7 +20,7 @@ export default Fieldset;
 const Legend = styled.legend`
   margin-bottom: 0.63rem;
 
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   ${({ theme }) => theme.fonts.body};
 `;
 const Container = styled.div<{ isDisabled: boolean }>`
@@ -30,5 +30,5 @@ const Container = styled.div<{ isDisabled: boolean }>`
   width: 100%;
 
   border-radius: 0.9375rem;
-  background-color: ${({ theme, isDisabled }) => isDisabled ? theme.colors.black400 : theme.colors.white};
+  background-color: ${({ theme, isDisabled }) => isDisabled ? theme.colors.neutral200 : theme.colors.neutral0};
 `;
