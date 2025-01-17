@@ -49,9 +49,9 @@ const Container = styled.div`
   position: relative;
   display: flex;
   width: 100%;
-  border: solid 0.1rem ${({ theme }) => theme.colors.blue200};
+  border: solid 0.1rem ${({ theme }) => theme.colors.blue300};
   border-radius: 1.625rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
   overflow: hidden;
 `;
 
@@ -61,7 +61,7 @@ const SelectedBackground = styled.div<{ position: number }>`
   bottom: 0.125rem;
   left: ${({ position }) => `calc(${position * 50}% + 0.125rem)`};
   width: calc(50% - 0.125rem - 0.125rem);
-  background-color: ${({ theme }) => theme.colors.blue100};
+  background-color: ${({ theme }) => theme.colors.blue500};
   border-radius: 1.625rem;
   transition:
     left 0.3s ease-in-out,
@@ -74,6 +74,6 @@ const Button = styled.button<{ isSelected: boolean }>`
   padding: 0.625rem;
   background-color: transparent;
   color: ${({ isSelected, theme }) =>
-    isSelected ? theme.colors.white : theme.colors.black100};
+    isSelected ? theme.colors.neutral0 : theme.colors.neutral950};
   transition: color 0.3s ease;
 `;

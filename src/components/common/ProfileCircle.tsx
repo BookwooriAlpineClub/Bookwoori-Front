@@ -26,7 +26,7 @@ const ProfileContainer = styled.div<{ status?: 'FINISHED' | 'FAILED' }>`
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.black400};
+  background-color: ${({ theme }) => theme.colors.neutral200};
   display: flex;
   justify-content: center;
   align-items: center;

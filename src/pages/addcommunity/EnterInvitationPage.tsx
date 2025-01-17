@@ -99,7 +99,7 @@ const Container = styled.div`
   width: 100svw;
   min-height: calc(100vh - 4.375rem);
   min-height: calc(100svh - 4.375rem);
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 
 const ButtonWrapper = styled.div`

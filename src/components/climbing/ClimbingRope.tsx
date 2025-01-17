@@ -106,7 +106,7 @@ const Background = styled.div`
   justify-content: center;
 
   height: 5.5rem;
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const SFlag = styled(Flag)`
   width: 5.3125rem;
@@ -122,14 +122,14 @@ const Container = styled.div`
 
   height: 100%;
   padding-bottom: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const Line = styled.div`
   margin-bottom: 0.0625rem;
 
   width: 100%;
   height: 0.0625rem;
-  background-color: ${({ theme }) => theme.colors.black400};
+  background-color: ${({ theme }) => theme.colors.neutral200};
 `;
 const Profile = styled.div`
   display: flex;
@@ -142,12 +142,12 @@ const Img = styled.img<{ outline?: boolean }>`
   height: 3.25rem;
 
   border: ${({ outline, theme }) =>
-    outline && `0.1875rem solid ${theme.colors.blue100}`};
+    outline && `0.1875rem solid ${theme.colors.blue500}`};
   border-radius: 50%;
 
   object-fit: cover;
 `;
 const Nickname = styled.span`
   text-align: center;
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;

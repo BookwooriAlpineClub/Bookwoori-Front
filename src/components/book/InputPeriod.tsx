@@ -66,7 +66,7 @@ const Container = styled.div`
   padding: 0.75rem 1rem;
 
   border-radius: 1rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   &:has(input:read-only) {
     background-color: transparent;
@@ -81,7 +81,7 @@ const Input = styled.input.attrs({ type: 'date' })<{ value: string }>`
 
   ${({ theme }) => theme.fonts.body};
   color: ${({ value, theme }) =>
-    value ? theme.colors.black100 : theme.colors.black200};
+    value ? theme.colors.neutral950 : theme.colors.neutral400};
 `;
 const Hyphen = styled.span`
   ${({ theme }) => theme.fonts.body}

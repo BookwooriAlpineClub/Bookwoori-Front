@@ -132,7 +132,7 @@ const SBox = styled.div`
 
 const SLabel = styled.label`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 
 const SWrapper = styled.div`
@@ -142,7 +142,7 @@ const SWrapper = styled.div`
   padding: 0.875rem 0.625rem;
 
   border-radius: 0.3125rem;
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.neutral0};
 `;
 
 const SInput = styled.input<{ $color: boolean }>`
@@ -150,10 +150,10 @@ const SInput = styled.input<{ $color: boolean }>`
 
   ${({ theme }) => theme.fonts.body};
   color: ${({ theme, $color }) =>
-    $color ? theme.colors.black100 : theme.colors.blue100};
+    $color ? theme.colors.neutral950 : theme.colors.blue500};
 `;
 
 const SSmallLabel = styled.label`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;

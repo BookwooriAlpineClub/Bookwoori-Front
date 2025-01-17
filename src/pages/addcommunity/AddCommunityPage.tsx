@@ -59,7 +59,7 @@ const Container = styled.div`
   min-height: calc(100vh - 4.375em);
   min-height: calc(100svh - 4.375rem);
 
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 
 const AddOptionContainer = styled.div`

@@ -1,4 +1,4 @@
-import UserProfile from '@src/components/userSettings/UserProfile';
+import UserProfile from '@src/components/common/UserProfile';
 import styled from 'styled-components';
 import SubButton from '@src/components/common/SubButton';
 import { ReactComponent as Chatting } from '@src/assets/icons/md_outline_chat_bubble.svg';

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-// import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
-import { ReactComponent as Copy } from '@src/assets/icons/copy.svg';
-// import { ReactComponent as Delete } from '@src/assets/icons/trash.svg';
+// import { ReactComponent as Edit } from '@src/assets/icons/hi_outline_pencil.svg';
+import { ReactComponent as Copy } from '@src/assets/icons/md_outline_content_copy.svg';
+// import { ReactComponent as Delete } from '@src/assets/icons/fi_trash_2.svg';
 import { useState } from 'react';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 
@@ -81,7 +81,7 @@ const SEmoji = styled.button<{ isClicked: boolean }>`
 
   border-radius: 50%;
   background-color: ${({ theme, isClicked }) =>
-    isClicked ? theme.colors.blue300 : theme.colors.white};
+    isClicked ? theme.colors.blue100 : theme.colors.neutral0};
 
   font-size: 1.5rem;
 `;
@@ -93,11 +93,11 @@ const SButton = styled.button`
   padding: 1.0625rem 0.9375rem;
 
   border-radius: 6.1875rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 const Icon = styled.span`
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
 `;

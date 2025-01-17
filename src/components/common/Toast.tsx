@@ -45,10 +45,11 @@ const Item = styled.li`
   padding: 0.25rem 0.9375rem; // 추후 수정: 디자인 작업 중
 
   border-radius: 0.25rem; // 추후 수정: 디자인 작업 중
-  background-color: ${({ theme }) => theme.colors.blackOverlay}; // 추후 수정: 디자인 작업 중
+  background-color: ${({ theme }) =>
+    theme.colors.overlay}; // 추후 수정: 디자인 작업 중
 
   ${({ theme }) => theme.fonts.body} // 추후 수정: 디자인 작업 중
-  color: ${({ theme }) => theme.colors.white}; // 추후 수정: 디자인 작업 중
+  color: ${({ theme }) => theme.colors.neutral0}; // 추후 수정: 디자인 작업 중
   text-align: center;
   white-space: pre-line; // 개행문자 처리
 

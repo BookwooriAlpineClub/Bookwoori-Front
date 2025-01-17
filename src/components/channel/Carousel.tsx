@@ -158,7 +158,7 @@ const SLayout = styled.div`
 
   min-height: 6.25rem;
   border-radius: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.blue100};
 `;
 const Span = styled.span`
   display: flex;
@@ -166,7 +166,7 @@ const Span = styled.span`
   justify-content: center;
 
   ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const SContainer = styled.div`
   display: flex;
@@ -218,7 +218,7 @@ const SLabel = styled.label`
 
   text-align: center;
   ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.neutral0};
   -webkit-text-stroke: 0.125rem rgba(15, 16, 21, 0.4);
 
   overflow: hidden;
