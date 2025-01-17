@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { UnderlineButton } from '@src/styles/mixins';
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import useCategory from '@src/hooks/query/useCategory';
@@ -14,6 +13,7 @@ import InputText from '@src/components/common/InputText';
 import InputDropdown from '@src/components/common/InputDropdown';
 import ButtonBackground from '@src/components/common/ButtonBackground';
 import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
+import UnderlineButton from '@src/components/common/UnderlineButton';
 
 const ChannelEditPage = () => {
   const { id: serverId } = useLoaderData<{ id: string }>();
@@ -96,7 +96,9 @@ const ChannelEditPage = () => {
             수정하기
           </Button>
           {!(findChannel?.name === 'DEFAULT') && (
-            <TextButton
+            <UnderlineButton
+              size='small'
+              text='모임 삭제하기'
               onClick={() =>
                 openDialog(
                   <DeleteConfirmModal
@@ -105,9 +107,7 @@ const ChannelEditPage = () => {
                   />,
                 )
               }
-            >
-              모임 삭제하기
-            </TextButton>
+            />
           )}
         </Container>
       </ButtonBackground>
@@ -132,7 +132,4 @@ const Container = styled.div`
   padding-bottom: -0.625rem;
 
   width: 100%;
-`;
-const TextButton = styled(UnderlineButton)`
-  ${({ theme }) => theme.fonts.caption};
 `;
