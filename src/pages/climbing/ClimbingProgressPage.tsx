@@ -10,7 +10,7 @@ const ClimbingProgressPage = ({ name: headerText }: { name: string }) => {
 
   return (
     <>
-      <SHeader text={headerText} headerType='back' />
+      <Header text={headerText} headerType='back' />
       <Layout>
         <Wrapper>
           <ClimbingDescription />
@@ -23,9 +23,6 @@ const ClimbingProgressPage = ({ name: headerText }: { name: string }) => {
 
 export default ClimbingProgressPage;
 
-const SHeader = styled(Header)`
-  z-index: 1;
-`;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;

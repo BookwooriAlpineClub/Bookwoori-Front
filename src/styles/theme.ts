@@ -93,6 +93,7 @@ const gap = {
 const zIndex = {
   toast: '900',
   modal: '800',
+  header: '100',
 } as const;
 
 export type ColorsTypes = typeof colors;
