@@ -4,6 +4,7 @@ import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
 import useLoaderData from '@src/hooks/useRoaderData';
 import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 import useToast from '@src/hooks/useToast';
+import useDialog from '@src/hooks/useDialog';
 import { encodeId, formatDate } from '@src/utils/formatters';
 import Button from '@src/components/common/Button';
 import ButtonBackground from '@src/components/common/ButtonBackground';
@@ -12,8 +13,8 @@ import InputDatepicker, {
   Period,
 } from '@src/components/common/InputDatepicker';
 import InputText from '@src/components/common/InputText';
-import useDialog from '@src/hooks/useDialog';
 import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
+import UnderlineButton from '@src/components/common/UnderlineButton';
 
 const ClimbingEditPage = () => {
   const serverId = sessionStorage.getItem('currentServer') ?? '-1';
@@ -126,7 +127,9 @@ const ClimbingEditPage = () => {
           >
             편집하기
           </Button>
-          <TextButton
+          <UnderlineButton
+            size='small'
+            text='모임 삭제하기'
             onClick={() =>
               openDialog(
                 <DeleteConfirmModal
@@ -135,9 +138,7 @@ const ClimbingEditPage = () => {
                 />,
               )
             }
-          >
-            모임 삭제하기
-          </TextButton>
+          />
         </Container>
       </ButtonBackground>
     </>
@@ -153,13 +154,6 @@ const SLayout = styled.form`
 
   width: 100%;
   padding: 1.875rem 1.25rem;
-`;
-const TextButton = styled.button`
-  margin-bottom: -0.625rem;
-
-  ${({ theme }) => theme.fonts.caption};
-  text-decoration: underline;
-  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const Container = styled.div`
   display: flex;
