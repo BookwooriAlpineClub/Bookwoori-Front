@@ -48,5 +48,5 @@ const Img = styled.img`
 const Name = styled.span``;
 const Level = styled.span`
   ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.black200}
+  color: ${({ theme }) => theme.colors.neutral400}
 `;

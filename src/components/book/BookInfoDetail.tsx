@@ -1,22 +1,26 @@
+import type Book from '@src/types/book';
 import type Record from '@src/types/record';
-import type { BookDetailQueryRes } from '@src/types/apis/book';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Tag from '@src/components/common/Tag';
 
-type Props = BookInfo & Pick<Record, 'readingStatus'>;
+type Props = Pick<
+  Book,
+  'title' | 'author' | 'cover' | 'publisher' | 'pubYear' | 'itemPage'
+> &
+  Pick<Record, 'status'>;
 
 const BookInfoDetail = ({
-  readingStatus,
   title,
   author,
-  publisher,
-  pubDate,
-  itemPage,
   cover,
+  publisher,
+  pubYear,
+  itemPage,
+  status,
 }: Props) => {
   const calcStatusText = () => {
-    switch (readingStatus) {
+    switch (status) {
       case 'WISH':
         return '읽고 싶어요';
       case 'READING':
@@ -32,13 +36,13 @@ const BookInfoDetail = ({
     <Container>
       <Img src={cover} alt='책 표지' />
       <InfoWrapper>
-        {readingStatus !== 'UNREAD' && <Tag>{calcStatusText()}</Tag>}
+        {status !== 'UNREAD' && <Tag>{calcStatusText()}</Tag>}
         <Title $line={2}>{title}</Title>
         <CaptionEllipsis $line={1}>{author}</CaptionEllipsis>
         <PubWrapper>
           <CaptionEllipsis $line={1}>{publisher}</CaptionEllipsis>
           <Caption>·</Caption>
-          <Caption>{pubDate}</Caption>
+          <Caption>{pubYear}</Caption>
         </PubWrapper>
         <CaptionEllipsis $line={1}>{itemPage}쪽</CaptionEllipsis>
       </InfoWrapper>

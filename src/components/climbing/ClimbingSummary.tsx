@@ -73,12 +73,12 @@ const DateInfo = styled.div`
 `;
 
 const DateText = styled.span`
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
   ${({ theme }) => theme.fonts.caption}
 `;
 
 const HighlightText = styled.span`
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
   font-weight: 1000;
   font-size: 0.6875rem;
 `;
@@ -86,7 +86,7 @@ const HighlightText = styled.span`
 const MemberInfo = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.blue100};
   ${({ theme }) => theme.fonts.caption}
 
   border-radius: 0.725rem;
@@ -98,11 +98,11 @@ const MemberInfo = styled.div`
 const MemberCount = styled.span``;
 
 const StyledCalendarIcon = styled(CalendarIcon)`
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
   font-size: 1.0625rem;
 `;
 
 const StyledGroupIcon = styled(GroupIcon)`
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   font-size: 0.75rem;
 `;

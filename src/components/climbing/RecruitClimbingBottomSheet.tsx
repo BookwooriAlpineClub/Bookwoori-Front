@@ -71,7 +71,7 @@ const SContainer = styled.div`
   overflow: scroll;
 `;
 const SPlus = styled(Plus)`
-  fill: ${({ theme }) => theme.colors.black100};
+  fill: ${({ theme }) => theme.colors.neutral950};
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -82,5 +82,5 @@ const Wrapper = styled.div`
 const Span = styled.span`
   margin: auto;
   ${({ theme }) => theme.fonts.body}
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;

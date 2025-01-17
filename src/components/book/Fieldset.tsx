@@ -24,7 +24,7 @@ const Container = styled.fieldset`
   padding: 1rem;
 
   border-radius: 1rem;
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const Legend = styled.legend`
   display: contents;

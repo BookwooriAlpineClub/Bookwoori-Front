@@ -77,5 +77,5 @@ const Span = styled.span`
   margin: auto;
 
   ${({ theme }) => theme.fonts.body}
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;

@@ -26,7 +26,7 @@ const Button = styled.button<{ width?: string }>`
   gap: 0.3125rem;
   width: ${({ width }) => width || 'calc(100% - 1.875rem)'};
   border-radius: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.blue100};
+  background-color: ${({ theme }) => theme.colors.blue500};
   ${({ theme }) => theme.fonts.body}
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.neutral0};
 `;

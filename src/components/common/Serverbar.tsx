@@ -153,7 +153,7 @@ const Container = styled.section<{ $transition: ModalTransition }>`
 
   height: 100%;
 
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const Fieldset = styled.fieldset`
   display: flex;
@@ -168,7 +168,7 @@ const Hr = styled.hr`
   width: 2.1875rem;
   margin: 0 auto;
 
-  border: 1.5px solid ${({ theme }) => theme.colors.blue300};
+  border: 1.5px solid ${({ theme }) => theme.colors.blue100};
 `;
 const SButton = styled.label`
   display: flex;
@@ -186,12 +186,12 @@ const SButton = styled.label`
   }
 
   &.neongreen {
-    background-color: ${({ theme }) => theme.colors.black300};
-    color: ${({ theme }) => theme.colors.black200};
+    background-color: ${({ theme }) => theme.colors.neutral50};
+    color: ${({ theme }) => theme.colors.neutral400};
 
     &:has(input[type='radio']:checked) {
-      background-color: ${({ theme }) => theme.colors.neonGreen};
-      color: ${({ theme }) => theme.colors.black100};
+      background-color: ${({ theme }) => theme.colors.lime300};
+      color: ${({ theme }) => theme.colors.neutral950};
     }
   }
 
@@ -209,18 +209,18 @@ const SButton = styled.label`
       height: 0.5rem;
 
       border-radius: 50%;
-      border: 1px solid ${({ theme }) => theme.colors.white};
-      background-color: ${({ theme }) => theme.colors.blue100};
+      border: 1px solid ${({ theme }) => theme.colors.neutral0};
+      background-color: ${({ theme }) => theme.colors.blue500};
     }
   }
 
   &.blue {
-    background-color: ${({ theme }) => theme.colors.blue200};
-    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.blue300};
+    color: ${({ theme }) => theme.colors.neutral0};
   }
 `;
 const ImageButton = styled(SButton)<{ $img: string }>`
-  background-color: ${({ theme }) => theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.blue100};
   background-image: url(${({ $img }) => $img});
   background-repeat: no-repeat;
   background-size: cover;
