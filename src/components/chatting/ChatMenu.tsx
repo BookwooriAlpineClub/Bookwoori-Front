@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 // import { ReactComponent as Edit } from '@src/assets/icons/hi_outline_pencil.svg';
-import { ReactComponent as Copy } from '@src/assets/icons/copy.svg';
+import { ReactComponent as Copy } from '@src/assets/icons/md_outline_content_copy.svg';
 // import { ReactComponent as Delete } from '@src/assets/icons/fi_trash_2.svg';
 import { useState } from 'react';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as KakaoButton } from '@src/assets/images/login/kakao_login.svg';
 import { ReactComponent as Logo } from '@src/assets/images/login/bookwoori_logo.svg';
-import { kakaoUrl } from '@src/constants/apiUrl';
+import { kakaoUrl } from '@src/constants/env';
 
 const LoginPage = () => {
   return (

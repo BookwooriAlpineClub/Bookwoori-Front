@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatTimeGap } from '@src/utils/formatters';
-import BadgeListItem from '@src/components/common/BadgeListItem';
+import BadgeListItem from '@src/components/common/StatusBadgeListItem';
 
 export type NotiItemType = {
   id: number;

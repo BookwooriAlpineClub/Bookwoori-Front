@@ -1,6 +1,5 @@
 import Button from '@src/components/common/Button';
 import styled from 'styled-components';
-import { UnderlineButton } from '@src/styles/mixins';
 import { ClimbingResponse } from '@src/types/apis/climbing';
 import ReviewItem from '@src/components/book/ReviewItem';
 import { useMutation } from '@tanstack/react-query';
@@ -8,6 +7,7 @@ import { patchShareClimbingReview } from '@src/apis/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import UnderlineButton from '@src/components/common/UnderlineButton';
 
 /*
  *
@@ -61,9 +61,10 @@ const ReviewShareComponent = ({
         {!isShareable && (
           <Wrapper>
             <div>아직 감상평을 작성하지 않았어요.</div>
-            <UnderlineButton onClick={handleNavigate}>
-              감상평 작성하러가기
-            </UnderlineButton>
+            <UnderlineButton
+              text='감상평 작성하러가기'
+              onClick={handleNavigate}
+            />
           </Wrapper>
         )}
       </ItemWrapper>

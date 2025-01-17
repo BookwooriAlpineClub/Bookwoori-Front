@@ -5,7 +5,7 @@ import useDialog from '@src/hooks/useDialog';
 import useMember from '@src/hooks/query/useMember';
 import Header from '@src/components/common/Header';
 import IconButton from '@src/components/common/IconButton';
-import UserProfile from '@src/components/userSettings/UserProfile';
+import UserProfile from '@src/components/common/UserProfile';
 import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 
 const SettingsPage = () => {
@@ -19,7 +19,7 @@ const SettingsPage = () => {
 
   return (
     <>
-      <SHeader text='설정' headerType='hamburger' />
+      <Header text='설정' headerType='hamburger' />
       <Layout>
         <UserProfile />
         <Container>
@@ -50,9 +50,6 @@ const SettingsPage = () => {
 
 export default SettingsPage;
 
-const SHeader = styled(Header)`
-  z-index: 1;
-`;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
