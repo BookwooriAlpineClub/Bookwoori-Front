@@ -158,7 +158,7 @@ const ChannelPage = () => {
 
   return (
     <>
-      <SHeader text={channelName ?? ''} headerType='back' />
+      <Header text={channelName ?? ''} headerType='back' />
       <Container ref={containerRef}>
         {totalMessageCount > 8 && <div ref={ref} style={{ height: '20px' }} />}
         {Object.entries(chattings)
@@ -184,10 +184,6 @@ const ChannelPage = () => {
 };
 
 export default ChannelPage;
-
-const SHeader = styled(Header)`
-  z-index: 1;
-`;
 
 const Container = styled.div`
   position: relative;

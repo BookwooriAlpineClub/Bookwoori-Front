@@ -12,7 +12,7 @@ interface Props extends BadgeListItemType {
   onClick: () => void;
 }
 
-const BadgeListItem = ({
+const StatusBadgeListItem = ({
   type,
   imgUrl,
   caption,
@@ -22,29 +22,29 @@ const BadgeListItem = ({
   onClick,
 }: Props) => {
   return (
-    <SLayout onClick={onClick}>
-      <SImg src={imgUrl} />
-      <SContainer>
-        <SWrapper>
-          <SCaption className={type} $isRead={isRead}>
+    <Layout onClick={onClick}>
+      <Img src={imgUrl} />
+      <Container>
+        <Wrapper>
+          <Caption className={type} $isRead={isRead}>
             {caption}
-          </SCaption>
-          <SCaption className={type} $isRead={isRead}>
+          </Caption>
+          <Caption className={type} $isRead={isRead}>
             {time}
-          </SCaption>
-        </SWrapper>
-        <SMessage className={type} $isRead={isRead}>
+          </Caption>
+        </Wrapper>
+        <Message className={type} $isRead={isRead}>
           {message}
-        </SMessage>
-      </SContainer>
-      {!isRead && <SCircle />}
-    </SLayout>
+        </Message>
+      </Container>
+      {!isRead && <Circle />}
+    </Layout>
   );
 };
 
-export default BadgeListItem;
+export default StatusBadgeListItem;
 
-const SLayout = styled.li`
+const Layout = styled.li`
   display: flex;
   gap: 0.125rem;
 
@@ -55,14 +55,14 @@ const SLayout = styled.li`
 
   cursor: pointer;
 `;
-const SImg = styled.img`
+const Img = styled.img`
   width: 2.5rem;
   height: 2.5rem;
 
   background-color: ${({ theme }) => theme.colors.blue100};
   border-radius: 50%;
 `;
-const SContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -70,11 +70,11 @@ const SContainer = styled.div`
   padding: 0 0.5rem;
   width: calc(100% - 3.125rem);
 `;
-const SWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const SCaption = styled.span<{ $isRead: boolean }>`
+const Caption = styled.span<{ $isRead: boolean }>`
   ${({ theme }) => theme.fonts.caption};
 
   &.notice {
@@ -86,7 +86,7 @@ const SCaption = styled.span<{ $isRead: boolean }>`
       $isRead ? theme.colors.neutral950 : theme.colors.blue500};
   }
 `;
-const SMessage = styled.span<{ $isRead: boolean }>`
+const Message = styled.span<{ $isRead: boolean }>`
   ${({ theme }) => theme.fonts.body};
 
   overflow: hidden;
@@ -101,7 +101,7 @@ const SMessage = styled.span<{ $isRead: boolean }>`
       $isRead ? theme.colors.neutral400 : theme.colors.neutral950};
   }
 `;
-const SCircle = styled.div`
+const Circle = styled.div`
   width: 0.375rem;
   height: 0.375rem;
 

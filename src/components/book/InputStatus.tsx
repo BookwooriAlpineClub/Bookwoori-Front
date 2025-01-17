@@ -7,13 +7,13 @@ import { ReactComponent as IcnFinished } from '@src/assets/icons/done.svg';
 
 interface Props {
   name: string;
-  setValue: React.Dispatch<React.SetStateAction<Record['readingStatus']>>;
-  readingStatus: Record['readingStatus'];
+  setValue: React.Dispatch<React.SetStateAction<Record['status']>>;
+  status: Record['status'];
 }
 
-const InputStatus = ({ name, setValue, readingStatus }: Props) => {
+const InputStatus = ({ name, setValue, status }: Props) => {
   const radioConfigs: {
-    value: Record['readingStatus'];
+    value: Record['status'];
     Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
     text: string;
   }[] = [
@@ -35,9 +35,9 @@ const InputStatus = ({ name, setValue, readingStatus }: Props) => {
             type='radio'
             value={value}
             required
-            defaultChecked={value === readingStatus}
+            defaultChecked={value === status}
             onChange={(e) => {
-              setValue(e.target.value as Record['readingStatus']);
+              setValue(e.target.value as Record['status']);
             }}
           />
         </Label>

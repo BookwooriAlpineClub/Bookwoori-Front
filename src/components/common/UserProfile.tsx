@@ -1,40 +1,40 @@
 import styled from 'styled-components';
-import UserProfilImg from '@src/components/userSettings/UserProfileImg';
 import useMember from '@src/hooks/query/useMember';
+import UserProfilImg from '@src/components/userSettings/UserProfileImg';
 
 const UserProfile = ({ memberId }: { memberId?: number }) => {
   const { profileData: data } = useMember(memberId);
 
   return (
-    <SLayout>
+    <Layout>
       <UserProfilImg
         profile={data?.profileImg ?? undefined}
         background={data?.backgroundImg ?? undefined}
       />
-      <SContainer>
-        <SNickname>{data?.nickname}</SNickname>
-        <SMountain>
+      <Container>
+        <Nickname>{data?.nickname}</Nickname>
+        <Mountain>
           {data?.level}번째, {data?.mountain} 등산가
-        </SMountain>
-        <SBox>
-          <SWrapper>
-            <SNicknameBlue>{data?.height}</SNicknameBlue>
-            <SCaption>지나온 길(m)</SCaption>
-          </SWrapper>
-          <SLine />
-          <SWrapper>
-            <SNicknameBlue>{data?.totalPage}</SNicknameBlue>
-            <SCaption>읽어낸 책(p)</SCaption>
-          </SWrapper>
-        </SBox>
-      </SContainer>
-    </SLayout>
+        </Mountain>
+        <Box>
+          <Wrapper>
+            <NicknameBlue>{data?.height}</NicknameBlue>
+            <Caption>지나온 길(m)</Caption>
+          </Wrapper>
+          <Line />
+          <Wrapper>
+            <NicknameBlue>{data?.totalPage}</NicknameBlue>
+            <Caption>읽어낸 책(p)</Caption>
+          </Wrapper>
+        </Box>
+      </Container>
+    </Layout>
   );
 };
 
 export default UserProfile;
 
-const SLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -49,24 +49,24 @@ const SLayout = styled.div`
 
   text-align: center;
 `;
-const SContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.9375rem;
 
   width: 100%;
 `;
-const SNickname = styled.label`
+const Nickname = styled.label`
   ${({ theme }) => theme.fonts.nickname};
   color: ${({ theme }) => theme.colors.neutral950};
   cursor: default;
 `;
-const SMountain = styled.label`
+const Mountain = styled.label`
   ${({ theme }) => theme.fonts.mountain};
   color: ${({ theme }) => theme.colors.blue500};
   cursor: default;
 `;
-const SBox = styled.div`
+const Box = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -75,22 +75,22 @@ const SBox = styled.div`
   padding: 1.25rem 3.125rem;
   margin-top: 0.3125rem;
 `;
-const SWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.3125rem;
 `;
-const SNicknameBlue = styled.label`
+const NicknameBlue = styled.label`
   ${({ theme }) => theme.fonts.nickname};
   color: ${({ theme }) => theme.colors.blue500};
   cursor: default;
 `;
-const SCaption = styled.label`
+const Caption = styled.label`
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.neutral950};
   cursor: default;
 `;
-const SLine = styled.div`
+const Line = styled.div`
   width: 0.0938rem;
   height: 2.1875rem;
   background-color: ${({ theme }) => theme.colors.blue100};
