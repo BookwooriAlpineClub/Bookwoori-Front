@@ -64,6 +64,7 @@ const fonts = {
 } as const;
 
 const rounded = {
+  2: '0.125rem',
   4: '0.25rem',
   6: '0.375rem',
   8: '0.5rem',
@@ -73,6 +74,7 @@ const rounded = {
 } as const;
 
 const padding = {
+  2: '0.125rem',
   4: '0.25rem',
   6: '0.375rem',
   8: '0.5rem',
@@ -93,6 +95,7 @@ const gap = {
 const zIndex = {
   toast: '900',
   modal: '800',
+  header: '100',
 } as const;
 
 export type ColorsTypes = typeof colors;

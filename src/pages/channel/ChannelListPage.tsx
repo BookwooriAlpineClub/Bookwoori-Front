@@ -29,12 +29,12 @@ const ChannelListPage = () => {
   const navigate = useNavigate();
   const buttonData: ButtonData[] = [
     {
-      icon: <SCategoryAdd />,
+      icon: <CategoryAdd width='16' height='16' />,
       label: '분류 추가',
       onClick: () => navigate(`/server/${encodeId(serverId)}/create/category`),
     },
     {
-      icon: <SChannelAdd />,
+      icon: <ChannelAdd width='18' height='18' />,
       label: '모임 추가',
       onClick: () => navigate(`/server/${encodeId(serverId)}/create/channel`),
     },
@@ -53,13 +53,16 @@ const ChannelListPage = () => {
 
   return (
     <>
-      <SHeader headerType='server' text={serverInfo?.name ?? '서버'} />
+      <Header headerType='server' text={serverInfo?.name ?? '서버'} />
       <Layout>
         <ButtonContainer>
           {buttonData.map((buttonItem) => (
-            <SubButton key={buttonItem.label} onClick={buttonItem.onClick}>
-              {buttonItem.icon} {buttonItem.label}
-            </SubButton>
+            <SubButton
+              key={buttonItem.label}
+              icon={buttonItem.icon}
+              label={buttonItem.label}
+              onClick={buttonItem.onClick}
+            />
           ))}
         </ButtonContainer>
         <Container>
@@ -108,9 +111,6 @@ const ChannelListPage = () => {
 
 export default ChannelListPage;
 
-const SHeader = styled(Header)`
-  z-index: 1;
-`;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
