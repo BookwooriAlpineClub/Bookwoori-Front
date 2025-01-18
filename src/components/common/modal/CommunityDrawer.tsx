@@ -7,17 +7,17 @@ import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 import useDialog from '@src/hooks/useDialog';
 import ProfileModal from '@src/components/communitysidebar/ProfileModal';
-import useSideBar from '@src/hooks/useSideBar';
-import useSideBarData from '@src/hooks/query/useSideBarData';
+import useCommunityDrawer from '@src/hooks/useCommunityDrawer';
+import useCommunityDrawerData from '@src/hooks/query/useCommunityDrawerData';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { decodeIdParam, encodeId } from '@src/utils/formatters';
 
-const CommunitySideBar = () => {
-  const { sideBar, closeSideBar } = useSideBar();
+const CommunityDrawer = () => {
+  const { communityDrawer, closeCommunityDrawer } = useCommunityDrawer();
   const { serverId: id } = useParams<{ serverId: string }>();
   const serverId = decodeIdParam(id ?? '-1');
-  const { serverInfo, memberList, copyText } = useSideBarData(serverId);
+  const { serverInfo, memberList, copyText } = useCommunityDrawerData(serverId);
   const { handleCopy } = useCopyToClipboard(copyText);
   const { openDialog } = useDialog();
 
@@ -34,18 +34,18 @@ const CommunitySideBar = () => {
       encodeId(serverId),
     );
     navigate(`${serverSetting}`);
-    closeSideBar();
+    closeCommunityDrawer();
   };
 
   return (
     <Scrim
-      isOpen={sideBar.isOpen}
-      transition={sideBar.transition}
-      closeModal={closeSideBar}
+      isOpen={communityDrawer.isOpen}
+      transition={communityDrawer.transition}
+      closeModal={closeCommunityDrawer}
     >
-      <SideBarContainer
-        isOpen={sideBar.isOpen}
-        transition={sideBar.transition}
+      <CommunityDrawerContainer
+        isOpen={communityDrawer.isOpen}
+        transition={communityDrawer.transition}
         onClick={(e) => e.stopPropagation()} // 이벤트 버블링 방지
       >
         <CommunityTitleContainer>
@@ -87,14 +87,14 @@ const CommunitySideBar = () => {
             ))}
           </MemberListContainer>
         </TitleAndFieldContainer>
-      </SideBarContainer>
+      </CommunityDrawerContainer>
     </Scrim>
   );
 };
 
-export default CommunitySideBar;
+export default CommunityDrawer;
 
-const SideBarContainer = styled.div<{
+const CommunityDrawerContainer = styled.div<{
   isOpen: boolean;
   transition: ModalTransition;
 }>`

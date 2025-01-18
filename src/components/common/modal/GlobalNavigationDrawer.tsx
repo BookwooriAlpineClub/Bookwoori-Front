@@ -1,11 +1,11 @@
 import type { ModalTransition } from '@src/types/modal';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { serverbarState, currentServerIdState } from '@src/states/atoms';
+import { globalNavigationDrawerState, currentServerIdState } from '@src/states/atoms';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
-import useServerbar from '@src/hooks/useServerbar';
+import useGlobalNavigationDrawer from '@src/hooks/useGlobalNavigationDrawer';
 import useServer from '@src/hooks/query/useServer';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
@@ -23,28 +23,28 @@ type buttonConfig = {
 };
 
 /**
- * Serverbar 컴포넌트 사용법
+ * 컴포넌트 사용법
  *
- * 0. Serverbar 컴포넌트를 추가한다.
- * 1. useServerbar 훅을 불러온다.
- * 2. openServerbar()로 연다.
+ * 0. GlobalNavigationDrawer 컴포넌트를 추가한다.
+ * 1. useGlobalNavigationDrawer 훅을 불러온다.
+ * 2. openGlobalNavigationDrawer()로 연다.
  *
  * @example
- * <Serverbar />
+ * <GlobalNavigationDrawer />
  *
- * import useServerbar from '@src/hooks/useServerbar';
- * const { openServerbar } = useServerbar();
+ * import useGlobalNavigationDrawer from '@src/hooks/useGlobalNavigationDrawer';
+ * const { openGlobalNavigationDrawer } = useGlobalNavigationDrawer();
  *
- * openServerbar();
+ * openGlobalNavigationDrawer();
  */
-const Serverbar = () => {
-  const { closeServerbar } = useServerbar();
+const GlobalNavigationDrawer = () => {
+  const { closeGlobalNavigationDrawer } = useGlobalNavigationDrawer();
   const navigate = useNavigate();
   const encodedNavigate = useEncodedNavigate();
   const { serverId: params } = useParams<{ serverId: string }>();
   const location = useLocation();
 
-  const { isOpen, transition } = useRecoilValue(serverbarState);
+  const { isOpen, transition } = useRecoilValue(globalNavigationDrawerState);
   const setCurrentServerId = useSetRecoilState(currentServerIdState);
 
   let decodedServerId: number = -1;
@@ -92,15 +92,19 @@ const Serverbar = () => {
 
   const handleMyClick = (link: string) => {
     navigate(link);
-    closeServerbar();
+    closeGlobalNavigationDrawer();
   };
   const handleServerClick = (id: number) => {
     encodedNavigate('/server', id);
-    closeServerbar();
+    closeGlobalNavigationDrawer();
   };
 
   return (
-    <Scrim isOpen={isOpen} transition={transition} closeModal={closeServerbar}>
+    <Scrim
+      isOpen={isOpen}
+      transition={transition}
+      closeModal={closeGlobalNavigationDrawer}
+    >
       <Container
         onClick={(event) => event.stopPropagation()}
         $transition={transition}
@@ -111,7 +115,7 @@ const Serverbar = () => {
               <SButton key={name} className={className}>
                 <input
                   type='radio'
-                  name='serverbar'
+                  name='GlobalNavigationDrawer'
                   onClick={() => handleMyClick(link)}
                   checked={window.location.pathname === link}
                 />
@@ -125,7 +129,7 @@ const Serverbar = () => {
               <ImageButton key={serverId} $img={serverImg || ''}>
                 <input
                   type='radio'
-                  name='serverbar'
+                  name='GlobalNavigationDrawer'
                   onChange={() => handleServerClick(serverId)}
                   checked={decodedServerId === serverId}
                 />
@@ -137,7 +141,7 @@ const Serverbar = () => {
   );
 };
 
-export default Serverbar;
+export default GlobalNavigationDrawer;
 
 const Container = styled.section<{ $transition: ModalTransition }>`
   position: fixed;

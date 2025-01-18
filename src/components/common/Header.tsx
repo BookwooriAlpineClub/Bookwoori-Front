@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import useSideBar from '@src/hooks/useSideBar';
-import useServerbar from '@src/hooks/useServerbar';
-import Serverbar from '@src/components/common/Serverbar';
+import GlobalNavigationDrawer from '@src/components/common/modal/GlobalNavigationDrawer';
+import CommunityDrawer from '@src/components/common/modal/CommunityDrawer';
+import useGlobalNavigationDrawer from '@src/hooks/useGlobalNavigationDrawer';
+import useCommunityDrawer from '@src/hooks/useCommunityDrawer';
 import { ReactComponent as Hamburger } from '@src/assets/icons/menu.svg';
 import { ReactComponent as Back } from '@src/assets/icons/left_arrow.svg';
 import { ReactComponent as Users } from '@src/assets/icons/users.svg';
@@ -21,17 +22,19 @@ const renderButton = (type: string, onClick: () => void, Icon: React.FC) => (
 const Header = ({ text, headerType }: HeaderProps) => {
   const navigate = useNavigate();
   const handleClick = () => navigate(-1);
-  const { openServerbar } = useServerbar();
-  const { openSideBar } = useSideBar();
+  const { openGlobalNavigationDrawer } = useGlobalNavigationDrawer();
+  const { openCommunityDrawer } = useCommunityDrawer();
 
   return (
     <Layout>
       {headerType === 'back' && renderButton('back', handleClick, Back)}
       {(headerType === 'hamburger' || headerType === 'server') &&
-        renderButton('hamburger', openServerbar, Hamburger)}
-      <Serverbar />
+        renderButton('hamburger', openGlobalNavigationDrawer, Hamburger)}
       <Label>{text}</Label>
-      {headerType === 'server' && renderButton('server', openSideBar, Users)}
+      {headerType === 'server' &&
+        renderButton('server', openCommunityDrawer, Users)}
+      <GlobalNavigationDrawer />
+      <CommunityDrawer />
     </Layout>
   );
 };
@@ -44,7 +47,7 @@ const Layout = styled.header`
   justify-content: space-between;
   position: fixed;
   top: 0;
-  z-index: ${({theme}) => theme.zIndex.header};
+  z-index: ${({ theme }) => theme.zIndex.header};
 
   width: 100%;
   height: 4.375rem;

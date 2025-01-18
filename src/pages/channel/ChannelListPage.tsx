@@ -7,7 +7,7 @@ import useDraggable from '@src/hooks/useDraggable';
 import useChannel from '@src/hooks/query/useChannel';
 import useCategory from '@src/hooks/query/useCategory';
 // import useLoaderData from '@src/hooks/useRoaderData';
-import useSideBarData from '@src/hooks/query/useSideBarData';
+import useCommunityDrawerData from '@src/hooks/query/useCommunityDrawerData';
 import { encodeId } from '@src/utils/formatters';
 import SubButton from '@src/components/channel/SubButton';
 import Header from '@src/components/common/Header';
@@ -42,7 +42,7 @@ const ChannelListPage = () => {
   const { channels, climbingList } = useChannel(serverId);
   const { categoryList: channelNameData = [] } = useCategory(serverId);
   const { list, handleDraggable } = useDraggable(channelNameData);
-  const { serverInfo } = useSideBarData(serverId);
+  const { serverInfo } = useCommunityDrawerData(serverId);
   const ref = useRef(channelNameData);
 
   useEffect(() => {

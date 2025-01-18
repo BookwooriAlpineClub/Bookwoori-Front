@@ -7,7 +7,7 @@ import {
 import { Server, ServerMembersResponse } from '@src/types/apis/server.d';
 import { AxiosError } from 'axios';
 
-const useSideBarData = (serverId: number) => {
+const useCommunityDrawerData = (serverId: number) => {
   const isValidServerId = serverId > 0;
 
   // 서버 정보
@@ -42,4 +42,4 @@ const useSideBarData = (serverId: number) => {
   };
 };
 
-export default useSideBarData;
+export default useCommunityDrawerData;

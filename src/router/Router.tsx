@@ -4,7 +4,6 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import { checkAuthLoader, isParamLoader } from '@src/router/loader';
 import Bottomsheet from '@src/components/common/Bottomsheet';
 import Dialog from '@src/components/common/Dialog';
-import CommunitySideBar from '@src/components/communitysidebar/CommunitySideBar';
 import LoadingPage from '@src/components/common/LoadingPage';
 
 /* example */
@@ -104,7 +103,6 @@ const router = createBrowserRouter([
         <Outlet />
         <Bottomsheet />
         <Dialog />
-        <CommunitySideBar />
       </Suspense>
     ),
     errorElement: <h1>Error</h1>,
