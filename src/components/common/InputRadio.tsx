@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
-import icnCheck from '@src/assets/icons/check_circle.svg';
+import icnCheck from '@src/assets/icons/md_check_circle.svg';
 
 interface Props<ValueType> {
   name: string;

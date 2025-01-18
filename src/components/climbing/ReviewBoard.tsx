@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ClimbingResponse } from '@src/types/apis/climbing.d';
 import { getClimbingReview } from '@src/apis/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
-import Chip from '@src/components/common/Chip';
+import Chip from '@src/components/common/Tag';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
 // const reviews = [

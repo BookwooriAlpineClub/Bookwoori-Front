@@ -19,9 +19,9 @@ import InputDatepicker, {
 } from '@src/components/common/InputDatepicker';
 import Button from '@src/components/common/Button';
 import SearchBottomsheet from '@src/components/channel/SearchBottomsheet';
-import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
-import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
-import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
+import { ReactComponent as IcnHash } from '@src/assets/icons/bi_hash.svg';
+import { ReactComponent as IcnVoice } from '@src/assets/icons/hi_outline_volume_up.svg';
+import { ReactComponent as IcnRun } from '@src/assets/icons/bi_run.svg';
 
 type DefaultKind = 'chat' | 'voice' | 'climb' | null;
 
@@ -119,7 +119,7 @@ const ChannelAddPage = () => {
             <InputDropdown
               title='모임 분류'
               placeholder='분류 선택'
-              items={categoryList as Pick<Categories, 'categoryId' | 'name'>[]}
+              items={categoryList as Pick<Category, 'categoryId' | 'name'>[]}
               required
               value={category}
               setValue={setCategory}
