@@ -3,7 +3,7 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
-import Chip from '@src/components/common/Chip';
+import Chip from '@src/components/common/Tag';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
 type Props = ElementOfArray<GetReviewListRes>;

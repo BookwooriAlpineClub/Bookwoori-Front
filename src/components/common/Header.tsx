@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import useSideBar from '@src/hooks/useSideBar';
 import useServerbar from '@src/hooks/useServerbar';
 import Serverbar from '@src/components/common/Serverbar';
-import { ReactComponent as Hamburger } from '@src/assets/icons/menu.svg';
-import { ReactComponent as Back } from '@src/assets/icons/left_arrow.svg';
-import { ReactComponent as Users } from '@src/assets/icons/users.svg';
+import { ReactComponent as Hamburger } from '@src/assets/icons/fi_menu.svg';
+import { ReactComponent as Back } from '@src/assets/icons/fi_arrow_left.svg';
+import { ReactComponent as Users } from '@src/assets/icons/fi_users.svg';
 
 interface HeaderProps {
   text: string;

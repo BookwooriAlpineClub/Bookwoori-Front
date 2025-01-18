@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Climber } from '@src/assets/icons/climber_grey.svg';
+import { ReactComponent as Climber } from '@src/assets/icons/md_directions_walk.svg';
 import { useRef, useState, useEffect } from 'react';
 
 const ProgressBar = ({

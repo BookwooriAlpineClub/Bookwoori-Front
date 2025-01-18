@@ -9,11 +9,11 @@ import useServerbar from '@src/hooks/useServerbar';
 import useServer from '@src/hooks/query/useServer';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
-import { ReactComponent as IcnLibrary } from '@src/assets/icons/library.svg';
-import { ReactComponent as IcnBell } from '@src/assets/icons/bell.svg';
-import { ReactComponent as IcnChat } from '@src/assets/icons/chat.svg';
-import { ReactComponent as IcnSettings } from '@src/assets/icons/settings.svg';
-import { ReactComponent as IcnPlus } from '@src/assets/icons/plus.svg';
+import { ReactComponent as IcnLibrary } from '@src/assets/icons/md_outline_auto_stories.svg';
+import { ReactComponent as IcnBell } from '@src/assets/icons/fi_bell.svg';
+import { ReactComponent as IcnChat } from '@src/assets/icons/md_outline_chat_bubble_outline.svg';
+import { ReactComponent as IcnSettings } from '@src/assets/icons/fi_settings.svg';
+import { ReactComponent as IcnPlus } from '@src/assets/icons/hi_outline_plus.svg';
 
 type buttonConfig = {
   name: string;

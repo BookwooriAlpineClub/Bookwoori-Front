@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -9,13 +9,13 @@ import useCategory from '@src/hooks/query/useCategory';
 // import useLoaderData from '@src/hooks/useRoaderData';
 import useSideBarData from '@src/hooks/query/useSideBarData';
 import { encodeId } from '@src/utils/formatters';
-import SubButton from '@src/components/channel/SubButton';
+import SubButton from '@src/components/common/SubButton';
 import Header from '@src/components/common/Header';
 import Accordion from '@src/components/common/Accordion';
 import Carousel from '@src/components/channel/Carousel';
 import ChannelList from '@src/components/channel/ChannelList';
-import { ReactComponent as CategoryAdd } from '@src/assets/icons/category_add.svg';
-import { ReactComponent as ChannelAdd } from '@src/assets/icons/channel_add.svg';
+import { ReactComponent as CategoryAdd } from '@src/assets/icons/bi_book_add.svg';
+import { ReactComponent as ChannelAdd } from '@src/assets/icons/md_outline_playlist_add.svg';
 
 interface ButtonData {
   icon: React.ReactNode;
@@ -122,16 +122,6 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 0.625rem;
-`;
-const IconSize = css`
-  width: 1rem;
-  height: 1rem;
-`;
-const SChannelAdd = styled(ChannelAdd)`
-  ${IconSize}
-`;
-const SCategoryAdd = styled(CategoryAdd)`
-  ${IconSize}
 `;
 const Container = styled.div`
   display: flex;
