@@ -2,7 +2,7 @@ import Header from '@src/components/common/Header';
 import styled from 'styled-components';
 import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
 import InputField from '@src/components/common/InputField';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import React, { useEffect, useState } from 'react';
 import IntroSection from '@src/components/addcommunity/IntroSection';
 import { useNavigate } from 'react-router-dom';

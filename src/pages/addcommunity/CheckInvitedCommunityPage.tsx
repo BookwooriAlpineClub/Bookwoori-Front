@@ -1,9 +1,8 @@
 import Header from '@src/components/common/Header';
 import styled from 'styled-components';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import IntroSection from '@src/components/addcommunity/IntroSection';
-import React from 'react';
-import CommunityInfoCard from '@src/components/common/CommunityInfoCard';
+import CommunityInfoCard from '@src/components/community/CommunityInfoCard';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getServerByCode, postServerJoinByCode } from '@src/apis/server';

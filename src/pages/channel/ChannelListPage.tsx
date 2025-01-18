@@ -9,7 +9,7 @@ import useCategory from '@src/hooks/query/useCategory';
 // import useLoaderData from '@src/hooks/useRoaderData';
 import useCommunityDrawerData from '@src/hooks/query/useCommunityDrawerData';
 import { encodeId } from '@src/utils/formatters';
-import SubButton from '@src/components/channel/SubButton';
+import SubButton from '@src/components/common/button/SubButton';
 import Header from '@src/components/common/Header';
 import Accordion from '@src/components/common/Accordion';
 import Carousel from '@src/components/channel/Carousel';

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import useBook from '@src/hooks/query/useBook';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
-import BookinfoItem from '@src/components/book/BookinfoItem';
+import BookinfoItem from '@src/components/library/BookinfoItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 
 type BookReturnData = Pick<Book, 'isbn13' | 'title'>;

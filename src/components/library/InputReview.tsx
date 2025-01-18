@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Fieldset from '@src/components/book/Fieldset';
+import Fieldset from '@src/components/library/Fieldset';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
 interface Props {

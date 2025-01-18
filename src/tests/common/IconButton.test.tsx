@@ -1,10 +1,10 @@
 import { fireEvent, screen } from '@testing-library/react';
 import renderWithProviders from '@src/tests/utils/renderWithProvider.setup';
-import CommunityButton, {
+import IconButton, {
   IconButtonType,
-} from '@src/components/common/IconButton';
+} from '@src/components/common/button/IconButton';
 
-describe('CommunityButton', () => {
+describe('IconButton', () => {
   const buttonTypes: {
     type: IconButtonType;
     name: string;
@@ -38,7 +38,7 @@ describe('CommunityButton', () => {
   ];
   buttonTypes.forEach(({ type, name, iconAltText }) => {
     test(`${name} 버튼을 렌더링한다.`, () => {
-      renderWithProviders(<CommunityButton type={type} testId={type} />);
+      renderWithProviders(<IconButton type={type} testId={type} />);
       expect(screen.getByText(name)).toBeInTheDocument();
       expect(screen.getByAltText(iconAltText)).toBeInTheDocument();
       expect(screen.getByTestId(type)).toBeInTheDocument();
@@ -48,7 +48,7 @@ describe('CommunityButton', () => {
     const mockOnClick = jest.fn();
     // 대표로 transferAuthority 타입 버튼을 테스트한다.
     renderWithProviders(
-      <CommunityButton type='transferAuthority' onClick={mockOnClick} />,
+      <IconButton type='transferAuthority' onClick={mockOnClick} />,
     );
     const button = screen.getByRole('button');
     fireEvent.click(button);

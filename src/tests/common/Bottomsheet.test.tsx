@@ -1,6 +1,6 @@
 import { screen, fireEvent } from '@testing-library/react';
 import useBottomsheet from '@src/hooks/useBottomsheet';
-import Bottomsheet from '@src/components/common/Bottomsheet';
+import Bottomsheet from '@src/components/common/modal/Bottomsheet';
 
 const App = () => {
   const { openBottomsheet, closeBottomsheet } = useBottomsheet();

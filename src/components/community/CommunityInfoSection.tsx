@@ -1,5 +1,5 @@
 import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
-import CommunityInfoCard from '@src/components/common/CommunityInfoCard';
+import CommunityInfoCard from '@src/components/community/CommunityInfoCard';
 
 export interface CommunityInfoProps {
   name?: string;

@@ -1,6 +1,6 @@
 import UserProfile from '@src/components/common/UserProfile';
 import styled from 'styled-components';
-import SubButton from '@src/components/common/SubButton';
+import SubButton from '@src/components/common/button/SubButton';
 import { ReactComponent as Chatting } from '@src/assets/icons/md_outline_chat_bubble.svg';
 import { ReactComponent as Hiking } from '@src/assets/icons/md_outline_auto_stories.svg';
 import { useNavigate } from 'react-router-dom';

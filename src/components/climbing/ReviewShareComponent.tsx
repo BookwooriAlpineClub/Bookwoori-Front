@@ -1,13 +1,13 @@
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import styled from 'styled-components';
 import { ClimbingResponse } from '@src/types/apis/climbing';
-import ReviewItem from '@src/components/book/ReviewItem';
+import ReviewListItem from '@src/components/library/ReviewItem';
 import { useMutation } from '@tanstack/react-query';
 import { patchShareClimbingReview } from '@src/apis/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
-import UnderlineButton from '@src/components/common/UnderlineButton';
+import UnderlineButton from '@src/components/common/button/UnderlineButton';
 
 /*
  *
@@ -52,7 +52,7 @@ const ReviewShareComponent = ({
       </TextContainer>
       <ItemWrapper>
         {isShareable && (
-          <ReviewItem
+          <ReviewListItem
             star={star ?? 0}
             reviewContent={content ?? ''}
             bookInfo={bookInfo}

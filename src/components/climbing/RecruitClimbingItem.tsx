@@ -6,7 +6,7 @@ import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
 import usePopover from '@src/hooks/usePopover';
 import Popover from '@src/components/common/Popover';
 import ParticipantList from '@src/components/climbing/ParticipantList';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import { ReactComponent as Calendar } from '@src/assets/icons/md_insert_invitation.svg';
 import { ReactComponent as Group } from '@src/assets/icons/md_group.svg';
 import { ReactComponent as Book } from '@src/assets/icons/md_book.svg';

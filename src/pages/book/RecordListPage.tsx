@@ -4,7 +4,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import Header from '@src/components/common/Header';
-import Li from '@src/components/book/RecordListItem';
+import Li from '@src/components/library/RecordListItem';
 
 const RecordListPage = () => {
   const [status, setStatus] = useState<Record['status']>('READING');

@@ -1,15 +1,11 @@
 import { screen, fireEvent } from '@testing-library/react';
 import useDialog from '@src/hooks/useDialog';
-import Dialog from '@src/components/common/Dialog';
+import Dialog from '@src/components/common/modal/Dialog';
 
 const App = () => {
   const { openDialog, closeDialog } = useDialog();
   const ConfirmDialog: React.ReactNode = (
-    <button
-	  data-testid='dialog-close'
-	  type='button'
-	  onClick={closeDialog}
-	>
+    <button data-testid='dialog-close' type='button' onClick={closeDialog}>
       취소
     </button>
   );

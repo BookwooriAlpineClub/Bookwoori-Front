@@ -1,5 +1,5 @@
 import { postCategory } from '@src/apis/category';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import Header from '@src/components/common/Header';
 import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 import { currentServerIdState } from '@src/states/atoms';

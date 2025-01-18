@@ -4,14 +4,15 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useBook from '@src/hooks/query/useBook';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
-import BookinfoItem from '@src/components/book/BookinfoItem';
+import BookinfoItem from '@src/components/library/BookinfoItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 import { ReactComponent as IcnClose } from '@src/assets/icons/ck_close.svg';
 
 const SearchPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const keyword: string = new URLSearchParams(location.search).get('keyword') ?? '';
+  const keyword: string =
+    new URLSearchParams(location.search).get('keyword') ?? '';
 
   // API 요청
   const { bookList } = useBook({ keyword });

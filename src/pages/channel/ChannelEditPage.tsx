@@ -8,12 +8,12 @@ import useLoaderData from '@src/hooks/useRoaderData';
 import useToast from '@src/hooks/useToast';
 import { encodeId } from '@src/utils/formatters';
 import Header from '@src/components/common/Header';
-import Button from '@src/components/common/Button';
-import InputText from '@src/components/common/InputText';
-import InputDropdown from '@src/components/common/InputDropdown';
+import Button from '@src/components/common/button/Button';
+import TextField from '@src/components/common/input/TextField';
+import Dropdown from '@src/components/common/input/Dropdown';
 import ButtonBackground from '@src/components/common/ButtonBackground';
-import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
-import UnderlineButton from '@src/components/common/UnderlineButton';
+import DeleteConfirmModal from '@src/components/common/modal/DeleteConfirmModal';
+import UnderlineButton from '@src/components/common/button/UnderlineButton';
 
 const ChannelEditPage = () => {
   const { id: serverId } = useLoaderData<{ id: string }>();
@@ -65,7 +65,7 @@ const ChannelEditPage = () => {
     <>
       <Header text='모임 편집하기' headerType='back' />
       <SLayout>
-        <InputDropdown
+        <Dropdown
           title='모임 분류'
           placeholder='모임 분류를 선택해주세요.'
           items={
@@ -80,7 +80,7 @@ const ChannelEditPage = () => {
           required
           disabled={findChannel?.name === 'DEFAULT'}
         />
-        <InputText
+        <TextField
           title='모임 이름'
           placeholder='채널 이름을 입력하세요.'
           type='short'

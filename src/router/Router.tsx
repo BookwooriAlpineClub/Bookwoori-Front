@@ -2,8 +2,8 @@ import React, { Suspense } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { checkAuthLoader, isParamLoader } from '@src/router/loader';
-import Bottomsheet from '@src/components/common/Bottomsheet';
-import Dialog from '@src/components/common/Dialog';
+import Bottomsheet from '@src/components/common/modal/Bottomsheet';
+import Dialog from '@src/components/common/modal/Dialog';
 import LoadingPage from '@src/components/common/LoadingPage';
 
 /* example */

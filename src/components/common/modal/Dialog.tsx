@@ -1,5 +1,5 @@
 /*
-Dialog 컴포넌트 사용법
+컴포넌트 사용법
 
 1. useDialog 훅을 불러온다.
 import useDialog from '@src/hooks/useDialog';
@@ -20,7 +20,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { dialogState } from '@src/states/atoms';
 import useDialog from '@src/hooks/useDialog';
-import Scrim from '@src/components/common/Scrim';
+import Scrim from '@src/components/common/modal/Scrim';
 
 const Dialog = () => {
   const { isOpen, transition, content } = useRecoilValue(dialogState);

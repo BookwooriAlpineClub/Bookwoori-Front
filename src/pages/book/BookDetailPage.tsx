@@ -3,8 +3,8 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { SESSION_STORAGE } from '@src/constants/sessionStorage';
 import useBook from '@src/hooks/query/useBook';
 import styled from 'styled-components';
-import Header from '@src/components/book/Header';
-import BookInfoDetail from '@src/components/book/BookInfoDetail';
+import Header from '@src/components/library/Header';
+import BookInfoDetail from '@src/components/library/BookInfoDetail';
 
 const BookDetailPage = () => {
   const navigate = useNavigate();

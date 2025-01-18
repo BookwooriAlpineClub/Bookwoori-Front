@@ -4,7 +4,7 @@ import Header from '@src/components/common/Header';
 import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
 import InputField from '@src/components/common/InputField';
 import TextAreaField from '@src/components/common/TextAreaField';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import ImageUploadField from '@src/components/addcommunity/ImageUploadField';
 import { postServer } from '@src/apis/server';
 import { useMutation } from '@tanstack/react-query';

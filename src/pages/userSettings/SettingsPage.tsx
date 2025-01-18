@@ -4,9 +4,9 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useDialog from '@src/hooks/useDialog';
 import useMember from '@src/hooks/query/useMember';
 import Header from '@src/components/common/Header';
-import IconButton from '@src/components/common/IconButton';
+import IconButton from '@src/components/common/button/IconButton';
 import UserProfile from '@src/components/common/UserProfile';
-import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
+import DeleteConfirmModal from '@src/components/common/modal/DeleteConfirmModal';
 
 const SettingsPage = () => {
   const navigate = useNavigate();

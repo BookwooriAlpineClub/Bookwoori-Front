@@ -1,12 +1,12 @@
 import type { ModalTransition } from '@src/types/modal';
 import styled from 'styled-components';
-import Scrim from '@src/components/common/Scrim';
 import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
-import CommunityButton from '@src/components/common/IconButton';
+import Scrim from '@src/components/common/modal/Scrim';
+import IconButton from '@src/components/common/button/IconButton';
 import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 import useDialog from '@src/hooks/useDialog';
-import ProfileModal from '@src/components/communitysidebar/ProfileModal';
+import ProfileModal from '@src/components/community/ProfileModal';
 import useCommunityDrawer from '@src/hooks/useCommunityDrawer';
 import useCommunityDrawerData from '@src/hooks/query/useCommunityDrawerData';
 import { useNavigate, useParams } from 'react-router-dom';

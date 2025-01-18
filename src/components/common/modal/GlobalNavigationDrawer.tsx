@@ -8,7 +8,7 @@ import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useGlobalNavigationDrawer from '@src/hooks/useGlobalNavigationDrawer';
 import useServer from '@src/hooks/query/useServer';
 import styled from 'styled-components';
-import Scrim from '@src/components/common/Scrim';
+import Scrim from '@src/components/common/modal/Scrim';
 import { ReactComponent as IcnLibrary } from '@src/assets/icons/library.svg';
 import { ReactComponent as IcnBell } from '@src/assets/icons/bell.svg';
 import { ReactComponent as IcnChat } from '@src/assets/icons/chat.svg';

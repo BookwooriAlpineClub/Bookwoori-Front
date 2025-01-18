@@ -5,7 +5,7 @@ import { bgFileState, profileState } from '@src/states/atoms';
 import useMember from '@src/hooks/query/useMember';
 import { convertURLToFile } from '@src/utils/formatters';
 import UserProfilImg from '@src/components/userSettings/UserProfileImg';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import Header from '@src/components/common/Header';
 import ButtonBackground from '@src/components/common/ButtonBackground';
 import LoadingPage from '@src/components/common/LoadingPage';

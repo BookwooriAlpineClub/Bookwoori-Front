@@ -1,5 +1,5 @@
 /*
-Bottomsheet 컴포넌트 사용법
+컴포넌트 사용법
 
 1. useBottomsheet 훅을 불러온다.
 import useBottomsheet from '@src/hooks/useBottomsheet';
@@ -20,7 +20,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { bottomsheetState } from '@src/states/atoms';
 import useBottomsheet from '@src/hooks/useBottomsheet';
-import Scrim from '@src/components/common/Scrim';
+import Scrim from '@src/components/common/modal/Scrim';
 
 const Bottomsheet = () => {
   const { isOpen, transition, content } = useRecoilValue(bottomsheetState);

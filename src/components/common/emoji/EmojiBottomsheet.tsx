@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
-import IconButton from '@src/components/common/IconButton';
+import IconButton from '@src/components/common/button/IconButton';
 
 const EmojiBottomsheet = ({
   emoji = [],

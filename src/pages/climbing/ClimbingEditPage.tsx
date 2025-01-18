@@ -6,15 +6,13 @@ import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 import useToast from '@src/hooks/useToast';
 import useDialog from '@src/hooks/useDialog';
 import { encodeId, formatDate } from '@src/utils/formatters';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import ButtonBackground from '@src/components/common/ButtonBackground';
 import Header from '@src/components/common/Header';
-import InputDatepicker, {
-  Period,
-} from '@src/components/common/InputDatepicker';
-import InputText from '@src/components/common/InputText';
-import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
-import UnderlineButton from '@src/components/common/UnderlineButton';
+import Datepicker, { Period } from '@src/components/common/input/Datepicker';
+import TextField from '@src/components/common/input/TextField';
+import DeleteConfirmModal from '@src/components/common/modal/DeleteConfirmModal';
+import UnderlineButton from '@src/components/common/button/UnderlineButton';
 
 const ClimbingEditPage = () => {
   const serverId = sessionStorage.getItem('currentServer') ?? '-1';
@@ -81,7 +79,7 @@ const ClimbingEditPage = () => {
     <>
       <Header text='등반 편집하기' headerType='back' />
       <SLayout>
-        <InputText
+        <TextField
           title='등반 이름'
           placeholder='등반 이름을 입력하세요.'
           type='short'
@@ -90,7 +88,7 @@ const ClimbingEditPage = () => {
           value={climbingName}
           setValue={setClimbingName}
         />
-        <InputText
+        <TextField
           title='책 제목'
           placeholder='책 제목을 입력하세요.'
           type='short'
@@ -100,7 +98,7 @@ const ClimbingEditPage = () => {
           setValue={setBookTitle}
           disabled
         />
-        <InputDatepicker
+        <Datepicker
           title='등반 시기'
           type='period'
           min={formatDate(new Date())}
@@ -109,7 +107,7 @@ const ClimbingEditPage = () => {
           value={date}
           setValue={setDate}
         />
-        <InputText
+        <TextField
           title='등반 설명'
           placeholder='사람들에게 등반에 대해 알려주세요.'
           type='long'

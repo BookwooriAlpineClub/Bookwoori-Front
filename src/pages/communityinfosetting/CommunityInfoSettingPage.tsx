@@ -1,10 +1,9 @@
-import React from 'react';
 import CommunityInfoSection, {
   CommunityInfoProps,
-} from '@src/components/communityinfosetting/CommunityInfoSection';
+} from '@src/components/community/CommunityInfoSection';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
-import CommunitySettingSection from '@src/components/communityinfosetting/CommunitySettingSection';
+import CommunitySettingSection from '@src/components/community/CommunitySettingSection';
 import { useQuery } from '@tanstack/react-query';
 import { Server } from '@src/types/apis/server.d';
 import { AxiosError } from 'axios';

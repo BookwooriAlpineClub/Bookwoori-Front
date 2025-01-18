@@ -2,7 +2,7 @@ import useRecord from '@src/hooks/query/useRecord';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import Header from '@src/components/common/Header';
-import ReviewItem from '@src/components/book/ReviewItem';
+import ReviewListItem from '@src/components/library/ReviewListItem';
 
 const ReviewListPage = () => {
   const { reviewList } = useRecord({});
@@ -14,7 +14,7 @@ const ReviewListPage = () => {
         {reviewList.length !== 0 ? (
           <Ul>
             {reviewList.map((item) => (
-              <ReviewItem key={item.isbn13} {...item} />
+              <ReviewListItem key={item.isbn13} {...item} />
             ))}
           </Ul>
         ) : (

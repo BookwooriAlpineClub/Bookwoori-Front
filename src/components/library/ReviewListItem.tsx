@@ -9,7 +9,7 @@ import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 type Props = ElementOfArray<GetReviewListRes>;
 // type Listitem = ElementOfArray<ElementOfArray<GetReviewListRes>['records']>;
 
-const ReviewItem = ({
+const ReviewListItem = ({
   isbn13,
   title,
   author,
@@ -43,7 +43,7 @@ const ReviewItem = ({
   );
 };
 
-export default ReviewItem;
+export default ReviewListItem;
 
 const RowLayout = styled.div`
   display: flex;
