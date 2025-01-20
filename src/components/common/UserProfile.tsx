@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import { useGetProfile } from '@src/hooks/query/member';
-import UserProfilImg from '@src/components/userSettings/UserProfileImg';
+import UserProfileImg from '@src/components/userSettings/UserProfileImg';
 
 const UserProfile = ({ memberId }: { memberId: number | 'me' }) => {
   const { profileData } = useGetProfile(memberId);
 
   return (
     <Layout>
-      <UserProfilImg
-        profile={profileData?.profileImg ?? undefined}
-        background={profileData?.backgroundImg ?? undefined}
+      <UserProfileImg
+        profileImg={profileData?.profileImg ?? undefined}
+        backgroundImg={profileData?.backgroundImg ?? undefined}
       />
       <Container>
         <Nickname>{profileData?.nickname}</Nickname>

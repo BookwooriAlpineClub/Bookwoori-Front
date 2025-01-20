@@ -20,7 +20,7 @@ const useProfileImages = (
   profile: useUploadFile(profile, profileState),
 });
 
-const UserProfilImg = ({
+const UserProfileImg = ({
   edit,
   profileImg,
   backgroundImg,
@@ -65,7 +65,7 @@ const UserProfilImg = ({
   );
 };
 
-export default UserProfilImg;
+export default UserProfileImg;
 
 const Layout = styled.div`
   display: flex;
