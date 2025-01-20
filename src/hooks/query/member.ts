@@ -18,7 +18,7 @@ export const usePatchProfile = () => {
   const editProfile = useMutation({
     mutationFn: (formData: FormData) => patchProfile(formData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['getProfile'] });
+      queryClient.invalidateQueries({ queryKey: ['getProfile', 'me'] });
       window.location.reload();
     },
   });
