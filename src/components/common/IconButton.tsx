@@ -99,7 +99,7 @@ const ButtonContainer = styled.button`
 const IconWrapper = styled.div`
   width: 1.25rem;
   height: 1.25rem;
-  color: ${({ theme }) => theme.colors.blue700};
+  color: ${({ theme }) => theme.colors.blue500};
 `;
 
 const TextWrapper = styled.span`
