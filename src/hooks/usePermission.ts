@@ -6,8 +6,7 @@ const usePermission = () => {
     try {
       const permission = await Notification.requestPermission();
       switch (permission) {
-        case 'granted': {
-          // 권한 부여
+        case 'granted': { // 권한 부여
           const currentToken = await getToken(messaging, {
             vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
           });
