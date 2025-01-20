@@ -1,83 +1,78 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
-import Fieldset from '@src/components/common/Fieldset';
-import icnCheck from '@src/assets/icons/check_circle.svg';
+import icnCheck from '@src/assets/icons/md_check_circle.svg';
 
-type Kind = 'chat' | 'voice' | 'climb' | null;
-interface Props {
-  title: string;
-  items: {
-    value: 'chat' | 'voice' | 'climb';
-    icon: React.ReactElement;
-    isRadioDisabled?: boolean;
+interface Props<ValueType> {
+  name: string;
+  options: {
+    value: ValueType;
+    Icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    text: string;
+    disabled?: boolean;
   }[];
-  defaultValue?: Kind;
+  defaultValue?: ValueType;
   required: boolean;
-  setValue: React.Dispatch<React.SetStateAction<Kind>>;
+  disabled: boolean;
+  setValue: React.Dispatch<React.SetStateAction<ValueType>>;
 }
 
 /**
- * @prop items
- * @ text - 중앙 텍스트
- * @ icon - 좌측 svg 아이콘
+ * @typeDef {object[]} options
+ * @property {ValueType} value - 데이터
+ * @property {React.FC<React.SVGProps<SVGSVGElement>>} icon - 좌측 svg 아이콘
+ * @property {string} text - 중앙 텍스트
+ * @property {boolean} disabled - 선택지 비활성화 여부
  */
-const InputRadio = ({
-  title,
-  items,
+const InputRadio = <ValueType extends string>({
+  name,
+  options,
   defaultValue,
   required,
+  disabled,
   setValue,
-}: Props) => {
-  const text: {
-    [key: string]: string;
-  } = {
-    chat: '문자',
-    voice: '전화',
-    climb: '등반',
-  };
-
+}: Props<ValueType>) => {
   return (
-    <Fieldset title={title}>
-      <Layout>
-        {items.map(({ value, icon, isRadioDisabled }) => (
-          <Label key={text[value]}>
-            <Container>
-              {icon}
-              {text[value]}
-            </Container>
-            <Input
-              name={title}
-              value={value}
-              required={required}
-              onChange={(e) => setValue(e.target.value as Kind)}
-              disabled={isRadioDisabled}
-              defaultChecked={defaultValue ? defaultValue === value : false}
-            />
-          </Label>
-        ))}
-      </Layout>
-    </Fieldset>
+    <Container>
+      {options.map((item) => (
+        <Label key={item.value}>
+          <Wrapper>
+            <item.Icon width={20} height={20} />
+            {item.text}
+          </Wrapper>
+          <Input
+            name={name}
+            value={item.value}
+            required={required}
+            onChange={(e) => setValue(e.target.value as ValueType)}
+            disabled={disabled || item.disabled}
+            defaultChecked={defaultValue ? defaultValue === item.value : false}
+          />
+        </Label>
+      ))}
+    </Container>
   );
 };
 
 export default InputRadio;
 
-const Layout = styled.div`
+const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.3125rem;
+  gap: ${({ theme }) => theme.gap[6]};
 `;
 const Label = styled.label`
   display: flex;
   justify-content: space-between;
 
   width: 100%;
-  padding: 0.63rem;
+  padding: ${({ theme }) => theme.padding[8]};
 
-  border-radius: 0.9375rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background: none;
 
   color: ${({ theme }) => theme.colors.neutral400};
+
+  ${NoSelect}
 
   &:has(input[type='radio']:checked) {
     background-color: ${({ theme }) => theme.colors.blue100};
@@ -85,12 +80,10 @@ const Label = styled.label`
     color: ${({ theme }) => theme.colors.neutral950};
   }
 `;
-const Container = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  gap: 0.62rem;
-
-  ${NoSelect}
+  gap: ${({ theme }) => theme.gap[10]};
 `;
 const Input = styled.input.attrs({ type: 'radio' })`
   width: 1.0625rem;

@@ -15,7 +15,7 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
 
   return (
     <>
-      <HeaderWithZIndex text={headerText} headerType='back' />
+      <Header text={headerText} headerType='back' />
       <Container>
         <SegmentedButton onSegmentChange={handleSegmentChange} />
         {selectedView === 'climbing' && <ClimbingBoard />}
@@ -26,10 +26,6 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
 };
 
 export default ClimbingTerminatePage;
-
-const HeaderWithZIndex = styled(Header)`
-  z-index: 1;
-`;
 
 const Container = styled.div`
   display: flex;

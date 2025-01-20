@@ -1,5 +1,15 @@
-<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="MdCheck">
-<path id="Vector" d="M6.29258 10.6604L3.68633 8.0541L2.79883 8.93535L6.29258 12.4291L13.7926 4.9291L12.9113 4.04785L6.29258 10.6604Z" fill="currentColor"/>
-</g>
+<svg
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g id="MdCheck">
+    <path
+      id="Vector"
+      fill="currentColor"
+      d="M6.29258 10.6604L3.68633 8.0541L2.79883 8.93535L6.29258 12.4291L13.7926 4.9291L12.9113 4.04785L6.29258 10.6604Z"
+    />
+  </g>
 </svg>

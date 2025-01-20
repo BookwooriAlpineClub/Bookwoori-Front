@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { encodeId } from '@src/utils/formatters';
 import useLoaderData from '@src/hooks/useRoaderData';
-import { ReactComponent as Hash } from '@src/assets/icons/hash.svg';
-import { ReactComponent as Voice } from '@src/assets/icons/voice.svg';
-import { ReactComponent as Run } from '@src/assets/icons/run.svg';
-import { ReactComponent as Edit } from '@src/assets/icons/edit.svg';
+import { ReactComponent as Hash } from '@src/assets/icons/bi_hash.svg';
+import { ReactComponent as Voice } from '@src/assets/icons/hi_outline_volume_up.svg';
+import { ReactComponent as Run } from '@src/assets/icons/bi_run.svg';
+import { ReactComponent as Edit } from '@src/assets/icons/hi_outline_pencil.svg';
 
 interface Props {
   color?: string;

@@ -3,7 +3,7 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
 import { TextEllipsis, BookImg } from '@src/styles/mixins';
-import Chip from '@src/components/common/Chip';
+import Chip from '@src/components/common/Tag';
 import { ReactComponent as IcnBook } from '@src/assets/icons/md_auto_stories.svg';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
