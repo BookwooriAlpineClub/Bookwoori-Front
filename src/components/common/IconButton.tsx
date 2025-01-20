@@ -6,6 +6,7 @@ import { ReactComponent as FiLogOut } from '@src/assets/icons/fi_log_out.svg';
 import { ReactComponent as BIUserPlus } from '@src/assets/icons/bi_user_plus.svg';
 import { ReactComponent as FiSettings } from '@src/assets/icons/fi_settings.svg';
 import { ReactComponent as HiOutlinePencil } from '@src/assets/icons/hi_outline_pencil.svg';
+import { ReactComponent as FiBell } from '@src/assets/icons/fi_bell.svg';
 import { ReactComponent as HiOutlineFlag } from '@src/assets/icons/hi_outline_flag.svg';
 import { ReactComponent as MdOutlineContentCopy } from '@src/assets/icons/md_outline_content_copy.svg';
 
@@ -53,6 +54,14 @@ const buttonConfig = {
   editUserInfo: {
     name: '인물 정보 수정하기',
     icon: <HiOutlinePencil />,
+  },
+  notificationTurnOn: {
+    name: '알림 켜기',
+    icon: <FiBell />,
+  },
+  notificationTurnOff: {
+    name: '알림 끄기',
+    icon: <FiBell />,
   },
   navigateExp: {
     name: '지나온 길 보기',
