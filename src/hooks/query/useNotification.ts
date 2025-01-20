@@ -11,11 +11,11 @@ import {
  * 기기 등록 조회
  */
 export const useGetDevice = () => {
-  const { data } = useQuery<GetDeviceRes, AxiosError>({
+  const { data: device } = useQuery<GetDeviceRes, AxiosError>({
     queryKey: ['getDevice'],
     queryFn: () => getDevice(),
   });
-  return data;
+  return device;
 };
 /**
  * 기기 등록 추가
