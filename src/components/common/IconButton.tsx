@@ -71,7 +71,7 @@ interface IconButtonProps {
   testId?: string; // 테스트를 하지 않는 버튼 대비 optional 처리
 }
 
-const IconButton: React.FC<IconButtonProps> = ({ type, onClick, testId }) => {
+const IconButton = ({ type, onClick, testId }: IconButtonProps) => {
   const { name, icon } = buttonConfig[type];
   return (
     <ButtonContainer onClick={onClick} data-testid={testId} aria-label={name}>
