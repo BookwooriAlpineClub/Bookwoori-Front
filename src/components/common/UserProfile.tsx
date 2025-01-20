@@ -1,29 +1,29 @@
 import styled from 'styled-components';
-import useMember from '@src/hooks/query/useMember';
+import { useGetProfile } from '@src/hooks/query/member';
 import UserProfilImg from '@src/components/userSettings/UserProfileImg';
 
-const UserProfile = ({ memberId }: { memberId?: number }) => {
-  const { profileData: data } = useMember(memberId);
+const UserProfile = ({ memberId }: { memberId: number | 'me' }) => {
+  const { profileData } = useGetProfile(memberId);
 
   return (
     <Layout>
       <UserProfilImg
-        profile={data?.profileImg ?? undefined}
-        background={data?.backgroundImg ?? undefined}
+        profile={profileData?.profileImg ?? undefined}
+        background={profileData?.backgroundImg ?? undefined}
       />
       <Container>
-        <Nickname>{data?.nickname}</Nickname>
+        <Nickname>{profileData?.nickname}</Nickname>
         <Mountain>
-          {data?.level}번째, {data?.mountain} 등산가
+          {profileData?.level ?? 0}번째, {profileData?.mountain} 등산가
         </Mountain>
         <Box>
           <Wrapper>
-            <NicknameBlue>{data?.height}</NicknameBlue>
+            <NicknameBlue>{profileData?.height ?? 0}</NicknameBlue>
             <Caption>지나온 길(m)</Caption>
           </Wrapper>
           <Line />
           <Wrapper>
-            <NicknameBlue>{data?.totalPage}</NicknameBlue>
+            <NicknameBlue>{profileData?.totalPage ?? 0}</NicknameBlue>
             <Caption>읽어낸 책(p)</Caption>
           </Wrapper>
         </Box>
@@ -39,7 +39,7 @@ const Layout = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   width: 100%;
   padding: 0 0 1.25rem;
@@ -78,7 +78,7 @@ const Box = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.3125rem;
+  gap: ${({ theme }) => theme.gap[6]};
 `;
 const NicknameBlue = styled.label`
   ${({ theme }) => theme.fonts.nickname};
