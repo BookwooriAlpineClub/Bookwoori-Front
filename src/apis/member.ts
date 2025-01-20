@@ -1,5 +1,9 @@
 import { authClient } from '@src/apis/index';
-import type { ExpRes, ProfilePatchReq, ProfileRes } from '@src/types/apis/member';
+import type {
+  ExpRes,
+  ProfilePatchReq,
+  ProfileRes,
+} from '@src/types/apis/member';
 
 /* 프로필 수정 */
 export const patchProfile = async <Res = void, Req = ProfilePatchReq>(
@@ -15,9 +19,9 @@ export const patchProfile = async <Res = void, Req = ProfilePatchReq>(
 
 /* 개별 프로필 조회 */
 export const getProfile = async (
-  memberId?: number | null,
+  memberId: number | 'me',
 ): Promise<ProfileRes> => {
-  const res = await authClient.get(`members/${memberId ?? 'me'}`);
+  const res = await authClient.get(`members/${memberId}`);
   return res.data;
 };
 
