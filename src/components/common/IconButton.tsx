@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 import { ReactComponent as FiTrash } from '@src/assets/icons/fi_trash_2.svg';
@@ -95,13 +94,11 @@ const ButtonContainer = styled.button`
   border-radius: 6.1875rem;
   background-color: ${({ theme }) => theme.colors.neutral0};
 `;
-
 const IconWrapper = styled.div`
   width: 1.25rem;
   height: 1.25rem;
   color: ${({ theme }) => theme.colors.blue500};
 `;
-
 const TextWrapper = styled.span`
   font-family: ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.neutral950};
