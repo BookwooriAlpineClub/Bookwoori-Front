@@ -1,14 +1,7 @@
-import Device from '@src/types/device';
 import { getToken } from 'firebase/messaging';
 import { messaging } from '@src/firebase';
 
-interface Props {
-  onSuccess: (currentToken: Device['token']) => void;
-  onDenied: () => void;
-  onError: (error: Error) => void;
-}
-
-const usePermission = ({ onSuccess, onDenied, onError }: Props) => {
+const usePermission = () => {
   const requestNotification = async () => {
     try {
       const permission = await Notification.requestPermission();
@@ -18,16 +11,16 @@ const usePermission = ({ onSuccess, onDenied, onError }: Props) => {
           const currentToken = await getToken(messaging, {
             vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
           });
-          onSuccess(currentToken);
-          break;
+          return currentToken;
         }
         case 'denied': // 권한 거부
         case 'default': // 권한 요청 무시
         default:
-          onDenied();
+          throw new Error('알림 권한을 허용해 주세요.');
       }
     } catch (error) {
-      onError(error as Error);
+      if (error instanceof Error) throw new Error(error.message);
+      throw new Error('알 수 없는 오류가 발생했어요.');
     }
   };
 
