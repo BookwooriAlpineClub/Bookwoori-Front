@@ -22,3 +22,9 @@ export const isTokenWrong = (data: any): boolean => {
 export const isRefreshExpired = (data: any): boolean => {
   return data?.message == '만료된 리프레쉬 토큰입니다.';
 };
+
+
+export const validateMimeTypes = (newFile: File) => {
+  const validMimeTypes = ['image/png', 'image/jpeg'];
+  return validMimeTypes.includes(newFile.type);
+};
