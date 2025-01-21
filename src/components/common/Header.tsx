@@ -10,6 +10,7 @@ import { ReactComponent as Users } from '@src/assets/icons/fi_users.svg';
 interface HeaderProps {
   text: string;
   headerType: 'hamburger' | 'back' | 'server';
+  onClick?: () => void;
 }
 
 const renderButton = (type: string, onClick: () => void, Icon: React.FC) => (
@@ -18,7 +19,7 @@ const renderButton = (type: string, onClick: () => void, Icon: React.FC) => (
   </Button>
 );
 
-const Header = ({ text, headerType }: HeaderProps) => {
+const Header = ({ text, headerType, onClick }: HeaderProps) => {
   const navigate = useNavigate();
   const handleClick = () => navigate(-1);
   const { openServerbar } = useServerbar();
@@ -26,7 +27,8 @@ const Header = ({ text, headerType }: HeaderProps) => {
 
   return (
     <Layout>
-      {headerType === 'back' && renderButton('back', handleClick, Back)}
+      {headerType === 'back' &&
+        renderButton('back', onClick ?? handleClick, Back)}
       {(headerType === 'hamburger' || headerType === 'server') &&
         renderButton('hamburger', openServerbar, Hamburger)}
       <Serverbar />
@@ -44,7 +46,7 @@ const Layout = styled.header`
   justify-content: space-between;
   position: fixed;
   top: 0;
-  z-index: ${({theme}) => theme.zIndex.header};
+  z-index: ${({ theme }) => theme.zIndex.header};
 
   width: 100%;
   height: 4.375rem;
