@@ -1,52 +1,53 @@
 import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
 import { connectHandler, disconnectHandler } from '@src/apis/chat';
 import type { DM } from '@src/types/messageRoom';
 import type { ChatEventRes } from '@src/types/apis/chat';
 import useLoaderData from '@src/hooks/useRoaderData';
-import { useMessage, useRoomInfo } from '@src/hooks/query/useDm';
+import { useGetDMList, usePostMessageRoom } from '@src/hooks/query/chat';
 import ChatBar from '@src/components/chatting/ChatBar';
 import ChatItem from '@src/components/chatting/ChatItem';
 import DateLine from '@src/components/common/DateLine';
 import Header from '@src/components/common/Header';
-import LoadingPage from '@src/components/common/LoadingPage';
 
 const ChattingPage = () => {
   const { id: memberId } = useLoaderData<{ id: number }>();
-  const { roomInfo } = useRoomInfo(memberId);
-  const [roomId, setRoomId] = useState<number>();
-  const {
-    messages: data,
-    isLoading,
-    fetchNextPage,
-    isFetchingNextPage,
-    hasNextPage,
-  } = useMessage(roomId ?? -1);
+  const { roomInfo } = usePostMessageRoom(memberId);
+  const { data, fetchNextPage, hasNextPage, refetch } = useGetDMList(
+    roomInfo?.messageRoomId ?? 0,
+  );
   const [messages, setMessages] = useState<DM[]>([]);
-  const [prevHeight, setPrevHeight] = useState<number>(-1);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const targetRef = useRef<any>(null);
+  const [newMessages, setNewMessages] = useState<DM[]>([]);
+  const [isInitial, setIsInitial] = useState<boolean>(true);
+  const { ref: targetRef, inView } = useInView();
   const chatRef = useRef<HTMLDivElement>(null);
 
-  // 데이터 fetching
-  useEffect(() => {
-    if (data) {
-      const uniqueMessages = data.filter(
-        (newMessage) => !messages.some((msg) => msg.id === newMessage.id),
-      );
+  const navigate = useNavigate();
 
-      // 기존 메시지에 새로운 메시지만 추가
-      if (uniqueMessages.length > 0) {
-        setMessages((prevMessages) => [...prevMessages, ...uniqueMessages]);
+  const handleRefresh = async () => {
+    refetch();
+    navigate(-1);
+  };
+
+  // 데이터 패칭
+  useEffect(() => {
+    if (!inView) return;
+
+    if (hasNextPage) fetchNextPage();
+    if (data) setMessages(data);
+  }, [inView, hasNextPage]);
+
+  // 최초 스크롤 하단 이동
+  useEffect(() => {
+    if (chatRef.current && messages.length > 0) {
+      if (isInitial) {
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        setIsInitial(false);
       }
     }
-  }, [data]);
-
-  useEffect(() => {
-    if (roomInfo && roomInfo.messageRoomId !== roomId) {
-      setRoomId(roomInfo.messageRoomId);
-    }
-  }, [roomInfo]);
+  }, [messages]);
 
   useEffect(() => {
     // 메시지 핸들러 정의 (새로운 메시지가 도착할 때 호출)
@@ -62,22 +63,14 @@ const ChattingPage = () => {
       ) {
         const newMessage: DM = {
           id: message.payload.id,
-          messageRoomId: message.payload.messageRoomId || 0,
+          messageRoomId: message.payload.messageRoomId,
           memberId: message.payload.memberId,
-          content: message.payload.content ?? '',
+          content: message.payload.content,
           createdAt: message.payload.createdAt,
           // reactions: {},
         };
-        setMessages((prevMessages) => {
-          if (prevMessages.some((msg) => msg.id === newMessage.id)) {
-            return prevMessages;
-          }
-          return [newMessage, ...prevMessages];
-        });
 
-        if (chatRef.current) {
-          chatRef.current.scrollTop = chatRef.current.scrollHeight;
-        }
+        setNewMessages((prev) => [newMessage, ...prev]);
       }
     };
 
@@ -88,51 +81,25 @@ const ChattingPage = () => {
       // 컴포넌트 언마운트 시 WebSocket 연결 해제
       disconnectHandler();
     };
-  }, [roomInfo]);
+  }, [roomInfo, messages]);
 
-  // 옵저버
+  // 새로운 메시지 보냈을 때 스크롤 이동
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const target = entries[0];
-        if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
-          setPrevHeight(chatRef.current?.scrollHeight || prevHeight);
-          fetchNextPage();
-        }
-      },
-      {
-        root: null,
-        rootMargin: '0px',
-        threshold: 1.0,
-      },
-    );
-
-    const targetElement = targetRef.current;
-    if (targetElement) observer.observe(targetElement);
-
-    return () => {
-      if (targetElement) observer.unobserve(targetElement);
-    };
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage, targetRef]);
-
-  useEffect(() => {
-    // 처음 채팅방 접속시 스크롤 하단 이동
-    if (prevHeight === -1 && chatRef.current) {
+    if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, [messages]);
-
-  if (!data || isLoading) {
-    return <LoadingPage />;
-  }
+  }, [newMessages]);
 
   return (
     <>
-      <Header text={roomInfo?.title ?? ''} headerType='back' />
-      <SLayout ref={chatRef}>
-        <div ref={targetRef} />
+      <Header
+        text={roomInfo?.title ?? ''}
+        headerType='back'
+        onClick={handleRefresh}
+      />
+      <Layout ref={chatRef}>
         <Container>
-          {messages.map((it, idx) => {
+          {[...newMessages, ...messages].map((it, idx) => {
             const participant = roomInfo?.participants?.[String(it.memberId)];
             const imgUrl = participant?.profileImg || undefined;
             const nickname = participant?.nickname || '';
@@ -164,8 +131,9 @@ const ChattingPage = () => {
               </React.Fragment>
             );
           })}
+          <div ref={targetRef} />
         </Container>
-      </SLayout>
+      </Layout>
       <ChatBar nickname={roomInfo?.title ?? ''} />
     </>
   );
@@ -173,14 +141,15 @@ const ChattingPage = () => {
 
 export default ChattingPage;
 
-const SLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
 
-  padding-top: 70px;
+  padding-top: 4.375rem;
+  padding-bottom: 4.4375rem;
   width: 100%;
-  height: calc(100% - 70px);
+  height: 100%;
 
   overflow: auto;
 `;
