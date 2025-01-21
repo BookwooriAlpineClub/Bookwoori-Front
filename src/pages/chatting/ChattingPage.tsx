@@ -101,15 +101,15 @@ const ChattingPage = () => {
         <Container>
           {[...newMessages, ...messages].map((it, idx) => {
             const participant = roomInfo?.participants?.[String(it.memberId)];
-            const imgUrl = participant?.profileImg || undefined;
-            const nickname = participant?.nickname || '';
             const currentDate = it.createdAt.split('T')[1]
               ? it.createdAt.split('T')[0]
               : it.createdAt.split(' ')[0];
 
-            const prevDate = messages[idx - 1]?.createdAt.split('T')[1]
-              ? messages[idx - 1]?.createdAt.split('T')[0]
-              : messages[idx - 1]?.createdAt.split(' ')[0];
+            const prevDate = [...newMessages, ...messages][
+              idx + 1
+            ]?.createdAt.split('T')[1]
+              ? [...newMessages, ...messages][idx + 1]?.createdAt.split('T')[0]
+              : [...newMessages, ...messages][idx + 1]?.createdAt.split(' ')[0];
 
             const showDateLine = currentDate !== prevDate;
 
@@ -121,13 +121,10 @@ const ChattingPage = () => {
                   createdAt={
                     it.createdAt.split('T')[1] || it.createdAt.split(' ')[1]
                   }
-                  imgUrl={imgUrl}
-                  nickname={nickname}
+                  imgUrl={participant?.profileImg ?? undefined}
+                  nickname={participant?.nickname ?? ''}
                 />
-                {showDateLine ||
-                  ((idx === messages.length - 1 || idx === 0) && (
-                    <DateLine date={currentDate ?? ''} />
-                  ))}
+                {(showDateLine) && <DateLine date={currentDate ?? ''} />}
               </React.Fragment>
             );
           })}
