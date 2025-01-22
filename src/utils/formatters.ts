@@ -80,8 +80,17 @@ export const formatChatItemTime = (date: string) => {
   const hour = Number(hourStr);
 
   const period = hour < 12 ? '오전' : '오후';
-  // eslint-disable-next-line no-nested-ternary
-  const formattedHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+
+  let formattedHour;
+
+  if (hour === 0) {
+    formattedHour = 12;
+  } else if (hour > 12) {
+    formattedHour = hour - 12;
+  } else {
+    formattedHour = hour;
+  }
+
   return `${period} ${formattedHour}:${minute}`;
 };
 
@@ -90,21 +99,14 @@ export const formatChatListItemTime = (date: string) => {
 
   const today = new Date();
   const targetDate = new Date(datePart);
-  if (
-    targetDate.getFullYear() === today.getFullYear() &&
-    targetDate.getMonth() === today.getMonth() &&
-    targetDate.getDate() === today.getDate()
-  ) {
+
+  if (targetDate.toDateString() === today.toDateString()) {
     return formatChatItemTime(timePart);
   }
 
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
-  if (
-    targetDate.getFullYear() === yesterday.getFullYear() &&
-    targetDate.getMonth() === yesterday.getMonth() &&
-    targetDate.getDate() === yesterday.getDate()
-  ) {
+  if (targetDate.toDateString() === yesterday.toDateString()) {
     return '어제';
   }
 
