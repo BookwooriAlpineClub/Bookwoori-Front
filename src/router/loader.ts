@@ -1,12 +1,12 @@
 import { Params } from 'react-router-dom';
 import { decodeIdParam } from '@src/utils/formatters';
-import { ROUTE_PATH } from '@src/constants/routePath';
+// import { ROUTE_PATH } from '@src/constants/routePath';
 
 export const checkAuthLoader = async () => {
-  const accessToken = localStorage.getItem('accessToken');
-  if (!accessToken) {
-    return { redirect: ROUTE_PATH.signIn };
-  }
+  // const accessToken = localStorage.getItem('accessToken');
+  // if (!accessToken) {
+  //   return { redirect: ROUTE_PATH.signIn };
+  // }
   return null;
 };
 

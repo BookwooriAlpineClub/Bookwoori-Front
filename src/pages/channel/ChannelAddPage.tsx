@@ -1,5 +1,5 @@
+import type Book from '@src/types/book';
 import type { Category } from '@src/types/category';
-import type { BookListitemQueryRes } from '@src/types/apis/book';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { formatDate, decodeIdParam } from '@src/utils/formatters';
@@ -19,9 +19,9 @@ import InputDatepicker, {
 } from '@src/components/common/InputDatepicker';
 import Button from '@src/components/common/Button';
 import SearchBottomsheet from '@src/components/channel/SearchBottomsheet';
-import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
-import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
-import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
+import { ReactComponent as IcnHash } from '@src/assets/icons/bi_hash.svg';
+import { ReactComponent as IcnVoice } from '@src/assets/icons/hi_outline_volume_up.svg';
+import { ReactComponent as IcnRun } from '@src/assets/icons/bi_run.svg';
 
 type DefaultKind = 'chat' | 'voice' | 'climb' | null;
 
@@ -42,7 +42,7 @@ const ChannelAddPage = () => {
   const [kind, setKind] = useState<DefaultKind>(defaultKind);
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({
+  const [book, setBook] = useState<Pick<Book, 'title' | 'isbn13'>>({
     title: '',
     isbn13: '',
   });

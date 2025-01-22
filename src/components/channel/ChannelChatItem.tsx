@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import useLongPress from '@src/hooks/useLongPress';
-import ChatMenu from '@src/components/chatting/ChatMenu';
+import ChatMenu from '@src/components/common/EmojiBottomsheet';
 import Profile from '@src/assets/images/userSettings/background_default.svg';
 import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';

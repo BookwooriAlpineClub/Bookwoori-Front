@@ -4,7 +4,7 @@ import useUploadFile from '@src/hooks/useUploadFile';
 import { bgFileState, profileState } from '@src/states/atoms';
 import Background from '@src/assets/images/userSettings/background_default.svg';
 import Profile from '@src/assets/images/userSettings/profile_default.svg';
-import { ReactComponent as Camera } from '@src/assets/icons/camera.svg';
+import { ReactComponent as Camera } from '@src/assets/icons/md_camera_enhance.svg';
 
 interface UserProfileImgProps {
   edit?: boolean;

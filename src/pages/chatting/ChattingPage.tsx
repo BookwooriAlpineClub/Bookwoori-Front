@@ -7,7 +7,7 @@ import useLoaderData from '@src/hooks/useRoaderData';
 import { useMessage, useRoomInfo } from '@src/hooks/query/useDm';
 import ChatBar from '@src/components/chatting/ChatBar';
 import ChatItem from '@src/components/chatting/ChatItem';
-import DateLine from '@src/components/chatting/DateLine';
+import DateLine from '@src/components/common/DateLine';
 import Header from '@src/components/common/Header';
 import LoadingPage from '@src/pages/fallback/LoadingPage';
 
@@ -128,7 +128,7 @@ const ChattingPage = () => {
 
   return (
     <>
-      <SHeader text={roomInfo?.title ?? ''} headerType='back' />
+      <Header text={roomInfo?.title ?? ''} headerType='back' />
       <SLayout ref={chatRef}>
         <div ref={targetRef} />
         <Container>
@@ -173,10 +173,6 @@ const ChattingPage = () => {
 
 export default ChattingPage;
 
-const SHeader = styled(Header)`
-  position: fixed;
-  z-index: 1;
-`;
 const SLayout = styled.div`
   display: flex;
   position: relative;
