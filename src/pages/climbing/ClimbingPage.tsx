@@ -3,7 +3,7 @@ import ClimbingTerminatePage from '@src/pages/climbing/ClimbingTerminatePage';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useQuery } from '@tanstack/react-query';
 import { getClimbing } from '@src/apis/climbing';
-import LoadingPage from '@src/components/common/LoadingPage';
+import LoadingPage from '@src/pages/fallback/LoadingPage';
 
 const ClimbingPage = () => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
