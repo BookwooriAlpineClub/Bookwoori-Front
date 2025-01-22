@@ -84,3 +84,15 @@ import firebaseConfig from '@src/firebase/firebaseConfig';
 
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
+
+onBackgroundMessage(messaging, (payload) => {
+  console.log('background:', payload);
+
+  const notificationTitle = 'Background Message Title';
+  const notificationOptions = {
+    body: 'Background Message body.',
+    icon: '/public/logo_neon.svg',
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});
