@@ -110,3 +110,11 @@ export const formatChatListItemTime = (date: string) => {
 
   return datePart;
 };
+
+export const formatCreatedAt = (createdAt: string) => {
+  const [datePart, timePart] = createdAt.split('T')[1]
+    ? createdAt.split('T')
+    : createdAt.split(' ');
+
+  return { date: datePart, time: timePart };
+};

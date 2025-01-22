@@ -7,6 +7,7 @@ import type { DM } from '@src/types/messageRoom';
 import type { ChatEventRes } from '@src/types/apis/chat';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useGetDMList, usePostMessageRoom } from '@src/hooks/query/chat';
+import { formatCreatedAt } from '@src/utils/formatters';
 import ChatBar from '@src/components/chatting/ChatBar';
 import ChatItem from '@src/components/chatting/ChatItem';
 import DateLine from '@src/components/common/DateLine';
@@ -31,6 +32,12 @@ const ChattingPage = () => {
     navigate(-1);
   };
 
+  useEffect(() => {
+    if (data && isInitial) {
+      setMessages(data);
+    }
+  }, [data]);
+
   // 데이터 패칭
   useEffect(() => {
     if (!inView) return;
@@ -48,6 +55,13 @@ const ChattingPage = () => {
       }
     }
   }, [messages]);
+
+  // 새로운 메시지 보냈을 때 스크롤 이동
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [newMessages]);
 
   useEffect(() => {
     // 메시지 핸들러 정의 (새로운 메시지가 도착할 때 호출)
@@ -81,14 +95,7 @@ const ChattingPage = () => {
       // 컴포넌트 언마운트 시 WebSocket 연결 해제
       disconnectHandler();
     };
-  }, [roomInfo, messages]);
-
-  // 새로운 메시지 보냈을 때 스크롤 이동
-  useEffect(() => {
-    if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight;
-    }
-  }, [newMessages]);
+  }, [roomInfo]);
 
   return (
     <>
@@ -101,30 +108,25 @@ const ChattingPage = () => {
         <Container>
           {[...newMessages, ...messages].map((it, idx) => {
             const participant = roomInfo?.participants?.[String(it.memberId)];
-            const currentDate = it.createdAt.split('T')[1]
-              ? it.createdAt.split('T')[0]
-              : it.createdAt.split(' ')[0];
-
-            const prevDate = [...newMessages, ...messages][
-              idx + 1
-            ]?.createdAt.split('T')[1]
-              ? [...newMessages, ...messages][idx + 1]?.createdAt.split('T')[0]
-              : [...newMessages, ...messages][idx + 1]?.createdAt.split(' ')[0];
-
-            const showDateLine = currentDate !== prevDate;
+            const prevMessage = [...newMessages, ...messages][idx + 1];
+            const { date: prevDate } = prevMessage
+              ? formatCreatedAt(prevMessage.createdAt)
+              : {};
+            const { date: currentDate, time: currentTime } = formatCreatedAt(
+              it.createdAt,
+            );
+            const showDateLine = prevDate !== currentDate;
 
             return (
               <React.Fragment key={it.id}>
                 <ChatItem
                   key={it.id}
                   chatItem={it}
-                  createdAt={
-                    it.createdAt.split('T')[1] || it.createdAt.split(' ')[1]
-                  }
+                  createdAt={currentTime}
                   imgUrl={participant?.profileImg ?? undefined}
                   nickname={participant?.nickname ?? ''}
                 />
-                {(showDateLine) && <DateLine date={currentDate ?? ''} />}
+                {showDateLine && <DateLine date={currentDate} />}
               </React.Fragment>
             );
           })}
