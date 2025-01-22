@@ -64,17 +64,6 @@ export const decodeIdParam = (id: string | undefined): number => {
   }
 };
 
-/* url 형식의 이미지를 File로 변환하는 함수 */
-export const convertURLToFile = async (url: string): Promise<File> => {
-  const response = await fetch(url);
-  const data = await response.blob();
-  const ext = url.split('.').pop();
-  const filename = url.split('/').pop();
-  const metadata = { type: `image/${ext}` };
-
-  return new File([data], filename!, metadata);
-};
-
 export const formatChatItemTime = (date: string) => {
   const [hourStr, minute] = date.split(':');
   const hour = Number(hourStr);

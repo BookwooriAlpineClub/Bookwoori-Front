@@ -1,7 +1,12 @@
 import { AxiosError } from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { ProfileRes } from '@src/types/apis/member';
-import { getProfile, patchProfile } from '@src/apis/member';
+import {
+  getProfile,
+  patchBackgroundImg,
+  patchNickname,
+  patchProfileImg,
+} from '@src/apis/member';
 
 export const useGetProfile = (userId: number | 'me') => {
   const { data } = useQuery<ProfileRes, AxiosError>({
@@ -15,13 +20,26 @@ export const useGetProfile = (userId: number | 'me') => {
 export const usePatchProfile = () => {
   const queryClient = useQueryClient();
 
-  const editProfile = useMutation({
-    mutationFn: (formData: FormData) => patchProfile(formData),
+  const editNickname = useMutation({
+    mutationFn: (nickname: string) => patchNickname({ nickname }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['getProfile', 'me'] });
-      window.location.reload();
     },
   });
 
-  return { editProfile };
+  const editProfileImg = useMutation({
+    mutationFn: (formData: FormData) => patchProfileImg(formData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['getProfile', 'me'] });
+    },
+  });
+
+  const editBackgroundImg = useMutation({
+    mutationFn: (formData: FormData) => patchBackgroundImg(formData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['getProfile', 'me'] });
+    },
+  });
+
+  return { editNickname, editProfileImg, editBackgroundImg };
 };

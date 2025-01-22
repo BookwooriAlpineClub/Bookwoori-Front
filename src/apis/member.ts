@@ -6,10 +6,37 @@ import type {
 } from '@src/types/apis/member';
 
 /* 프로필 수정 */
-export const patchProfile = async <Res = void, Req = ProfilePatchReq>(
+export const patchNickname = async <
+  Res = void,
+  Req = Pick<ProfilePatchReq, 'nickname'>,
+>(
   body: Req,
 ): Promise<Res> => {
-  const res = await authClient.patch(`members/me`, body, {
+  const res = await authClient.patch(`members/me`, body);
+  return res.data;
+};
+
+export const patchProfileImg = async <
+  Res = void,
+  Req = Pick<ProfilePatchReq, 'profileImg'>,
+>(
+  body: Req,
+): Promise<Res> => {
+  const res = await authClient.patch(`members/me/profileImg`, body, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return res.data;
+};
+
+export const patchBackgroundImg = async <
+  Res = void,
+  Req = Pick<ProfilePatchReq, 'backgroundImg'>,
+>(
+  body: Req,
+): Promise<Res> => {
+  const res = await authClient.patch(`members/me/backgroundImg`, body, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
