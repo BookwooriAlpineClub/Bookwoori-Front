@@ -1,7 +1,8 @@
-import { getToken } from 'firebase/messaging';
-import { messaging } from '@src/firebase';
+import { getMessaging, getToken } from 'firebase/messaging';
 
 const usePermission = () => {
+  const messaging = getMessaging();
+
   const requestNotification = async () => {
     try {
       const permission = await Notification.requestPermission();

@@ -1,5 +1,5 @@
 import '@src/styles/reset.css';
-import '@src/firebase';
+import '@src/firebase/messaging';
 import * as serviceWorkerRegistration from '@src/serviceWorkerRegistration';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
