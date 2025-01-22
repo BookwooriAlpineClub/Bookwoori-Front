@@ -8,7 +8,41 @@ import Button from '@src/components/common/Button';
 import Header from '@src/components/common/Header';
 import ButtonBackground from '@src/components/common/ButtonBackground';
 import Fieldset from '@src/components/common/Fieldset';
+import Section from '@src/components/common/Section';
 import InputText from '@src/components/common/InputText';
+
+const addNicknamePromise = (
+  promises: Promise<void>[],
+  refValue: string,
+  newValue: string,
+  mutateFunc: (nickname: string) => Promise<void>,
+) => {
+  if (refValue !== newValue) {
+    promises.push(mutateFunc(newValue));
+  }
+};
+
+const addImagePromise = (
+  promises: Promise<void>[],
+  file: File | null,
+  mutateFunc: (
+    data: FormData,
+    options?: {
+      onSuccess?: () => void;
+    },
+  ) => Promise<void>,
+  resetFunc: () => void,
+) => {
+  if (file) {
+    const formData = new FormData();
+    formData.append('imageFile', file);
+    promises.push(
+      mutateFunc(formData, {
+        onSuccess: resetFunc,
+      }),
+    );
+  }
+};
 
 const EditUserInfoPage = () => {
   const { profileData } = useGetProfile('me');
@@ -22,29 +56,16 @@ const EditUserInfoPage = () => {
   const handleEditProfile = async () => {
     const promises: Promise<void>[] = [];
 
-    if (ref.current !== value) {
-      promises.push(editNickname.mutateAsync(value));
-    }
-
-    if (profileFile) {
-      const profileFormData = new FormData();
-      profileFormData.append('imageFile', profileFile);
-      promises.push(
-        editProfileImg.mutateAsync(profileFormData, {
-          onSuccess: () => setProfileFile(null),
-        }),
-      );
-    }
-
-    if (backgroundFile) {
-      const backgroundFormData = new FormData();
-      backgroundFormData.append('imageFile', backgroundFile);
-      promises.push(
-        editBackgroundImg.mutateAsync(backgroundFormData, {
-          onSuccess: () => setBackgroundFile(null),
-        }),
-      );
-    }
+    addNicknamePromise(promises, ref.current, value, editNickname.mutateAsync);
+    addImagePromise(promises, profileFile, editProfileImg.mutateAsync, () =>
+      setProfileFile(null),
+    );
+    addImagePromise(
+      promises,
+      backgroundFile,
+      editBackgroundImg.mutateAsync,
+      () => setBackgroundFile(null),
+    );
 
     await Promise.all(promises);
   };
@@ -67,7 +88,7 @@ const EditUserInfoPage = () => {
             backgroundImg={profileData?.backgroundImg ?? undefined}
           />
           <Fieldset title='별명'>
-            <Wrapper>
+            <Section>
               <InputText
                 as='input'
                 name='nickname'
@@ -77,7 +98,7 @@ const EditUserInfoPage = () => {
                 setValue={setValue}
                 required
               />
-            </Wrapper>
+            </Section>
           </Fieldset>
         </Container>
         <ButtonBackground color='transparent'>
@@ -115,14 +136,4 @@ const Container = styled.div`
   gap: 1.25rem;
 
   width: 100%;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-
-  padding: 0.875rem 0.625rem;
-
-  border-radius: ${({ theme }) => theme.rounded[6]};
-  background: ${({ theme }) => theme.colors.neutral0};
 `;
