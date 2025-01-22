@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
 import { toastState } from '@src/states/atoms';
+import { NoSelect } from '@src/styles/mixins';
 
 const Toast = () => {
   const toasts = useRecoilValue(toastState);
@@ -63,9 +64,5 @@ const Item = styled.li`
   }
   animation: fadeOut 2.5s ease 2s forwards;
 
-  // 드래그 및 선택 방지
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-use-select: none;
-  user-select: none;
+  ${NoSelect}
 `;
