@@ -78,3 +78,9 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+import { initializeApp } from 'firebase/app';
+import { getMessaging, onBackgroundMessage } from 'firebase/messaging/sw';
+import firebaseConfig from '@src/firebase/firebaseConfig';
+
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
