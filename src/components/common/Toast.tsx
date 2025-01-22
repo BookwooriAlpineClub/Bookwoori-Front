@@ -15,16 +15,25 @@ import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
 import { toastState } from '@src/states/atoms';
 import { NoSelect } from '@src/styles/mixins';
+import { ReactComponent as IcnInfo } from '@src/assets/icons/toast_info.svg';
+import { ReactComponent as IcnSuccess } from '@src/assets/icons/toast_success.svg';
+import { ReactComponent as IcnError } from '@src/assets/icons/toast_error.svg';
 
 const Toast = () => {
   const toasts = useRecoilValue(toastState);
+  const icon = {
+    info: <IcnInfo />,
+    success: <IcnSuccess />,
+    error: <IcnError />,
+  };
 
   return createPortal(
     <List>
       {toasts &&
-        toasts.map((item) => (
-          <Item key={item.id} role='alert'>
-            {item.content}
+        toasts.map(({ id, kind, content }) => (
+          <Item key={id} role='alert'>
+            {icon[kind]}
+            {content}
           </Item>
         ))}
     </List>,
