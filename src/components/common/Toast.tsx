@@ -47,20 +47,30 @@ const List = styled.ul`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: ${({ theme }) => theme.gap[12]};
+  align-items: center;
+
+  ${NoSelect}
 `;
-
 const Item = styled.li`
-  min-width: 260px; // 추후 수정: 디자인 작업 중
-  padding: 0.25rem 0.9375rem; // 추후 수정: 디자인 작업 중
+  display: flex;
+  flex-flow: row nowrap;
+  gap: ${({ theme }) => theme.gap[8]};
+  align-items: center;
 
-  border-radius: 0.25rem; // 추후 수정: 디자인 작업 중
-  background-color: ${({ theme }) =>
-    theme.colors.overlay}; // 추후 수정: 디자인 작업 중
+  width: fit-content;
+  padding: ${({ theme }) => `${theme.padding[12]} ${theme.padding[16]}`};
 
-  ${({ theme }) => theme.fonts.body} // 추후 수정: 디자인 작업 중
-  color: ${({ theme }) => theme.colors.neutral0}; // 추후 수정: 디자인 작업 중
-  text-align: center;
-  white-space: pre-line; // 개행문자 처리
+  border-radius: ${({ theme }) => theme.rounded[16]};
+  background-color: ${({ theme }) => theme.colors.neutral0};
+  box-shadow: 0px 0px 16px 0px ${({ theme }) => theme.colors.overlay};
+
+  ${({ theme }) => theme.fonts.body}
+  color: ${({ theme }) => theme.colors.neutral950};
+  white-space: pre-line;
 
   @keyframes fadeOut {
     from {
@@ -71,6 +81,4 @@ const Item = styled.li`
     }
   }
   animation: fadeOut 2.5s ease 2s forwards;
-
-  ${NoSelect}
 `;
