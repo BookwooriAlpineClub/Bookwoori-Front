@@ -44,9 +44,9 @@ export default Toast;
 
 const List = styled.ul`
   position: fixed;
-  top: 50%;
+  top: 5%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
 
   display: flex;
   flex-flow: column nowrap;
