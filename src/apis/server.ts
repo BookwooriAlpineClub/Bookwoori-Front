@@ -1,6 +1,20 @@
 import { AxiosResponse } from 'axios';
 import { authClient } from '@src/apis/index';
-import { Server, ServerListItem } from '@src/types/apis/server.d';
+import type {
+  ApiResponse,
+  ApiSuccessResponse,
+} from '@src/types/apis/apiResponse';
+import type {
+  PostServerReq,
+  GetServersRes,
+  GetServerOneRes,
+  PatchServerOneReq,
+  PatchServerImgReq,
+  GetServerInfoInviteCodeRes,
+  GetServerMembersRes,
+  PatchServerMemberRoleReq,
+} from '@src/types/apis/server';
+import { ApiErrorResponse } from '@src/types/apis/apiResponse';
 
 const SERVER_BASE_URL = '/servers';
 const buildServerUrl = (path: string = '') => `${SERVER_BASE_URL}${path}`;
