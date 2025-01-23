@@ -70,7 +70,7 @@ const Item = styled.li`
 
   ${({ theme }) => theme.fonts.body}
   color: ${({ theme }) => theme.colors.neutral950};
-  white-space: pre-line;
+  white-space: pre;
 
   @keyframes in {
     from {
