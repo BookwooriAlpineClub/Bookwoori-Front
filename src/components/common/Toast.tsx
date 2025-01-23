@@ -72,13 +72,27 @@ const Item = styled.li`
   color: ${({ theme }) => theme.colors.neutral950};
   white-space: pre-line;
 
-  @keyframes fadeOut {
+  @keyframes in {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes out {
     from {
       opacity: 1;
+      transform: translateY(0);
     }
     to {
       opacity: 0;
+      transform: translateY(-100%);
     }
   }
-  animation: fadeOut 2.5s ease 2s forwards;
+  animation:
+    in 0.3s ease forwards,
+    out 0.3s ease 2.3s forwards;
 `;
