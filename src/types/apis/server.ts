@@ -1,16 +1,39 @@
-import { ServerMember } from '@src/types/domain/member';
+import type { Server, ServerMember } from '@src/types/server';
 
-export type Server = {
-  serverId: number;
-  name: string;
-  serverImg: string | null;
-  ownerNickname: string;
-  memberCount: number;
-  createdAt: string;
-  description: string;
+export interface PostServerReq extends Pick<Server, 'name' | 'description'> {
+  serverImg?: File | null;
+}
+
+export interface GetServersRes {
+  servers: Array<Pick<Server, 'name' | 'serverImg'> & { serverId: number }>;
+}
+
+export interface GetServerOneRes extends Server {
   isOwner: boolean;
-};
-export type ServerListItem = Pick<Server, 'serverId' | 'name' | 'serverImg'>;
-export interface ServerMembersResponse {
+}
+
+export interface GetInviteCodeRes {
+  inviteCode: string;
+}
+
+export interface PatchServerOneReq
+  extends Pick<Server, 'name' | 'description'> {}
+
+export interface PatchServerImgReq {
+  serverImg: File;
+}
+
+export interface GetServerInfoInviteCodeReq {
+  inviteCode: string;
+}
+
+export interface GetServerInfoInviteCodeRes extends Server {}
+
+export interface GetServerMembersRes {
   members: ServerMember[];
+}
+
+export interface PatchServerMemberRoleReq {
+  memberId: number;
+  serverId: number;
 }
