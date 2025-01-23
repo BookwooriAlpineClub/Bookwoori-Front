@@ -78,7 +78,10 @@
     "import/prefer-default-export": "off",
     "react/jsx-no-useless-fragment": "off",
     "no-nested-ternary": "off",
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-empty-object-type": "off",
+    "react/jsx-boolean-value": "off"
   },
   "overrides": [
     {
