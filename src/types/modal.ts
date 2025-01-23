@@ -1,7 +1,7 @@
 export type Toast = {
   id: number;
+  kind: 'info' | 'success' | 'error';
   content: string;
-  kind?: 'default' | 'success' | 'error';
 };
 
 export type ModalTransition = 'open' | 'close';
