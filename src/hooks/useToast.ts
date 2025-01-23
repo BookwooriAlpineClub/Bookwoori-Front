@@ -5,7 +5,7 @@ import { toastState } from '@src/states/atoms';
 const useToast = () => {
   const setToasts = useSetRecoilState(toastState);
 
-  const addToast = ({ kind, content }: Omit<Toast, 'id'>): void => {
+  const addToast = (kind: Toast['kind'], content: Toast['content']): void => {
     const newToast: Toast = { id: Date.now(), kind, content };
     setToasts((prev) => [...prev, newToast]);
 
