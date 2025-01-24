@@ -35,13 +35,13 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
   }
-  #toast {
-    position: fixed;
-    z-index: ${({ theme }) => theme.zIndex.toast};
-  }
   #modal {
     position: fixed;
     z-index: ${({ theme }) => theme.zIndex.modal};
+  }
+  #toast {
+    position: fixed;
+    z-index: ${({ theme }) => theme.zIndex.toast};
   }
 `;
 
