@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { useRecoilValue } from 'recoil';
+import { currentServerIdState } from '@src/states/atoms';
 import {
   deleteClimbing,
   getClimbing,
@@ -10,6 +12,7 @@ import {
   postClimbing,
 } from '@src/apis/climbing';
 import {
+  ClimbingRecruitListRes,
   getClimbingChannelMembersRes,
   getClimbingInfoRes,
   patchClimbingChannelReq,
@@ -44,8 +47,10 @@ export const useGetClimbingMembers = (climbingId: number) => {
   return { participants };
 };
 
-export const useGetClimbingRecruitList = (serverId: number) => {
-  const { data } = useQuery<getClimbingInfoRes, AxiosError>({
+export const useGetClimbingRecruitList = () => {
+  const serverId = useRecoilValue(currentServerIdState);
+
+  const { data } = useQuery<ClimbingRecruitListRes, AxiosError>({
     queryKey: ['getClimbingRecruitList', serverId],
     queryFn: () =>
       getServerClimbing(
@@ -55,10 +60,11 @@ export const useGetClimbingRecruitList = (serverId: number) => {
       ),
   });
 
-  return { data };
+  return { data: data?.readyClimbingList };
 };
 
-export const usePutParticipate = (climbingId: number, serverId?: number) => {
+export const usePutParticipate = (climbingId: number) => {
+  const serverId = useRecoilValue(currentServerIdState);
   const queryClient = useQueryClient();
 
   const participateClimbing = useMutation({
@@ -79,7 +85,8 @@ export const usePutParticipate = (climbingId: number, serverId?: number) => {
   return { participateClimbing };
 };
 
-export const usePatchClimbing = (serverId?: number) => {
+export const usePatchClimbing = () => {
+  const serverId = useRecoilValue(currentServerIdState);
   const queryClient = useQueryClient();
 
   const editClimbing = useMutation({
@@ -120,7 +127,8 @@ export const usePostClimbing = () => {
   return { createClimbing };
 };
 
-export const useDeleteClimbing = (serverId?: number) => {
+export const useDeleteClimbing = () => {
+  const serverId = useRecoilValue(currentServerIdState);
   const queryClient = useQueryClient();
 
   const delClimbing = useMutation({
