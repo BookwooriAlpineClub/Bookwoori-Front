@@ -59,17 +59,17 @@ const CommunityInfoSettingPage = () => {
   return (
     <>
       <Header text={headerText} headerType='back' />
-      <Container>
+      <Main>
         <CommunityInfoSection {...communityInfo} />
         <CommunitySettingSection isOwner={data?.isOwner} />
-      </Container>
+      </Main>
     </>
   );
 };
 
 export default CommunityInfoSettingPage;
 
-const Container = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   gap: 0.94rem;

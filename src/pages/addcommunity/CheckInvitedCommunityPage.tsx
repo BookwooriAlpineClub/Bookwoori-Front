@@ -65,29 +65,28 @@ const CheckInvitedCommunityPage = () => {
   return (
     <>
       <Header text={headerText} headerType={headerType} />
-      <Container>
-        <IntroSection title={introTitleText} bodyLines={introBodyLines} />
-        <CommunityInfoCard
-          name={server.name}
-          memberInfo={memberInfo}
-          creationDate={server.createdAt}
-          description={server.description}
-          imageUrl={server.serverImg || ' '}
-        />
-        <ButtonWrapper>
-          <Button type='submit' onClick={handleJoinServer}>
-            참여하기
-          </Button>
-        </ButtonWrapper>
-        <BottomSpacer />
-      </Container>
+      <Main>
+        <div className='scroll-area'>
+          <IntroSection title={introTitleText} bodyLines={introBodyLines} />
+          <CommunityInfoCard
+            name={server.name}
+            memberInfo={memberInfo}
+            creationDate={server.createdAt}
+            description={server.description}
+            imageUrl={server.serverImg || ' '}
+          />
+        </div>
+        <Button type='submit' onClick={handleJoinServer}>
+          참여하기
+        </Button>
+      </Main>
     </>
   );
 };
 
 export default CheckInvitedCommunityPage;
 
-const Container = styled.div`
+const Main = styled.main`
   min-height: calc(100% - 4.375rem);
   display: flex;
   flex-direction: column;
@@ -96,18 +95,4 @@ const Container = styled.div`
   padding: 0 1.25rem;
   padding-top: 1.875rem;
   background-color: ${({ theme }) => theme.colors.neutral50};
-`;
-
-const ButtonWrapper = styled.div`
-  position: fixed;
-  bottom: calc(1.875rem + 2px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  padding: 0 1.25rem;
-`;
-
-const BottomSpacer = styled.div`
-  height: calc(1.875rem + 2px + 2.56rem + 2.56rem);
-  width: 100%;
 `;

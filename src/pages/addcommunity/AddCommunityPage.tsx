@@ -31,7 +31,7 @@ const AddCommunityPage = () => {
   return (
     <>
       <Header text={headerText} headerType={headerType} />
-      <Container>
+      <Main>
         <IntroSection title={introTitleText} bodyLines={introBodyLines} />
         <AddOptionContainer>
           {buttonConfig.map((button) => (
@@ -42,14 +42,14 @@ const AddCommunityPage = () => {
             />
           ))}
         </AddOptionContainer>
-      </Container>
+      </Main>
     </>
   );
 };
 
 export default AddCommunityPage;
 
-const Container = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,7 +61,6 @@ const Container = styled.div`
 
   background-color: ${({ theme }) => theme.colors.neutral50};
 `;
-
 const AddOptionContainer = styled.div`
   display: flex;
   flex-direction: column;

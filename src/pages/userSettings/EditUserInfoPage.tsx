@@ -77,8 +77,8 @@ const EditUserInfoPage = () => {
   return (
     <>
       <Header text='인물 정보 수정하기' headerType='back' />
-      <Layout>
-        <Container>
+      <Main>
+        <Container className='scroll-area'>
           <UserProfileImg
             edit
             profileImg={profileData?.profileImg ?? undefined}
@@ -98,35 +98,32 @@ const EditUserInfoPage = () => {
             </Section>
           </Fieldset>
         </Container>
-        <ButtonBackground color='transparent'>
-          <Button
-            disabled={
-              !(
-                value &&
-                value.length <= 10 &&
-                (ref.current !== value || profileFile || backgroundFile)
-              )
-            }
-            onClick={handleEditProfile}
-          >
-            수정하기
-          </Button>
-        </ButtonBackground>
-      </Layout>
+        <Button
+          disabled={
+            !(
+              value &&
+              value.length <= 10 &&
+              (ref.current !== value || profileFile || backgroundFile)
+            )
+          }
+          onClick={handleEditProfile}
+        >
+          수정하기
+        </Button>
+      </Main>
     </>
   );
 };
 
 export default EditUserInfoPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
 
   padding: 1.875rem 1.25rem 0;
 `;
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;

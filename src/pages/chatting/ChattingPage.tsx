@@ -104,7 +104,7 @@ const ChattingPage = () => {
         headerType='back'
         onClick={handleRefresh}
       />
-      <Layout ref={chatRef}>
+      <Main ref={chatRef}>
         <Container>
           {[...newMessages, ...messages].map((it, idx) => {
             const participant = roomInfo?.participants?.[String(it.memberId)];
@@ -132,7 +132,7 @@ const ChattingPage = () => {
           })}
           <div ref={targetRef} />
         </Container>
-      </Layout>
+      </Main>
       <ChatBar nickname={roomInfo?.title ?? ''} />
     </>
   );
@@ -140,7 +140,7 @@ const ChattingPage = () => {
 
 export default ChattingPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   position: relative;
   flex-direction: column;

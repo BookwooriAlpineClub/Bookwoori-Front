@@ -27,7 +27,7 @@ const ChattingListPage = () => {
   return (
     <>
       <Header text='문자' headerType='hamburger' />
-      <Layout>
+      <Main>
         {data?.map((page) =>
           page.messageRooms.map((it) => (
             <StatusBadgeListItem
@@ -57,14 +57,14 @@ const ChattingListPage = () => {
             <Span>데이터 불러오는 중...</Span>
           </Wrapper>
         )}
-      </Layout>
+      </Main>
     </>
   );
 };
 
 export default ChattingListPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.gap[10]};

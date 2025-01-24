@@ -16,18 +16,18 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
   return (
     <>
       <Header text={headerText} headerType='back' />
-      <Container>
+      <Main>
         <SegmentedButton onSegmentChange={handleSegmentChange} />
         {selectedView === 'climbing' && <ClimbingBoard />}
         {selectedView === 'review' && <ReviewBoard />}
-      </Container>
+      </Main>
     </>
   );
 };
 
 export default ClimbingTerminatePage;
 
-const Container = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   padding: 1.25rem 1.875rem;

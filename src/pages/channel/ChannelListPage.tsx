@@ -54,7 +54,7 @@ const ChannelListPage = () => {
   return (
     <>
       <Header headerType='server' text={serverInfo?.name ?? '서버'} />
-      <Layout>
+      <Main>
         <ButtonContainer>
           {buttonData.map((buttonItem) => (
             <SubButton
@@ -104,14 +104,14 @@ const ChannelListPage = () => {
             )}
           </Accordion>
         </Container>
-      </Layout>
+      </Main>
     </>
   );
 };
 
 export default ChannelListPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   gap: 0.9375rem;

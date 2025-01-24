@@ -159,7 +159,7 @@ const ChannelPage = () => {
   return (
     <>
       <Header text={channelName ?? ''} headerType='back' />
-      <Container ref={containerRef}>
+      <Main ref={containerRef}>
         {totalMessageCount > 8 && <div ref={ref} style={{ height: '20px' }} />}
         {Object.entries(chattings)
           .sort((a, b) => (a[0] < b[0] ? 1 : -1))
@@ -177,7 +177,7 @@ const ChannelPage = () => {
                 ))}
             </>
           ))}
-      </Container>
+      </Main>
       <ChannelChatBar channelName={channelName ?? ''} channelId={channelId} />
     </>
   );
@@ -185,7 +185,7 @@ const ChannelPage = () => {
 
 export default ChannelPage;
 
-const Container = styled.div`
+const Main = styled.main`
   position: relative;
   flex-direction: column;
   width: 100%;

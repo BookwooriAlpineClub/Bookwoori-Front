@@ -33,11 +33,13 @@ const BookDetailPage = () => {
   return (
     <Container>
       <Header buttonList={['edit']} handleEditClick={handleEditClick} />
-      <BookInfoDetail status={status} {...bookDetail} />
-      <Description>
-        <h2>책 소개</h2>
-        <p>{bookDetail.description}</p>
-      </Description>
+      <main>
+        <BookInfoDetail status={status} {...bookDetail} />
+        <Description>
+          <h2>책 소개</h2>
+          <p>{bookDetail.description}</p>
+        </Description>
+      </main>
     </Container>
   );
 };

@@ -42,40 +42,27 @@ const NotificationPage = () => {
   }, []);
 
   return (
-    <Layout>
+    <>
       <Header text='알림' headerType='hamburger' />
-      <Ol>
+      <main>
         {notiList.length > 0 ? (
-          notiList.map((item) => <NotiItem key={item.id} {...item} />)
+          <Ol>
+            {notiList.map((item) => (
+              <NotiItem key={item.id} {...item} />
+            ))}
+          </Ol>
         ) : (
-          <Span>알림이 없어요.</Span>
+          <strong>알림이 없어요.</strong>
         )}
-      </Ol>
-    </Layout>
+      </main>
+    </>
   );
 };
 
 export default NotificationPage;
 
-const Layout = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-
-  height: 100%;
-`;
 const Ol = styled.ol`
   display: flex;
   flex-flow: column nowrap;
   gap: 0.62rem;
-
-  flex: 1;
-  overflow-y: scroll;
-
-  margin: 0.94rem 5%;
-`;
-const Span = styled.span`
-  margin: auto;
-
-  ${({ theme }) => theme.fonts.body}
-  color: ${({ theme }) => theme.colors.neutral400};
 `;

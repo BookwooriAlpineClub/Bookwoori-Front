@@ -80,46 +80,46 @@ const ClimbingEditPage = () => {
   return (
     <>
       <Header text='등반 편집하기' headerType='back' />
-      <SLayout>
-        <InputText
-          title='등반 이름'
-          placeholder='등반 이름을 입력하세요.'
-          type='short'
-          limit={20}
-          required
-          value={climbingName}
-          setValue={setClimbingName}
-        />
-        <InputText
-          title='책 제목'
-          placeholder='책 제목을 입력하세요.'
-          type='short'
-          limit={-1}
-          required
-          value={bookTitle}
-          setValue={setBookTitle}
-          disabled
-        />
-        <InputDatepicker
-          title='등반 시기'
-          type='period'
-          min={formatDate(new Date())}
-          required
-          disabled='start'
-          value={date}
-          setValue={setDate}
-        />
-        <InputText
-          title='등반 설명'
-          placeholder='사람들에게 등반에 대해 알려주세요.'
-          type='long'
-          limit={150}
-          required
-          value={description}
-          setValue={setDescription}
-        />
-      </SLayout>
-      <ButtonBackground color='transparent'>
+      <main>
+        <Form className='scroll-area'>
+          <InputText
+            title='등반 이름'
+            placeholder='등반 이름을 입력하세요.'
+            type='short'
+            limit={20}
+            required
+            value={climbingName}
+            setValue={setClimbingName}
+          />
+          <InputText
+            title='책 제목'
+            placeholder='책 제목을 입력하세요.'
+            type='short'
+            limit={-1}
+            required
+            value={bookTitle}
+            setValue={setBookTitle}
+            disabled
+          />
+          <InputDatepicker
+            title='등반 시기'
+            type='period'
+            min={formatDate(new Date())}
+            required
+            disabled='start'
+            value={date}
+            setValue={setDate}
+          />
+          <InputText
+            title='등반 설명'
+            placeholder='사람들에게 등반에 대해 알려주세요.'
+            type='long'
+            limit={150}
+            required
+            value={description}
+            setValue={setDescription}
+          />
+        </Form>
         <Container>
           <Button
             disabled={!climbingName || !description || !date.end}
@@ -140,14 +140,14 @@ const ClimbingEditPage = () => {
             }
           />
         </Container>
-      </ButtonBackground>
+      </main>
     </>
   );
 };
 
 export default ClimbingEditPage;
 
-const SLayout = styled.form`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
