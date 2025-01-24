@@ -7,9 +7,6 @@ import UserProfileImg from '@src/components/userSettings/UserProfileImg';
 import Button from '@src/components/common/Button';
 import Header from '@src/components/common/Header';
 import ButtonBackground from '@src/components/common/ButtonBackground';
-import Fieldset from '@src/components/common/Fieldset';
-import Section from '@src/components/common/Section';
-import InputText from '@src/components/common/InputText';
 
 const addNicknamePromise = (
   promises: Promise<void>[],
