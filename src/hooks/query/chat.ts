@@ -5,7 +5,10 @@ import {
 } from '@src/apis/messageRoom';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-export const useRoomInfo = (memberId: number) => {
+const ITEMS_PER_PAGE = 10;
+const MESSAGE_PER_PAGE = 10;
+
+export const usePostMessageRoom = (memberId: number) => {
   const { data, isLoading } = useQuery({
     queryKey: ['postMessageRoom', memberId],
     queryFn: () => postMessageRoom({ memberId }),
@@ -14,17 +17,15 @@ export const useRoomInfo = (memberId: number) => {
   return { roomInfo: data, isLoading };
 };
 
-const itemsPerPage = 10;
-
-export const useDm = () => {
+export const useGetMessageRoomList = () => {
   const { data, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey: ['getMessageRoomList'],
       queryFn: ({ pageParam = 0 }) =>
-        getMessageRoomList(pageParam, itemsPerPage),
+        getMessageRoomList(pageParam, ITEMS_PER_PAGE),
       getNextPageParam: (lastPage, allPages) => {
         const nextPage = allPages.length;
-        return lastPage?.messageRooms.length < itemsPerPage
+        return lastPage?.messageRooms.length < ITEMS_PER_PAGE
           ? undefined
           : nextPage;
       },
@@ -32,7 +33,7 @@ export const useDm = () => {
     });
 
   return {
-    data,
+    data: data?.pages,
     isLoading,
     fetchNextPage,
     isFetchingNextPage,
@@ -40,42 +41,33 @@ export const useDm = () => {
   };
 };
 
-const messagesPerPage = 10;
-
-export const useMessage = (messageRoomId: number) => {
+export const useGetDMList = (messageRoomId: number) => {
   const {
     data,
-    isLoading,
-    isFetching,
     fetchNextPage,
-    isFetchingNextPage,
+    refetch,
     hasNextPage,
   } = useInfiniteQuery({
     queryKey: ['getDMList', messageRoomId],
-    queryFn: async ({ pageParam = 0 }) => {
-      const response = await getDmList(
-        messageRoomId,
-        pageParam,
-        messagesPerPage,
-      );
-      return response;
-    },
+    queryFn: ({ pageParam = 0 }) =>
+      getDmList(messageRoomId, pageParam, MESSAGE_PER_PAGE),
     getNextPageParam: (lastPage, allPages) => {
-      const nextPage = allPages.length;
-      return lastPage?.messages.length < messagesPerPage ? undefined : nextPage;
+      const nextPage = allPages.length + 1;
+      return lastPage?.messages.length < MESSAGE_PER_PAGE
+        ? undefined
+        : nextPage;
     },
+    retry: 0,
+    refetchOnMount: true,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
     initialPageParam: 0,
   });
 
-  const messages = data?.pages.flatMap((page) => page.messages) || [];
-
   return {
-    data,
-    messages,
-    isLoading,
-    isFetching,
+    data: data?.pages.map((page) => page.messages).flat(),
     fetchNextPage,
-    isFetchingNextPage,
+    refetch,
     hasNextPage,
   };
 };

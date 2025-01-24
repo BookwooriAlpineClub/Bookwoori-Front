@@ -1,18 +1,18 @@
 import styled from 'styled-components';
+import { SyntheticEvent, useMemo } from 'react';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import useLongPress from '@src/hooks/useLongPress';
-import ChatMenu from '@src/components/common/EmojiBottomsheet';
-import Profile from '@src/assets/images/userSettings/background_default.svg';
 import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
-import { SyntheticEvent, useMemo } from 'react';
 import { formatChatItemTime } from '@src/utils/formatters';
+import ChatMenu from '@src/components/common/EmojiBottomsheet';
+import Profile from '@src/assets/images/userSettings/background_default.svg';
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;
-  imgUrl?: string;
   nickname: string;
   createdAt: string;
+  imgUrl?: string;
 }
 
 const ChatItem = ({ chatItem, imgUrl, nickname, createdAt }: ChatItemProps) => {
@@ -26,23 +26,19 @@ const ChatItem = ({ chatItem, imgUrl, nickname, createdAt }: ChatItemProps) => {
   };
 
   return (
-    <SLayout {...longPressHandler}>
-      {imgUrl ? (
-        <SImg src={imgUrl} onError={handleImgError} />
-      ) : (
-        <SImg src={Profile} />
-      )}
-      <SContainer>
-        <SWrapper>
-          <SNickname>{nickname}</SNickname>
-          <STime>
+    <Layout {...longPressHandler}>
+      <Img src={imgUrl ?? Profile} onError={handleImgError} />
+      <Container>
+        <Wrapper>
+          <Nickname>{nickname}</Nickname>
+          <Time>
             {useMemo(
               () => createdAt && formatChatItemTime(createdAt),
               [createdAt],
             )}
-          </STime>
-        </SWrapper>
-        <SText>{chatItem.content}</SText>
+          </Time>
+        </Wrapper>
+        <Text>{chatItem.content}</Text>
         {/* {chatItem.emoji && (
           <SEmoji
             type='button'
@@ -51,44 +47,44 @@ const ChatItem = ({ chatItem, imgUrl, nickname, createdAt }: ChatItemProps) => {
             {chatItem.emoji}
           </SEmoji>
         )} */}
-      </SContainer>
-    </SLayout>
+      </Container>
+    </Layout>
   );
 };
 
 export default ChatItem;
 
-const SLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   gap: 0.75rem;
 
   padding: 0.9375rem 1.25rem;
 `;
-const SImg = styled.img`
+const Img = styled.img`
   width: 2.5rem;
   height: 2.5rem;
 
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.blue100};
 `;
-const SContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: ${({ theme }) => theme.gap[4]};
 `;
-const SWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.3125rem;
+  gap: ${({ theme }) => theme.gap[6]};
 `;
-const SNickname = styled.label`
+const Nickname = styled.label`
   line-height: 1.25rem;
 `;
-const STime = styled.label`
+const Time = styled.label`
   ${({ theme }) => theme.fonts.caption};
   color: var(--400, #9496a1);
 `;
-const SText = styled.p`
+const Text = styled.p`
   ${({ theme }) => theme.colors.neutral950};
   line-height: 1.25rem;
   font-weight: 600;

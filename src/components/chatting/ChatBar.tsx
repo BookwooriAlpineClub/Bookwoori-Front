@@ -4,12 +4,12 @@ import { ReactComponent as Send } from '@src/assets/icons/ck_arrow_up.svg';
 import { ReactComponent as SendGreen } from '@src/assets/icons/ck_arrow_right.svg';
 import { sendHandler } from '@src/apis/chat';
 import useLoaderData from '@src/hooks/useRoaderData';
-import { useRoomInfo } from '@src/hooks/query/useDm';
+import { usePostMessageRoom } from '@src/hooks/query/chat';
 import type { MessageReq } from '@src/types/apis/chat';
 
 const ChatBar = ({ nickname }: { nickname: string }) => {
   const { id: memberId } = useLoaderData<{ id: number }>();
-  const { roomInfo } = useRoomInfo(memberId);
+  const { roomInfo } = usePostMessageRoom(memberId);
   const [chat, setChat] = useState<string>('');
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +61,7 @@ export default ChatBar;
 const SLayout = styled.div`
   display: flex;
   gap: 0.625rem;
-  position: sticky;
+  position: fixed;
   bottom: 0;
 
   width: 100%;
