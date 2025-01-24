@@ -35,6 +35,16 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
   }
+  #root {
+    display: flex;
+    flex-flow: column nowrap;
+
+    padding: ${({ theme }) => theme.padding[16]};
+
+    &:has(header) {
+      padding-top: calc(4.375rem + ${({ theme }) => theme.padding[16]});
+    }
+  }
   #modal {
     position: fixed;
     z-index: ${({ theme }) => theme.zIndex.modal};
