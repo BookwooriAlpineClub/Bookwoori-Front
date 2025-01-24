@@ -10,7 +10,7 @@ export type Climbing = {
   description: string;
   memberCount: number;
   isJoined: boolean;
-  isOwner: boolean;
+  isOWner: boolean;
   bookInfo: Book;
 };
 
