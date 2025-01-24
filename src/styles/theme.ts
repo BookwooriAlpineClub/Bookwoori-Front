@@ -90,6 +90,7 @@ const gap = {
   8: '0.5rem',
   10: '0.625rem',
   12: '0.75rem',
+  16: '1rem',
 } as const;
 
 const zIndex = {
