@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import useLongPress from '@src/hooks/useLongPress';
+import { useGetProfile } from '@src/hooks/query/member';
 import ChatMenu from '@src/components/common/EmojiBottomsheet';
 import Profile from '@src/assets/images/userSettings/background_default.svg';
 import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
 import { SyntheticEvent, useMemo } from 'react';
 import { formatChatItemTime } from '@src/utils/formatters';
-import useMember from '@src/hooks/query/useMember';
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;
@@ -23,7 +23,7 @@ const ChannelChatItem = ({ chatItem, memberId, createdAt }: ChatItemProps) => {
   });
 
   // user data (nickname, profileImg)
-  const { profileData: user } = useMember(memberId);
+  const { profileData: user } = useGetProfile(memberId);
   // img error handler
   const handleImgError = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = Profile;

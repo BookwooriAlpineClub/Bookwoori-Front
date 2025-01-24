@@ -1,114 +1,125 @@
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { bgFileState, profileState } from '@src/states/atoms';
-import useMember from '@src/hooks/query/useMember';
-import { convertURLToFile } from '@src/utils/formatters';
-import UserProfilImg from '@src/components/userSettings/UserProfileImg';
+import { useGetProfile, usePatchProfile } from '@src/hooks/query/member';
+import UserProfileImg from '@src/components/userSettings/UserProfileImg';
 import Button from '@src/components/common/Button';
 import Header from '@src/components/common/Header';
 import ButtonBackground from '@src/components/common/ButtonBackground';
-import LoadingPage from '@src/components/common/LoadingPage';
+
+const addNicknamePromise = (
+  promises: Promise<void>[],
+  refValue: string,
+  newValue: string,
+  mutateFunc: (nickname: string) => Promise<void>,
+) => {
+  if (refValue !== newValue) {
+    promises.push(mutateFunc(newValue));
+  }
+};
+
+const addImagePromise = (
+  promises: Promise<void>[],
+  file: File | null,
+  mutateFunc: (
+    data: FormData,
+    options?: {
+      onSuccess?: () => void;
+    },
+  ) => Promise<void>,
+  resetFunc: () => void,
+) => {
+  if (file) {
+    const formData = new FormData();
+    formData.append('imageFile', file);
+    promises.push(
+      mutateFunc(formData, {
+        onSuccess: resetFunc,
+      }),
+    );
+  }
+};
 
 const EditUserInfoPage = () => {
-  const { profileData, isLoading, isError, editProfile } = useMember();
-  const [value, setValue] = useState<string | undefined>(profileData?.nickname);
-  const [length, setLength] = useState<number>(0);
-  const profileFile = useRecoilValue(profileState);
-  const backgroundFile = useRecoilValue(bgFileState);
+  const { profileData } = useGetProfile('me');
+  const { editNickname, editProfileImg, editBackgroundImg } = usePatchProfile();
+  const [profileFile, setProfileFile] = useRecoilState(profileState);
+  const [backgroundFile, setBackgroundFile] = useRecoilState(bgFileState);
+
+  const [value, setValue] = useState<string>(profileData?.nickname ?? '');
   const ref = useRef(value);
 
-  const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const targetValue = e.target.value;
-    const targetLength = e.target.value.length;
-
-    if (targetLength > 20) {
-      setValue(targetValue.slice(0, 20));
-      setLength(20);
-      return;
-    }
-    setValue(targetValue);
-    setLength(targetLength);
-  };
-
   const handleEditProfile = async () => {
-    const formData = new FormData();
-    if (value) {
-      formData.append('nickname', value);
-    }
-    const file =
-      profileFile ||
-      (profileData?.profileImg &&
-        (await convertURLToFile(profileData?.profileImg ?? '')));
-    const bgFile =
-      backgroundFile ||
-      (profileData?.backgroundImg &&
-        (await convertURLToFile(profileData?.backgroundImg ?? '')));
+    const promises: Promise<void>[] = [];
 
-    if (file) {
-      formData.append('profileImg', file);
-    }
-    if (bgFile) {
-      formData.append('backgroundImg', bgFile);
-    }
+    addNicknamePromise(promises, ref.current, value, editNickname.mutateAsync);
+    addImagePromise(promises, profileFile, editProfileImg.mutateAsync, () =>
+      setProfileFile(null),
+    );
+    addImagePromise(
+      promises,
+      backgroundFile,
+      editBackgroundImg.mutateAsync,
+      () => setBackgroundFile(null),
+    );
 
-    editProfile.mutate(formData);
+    await Promise.all(promises);
   };
 
   useEffect(() => {
-    if (profileData) {
+    if (profileData?.nickname) {
       setValue(profileData.nickname);
-      setLength(profileData.nickname.length);
       ref.current = profileData.nickname;
     }
   }, [profileData]);
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (isError) {
-    console.error('데이터를 불러오는데 실패했습니다.');
-  }
-
   return (
     <>
       <Header text='인물 정보 수정하기' headerType='back' />
-      <SLayout>
-        <SContainer>
-          <UserProfilImg edit profile={profileData?.profileImg || undefined} />
-          <SBox>
-            <SLabel>별명</SLabel>
-            <SWrapper>
-              <SInput
-                type='text'
+      <Layout>
+        <Container>
+          <UserProfileImg
+            edit
+            profileImg={profileData?.profileImg ?? undefined}
+            backgroundImg={profileData?.backgroundImg ?? undefined}
+          />
+          <Fieldset title='별명'>
+            <Section>
+              <InputText
+                as='input'
+                name='nickname'
                 placeholder='별명을 입력하세요.'
+                maxLength={10}
                 value={value}
-                onChange={handleChangeValue}
-                $color={ref.current === value}
+                setValue={setValue}
+                required
               />
-              <SSmallLabel>{length}/10</SSmallLabel>
-            </SWrapper>
-          </SBox>
-        </SContainer>
+            </Section>
+          </Fieldset>
+        </Container>
         <ButtonBackground color='transparent'>
           <Button
             disabled={
-              !((value && length <= 10 && ref.current !== value) || profileFile)
+              !(
+                value &&
+                value.length <= 10 &&
+                (ref.current !== value || profileFile || backgroundFile)
+              )
             }
             onClick={handleEditProfile}
           >
             수정하기
           </Button>
         </ButtonBackground>
-      </SLayout>
+      </Layout>
     </>
   );
 };
 
 export default EditUserInfoPage;
 
-const SLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -116,44 +127,10 @@ const SLayout = styled.div`
   padding: 1.875rem 1.25rem 0;
 `;
 
-const SContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
 
   width: 100%;
-`;
-
-const SBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-`;
-
-const SLabel = styled.label`
-  ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.neutral950};
-`;
-
-const SWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-
-  padding: 0.875rem 0.625rem;
-
-  border-radius: 0.3125rem;
-  background: ${({ theme }) => theme.colors.neutral0};
-`;
-
-const SInput = styled.input<{ $color: boolean }>`
-  width: 100%;
-
-  ${({ theme }) => theme.fonts.body};
-  color: ${({ theme, $color }) =>
-    $color ? theme.colors.neutral950 : theme.colors.blue500};
-`;
-
-const SSmallLabel = styled.label`
-  ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.neutral400};
 `;

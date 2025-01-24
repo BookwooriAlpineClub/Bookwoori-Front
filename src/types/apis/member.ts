@@ -2,8 +2,8 @@ import { Exp, User } from '@src/types/user';
 
 export interface ProfilePatchReq {
   nickname: 'string';
-  profileImg: string | null;
-  backgroundImg: string | null;
+  profileImg: File | null;
+  backgroundImg: File | null;
 }
 
 export type ProfileRes = User;

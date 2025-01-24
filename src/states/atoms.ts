@@ -51,3 +51,7 @@ export const currentServerIdState = atom<number>({
   key: 'currentServerIdState',
   default: -1,
 });
+export const errorState = atom<Error | null>({
+  key: 'errorState',
+  default: null,
+});
