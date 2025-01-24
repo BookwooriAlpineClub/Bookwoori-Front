@@ -45,7 +45,7 @@ const NotificationPage = () => {
     <Layout>
       <Header text='알림' headerType='hamburger' />
       <Ol>
-        {notiList.length !== 0 ? (
+        {notiList.length > 0 ? (
           notiList.map((item) => <NotiItem key={item.id} {...item} />)
         ) : (
           <Span>알림이 없어요.</Span>

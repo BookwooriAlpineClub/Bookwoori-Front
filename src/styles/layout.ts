@@ -5,7 +5,7 @@ import { NoSelect } from '@src/styles/mixins';
  * @example
  * <NoDataTextLayout>
  *   <main>
- *     {data ? (
+ *     {data.length > 0 ? (
  *       // 데이터 표시
  *     ) : (
  *       <strong>데이터가 없어요.</strong>

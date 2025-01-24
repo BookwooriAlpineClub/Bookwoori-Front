@@ -38,7 +38,7 @@ const RecordListPage = () => {
         <Background status={status} />
       </Fieldset>
       <main>
-        {data.length !== 0 ? (
+        {data.length > 0 ? (
           <Ul>
             {data.map((item) => (
               <Li key={item.isbn13} {...item} />

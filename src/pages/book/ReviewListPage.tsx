@@ -11,7 +11,7 @@ const ReviewListPage = () => {
     <NoDataTextLayout>
       <Header text='책 평가' headerType='back' />
       <main>
-        {reviewList.length !== 0 ? (
+        {reviewList.length > 0 ? (
           <Ul>
             {reviewList.map((item) => (
               <ReviewItem key={item.isbn13} {...item} />
