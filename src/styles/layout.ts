@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { css } from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 
 /**
@@ -13,15 +13,7 @@ import { NoSelect } from '@src/styles/mixins';
  *   </main>
  * </NoDataTextLayout>
  */
-export const NoDataTextLayout = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-
-  height: 100%;
-
-  main {
-    padding: 0.94rem 5%;
-  }
+export const NoDataTextLayout = css`
   main:has(strong) {
     display: flex;
 
