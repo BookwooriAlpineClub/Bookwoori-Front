@@ -5,7 +5,7 @@ import BookButton from '@src/components/library/BookButton';
 import { ReactComponent as SearchIcon } from '@src/assets/icons/md_outline_search.svg';
 import { ReactComponent as BookmarkIcon } from '@src/assets/icons/md_collection_bookmark.svg';
 import { ReactComponent as StarIcon } from '@src/assets/icons/md_star.svg';
-import useMember from '@src/hooks/query/useMember';
+import { useGetProfile } from '@src/hooks/query/member';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 
@@ -19,8 +19,8 @@ const seasonalColors = {
 
 const LibraryHomePage = () => {
   const { memberId: id } = useParams<{ memberId: string }>();
-  const memberId = id ? Number(id) : null;
-  const { profileData } = useMember(memberId);
+  const memberId = id ? Number(id) : 'me';
+  const { profileData } = useGetProfile(memberId);
   const navigate = useNavigate();
 
   const season = 'spring';

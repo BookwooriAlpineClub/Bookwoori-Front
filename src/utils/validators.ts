@@ -26,6 +26,11 @@ export const isRefreshExpired = (data: any): boolean => {
   return data?.message == '만료된 리프레쉬 토큰입니다.';
 };
 
+export const validateMimeTypes = (newFile: File) => {
+  const validMimeTypes = ['image/png', 'image/jpeg'];
+  return validMimeTypes.includes(newFile.type);
+};
+
 export const isRequestedError = (error: Error): error is RequestErrorType => {
   return error instanceof RequestError;
 };
@@ -37,4 +42,3 @@ export const isErrorData = (data: unknown): data is ErrorData => {
     'code' in data &&
     'message' in data
   );
-};

@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
-import { RecoilState, useRecoilState } from 'recoil';
-import useToast from './useToast';
+import { RecoilState, useSetRecoilState } from 'recoil';
+import useToast from '@src/hooks/useToast';
+import { validateMimeTypes } from '@src/utils/validators';
 
 const useUploadFile = (
   previewImg: string | undefined,
   fileState: RecoilState<File | null>,
 ) => {
-  const [file, setFile] = useRecoilState<File | null>(fileState);
-  const [preview, setPreview] = useState<string | undefined>(previewImg);
   const addToast = useToast();
 
-  const validateMimeTypes = (newFile: File) => {
-    const validMimeTypes = ['image/png', 'image/jpeg'];
-    return validMimeTypes.includes(newFile.type);
-  };
+  const setFile = useSetRecoilState<File | null>(fileState);
+  const [preview, setPreview] = useState<string | undefined>(previewImg);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
@@ -41,12 +38,13 @@ const useUploadFile = (
   useEffect(() => {
     if (!previewImg) {
       handleFileDelete();
-    } else {
-      setPreview(previewImg);
+      return;
     }
+    
+    setPreview(previewImg);
   }, [previewImg]);
-  
-  return { file, preview, handleFileUpload, handleFileDelete };
+
+  return { preview, handleFileUpload, handleFileDelete };
 };
 
 export default useUploadFile;
