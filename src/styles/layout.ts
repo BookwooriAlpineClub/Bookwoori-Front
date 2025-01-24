@@ -28,3 +28,34 @@ export const NoDataTextLayout = css`
     ${NoSelect}
   }
 `;
+/**
+ * @example
+ * <BottomButtonLayout>
+ *   <main>
+ *     <태그 className='scroll-area'>
+ *       // 스크롤 영역
+ *     </태그>
+ *     <Button>메인 버튼</Button>
+ *   </main>
+ * </BottomButtonLayout>
+ */
+export const BottomButtonLayout = css`
+  main {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: ${({ theme }) => theme.gap[16]};
+
+    flex-grow: 1;
+    margin-bottom: 2.5rem;
+
+    overflow-y: auto;
+  }
+  .scroll-area {
+    display: flex;
+    flex-flow: column nowrap;
+
+    flex-grow: 1;
+
+    overflow-y: scroll;
+  }
+`;
