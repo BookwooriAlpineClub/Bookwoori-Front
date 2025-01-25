@@ -36,15 +36,12 @@ export const useGetClimbing = (climbingId: number) => {
 };
 
 export const useGetClimbingMembers = (climbingId: number) => {
-  const { data: participants } = useQuery<
-    getClimbingChannelMembersRes,
-    AxiosError
-  >({
+  const { data } = useQuery<getClimbingChannelMembersRes, AxiosError>({
     queryKey: ['getClimbingMembers', climbingId],
     queryFn: () => getClimbingMembers(climbingId as number),
   });
 
-  return { participants };
+  return { participants: data?.climbingMemberList };
 };
 
 export const useGetClimbingRecruitList = () => {
@@ -107,11 +104,16 @@ export const usePatchClimbing = () => {
   return { editClimbing };
 };
 
-export const usePatchMemo = (climbingId: number) => {
+export const usePatchMemo = () => {
   const editMemo = useMutation({
     mutationKey: ['patchMemo'],
-    mutationFn: (body: patchClimbingMemoReq) =>
-      patchClimbingMemberMemo(climbingId, body),
+    mutationFn: ({
+      climbingId,
+      body,
+    }: {
+      climbingId: number;
+      body: patchClimbingMemoReq;
+    }) => patchClimbingMemberMemo(climbingId, body),
   });
 
   return {
