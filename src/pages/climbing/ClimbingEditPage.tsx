@@ -31,8 +31,8 @@ const ClimbingEditPage = () => {
   const { id: climbingId } = useLoaderData<{ id: string }>();
 
   const { climbingInfo: readyClimbingInfo } = useGetClimbing(Number(climbingId));
-  const { editClimbing } = usePatchClimbing(Number(serverId));
-  const { delClimbing } = useDeleteClimbing(Number(serverId));
+  const { editClimbing } = usePatchClimbing();
+  const { delClimbing } = useDeleteClimbing();
 
   const [climbingName, setClimbingName] = useState<string>('');
   const [bookTitle, setBookTitle] = useState<string>('');
