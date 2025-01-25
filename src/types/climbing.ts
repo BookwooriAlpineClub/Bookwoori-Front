@@ -21,7 +21,20 @@ export type ClimbingMember = {
   profileImg: string | null;
   level: number;
   mountain: string;
-  status: 'UNREAD' | 'READ';
+  status: 'UNREAD' | 'READ' | 'READING' | 'FINISHED';
   currentPage: number;
   memo: string | null;
+};
+
+type ClimbingListKey =
+  | 'myClimbings'
+  | 'readyClimbings'
+  | 'runningClimbings'
+  | 'endClimbingings';
+
+export type ClimbingInfo = Pick<Climbing, 'name' | 'climbingId'> &
+  Pick<Book, 'cover'>;
+
+export type ClimbingList = {
+  [key in ClimbingListKey]: ClimbingInfo[];
 };
