@@ -1,6 +1,9 @@
-import type { Climbing } from '@src/types/apis/climbing';
-import { getClimbing, postClimbing } from '@src/apis/climbing';
-import { getParticipants } from '@src/apis/climbingTemp';
+import type { Climbing } from '@src/types/climbing';
+import {
+  getClimbing,
+  getClimbingMembers,
+  postClimbing,
+} from '@src/apis/climbing';
 import type {
   ClimbingParticipantsRes,
   ClimbingRecruitItem,
@@ -16,14 +19,17 @@ type A = Pick<Climbing, 'name' | 'description' | 'startDate' | 'endDate'> & {
 const useClimbing = (climbingId?: number) => {
   const { data: participants } = useQuery<ClimbingParticipantsRes, AxiosError>({
     queryKey: ['/climbs/member', climbingId],
-    queryFn: () => getParticipants(climbingId as number),
+    queryFn: () => getClimbingMembers(climbingId as number),
   });
 
   const createClimbing = useMutation({
     mutationFn: ({ body }: { body: A }) => postClimbing(body),
   });
 
-  const { data: climbingInfo, isLoading } = useQuery<ClimbingRecruitItem, AxiosError>({
+  const { data: climbingInfo, isLoading } = useQuery<
+    ClimbingRecruitItem,
+    AxiosError
+  >({
     queryKey: ['getClimbing', climbingId],
     queryFn: () => getClimbing(climbingId as number),
   });
@@ -32,7 +38,7 @@ const useClimbing = (climbingId?: number) => {
     participants: participants?.climbingMemberList,
     createClimbing,
     climbingInfo,
-    isLoading
+    isLoading,
   };
 };
 
