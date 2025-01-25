@@ -70,8 +70,6 @@ const Input = styled.input<{ as: string }>`
     color: ${({ theme }) => theme.colors.neutral400};
   }
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.neutral200};
-
     color: ${({ theme }) => theme.colors.neutral400};
   }
 `;
