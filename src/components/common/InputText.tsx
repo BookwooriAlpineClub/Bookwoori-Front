@@ -6,9 +6,9 @@ interface Props {
   name: string;
   placeholder: string;
   maxLength: number;
-  required: boolean;
+  required?: boolean;
   disabled?: boolean;
-  value?: string;
+  value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
