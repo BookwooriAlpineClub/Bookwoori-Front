@@ -1,5 +1,5 @@
-import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
 import CommunityInfoCard from '@src/components/common/CommunityInfoCard';
+import Fieldset from '@src/components/common/Fieldset';
 
 export interface CommunityInfoProps {
   name?: string;
@@ -16,9 +16,8 @@ const CommunityInfoSection = ({
   description = '',
   serverImg = '',
 }: CommunityInfoProps) => {
-  const subtitle = '공동체 정보';
   return (
-    <TitleAndFieldContainer title={subtitle}>
+    <Fieldset title='공동체 정보'>
       <CommunityInfoCard
         name={name}
         memberInfo={memberInfo}
@@ -26,7 +25,7 @@ const CommunityInfoSection = ({
         description={description}
         imageUrl={serverImg}
       />
-    </TitleAndFieldContainer>
+    </Fieldset>
   );
 };
 

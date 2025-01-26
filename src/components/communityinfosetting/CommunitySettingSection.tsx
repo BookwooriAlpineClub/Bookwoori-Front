@@ -1,10 +1,9 @@
 import CommunityButton from '@src/components/common/IconButton';
-import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
+import Fieldset from '@src/components/common/Fieldset';
 
 const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
-  const subtitle = '공동체 설정';
   return (
-    <TitleAndFieldContainer title={subtitle}>
+    <Fieldset title='공동체 설정'>
       {isOwner && (
         <>
           <CommunityButton
@@ -26,7 +25,7 @@ const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
           onClick={() => alert('leaveCommunity')}
         />
       )}
-    </TitleAndFieldContainer>
+    </Fieldset>
   );
 };
 

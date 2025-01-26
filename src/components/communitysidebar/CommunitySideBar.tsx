@@ -1,7 +1,6 @@
 import type { ModalTransition } from '@src/types/modal';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
-import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
 import CommunityButton from '@src/components/common/IconButton';
 import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
@@ -12,6 +11,7 @@ import useSideBarData from '@src/hooks/query/useSideBarData';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { decodeIdParam, encodeId } from '@src/utils/formatters';
+import Fieldset from '@src/components/common/Fieldset';
 
 const CommunitySideBar = () => {
   const { sideBar, closeSideBar } = useSideBar();
@@ -46,22 +46,20 @@ const CommunitySideBar = () => {
       <SideBarContainer
         isOpen={sideBar.isOpen}
         transition={sideBar.transition}
-        onClick={(e) => e.stopPropagation()} // 이벤트 버블링 방지
+        onClick={(e) => e.stopPropagation()}
       >
         <CommunityTitleContainer>
           <img src={serverInfo?.serverImg ?? ''} alt='server profile' />
           <span>{serverInfo?.name}</span>
         </CommunityTitleContainer>
-        <TitleAndFieldContainer title='공동체 기능'>
+        <Fieldset as='section' title='공동체 기능'>
           <CommunityButton
             type='detailInfoSetting'
             onClick={handleClickInfoSetting}
           />
           <CommunityButton type='copyInvitation' onClick={handleCopy} />
-        </TitleAndFieldContainer>
-        <TitleAndFieldContainer
-          title={`멤버 목록 (${serverInfo?.memberCount})`}
-        >
+        </Fieldset>
+        <Fieldset as='section' title={`멤버 목록 (${serverInfo?.memberCount})`}>
           <MemberListContainer>
             {memberList?.members.map((member) => (
               <MemberItem
@@ -86,7 +84,7 @@ const CommunitySideBar = () => {
               </MemberItem>
             ))}
           </MemberListContainer>
-        </TitleAndFieldContainer>
+        </Fieldset>
       </SideBarContainer>
     </Scrim>
   );
