@@ -47,7 +47,7 @@ export const postServer = async <
   return response.data;
 };
 
-export const getServers = async <Res = { servers: ServerListItem[] }>(
+export const getServers = async <Res = GetServersRes>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res>(buildServerUrl(), { headers });
