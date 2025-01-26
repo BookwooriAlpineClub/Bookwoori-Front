@@ -1,37 +1,23 @@
+import type { AxiosError } from 'axios';
 import type { GetDeviceRes, PostDeviceReq } from '@src/types/apis/notification';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import {
-  getDevice,
-  postDevice,
-  deleteDevice as delDevice,
-} from '@src/apis/notification';
+import { getDevice, postDevice, deleteDevice } from '@src/apis/notification';
 
-/**
- * 기기 등록 조회
- */
-export const useGetDevice = () => {
-  const { data: device } = useQuery<GetDeviceRes, AxiosError>({
+const useGetDevice = () => {
+  return useQuery<GetDeviceRes, AxiosError>({
     queryKey: ['getDevice'],
     queryFn: () => getDevice(),
   });
-  return device;
 };
-/**
- * 기기 등록 추가
- */
-export const usePostDevice = () => {
-  const createDevice = useMutation({
+const usePostDevice = () => {
+  return useMutation({
     mutationFn: ({ body }: { body: PostDeviceReq }) => postDevice(body),
   });
-  return createDevice;
 };
-/**
- * 기기 등록 삭제
- */
-export const useDeleteDevice = () => {
-  const deleteDevice = useMutation({
-    mutationFn: () => delDevice(),
+const useDeleteDevice = () => {
+  return useMutation({
+    mutationFn: () => deleteDevice(),
   });
-  return deleteDevice;
 };
+
+export { useGetDevice, usePostDevice, useDeleteDevice };
