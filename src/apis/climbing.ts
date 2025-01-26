@@ -1,10 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { authClient } from '@src/apis/index';
-import {
-  Climbing,
-  ClimbingResponse,
-  ReviewEmojiResponse,
-} from '@src/types/apis/climbing.d';
+import { Climbing } from '@src/types/climbing';
 
 const CLIMB_BASE_URL = '/climbs';
 const buildClimbUrl = (path: string = '') => `${CLIMB_BASE_URL}${path}`;
