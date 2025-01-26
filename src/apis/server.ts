@@ -41,6 +41,16 @@ export const postServer = async (
   return response.data;
 };
 
+export const postServerJoinByCode = async (
+  inviteCode: string,
+): Promise<ApiSuccessResponse<{ serverId: number }>> => {
+  const response = await authClient.post<
+    ApiResponse<{ serverId: number }>,
+    AxiosResponse<ApiSuccessResponse<{ serverId: number }>>
+  >(buildServerUrl(`/code/${inviteCode}`));
+  return response.data;
+};
+
 export const getServers = async <Res = { servers: ServerListItem[] }>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
@@ -105,25 +115,13 @@ export const deleteServerOne = async <Res = void>(
   return response.data;
 };
 
-export const getServerByCode = async <Res = Server>(
+export const getServerByCode = async (
   inviteCode: string,
-  headers?: Record<string, string>,
-): Promise<Res> => {
-  const response = await authClient.get<Res, AxiosResponse<Res>>(
-    buildServerUrl(`/code/${inviteCode}`),
-    { headers },
-  );
-  return response.data;
-};
-
-export const postServerJoinByCode = async <Res = void>(
-  inviteCode: string,
-  headers?: Record<string, string>,
-): Promise<Res> => {
-  const response = await authClient.post<Res, AxiosResponse<Res>>(
-    buildServerUrl(`/join/${inviteCode}`),
-    { headers },
-  );
+): Promise<ApiSuccessResponse<GetServerInfoInviteCodeRes>> => {
+  const response = await authClient.get<
+    ApiResponse<GetServerInfoInviteCodeRes>,
+    AxiosResponse<ApiSuccessResponse<GetServerInfoInviteCodeRes>>
+  >(buildServerUrl(`/code/${inviteCode}`));
   return response.data;
 };
 
