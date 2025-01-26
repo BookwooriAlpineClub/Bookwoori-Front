@@ -6,7 +6,6 @@ import AddReactionIcon from '@mui/icons-material/AddReaction';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import EmojiList from '@src/components/climbing/EmojiList';
 import { useQuery } from '@tanstack/react-query';
-import { ClimbingResponse } from '@src/types/apis/climbing.d';
 import { getClimbingReview } from '@src/apis/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
 import Chip from '@src/components/common/Tag';
@@ -48,7 +47,7 @@ import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 const ReviewBoard = () => {
   const { openBottomsheet } = useBottomsheet();
   const { id: climbingId } = useLoaderData<{ id: number }>();
-  const { data, isLoading, isError } = useQuery<ClimbingResponse>({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['climbingReview', climbingId],
     queryFn: () => getClimbingReview(climbingId),
   });
@@ -63,8 +62,6 @@ const ReviewBoard = () => {
     return <div>No data available</div>;
   }
 
-  console.log(data);
-  /* eslint-disable */
   return (
     <Container>
       {data.hasShared && <ClimbingDescription />}

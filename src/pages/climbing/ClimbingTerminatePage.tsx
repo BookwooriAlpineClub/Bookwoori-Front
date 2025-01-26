@@ -1,23 +1,31 @@
 import ClimbingBoard from '@src/components/climbing/ClimbingBoard';
 import Header from '@src/components/common/Header';
-import SegmentedButton from '@src/components/climbing/SegmentedButton';
 import { useState } from 'react';
 import styled from 'styled-components';
 import ReviewBoard from '@src/components/climbing/ReviewBoard';
+import SegmentedButton from '@src/components/common/SegmentedButton';
 
 export type ViewType = 'climbing' | 'review';
 
 const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
-  const [selectedView, setSelectedView] = useState<ViewType>('climbing');
+  const [selectedView, setSelectedView] = useState<ViewType>('review');
   const handleSegmentChange = (value: ViewType) => {
     setSelectedView(value);
   };
+  const SEGMENTED_BUTTON_CONFIG: { value: ViewType; label: string }[] = [
+    { value: 'climbing', label: '클라이밍' },
+    { value: 'review', label: '감상평' },
+  ];
 
   return (
     <>
       <Header text={headerText} headerType='back' />
       <Container>
-        <SegmentedButton onSegmentChange={handleSegmentChange} />
+        <SegmentedButton
+          config={SEGMENTED_BUTTON_CONFIG}
+          onSegmentChange={handleSegmentChange}
+          defaultValue='review'
+        />
         {selectedView === 'climbing' && <ClimbingBoard />}
         {selectedView === 'review' && <ReviewBoard />}
       </Container>
