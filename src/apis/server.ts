@@ -8,8 +8,8 @@ import type {
   GetServerInfoInviteCodeRes,
   GetServerMembersRes,
   PatchServerMemberRoleReq,
+  GetServersRes,
 } from '@src/types/apis/server';
-import type { Server } from '@src/types/server';
 
 const SERVER_BASE_URL = '/servers';
 const buildServerUrl = (path: string = '') => `${SERVER_BASE_URL}${path}`;
@@ -46,9 +46,7 @@ export const postServerJoinByCode = async (
   return response.data;
 };
 
-export const getServers = async <
-  Res = { servers: Server & { serverId: number }[] },
->(
+export const getServers = async <Res = GetServersRes>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res>(buildServerUrl(), { headers });
