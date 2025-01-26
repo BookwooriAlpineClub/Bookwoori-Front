@@ -8,29 +8,29 @@ import { ReactComponent as Down } from '@src/assets/icons/hi_outline_chevron_dow
  */
 
 type AccordionProps = {
-  id?: number;
+  dataIdx?: number;
   title: React.ReactNode;
   children?: React.ReactNode;
   draggable?: boolean;
-  onDragStart?: (e: React.DragEvent, idx: number) => void;
-  onDrop?: (idx: number) => void;
+  onDragStart?: (e: React.DragEvent) => void;
+  onDrop?: () => void;
   onDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
-  // onTouchStart?: (e: React.TouchEvent, idx: number) => void;
-  // onTouchEnd?: (e: React.TouchEvent, idx: number) => void;
-  // onTouchMove?: (e: React.TouchEvent) => void;
+  onTouchStart?: () => void;
+  onTouchEnd?: () => void;
+  onTouchMove?: (e: React.TouchEvent) => void;
 };
 
 const Accordion = ({
-  id = -1,
+  dataIdx,
   title,
   children,
   draggable = false,
   onDragStart = () => {},
   onDrop = () => {},
   onDragOver = () => {},
-  // onTouchStart = () => {},
-  // onTouchEnd = () => {},
-  // onTouchMove = () => {},
+  onTouchStart = () => {},
+  onTouchEnd = () => {},
+  onTouchMove = () => {},
 }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(!!children);
   const isTouchDevice = 'ontouchstart' in window;
@@ -45,13 +45,14 @@ const Accordion = ({
 
   return (
     <Layout
+      data-idx={dataIdx}
       draggable={!isTouchDevice && draggable}
-      onDragStart={(e) => onDragStart(e, id)}
-      onDrop={() => onDrop(id)}
+      onDragStart={onDragStart}
+      onDrop={onDrop}
       onDragOver={onDragOver}
-      // onTouchStart={(e) => onTouchStart(e, id)}
-      // onTouchEnd={(e) => onTouchEnd(e, id)}
-      // onTouchMove={onTouchMove}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      onTouchMove={onTouchMove}
     >
       <Container>
         {title}
@@ -77,6 +78,7 @@ const Layout = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral0};
 
   cursor: pointer;
+  touch-action: none;
 `;
 const Container = styled.div`
   display: flex;

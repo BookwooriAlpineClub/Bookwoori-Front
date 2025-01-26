@@ -20,14 +20,16 @@ import { ReactComponent as CategoryAdd } from '@src/assets/icons/bi_book_add.svg
 import { ReactComponent as ChannelAdd } from '@src/assets/icons/md_outline_playlist_add.svg';
 
 const ChannelListPage = () => {
-  const serverId = useRecoilValue(currentServerIdState);
   const navigate = useNavigate();
+  const serverId = useRecoilValue(currentServerIdState);
+
+  const { serverInfo } = useSideBarData(serverId);
   const { channels = [] } = useGetServerChannel();
   const { climbingList } = useGetServerClimbing();
   const { editLocation } = usePatchCategoryLocation();
+
   const { list, handleDraggable, beforeIdx, categoryId } =
     useDraggable(channels);
-  const { serverInfo } = useSideBarData(serverId);
   const ref = useRef(channels);
 
   useEffect(() => {
@@ -77,8 +79,8 @@ const ChannelListPage = () => {
           </Accordion>
           {list?.map((data) => (
             <Accordion
-              id={data.categoryId}
-              key={data.name}
+              dataIdx={data.categoryId}
+              key={data.categoryId}
               title={
                 data.name === 'DEFAULT' ? (
                   <Label>기본</Label>
