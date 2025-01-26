@@ -9,8 +9,8 @@ const headerText = '공동체 추가';
 const headerType = 'hamburger';
 const introTitleText = '공동체를 만들어보세요.';
 const introBodyLines = [
-  { id: 'line1', text: '공동체는 나와 친구들이 함께 어울리는 공간입니다.' },
-  { id: 'line2', text: '내 공동체를 만들고 공동체를 시작해보세요.' },
+  { text: '공동체는 나와 친구들이 함께 어울리는 공간입니다.' },
+  { text: '내 공동체를 만들고 공동체를 시작해보세요.' },
 ];
 
 const buttonConfig = [
@@ -32,11 +32,11 @@ const AddCommunityPage = () => {
       <Container>
         <IntroSection title={introTitleText} bodyLines={introBodyLines} />
         <AddOptionContainer>
-          {buttonConfig.map((button) => (
+          {buttonConfig.map((button, idx) => (
             <AddCommunityButton
-              key={button.type}
+              key={idx}
               name={button.name}
-              onClick={() => navigate(button.path)}
+              onClick={handleButtonClick(button.path)}
             />
           ))}
         </AddOptionContainer>
