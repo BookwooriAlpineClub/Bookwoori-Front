@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ReactComponent as Down } from '@src/assets/icons/hi_outline_chevron_down.svg';
 
 /**
@@ -34,13 +34,15 @@ const Accordion = ({
 }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(!!children);
   const isTouchDevice = 'ontouchstart' in window;
+  const isInitialRender = useRef(true);
 
   useEffect(() => {
-    if (children) {
+    if (isInitialRender.current && children) {
       setIsOpen(true);
+      isInitialRender.current = false;
     }
   }, [children]);
-  
+
   return (
     <Layout
       draggable={!isTouchDevice && draggable}
