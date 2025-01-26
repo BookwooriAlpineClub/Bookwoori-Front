@@ -8,7 +8,7 @@ import {
   useGetServerChannel,
   useGetServerClimbing,
 } from '@src/hooks/query/channel';
-import { useCategory } from '@src/hooks/query/category';
+import { usePatchCategoryLocation } from '@src/hooks/query/category';
 import useSideBarData from '@src/hooks/query/useSideBarData';
 import { encodeId } from '@src/utils/formatters';
 import SubButton from '@src/components/common/SubButton';
@@ -22,18 +22,31 @@ import { ReactComponent as ChannelAdd } from '@src/assets/icons/md_outline_playl
 const ChannelListPage = () => {
   const serverId = useRecoilValue(currentServerIdState);
   const navigate = useNavigate();
-  const { channels } = useGetServerChannel();
+  const { channels = [] } = useGetServerChannel();
   const { climbingList } = useGetServerClimbing();
-  const { categoryList = [] } = useCategory();
-  const { list, handleDraggable } = useDraggable(categoryList);
+  const { editLocation } = usePatchCategoryLocation();
+  const { list, handleDraggable, beforeIdx, categoryId } =
+    useDraggable(channels);
   const { serverInfo } = useSideBarData(serverId);
-  const ref = useRef(categoryList);
+  const ref = useRef(channels);
 
   useEffect(() => {
+    if (categoryId === -1 || beforeIdx === -1) return;
+
     if (JSON.stringify(ref.current) !== JSON.stringify(list)) {
-      // 백에 데이터 전송
+      editLocation.mutate(
+        {
+          categoryId,
+          body: { beforeCategoryId: beforeIdx },
+        },
+        {
+          onSuccess: () => {
+            if (list) ref.current = list;
+          },
+        },
+      );
     }
-  }, [list]);
+  }, [list, beforeIdx, categoryId]);
 
   return (
     <>
@@ -62,9 +75,9 @@ const ChannelListPage = () => {
           <Accordion key='모집 중인 등반' title={<Label>모집 중인 등반</Label>}>
             <Carousel type='more' list={climbingList?.readyClimbings ?? []} />
           </Accordion>
-          {channels?.map((data, idx) => (
+          {list?.map((data) => (
             <Accordion
-              id={idx}
+              id={data.categoryId}
               key={data.name}
               title={
                 data.name === 'DEFAULT' ? (
@@ -73,7 +86,7 @@ const ChannelListPage = () => {
                   <Label>{data.name}</Label>
                 )
               }
-              {...handleDraggable(idx)}
+              {...handleDraggable(data.categoryId)}
             >
               {data.channels.length > 0 && (
                 <ChannelList
