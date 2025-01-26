@@ -1,12 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { authClient } from '@src/apis/index';
 import type {
-  ApiResponse,
-  ApiSuccessResponse,
-} from '@src/types/apis/apiResponse';
-import type {
   PostServerReq,
-  GetServersRes,
   GetServerOneRes,
   PatchServerOneReq,
   PatchServerImgReq,
@@ -14,7 +9,7 @@ import type {
   GetServerMembersRes,
   PatchServerMemberRoleReq,
 } from '@src/types/apis/server';
-import { ApiErrorResponse } from '@src/types/apis/apiResponse';
+import type { Server } from '@src/types/server';
 
 const SERVER_BASE_URL = '/servers';
 const buildServerUrl = (path: string = '') => `${SERVER_BASE_URL}${path}`;
@@ -22,81 +17,73 @@ const buildServerUrl = (path: string = '') => `${SERVER_BASE_URL}${path}`;
 export const postServer = async (
   body: PostServerReq,
   headers?: Record<string, string>,
-): Promise<ApiSuccessResponse<{ serverId: number }>> => {
+): Promise<{ serverId: number }> => {
   const formData = new FormData();
   formData.append('name', body.name);
   formData.append('description', body.description);
   if (body.serverImg) {
     formData.append('serverImg', body.serverImg);
   }
-  const response = await authClient.post<
-    ApiResponse<{ serverId: number }>,
-    AxiosResponse<ApiSuccessResponse<{ serverId: number }>>
-  >(buildServerUrl(), formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      ...headers,
+  const response = await authClient.post<{ serverId: number }>(
+    buildServerUrl(),
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        ...headers,
+      },
     },
-  });
+  );
   return response.data;
 };
 
 export const postServerJoinByCode = async (
   inviteCode: string,
-): Promise<ApiSuccessResponse<{ serverId: number }>> => {
-  const response = await authClient.post<
-    ApiResponse<{ serverId: number }>,
-    AxiosResponse<ApiSuccessResponse<{ serverId: number }>>
-  >(buildServerUrl(`/code/${inviteCode}`));
+): Promise<{ serverId: number }> => {
+  const response = await authClient.post<{ serverId: number }>(
+    buildServerUrl(`/code/${inviteCode}`),
+  );
   return response.data;
 };
 
-export const getServers = async <Res = { servers: ServerListItem[] }>(
+export const getServers = async <
+  Res = { servers: Server & { serverId: number }[] },
+>(
   headers?: Record<string, string>,
 ): Promise<Res> => {
   const response = await authClient.get<Res>(buildServerUrl(), { headers });
   return response.data;
 };
 
-export const getServerOne = async <Res = Omit<Server, 'serverId'>>(
-  serverId: number | null,
-  headers?: Record<string, string>,
-): Promise<Res> => {
-  const response = await authClient.get<Res, AxiosResponse<Res>>(
+export const getServerOne = async (
+  serverId: number,
+): Promise<GetServerOneRes> => {
+  const response = await authClient.get<GetServerOneRes>(
     buildServerUrl(`/${serverId}`),
-    { headers },
   );
   return response.data;
 };
 
-export const patchServerOne = async <
-  Res = void,
-  Req = Pick<Server, 'name' | 'description'>,
->(
+export const patchServerOne = async (
   serverId: number,
-  body: Req,
-  headers?: Record<string, string>,
-): Promise<Res> => {
-  const response = await authClient.patch<Res, AxiosResponse<Res>>(
+  body: PatchServerOneReq,
+): Promise<void> => {
+  const response = await authClient.patch<void>(
     buildServerUrl(`/${serverId}`),
     body,
-    { headers },
   );
   return response.data;
 };
 
-export const patchServerImg = async <
-  Res = void,
-  Req extends { serverImg: File } = { serverImg: File },
->(
+export const patchServerImg = async (
   serverId: number,
-  body: Req,
+  body: PatchServerImgReq,
   headers?: Record<string, string>,
-): Promise<Res> => {
+): Promise<void> => {
   const formData = new FormData();
   formData.append('serverImg', body.serverImg);
 
-  const response = await authClient.patch<Res, AxiosResponse<Res>>(
+  const response = await authClient.patch(
     buildServerUrl(`/${serverId}`),
     formData,
     { headers: { 'Content-Type': 'multipart/form-data', ...headers } },
@@ -104,55 +91,40 @@ export const patchServerImg = async <
   return response.data;
 };
 
-export const deleteServerOne = async <Res = void>(
+export const deleteServerOne = async (
   serverId: number,
   headers?: Record<string, string>,
-): Promise<Res> => {
-  const response = await authClient.delete<Res, AxiosResponse<Res>>(
-    buildServerUrl(`/${serverId}`),
-    { headers },
-  );
+): Promise<void> => {
+  const response = await authClient.delete(buildServerUrl(`/${serverId}`), {
+    headers,
+  });
   return response.data;
 };
 
 export const getServerByCode = async (
   inviteCode: string,
-): Promise<ApiSuccessResponse<GetServerInfoInviteCodeRes>> => {
-  const response = await authClient.get<
-    ApiResponse<GetServerInfoInviteCodeRes>,
-    AxiosResponse<ApiSuccessResponse<GetServerInfoInviteCodeRes>>
-  >(buildServerUrl(`/code/${inviteCode}`));
-  return response.data;
-};
-
-export const postServerCode = async <Res = { inviteCode: string }>(
-  serverId: number,
-  headers?: Record<string, string>,
-): Promise<Res> => {
-  const response = await authClient.post<Res, AxiosResponse<Res>>(
-    buildServerUrl(`/code/${serverId}`),
-    { headers },
+): Promise<GetServerInfoInviteCodeRes> => {
+  const response = await authClient.get<GetServerInfoInviteCodeRes>(
+    buildServerUrl(`/code/${inviteCode}`),
   );
   return response.data;
 };
 
-export const getServerMembers = async <Res = []>(
+export const getServerMembers = async (
   serverId: number,
-  headers?: Record<string, string>,
-): Promise<Res> => {
-  const response = await authClient.get<Res, AxiosResponse<Res>>(
+): Promise<GetServerMembersRes> => {
+  const response = await authClient.get<GetServerMembersRes>(
     buildServerUrl(`/${serverId}/members`),
-    { headers },
   );
   return response.data;
 };
 
-export const patchServerOwner = async <Res = void, Req = { memberId: number }>(
+export const patchServerOwner = async (
   serverId: number,
-  body: Req,
+  body: PatchServerMemberRoleReq,
   headers?: Record<string, string>,
-): Promise<Res> => {
-  const response = await authClient.patch<Res, AxiosResponse<Res>>(
+): Promise<void> => {
+  const response = await authClient.patch(
     buildServerUrl(`/${serverId}/members`),
     body,
     { headers },

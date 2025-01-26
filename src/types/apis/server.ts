@@ -34,6 +34,5 @@ export interface GetServerMembersRes {
 }
 
 export interface PatchServerMemberRoleReq {
-  memberId: number;
   serverId: number;
 }
