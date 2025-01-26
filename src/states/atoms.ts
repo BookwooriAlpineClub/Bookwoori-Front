@@ -28,8 +28,8 @@ export const serverbarState = atom<Modal>({
     transition: 'close',
   },
 });
-export const sideBarState = atom<Modal>({
-  key: 'SideBarState',
+export const sidebarState = atom<Modal>({
+  key: 'sidebarState',
   default: {
     isOpen: false,
     transition: 'close',
