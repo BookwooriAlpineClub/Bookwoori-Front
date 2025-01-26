@@ -6,10 +6,7 @@ import React from 'react';
 import CommunityInfoCard from '@src/components/common/CommunityInfoCard';
 import { useParams } from 'react-router-dom';
 import Spinner from '@src/components/common/Spinner';
-import {
-  useGetServerByCode,
-  usePostServerJoin,
-} from '@src/hooks/query/useServerTmp';
+import { useGetServerByCode, usePostServerJoin } from '@src/hooks/query/server';
 
 const headerText = '공동체 정보 확인하기';
 const headerType = 'back';

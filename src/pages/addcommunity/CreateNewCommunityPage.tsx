@@ -6,7 +6,7 @@ import ImageUploadField from '@src/components/addcommunity/ImageUploadField';
 import Fieldset from '@src/components/common/Fieldset';
 import InputText from '@src/components/common/InputText';
 import Section from '@src/components/common/Section';
-import { usePostServer } from '@src/hooks/query/useServerTmp';
+import { usePostServer } from '@src/hooks/query/server';
 
 const headerText = '새로운 공동체 생성하기';
 const headerType = 'back';

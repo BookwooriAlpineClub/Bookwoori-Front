@@ -6,6 +6,7 @@ import { encodeId } from '@src/utils/formatters';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import {
   getServerByCode,
+  getServerOne,
   postServer,
   postServerJoinByCode,
 } from '@src/apis/server';
@@ -20,7 +21,7 @@ export const usePostServer = (resetFields: () => void) => {
     onSuccess: (res) => {
       addToast('success', '공동체가 생성되었습니다.');
       resetFields();
-      const encodedId = encodeId(res.data.serverId);
+      const encodedId = encodeId(res.serverId);
       navigate(ROUTE_PATH.server.replace(':serverId', encodedId));
     },
   });
@@ -32,7 +33,6 @@ export const useGetServerByCode = (inviteCode: string) => {
   return useQuery({
     queryKey: ['getServerByCode', inviteCode],
     queryFn: () => getServerByCode(inviteCode),
-    select: (response) => response.data,
   });
 };
 
@@ -43,7 +43,7 @@ export const usePostServerJoin = (inviteCode: string) => {
     mutationFn: () => postServerJoinByCode(inviteCode),
     onSuccess: (res) => {
       addToast('success', '가입 완료');
-      const { serverId } = res.data;
+      const { serverId } = res;
       const path = ROUTE_PATH.server.replace(
         ':serverId',
         encodeId(serverId || -1),
@@ -52,4 +52,12 @@ export const usePostServerJoin = (inviteCode: string) => {
     },
   });
   return mutation;
+};
+
+/* 서버 정보 조회 */
+export const useGetServerOne = (serverId: number) => {
+  return useQuery({
+    queryKey: ['getServerOne', serverId],
+    queryFn: () => getServerOne(serverId),
+  });
 };

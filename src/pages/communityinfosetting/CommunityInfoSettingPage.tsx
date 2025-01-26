@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import CommunitySettingSection from '@src/components/communityinfosetting/CommunitySettingSection';
 import useLoaderData from '@src/hooks/useRoaderData';
-import { useGetServerOne } from '@src/hooks/query/useServerTmp';
+import { useGetServerOne } from '@src/hooks/query/server';
 
 export interface CommunityInfoType {
   name: string;
