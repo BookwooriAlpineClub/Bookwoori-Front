@@ -26,6 +26,10 @@ const buttonConfig = [
 
 const AddCommunityPage = () => {
   const navigate = useNavigate();
+  const handleButtonClick = (path: string) => () => {
+    navigate(path);
+  };
+
   return (
     <>
       <Header text={headerText} headerType={headerType} />
