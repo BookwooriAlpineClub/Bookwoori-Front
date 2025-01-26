@@ -19,31 +19,25 @@ import { ApiErrorResponse } from '@src/types/apis/apiResponse';
 const SERVER_BASE_URL = '/servers';
 const buildServerUrl = (path: string = '') => `${SERVER_BASE_URL}${path}`;
 
-export const postServer = async <
-  Res = { serverId: number },
-  Req extends {
-    name: string;
-    description: string;
-    serverImg: File | null;
-  } = Pick<Server, 'name' | 'description'> & {
-    serverImg: File | null;
-  },
->(
-  body: Req,
+export const postServer = async (
+  body: PostServerReq,
   headers?: Record<string, string>,
-): Promise<Res> => {
+): Promise<ApiSuccessResponse<{ serverId: number }>> => {
   const formData = new FormData();
   formData.append('name', body.name);
   formData.append('description', body.description);
   if (body.serverImg) {
     formData.append('serverImg', body.serverImg);
   }
-
-  const response = await authClient.post<Res, AxiosResponse<Res>>(
-    buildServerUrl(),
-    formData,
-    { headers: { 'Content-Type': 'multipart/form-data', ...headers } },
-  );
+  const response = await authClient.post<
+    ApiResponse<{ serverId: number }>,
+    AxiosResponse<ApiSuccessResponse<{ serverId: number }>>
+  >(buildServerUrl(), formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      ...headers,
+    },
+  });
   return response.data;
 };
 
