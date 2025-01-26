@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import type Record from '@src/types/record';
 import type {
   GetRecordListRes,
@@ -7,72 +8,56 @@ import type {
   PatchRecordReq,
 } from '@src/types/apis/record';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import {
   getRecordList,
   getReviewList,
   getRecordDetail,
   postRecord,
-  putRecord,
-  deleteRecord as delRecord,
+  patchRecord,
+  deleteRecord,
 } from '@src/apis/record';
 
-const initRecordDetail: GetRecordDetailRes = {
-  isbn13: '',
-  title: '',
-  author: '',
-  cover: '',
-  publisher: '',
-  pubYear: '',
-  description: '',
-  itemPage: -1,
-  records: [],
-};
-
-interface Props {
-  status?: Record['status'];
-  recordId?: Record['recordId'];
-}
-const useRecord = ({ status = 'UNREAD', recordId = -1 }: Props) => {
-  const { data: recordList } = useQuery<GetRecordListRes, AxiosError>({
+const useGetRecordList = (status: Record['status']) => {
+  return useQuery<GetRecordListRes, AxiosError>({
     queryKey: ['getRecordList', status],
     queryFn: () => getRecordList(status),
     initialData: [],
   });
-
-  const { data: reviewList } = useQuery<GetReviewListRes, AxiosError>({
+};
+const useGetReviewList = () => {
+  return useQuery<GetReviewListRes, AxiosError>({
     queryKey: ['getReviewList'],
     queryFn: () => getReviewList(),
     initialData: [],
   });
-
-  const { data: recordDetail } = useQuery<GetRecordDetailRes, AxiosError>({
+};
+const useGetRecordDetail = (recordId: Record['recordId']) => {
+  return useQuery<GetRecordDetailRes, AxiosError>({
     queryKey: ['getRecordDetail', recordId],
     queryFn: () => getRecordDetail(recordId),
-    initialData: initRecordDetail,
   });
-
-  const createRecord = useMutation({
+};
+const usePostRecord = () => {
+  return useMutation({
     mutationFn: ({ body }: { body: PostRecordReq }) => postRecord(body),
   });
-
-  const updateRecord = useMutation({
-    mutationFn: ({ body }: { body: PatchRecordReq }) =>
-      putRecord(recordId, body),
+};
+const usePatchRecord = (recordId: Record['recordId']) => {
+  return useMutation({
+    mutationFn: ({ body }: { body: PatchRecordReq }) => patchRecord(recordId, body),
   });
-
-  const deleteRecord = useMutation({
-    mutationFn: () => delRecord(recordId),
+};
+const useDeleteRecord = (recordId: Record['recordId']) => {
+  return useMutation({
+    mutationFn: () => deleteRecord(recordId),
   });
-
-  return {
-    recordList,
-    recordDetail,
-    createRecord,
-    updateRecord,
-    deleteRecord,
-    reviewList,
-  };
 };
 
-export default useRecord;
+export {
+  useGetRecordList,
+  useGetReviewList,
+  useGetRecordDetail,
+  usePostRecord,
+  usePatchRecord,
+  useDeleteRecord,
+};
