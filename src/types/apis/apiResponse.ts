@@ -1,6 +1,6 @@
 import type { ErrorCodeType } from '@src/constants/constants';
 
-type ApiSuccessResponse<T> = {
+export type ApiSuccessResponse<T> = {
   data: T;
 };
 
