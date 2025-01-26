@@ -20,7 +20,7 @@ const IntroSection = ({ title, bodyLines }: IntroSectionProps) => {
 
 export default IntroSection;
 
-const IntroContainer = styled.div`
+const IntroContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
