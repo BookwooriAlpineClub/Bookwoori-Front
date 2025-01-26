@@ -1,19 +1,40 @@
-import { css } from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
+import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
 
 /**
  * @example
- * <NoDataTextLayout>
- *   <main>
- *     {data.length > 0 ? (
+ * {data.length > 0 ? (
  *       // 데이터 표시
  *     ) : (
  *       <strong>데이터가 없어요.</strong>
- *     )}
- *   </main>
- * </NoDataTextLayout>
+ * )}
  */
-export const NoDataTextLayout = css`
+export const NoDataTextLayout = () => (
+  <NoDataTextLayoutStyle>
+    <main>
+      <Outlet />
+    </main>
+  </NoDataTextLayoutStyle>
+);
+
+/**
+ * @example
+ *     <태그 className='scroll-area'>
+ *       // 스크롤 영역
+ *     </태그>
+ *     <Button>메인 버튼</Button>
+ */
+export const BottomButtonLayout = () => (
+  <BottomButtonLayoutStyle>
+    <main>
+      <Outlet />
+    </main>
+  </BottomButtonLayoutStyle>
+);
+
+// Styled components
+const NoDataTextLayoutStyle = styled.div`
   main:has(strong) {
     display: flex;
 
@@ -28,18 +49,8 @@ export const NoDataTextLayout = css`
     ${NoSelect}
   }
 `;
-/**
- * @example
- * <BottomButtonLayout>
- *   <main>
- *     <태그 className='scroll-area'>
- *       // 스크롤 영역
- *     </태그>
- *     <Button>메인 버튼</Button>
- *   </main>
- * </BottomButtonLayout>
- */
-export const BottomButtonLayout = css`
+
+const BottomButtonLayoutStyle = styled.div`
   main {
     display: flex;
     flex-flow: column nowrap;
