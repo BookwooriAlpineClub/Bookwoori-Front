@@ -6,9 +6,9 @@ import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import CommunitySettingSection from '@src/components/communityinfosetting/CommunitySettingSection';
 import { useQuery } from '@tanstack/react-query';
-import { Server } from '@src/types/apis/server.d';
 import { AxiosError } from 'axios';
 import { getServerOne } from '@src/apis/server';
+import type { Server } from '@src/types/server';
 import useLoaderData from '@src/hooks/useRoaderData';
 
 export interface CommunityInfoType {
@@ -61,7 +61,7 @@ const CommunityInfoSettingPage = () => {
       <Header text={headerText} headerType='back' />
       <Container>
         <CommunityInfoSection {...communityInfo} />
-        <CommunitySettingSection isOwner={data?.isOwner} />
+        <CommunitySettingSection isOwner={false} />
       </Container>
     </>
   );
