@@ -14,6 +14,7 @@ export const useGetServerChannel = () => {
   const { data } = useQuery<CategoryRes, AxiosError>({
     queryKey: ['getServerChannels', serverId],
     queryFn: () => getServerChannels(serverId as number),
+    enabled: serverId !== -1,
   });
 
   return { channels: data?.categories };
@@ -25,6 +26,7 @@ export const useGetServerClimbing = () => {
   const { data: climbingList } = useQuery<ClimbingList, AxiosError>({
     queryKey: ['getServerClimbing', serverId],
     queryFn: () => getServerClimbing(serverId as number),
+    enabled: serverId !== -1,
   });
 
   return { climbingList };
