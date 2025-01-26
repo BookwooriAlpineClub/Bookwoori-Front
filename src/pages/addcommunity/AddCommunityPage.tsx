@@ -16,12 +16,10 @@ const introBodyLines = [
 const buttonConfig = [
   {
     name: '새로운 공동체 생성하기',
-    type: 'create',
     path: ROUTE_PATH.createServer,
   },
   {
     name: '기존 공동체에 참여하기',
-    type: 'join',
     path: ROUTE_PATH.invitationCode,
   },
 ];
