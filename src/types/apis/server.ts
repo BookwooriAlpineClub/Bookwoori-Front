@@ -1,7 +1,7 @@
 import type { Server, ServerMember } from '@src/types/server';
 
 export interface PostServerReq extends Pick<Server, 'name' | 'description'> {
-  serverImg?: File | null;
+  serverImg: File | null;
 }
 
 export interface GetServersRes {
