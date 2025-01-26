@@ -1,14 +1,9 @@
-import React, { Suspense } from 'react';
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import React from 'react';
+import { createBrowserRouter } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { checkAuthLoader, isParamLoader } from '@src/router/loader';
-import Bottomsheet from '@src/components/common/Bottomsheet';
-import Dialog from '@src/components/common/Dialog';
-import CommunitySideBar from '@src/components/communitysidebar/CommunitySideBar';
-import RootErrorBoundary from '@src/components/errorBoundary/RootErrorBoundary';
-import ErrorCatcher from '@src/components/errorBoundary/ErrorCatcher';
-import LoadingPage from '@src/pages/fallback/LoadingPage';
-import QueryClientBoundary from '@src/components/queryClient/QueryClientBoundary';
+import { RootLayout } from '@src/router/RootLayout';
+import { BottomButtonLayout, NoDataTextLayout } from '@src/styles/Layout';
 
 /* example */
 const RouterExamplePage = React.lazy(
@@ -102,24 +97,30 @@ const CommunityInfoSettingPage = React.lazy(
 
 const router = createBrowserRouter([
   {
-    element: (
-      <QueryClientBoundary>
-        <RootErrorBoundary>
-          <ErrorCatcher>
-            <Suspense fallback={<LoadingPage />}>
-              <Outlet />
-              <Bottomsheet />
-              <Dialog />
-              <CommunitySideBar />
-            </Suspense>
-          </ErrorCatcher>
-        </RootErrorBoundary>
-      </QueryClientBoundary>
-    ),
-    errorElement: <h1>Error</h1>,
+    element: <RootLayout />,
     loader: checkAuthLoader,
     children: [
-      /* example */
+      {
+        /* Button이 잇는 경우 Layout */
+        element: <BottomButtonLayout />,
+        children: [
+          {
+            path: ROUTE_PATH.createServer,
+            element: <CreateNewCommunityPage />,
+          },
+        ],
+      },
+      {
+        /* 데이터가 없는 경우 Layout */
+        element: <NoDataTextLayout />,
+        children: [
+          {
+            path: ROUTE_PATH.libraryBookSearch,
+            element: <SearchPage />,
+          },
+        ],
+      },
+      /* 이외의 경우 */
       {
         path: ROUTE_PATH.example,
         element: <RouterExamplePage />,
@@ -152,10 +153,7 @@ const router = createBrowserRouter([
         element: <LibraryHomePage />,
         loader: (args) => isParamLoader(args, 'memberId'),
       },
-      {
-        path: ROUTE_PATH.libraryBookSearch,
-        element: <SearchPage />,
-      },
+
       {
         path: ROUTE_PATH.libraryRecord,
         element: <RecordListPage />,
