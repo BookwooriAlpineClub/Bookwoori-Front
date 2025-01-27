@@ -1,5 +1,5 @@
 import type Book from '@src/types/book';
-import type { ClimbingStatusType } from '@src/constants/constants';
+import type { ClimbingReadingStatusType, ClimbingStatusType } from '@src/constants/constants';
 
 export type Climbing = {
   climbingId: number;
@@ -10,7 +10,7 @@ export type Climbing = {
   description: string;
   memberCount: number;
   isJoined: boolean;
-  isOwner: boolean;
+  isOWner: boolean;
   bookInfo: Book;
 };
 
@@ -21,7 +21,20 @@ export type ClimbingMember = {
   profileImg: string | null;
   level: number;
   mountain: string;
-  status: 'UNREAD' | 'READ';
+  status: ClimbingReadingStatusType;
   currentPage: number;
   memo: string | null;
+};
+
+type ClimbingListKey =
+  | 'myClimbings'
+  | 'readyClimbings'
+  | 'runningClimbings'
+  | 'endClimbingings';
+
+export type ClimbingInfo = Pick<Climbing, 'name' | 'climbingId'> &
+  Pick<Book, 'cover'>;
+
+export type ClimbingList = {
+  [key in ClimbingListKey]: ClimbingInfo[];
 };

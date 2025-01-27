@@ -136,3 +136,19 @@ export const getClimbingReviewEmojis = async <Res = ReviewEmojiResponse>(
   );
   return response.data;
 };
+
+/* 클라이밍 삭제 */
+export const deleteClimbing = async <Res = void>(
+  climbingId: number,
+): Promise<Res> => {
+  const res = await authClient.delete(`/climbs/${climbingId}`);
+  return res.data;
+};
+
+/* 클라이밍 모집 참여 <-> 취소 */
+export const putParticipate = async <Res = void>(
+  climbingId: number,
+): Promise<Res> => {
+  const res = await authClient.put(`/climbs/${climbingId}/members`);
+  return res.data;
+};
