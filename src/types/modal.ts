@@ -7,7 +7,7 @@ export type Toast = {
 export type ModalTransition = 'open' | 'close';
 
 export type Modal = {
-  content: React.ReactNode;
+  content?: React.ReactNode;
   isOpen: boolean;
   transition: ModalTransition;
 };

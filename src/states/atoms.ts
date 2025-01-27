@@ -21,15 +21,15 @@ export const dialogState = atom<Modal>({
     transition: 'close',
   },
 });
-export const serverbarState = atom<Omit<Modal, 'content'>>({
+export const serverbarState = atom<Modal>({
   key: 'serverbarState',
   default: {
     isOpen: false,
     transition: 'close',
   },
 });
-export const sideBarState = atom<Omit<Modal, 'content'>>({
-  key: 'SideBarState',
+export const sidebarState = atom<Modal>({
+  key: 'sidebarState',
   default: {
     isOpen: false,
     transition: 'close',
