@@ -19,6 +19,16 @@ export const ClimbingStatus = {
 export type ClimbingStatusType =
   (typeof ClimbingStatus)[keyof typeof ClimbingStatus];
 
+/* 클라이밍 참여자 독서 상태 */
+export const ClimbingReadingStatus = {
+  UNREAD: 'UNREAD',
+  READING: 'READING',
+  FINISHED: 'FINISHED',
+} as const;
+
+export type ClimbingReadingStatusType =
+  (typeof ClimbingReadingStatus)[keyof typeof ClimbingReadingStatus];
+
 /* 채널 유형 */
 export const ChannelType = {
   CHAT: 'CHAT',
