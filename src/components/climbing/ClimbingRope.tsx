@@ -9,6 +9,10 @@ import { ReactComponent as FlagBefore } from '@src/assets/icons/climbing_flag_ou
 import ProfileImg from '@src/assets/images/userSettings/background_default.svg';
 import Memo from '@src/components/climbing/Memo';
 import ProgressBar from '@src/components/climbing/ProgressBar';
+import {
+  ClimbingReadingStatus,
+  ClimbingStatus,
+} from '@src/constants/constants';
 
 interface Props {
   item: ClimbingMember;
@@ -49,7 +53,7 @@ const ClimbingRope = ({ item }: Props) => {
   return (
     <Layout>
       <Background>
-        {item.status === 'FINISHED' ? (
+        {item.status === ClimbingReadingStatus.FINISHED ? (
           <Flag width={85} height={100} />
         ) : (
           <FlagBefore width={85} height={100} />
@@ -67,15 +71,16 @@ const ClimbingRope = ({ item }: Props) => {
             alt='memberImg'
             src={item.profileImg ?? ProfileImg}
             outline={
-              climbingInfo?.status === 'FINISHED' && item.status === 'FINISHED'
+              climbingInfo?.status === ClimbingStatus.FINISHED &&
+              item.status === ClimbingReadingStatus.FINISHED
             }
             onError={(e) => handleImgError(e, ProfileImg)}
           />
           <Nickname>{item.nickname}</Nickname>
         </Profile>
         {!(
-          climbingInfo?.status === 'FINISHED' ||
-          climbingInfo?.status === 'FAILED'
+          climbingInfo?.status === ClimbingStatus.FINISHED ||
+          climbingInfo?.status === ClimbingStatus.FAILED
         ) && <Memo isUser={item.isMine} memo={item.memo ? item.memo : ''} />}
       </Container>
     </Layout>
