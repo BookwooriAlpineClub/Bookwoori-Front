@@ -34,6 +34,10 @@ const GlobalStyle = createGlobalStyle`
       padding-top: calc(4.375rem + ${({ theme }) => theme.padding[16]});
     }
   }
+  #root > main {
+    width: 100%;
+    height: 100%;
+  }
   #modal {
     position: fixed;
     z-index: ${({ theme }) => theme.zIndex.modal};
