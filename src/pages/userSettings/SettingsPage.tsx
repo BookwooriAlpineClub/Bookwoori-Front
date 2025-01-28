@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
-import useDialog from '@src/hooks/useDialog';
+import useModal from '@src/hooks/useModal';
 import { useDeleteAccount } from '@src/hooks/query/auth';
 import Header from '@src/components/common/Header';
 import IconButton from '@src/components/common/IconButton';
 import UserProfile from '@src/components/common/UserProfile';
 import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 
-const SettingsPage = () => {
+const SettingsPage = async () => {
   const navigate = useNavigate();
   const { delAccount } = useDeleteAccount();
-  const { openDialog, closeDialog } = useDialog();
+  const { openModal: openDialog, closeModal: closeDialog } =
+    await useModal('dialog');
 
   const handleDelete = () => {
     delAccount.mutate();

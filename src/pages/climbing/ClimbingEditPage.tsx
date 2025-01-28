@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useLoaderData from '@src/hooks/useRoaderData';
 import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 import useToast from '@src/hooks/useToast';
-import useDialog from '@src/hooks/useDialog';
+import useModal from '@src/hooks/useModal';
 import {
   useDeleteClimbing,
   useGetClimbing,
@@ -22,15 +22,18 @@ import UnderlineButton from '@src/components/common/UnderlineButton';
 import Section from '@src/components/common/Section';
 import Fieldset from '@src/components/common/Fieldset';
 
-const ClimbingEditPage = () => {
+const ClimbingEditPage = async () => {
   const navigate = useEncodedNavigation();
   const addToast = useToast();
-  const { openDialog, closeDialog } = useDialog();
+  const { openModal: openDialog, closeModal: closeDialog } =
+    await useModal('dialog');
 
   const serverId = sessionStorage.getItem('currentServer');
   const { id: climbingId } = useLoaderData<{ id: string }>();
 
-  const { climbingInfo: readyClimbingInfo } = useGetClimbing(Number(climbingId));
+  const { climbingInfo: readyClimbingInfo } = useGetClimbing(
+    Number(climbingId),
+  );
   const { editClimbing } = usePatchClimbing();
   const { delClimbing } = useDeleteClimbing();
 
