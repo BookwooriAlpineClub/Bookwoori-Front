@@ -61,7 +61,7 @@ export const BottomButtonLayout = styled.div`
     gap: ${({ theme }) => theme.gap[16]};
 
     flex-grow: 1;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
 
     overflow-y: auto;
   }
