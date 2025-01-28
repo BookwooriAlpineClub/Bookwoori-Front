@@ -22,7 +22,10 @@ export const PaddingLayout = styled.div`
  *   </main>
  * </NoDataTextLayout>
  */
-export const NoDataTextLayout = css`
+export const NoDataTextLayout = styled.div`
+  display: flex;
+  height: 100%;
+
   main:has(strong) {
     display: flex;
 
@@ -48,7 +51,10 @@ export const NoDataTextLayout = css`
  *   </main>
  * </BottomButtonLayout>
  */
-export const BottomButtonLayout = css`
+export const BottomButtonLayout = styled.div`
+  display: flex;
+  height: 100%;
+
   main {
     display: flex;
     flex-flow: column nowrap;
