@@ -28,9 +28,6 @@ const GlobalStyle = createGlobalStyle`
     height: inherit;
   }
   #root {
-    display: flex;
-    flex-flow: column nowrap;
-
     padding: ${({ theme }) => theme.padding[16]};
 
     &:has(header) {
