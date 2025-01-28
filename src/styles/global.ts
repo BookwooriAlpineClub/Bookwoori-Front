@@ -28,8 +28,6 @@ const GlobalStyle = createGlobalStyle`
     height: inherit;
   }
   #root {
-    padding: ${({ theme }) => theme.padding[16]};
-
     &:has(header) {
       padding-top: calc(4.375rem + ${({ theme }) => theme.padding[16]});
     }

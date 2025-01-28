@@ -1,6 +1,15 @@
-import { css } from 'styled-components';
+import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 
+export const PaddingLayout = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: ${({ theme }) => theme.padding[16]};
+
+  &:has(header) {
+    padding-top: 0;
+  }
+`;
 /**
  * @example
  * <NoDataTextLayout>
