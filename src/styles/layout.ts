@@ -14,7 +14,7 @@ export const PaddingLayout = styled.div`
  * @example
  * <NoDataTextLayout>
  *   <main>
- *     {data.length > 0 ? (
+ *     {data ? (
  *       // 데이터 표시
  *     ) : (
  *       <strong>데이터가 없어요.</strong>
