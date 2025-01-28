@@ -23,14 +23,6 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.colors.neutral50};
     ${({ theme }) => theme.fonts.body}
   }
-  button {
-    ${({ theme }) => theme.fonts.mountain}
-  }
-  /* 스크롤바 비표시 */
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
   #root, #modal, #toast {
     width: 100%;
     height: 100%;
@@ -52,6 +44,12 @@ const GlobalStyle = createGlobalStyle`
   #toast {
     position: fixed;
     z-index: ${({ theme }) => theme.zIndex.toast};
+  }
+  button {
+    ${({ theme }) => theme.fonts.mountain}
+  }
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;
 
