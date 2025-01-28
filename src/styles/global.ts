@@ -24,8 +24,8 @@ const GlobalStyle = createGlobalStyle`
     ${({ theme }) => theme.fonts.body}
   }
   #root, #modal, #toast {
-    width: 100%;
-    height: 100%;
+    width: inherit;
+    height: inherit;
   }
   #root {
     display: flex;
