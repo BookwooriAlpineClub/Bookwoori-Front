@@ -1,5 +1,4 @@
 import type Book from '@src/types/book';
-import type { Category } from '@src/types/category';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { formatDate, decodeIdParam } from '@src/utils/formatters';
