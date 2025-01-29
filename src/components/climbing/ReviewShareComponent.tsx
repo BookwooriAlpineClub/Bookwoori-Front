@@ -1,13 +1,11 @@
 import Button from '@src/components/common/Button';
 import styled from 'styled-components';
-import { ClimbingResponse } from '@src/types/apis/climbing';
-import ReviewItem from '@src/components/book/ReviewItem';
-import { useMutation } from '@tanstack/react-query';
-import { patchShareClimbingReview } from '@src/apis/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import UnderlineButton from '@src/components/common/UnderlineButton';
+import type Book from '@src/types/book';
+import { useGetPatchShareClimbingReview } from '@src/hooks/query/climbing';
 
 /*
  *
@@ -15,24 +13,17 @@ import UnderlineButton from '@src/components/common/UnderlineButton';
  * */
 
 const ReviewShareComponent = ({
-  star,
-  content,
   bookInfo,
   isShareable,
-}: ClimbingResponse) => {
+}: {
+  bookInfo: Book;
+  isShareable: boolean;
+}) => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
-  const mutation = useMutation({
-    mutationFn: () => patchShareClimbingReview(climbingId),
-    onSuccess: () => {
-      console.log('Review shared successfully!');
-      window.location.reload();
-    },
-    onError: (error) => {
-      console.error('Error sharing review:', error);
-    },
-  });
+  const { shareReview } = useGetPatchShareClimbingReview(climbingId);
+
   const handleSubmit = () => {
-    mutation.mutate();
+    shareReview.mutate();
   };
 
   const navigate = useNavigate();
@@ -52,11 +43,12 @@ const ReviewShareComponent = ({
       </TextContainer>
       <ItemWrapper>
         {isShareable && (
-          <ReviewItem
-            star={star ?? 0}
-            reviewContent={content ?? ''}
-            bookInfo={bookInfo}
-          />
+          // <ReviewItem
+          //   star={star ?? 0}
+          //   reviewContent={content ?? ''}
+          //   bookInfo={bookInfo}
+          // />
+          <div>book에서 가져올 리뷰 아이템</div>
         )}
         {!isShareable && (
           <Wrapper>
