@@ -50,7 +50,7 @@ const Layout = styled.li`
 
   padding: 0.9375rem 0.625rem;
 
-  border-radius: 1.25rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral0};
 
   cursor: pointer;

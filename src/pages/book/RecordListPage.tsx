@@ -73,7 +73,7 @@ const Fieldset = styled.fieldset`
   flex-shrink: 0;
 
   border: ${({ theme }) => theme.colors.neutral0} 0.25rem solid;
-  border-radius: 62.4375rem;
+  border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.neutral0};
 
   overflow: hidden;

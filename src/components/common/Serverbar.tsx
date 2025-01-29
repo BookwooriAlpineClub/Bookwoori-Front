@@ -182,7 +182,7 @@ const SButton = styled.label`
   border-radius: 50%;
 
   &:has(input[type='radio']:checked) {
-    border-radius: 20px;
+    border-radius: ${({ theme }) => theme.rounded[24]};
   }
 
   &.neongreen {

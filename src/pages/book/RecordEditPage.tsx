@@ -156,7 +156,7 @@ export default RecordEditPage;
 //     width: 100%;
 //     height: -webkit-fill-available;
 
-//     border-radius: 1.125rem 1.125rem 0rem 0rem;
+//     border-radius: ${({ theme }) => `${theme.rounded[16]} ${theme.rounded[16]} 0 0`};
 //     background-color: ${({ theme }) => theme.colors.neutral0};
 //   }
 // `;

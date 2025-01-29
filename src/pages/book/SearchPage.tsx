@@ -96,7 +96,7 @@ const Form = styled.form`
   height: 2.5rem;
   padding: 0.75rem;
 
-  border-radius: 1.875rem;
+  border-radius: ${({ theme }) => theme.rounded[24]};
   background-color: ${({ theme }) => theme.colors.blue100};
 
   color: ${({ theme }) => theme.colors.blue500};

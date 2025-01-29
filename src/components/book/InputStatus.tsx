@@ -73,7 +73,7 @@ const Label = styled.label`
     display: flex;
     padding: 0.625rem;
 
-    border-radius: 0.5rem;
+    border-radius: ${({ theme }) => theme.rounded[8]};
     background-color: ${({ theme }) => theme.colors.neutral50};
   }
 

@@ -23,7 +23,7 @@ const Container = styled.fieldset`
 
   padding: 1rem;
 
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const Legend = styled.legend`

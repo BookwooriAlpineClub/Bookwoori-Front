@@ -84,7 +84,7 @@ const Textarea = styled.textarea<{ $height: number }>`
   height: ${({ $height }) => $height}px;
   padding: 0.75rem 1rem;
 
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral0};
 
   ${({ theme }) => theme.fonts.body}

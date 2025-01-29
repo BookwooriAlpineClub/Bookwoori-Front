@@ -68,7 +68,7 @@ const Container = styled.div`
 
   padding: 0.75rem 1rem;
 
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral0};
 
   &:has(input:read-only) {
