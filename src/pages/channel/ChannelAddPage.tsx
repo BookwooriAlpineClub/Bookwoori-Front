@@ -157,8 +157,8 @@ const ChannelAddPage = () => {
                 />
               </Fieldset>
               <InputDatepicker
-                title='등반 기간'
                 type='period'
+                name='등반 기간'
                 min={formatDate(calcTomorrow())}
                 required
                 value={date}
