@@ -55,7 +55,7 @@ const RecordListPage = () => {
 export default RecordListPage;
 
 const Container = styled(NoDataTextLayout)`
-  gap: 1.25rem;
+  gap: ${({ theme }) => theme.gap[16]};
 
   main {
     overflow-y: auto;
@@ -123,7 +123,7 @@ const Background = styled.div<{ status: Record['status'] }>`
 const Ul = styled.ul`
   display: flex;
   flex-flow: row wrap;
-  gap: 1.5rem 0.75rem;
+  gap: ${({ theme }) => `${theme.gap[16]} ${theme.gap[12]}`};
 
   margin-bottom: 1.25rem;
 

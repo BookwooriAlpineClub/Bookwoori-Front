@@ -47,7 +47,7 @@ export default BookDetailPage;
 const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: 1.56rem;
+  gap: ${({ theme }) => theme.gap[16]};
 
   margin: 1.875rem 7% 0;
 
@@ -73,7 +73,7 @@ const Container = styled.div`
 const Description = styled.section`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.94rem;
+  gap: ${({ theme }) => theme.gap[16]};
 
   h2 {
     ${({ theme }) => theme.fonts.mountain}

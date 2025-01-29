@@ -64,7 +64,7 @@ export default InputPage;
 const Container = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  gap: 0.62rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   padding: ${({ theme }) => `${theme.padding[12]} ${theme.padding[16]}`};
 

@@ -90,7 +90,6 @@ export default RecordDetailPage;
 
 //   display: flex;
 //   flex-flow: column nowrap;
-//   gap: 1.56rem;
 
 //   header {
 //     margin-bottom: 0.315rem;
@@ -114,12 +113,10 @@ export default RecordDetailPage;
 // const Form = styled.form`
 //   display: flex;
 //   flex-flow: column nowrap;
-//   gap: 1.56rem;
 // `;
 // const Description = styled.section`
 //   display: flex;
 //   flex-flow: column nowrap;
-//   gap: 0.94rem;
 
 //   h2 {
 //     ${({ theme }) => theme.fonts.mountain}

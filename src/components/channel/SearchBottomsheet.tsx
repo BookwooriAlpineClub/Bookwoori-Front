@@ -87,7 +87,7 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.875rem;
+  gap: ${({ theme }) => theme.gap[16]};
 
   width: 100%;
   padding: ${({ theme }) => theme.padding[16]};
@@ -98,7 +98,7 @@ const Main = styled.main`
 const Form = styled.form`
   display: flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: ${({ theme }) => theme.gap[6]};
 
   width: 19.375rem;
   height: 2.5rem;
@@ -125,5 +125,5 @@ const Input = styled.input`
 const Ul = styled.ul`
   display: flex;
   flex-flow: column nowrap;
-  gap: 1.25rem;
+  gap: ${({ theme }) => theme.gap[16]};
 `;

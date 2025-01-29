@@ -50,7 +50,7 @@ const RowLayout = styled.div`
   flex-flow: row nowrap;
 `;
 const ComponentWrapper = styled(RowLayout)`
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   padding: ${({ theme }) => theme.padding[16]};
 
@@ -60,7 +60,6 @@ const ComponentWrapper = styled(RowLayout)`
 const TextWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.3rem;
 
   width: 100%;
 `;

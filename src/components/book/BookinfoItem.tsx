@@ -34,18 +34,18 @@ export default BookinfoItem;
 const Container = styled.li`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: ${({ theme }) => theme.gap[16]};
 `;
 const TextWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.31rem;
+  gap: ${({ theme }) => theme.gap[4]};
 
   width: 100%;
 `;
 const PubWrapper = styled.div`
   display: flex;
-  gap: 0.19rem;
+  gap: ${({ theme }) => theme.gap[4]};
 `;
 const Img = styled.img`
   flex-shrink: 0;

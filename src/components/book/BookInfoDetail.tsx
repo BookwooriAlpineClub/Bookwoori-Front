@@ -56,12 +56,12 @@ const Container = styled.section`
   display: flex;
   flex-flow: row nowrap;
   align-items: end;
-  gap: 1.25rem;
+  gap: ${({ theme }) => theme.gap[16]};
 `;
 const InfoWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.31rem;
+  gap: ${({ theme }) => theme.gap[8]};
 
   mark {
     margin-bottom: 0.44rem;
@@ -70,7 +70,7 @@ const InfoWrapper = styled.div`
 const PubWrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  gap: 0.19rem;
+  gap: ${({ theme }) => theme.gap[4]};
 `;
 const Img = styled.img`
   width: 7.5rem;

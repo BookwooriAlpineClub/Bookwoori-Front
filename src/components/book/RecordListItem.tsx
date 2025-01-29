@@ -50,7 +50,7 @@ const Container = styled.li`
 
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.25rem;
+  gap: ${({ theme }) => theme.gap[4]};
 
   width: min-content;
 `;

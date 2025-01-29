@@ -60,7 +60,7 @@ const Label = styled.label`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   flex-shrink: 0;
 

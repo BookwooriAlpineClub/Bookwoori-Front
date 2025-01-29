@@ -19,7 +19,7 @@ export default Fieldset;
 const Container = styled.fieldset`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   padding: ${({ theme }) => theme.padding[16]};
 

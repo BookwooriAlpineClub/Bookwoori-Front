@@ -46,7 +46,7 @@ export default StatusBadgeListItem;
 
 const Layout = styled.li`
   display: flex;
-  gap: 0.125rem;
+  gap: ${({ theme }) => theme.gap[2]};
 
   padding: ${({ theme }) => `${theme.padding[16]} ${theme.padding[12]}`};
 
@@ -65,7 +65,7 @@ const Img = styled.img`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: ${({ theme }) => theme.gap[4]};
 
   padding: ${({ theme }) => `0 ${theme.padding[8]}`}
   width: calc(100% - 3.125rem);

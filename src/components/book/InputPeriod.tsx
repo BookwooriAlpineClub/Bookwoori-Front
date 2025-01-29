@@ -61,7 +61,7 @@ export default InputPeriod;
 const Container = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  gap: 0.25rem;
+  gap: ${({ theme }) => theme.gap[4]}
 
   padding: ${({ theme }) => `${theme.padding[12]} ${theme.padding[16]}`};
 

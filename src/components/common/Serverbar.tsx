@@ -158,7 +158,7 @@ const Container = styled.section<{ $transition: ModalTransition }>`
 const Fieldset = styled.fieldset`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.62rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   padding: ${({ theme }) => `${theme.padding[24]} ${theme.padding[16]}`};
 

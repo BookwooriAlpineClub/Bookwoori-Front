@@ -30,5 +30,5 @@ export default ReviewListPage;
 const Ul = styled.ul`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.94rem;
+  gap: ${({ theme }) => theme.gap[16]};
 `;

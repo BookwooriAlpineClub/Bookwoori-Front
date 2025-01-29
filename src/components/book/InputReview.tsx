@@ -67,7 +67,7 @@ const StarFieldset = styled.fieldset`
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  gap: 0.3125rem;
+  gap: ${({ theme }) => theme.gap[6]};
 `;
 const IcnStarBlue = styled(IcnStar)`
   width: 40px;
