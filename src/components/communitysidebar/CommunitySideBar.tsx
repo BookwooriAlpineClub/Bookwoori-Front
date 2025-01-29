@@ -33,7 +33,6 @@ const CommunitySideBar = () => {
     copyText: '',
   };
   const { handleCopy } = useCopyToClipboard(copyText);
-  const { openDialog } = useDialog();
 
   const navigate = useNavigate();
 
