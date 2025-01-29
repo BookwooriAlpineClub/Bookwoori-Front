@@ -9,7 +9,6 @@ import {
   useGetServerClimbing,
 } from '@src/hooks/query/channel';
 import { usePatchCategoryLocation } from '@src/hooks/query/category';
-import useSideBarData from '@src/hooks/query/useSideBarData';
 import { encodeId } from '@src/utils/formatters';
 import SubButton from '@src/components/common/SubButton';
 import Header from '@src/components/common/Header';
@@ -23,7 +22,7 @@ const ChannelListPage = () => {
   const navigate = useNavigate();
   const serverId = useRecoilValue(currentServerIdState);
 
-  const { serverInfo } = useSideBarData(serverId);
+  const serverInfo = { name: '서버' };
   const { channels = [] } = useGetServerChannel();
   const { climbingList } = useGetServerClimbing();
   const { editLocation } = usePatchCategoryLocation();

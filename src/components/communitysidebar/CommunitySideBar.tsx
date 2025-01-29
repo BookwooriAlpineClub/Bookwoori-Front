@@ -4,10 +4,7 @@ import Scrim from '@src/components/common/Scrim';
 import CommunityButton from '@src/components/common/IconButton';
 import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
-import useDialog from '@src/hooks/useDialog';
 import ProfileModal from '@src/components/communitysidebar/ProfileModal';
-import useSideBar from '@src/hooks/useSideBar';
-import useSideBarData from '@src/hooks/query/useSideBarData';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { decodeIdParam, encodeId } from '@src/utils/formatters';
@@ -15,12 +12,26 @@ import Fieldset from '@src/components/common/Fieldset';
 import useModal from '@src/hooks/useModal';
 
 const CommunitySideBar = () => {
-  const { sideBar, closeSideBar } = useSideBar();
   const { openModal: sideBar, closeModal: closeSideBar } = useModal('sidebar');
   const { openModal: openDialog } = useModal('dialog');
   const { serverId: id } = useParams<{ serverId: string }>();
   const serverId = decodeIdParam(id ?? '-1');
-  const { serverInfo, memberList, copyText } = useSideBarData(serverId);
+  const { serverInfo, memberList, copyText } = {
+    serverInfo: { serverImg: '', name: '', memberCount: 0 },
+    memberList: {
+      members: [
+        {
+          memberId: 1,
+          profileImg: '',
+          nickname: '',
+          level: 1,
+          mountain: '',
+          role: 'OWNER',
+        },
+      ],
+    },
+    copyText: '',
+  };
   const { handleCopy } = useCopyToClipboard(copyText);
   const { openDialog } = useDialog();
 
