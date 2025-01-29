@@ -1,4 +1,4 @@
-import type { ModalTransition } from '@src/types/modal';
+import type Modal from '@src/types/modal';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { serverbarState, currentServerIdState } from '@src/states/atoms';
@@ -139,7 +139,7 @@ const Serverbar = () => {
 
 export default Serverbar;
 
-const Container = styled.section<{ $transition: ModalTransition }>`
+const Container = styled.section<{ $transition: Modal['transition'] }>`
   position: fixed;
   left: 0;
   top: 0;

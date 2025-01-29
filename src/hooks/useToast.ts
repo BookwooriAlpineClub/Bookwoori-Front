@@ -1,4 +1,4 @@
-import type { Toast } from '@src/types/modal';
+import type Toast from '@src/types/toast';
 import { useSetRecoilState } from 'recoil';
 import { toastState } from '@src/states/atoms';
 

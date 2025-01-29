@@ -15,7 +15,7 @@ const ConfirmBottomsheet: React.ReactNode = (
 openBottomsheet(ConfirmBottomsheet);
 */
 
-import type { ModalTransition } from '@src/types/modal';
+import type Modal from '@src/types/modal';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { bottomsheetState } from '@src/states/atoms';
@@ -46,7 +46,7 @@ const Bottomsheet = () => {
 
 export default Bottomsheet;
 
-const Layout = styled.section<{ $transition: ModalTransition }>`
+const Layout = styled.section<{ $transition: Modal['transition'] }>`
   position: fixed;
   left: 50%;
   bottom: 0;
