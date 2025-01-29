@@ -12,9 +12,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { decodeIdParam, encodeId } from '@src/utils/formatters';
 import Fieldset from '@src/components/common/Fieldset';
+import useModal from '@src/hooks/useModal';
 
 const CommunitySideBar = () => {
   const { sideBar, closeSideBar } = useSideBar();
+  const { openModal: sideBar, closeModal: closeSideBar } = useModal('sidebar');
+  const { openModal: openDialog } = useModal('dialog');
   const { serverId: id } = useParams<{ serverId: string }>();
   const serverId = decodeIdParam(id ?? '-1');
   const { serverInfo, memberList, copyText } = useSideBarData(serverId);
