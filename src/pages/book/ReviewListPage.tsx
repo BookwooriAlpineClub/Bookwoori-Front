@@ -1,11 +1,11 @@
-import useRecord from '@src/hooks/query/useRecord';
+import { useGetReviewList } from '@src/hooks/query/record';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import Header from '@src/components/common/Header';
 import ReviewItem from '@src/components/book/ReviewItem';
 
 const ReviewListPage = () => {
-  const { reviewList } = useRecord({});
+  const { data: reviewList } = useGetReviewList();
 
   return (
     <NoDataTextLayout>

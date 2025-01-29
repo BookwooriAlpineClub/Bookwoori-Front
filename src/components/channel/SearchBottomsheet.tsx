@@ -1,7 +1,7 @@
 import type Book from '@src/types/book';
 import type { GetBookListRes } from '@src/types/apis/book';
 import { useState } from 'react';
-import useBook from '@src/hooks/query/useBook';
+import { useGetBookList } from '@src/hooks/query/book';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import BookinfoItem from '@src/components/book/BookinfoItem';
@@ -17,7 +17,7 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
   const [keyword, setKeyword] = useState<string>('');
 
   // API 요청
-  const { bookList } = useBook({ keyword });
+  const { data: bookList } = useGetBookList(keyword);
   const data: GetBookListRes = bookList as GetBookListRes;
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {

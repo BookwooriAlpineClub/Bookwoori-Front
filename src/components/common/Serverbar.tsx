@@ -6,7 +6,7 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import { decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useServerbar from '@src/hooks/useServerbar';
-import useServer from '@src/hooks/query/useServer';
+import { useGetServerList } from '@src/hooks/query/server';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 import { ReactComponent as IcnLibrary } from '@src/assets/icons/md_outline_auto_stories.svg';
@@ -53,7 +53,7 @@ const Serverbar = () => {
   }
   setCurrentServerId(decodedServerId);
 
-  const { serverList } = useServer();
+  const { data: serverList } = useGetServerList();
   const isNotiRead = true; // 나중에 수정
   const isChatRead = true; // 나중에 수정
 

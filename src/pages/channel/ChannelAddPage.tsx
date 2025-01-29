@@ -5,8 +5,8 @@ import { formatDate, decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useBottomsheet from '@src/hooks/useBottomsheet';
 import { useCategory } from '@src/hooks/query/category';
-import useChannel from '@src/hooks/query/useChannel';
-import useClimbing from '@src/hooks/query/useClimbing';
+import { usePostChannel } from '@src/hooks/query/channel';
+import { usePostClimbing } from '@src/hooks/query/climbing';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
@@ -31,8 +31,8 @@ const ChannelAddPage = () => {
   const defaultKind = new URLSearchParams(location.search).get('kind') || '';
 
   const { categoryList = [] } = useCategory();
-  const { createChannel } = useChannel();
-  const { createClimbing } = useClimbing();
+  const { createChannel } = usePostChannel();
+  const { createClimbing } = usePostClimbing();
 
   const [kind, setKind] = useState<string>(defaultKind);
   const [category, setCategory] = useState<string>('');
@@ -76,14 +76,12 @@ const ChannelAddPage = () => {
     } else {
       createClimbing.mutate(
         {
-          body: {
-            serverId: Number(decodedServerId),
-            name,
-            isbn: book.isbn13,
-            description,
-            startDate: date.start,
-            endDate: date.end,
-          },
+          serverId: Number(decodedServerId),
+          name,
+          isbn: book.isbn13,
+          description,
+          startDate: date.start,
+          endDate: date.end,
         },
         {
           onSuccess() {

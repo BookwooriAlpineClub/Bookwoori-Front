@@ -1,5 +1,5 @@
 import type Record from '@src/types/record';
-import useRecord from '@src/hooks/query/useRecord';
+import { useGetRecordList } from '@src/hooks/query/record';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
@@ -18,7 +18,7 @@ const RecordListPage = () => {
     { value: 'FINISHED', label: '다 읽었어요' },
   ];
 
-  const { recordList: data } = useRecord({ status });
+  const { data: recordList } = useGetRecordList(status);
 
   return (
     <Container>
@@ -29,9 +29,9 @@ const RecordListPage = () => {
         defaultValue='READING'
       />
       <main>
-        {data.length !== 0 ? (
+        {recordList.length !== 0 ? (
           <Ul>
-            {data.map((item) => (
+            {recordList.map((item) => (
               <Li key={item.isbn13} {...item} />
             ))}
           </Ul>
