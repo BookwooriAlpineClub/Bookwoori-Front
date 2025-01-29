@@ -23,23 +23,19 @@ import { ReactComponent as IcnHash } from '@src/assets/icons/bi_hash.svg';
 import { ReactComponent as IcnVoice } from '@src/assets/icons/hi_outline_volume_up.svg';
 import { ReactComponent as IcnRun } from '@src/assets/icons/bi_run.svg';
 
-type DefaultKind = 'chat' | 'voice' | 'climb' | null;
-
 const ChannelAddPage = () => {
   const navigate = useEncodedNavigate();
   const { openBottomsheet, closeBottomsheet } = useBottomsheet();
   const { serverId } = useParams<{ serverId: string }>();
   const decodedServerId = decodeIdParam(serverId);
   const location = useLocation();
-  const defaultKind: DefaultKind = new URLSearchParams(location.search).get(
-    'kind',
-  ) as DefaultKind;
+  const defaultKind = new URLSearchParams(location.search).get('kind') || '';
 
   const { categoryList = [] } = useCategory();
   const { createChannel } = useChannel();
   const { createClimbing } = useClimbing();
 
-  const [kind, setKind] = useState<DefaultKind>(defaultKind);
+  const [kind, setKind] = useState<string>(defaultKind);
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [book, setBook] = useState<Pick<Book, 'title' | 'isbn13'>>({
@@ -105,11 +101,11 @@ const ChannelAddPage = () => {
       <Main>
         <Form id='channel-add-form' onSubmit={handleFormSubmit}>
           <InputRadio
-            title='모임 유형'
-            items={[
-              { value: 'chat', icon: <IcnHash /> },
-              { value: 'voice', icon: <IcnVoice /> },
-              { value: 'climb', icon: <IcnRun /> },
+            name='모임 유형'
+            options={[
+              { value: 'chat', Icon: IcnHash, text: '문자' },
+              { value: 'voice', Icon: IcnVoice, text: '전화' },
+              { value: 'climb', Icon: IcnRun, text: '등반' },
             ]}
             defaultValue={defaultKind}
             required
