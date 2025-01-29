@@ -126,10 +126,10 @@ const ChannelAddPage = () => {
           )}
           {!!kind && (
             <InputText
-              title='모임 이름'
+              as='input'
+              name='모임 이름'
               placeholder='모임 이름을 입력하세요.'
-              type='short'
-              limit={20}
+              maxLength={20}
               required
               value={name}
               setValue={setName}
@@ -164,10 +164,10 @@ const ChannelAddPage = () => {
                 setValue={setDate}
               />
               <InputText
-                title='등반 설명'
+                as='textarea'
+                name='등반 설명'
                 placeholder='사람들에게 등반에 대해 알려주세요.'
-                type='long'
-                limit={150}
+                maxLength={150}
                 required
                 value={description}
                 setValue={setDescription}
