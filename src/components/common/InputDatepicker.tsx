@@ -10,7 +10,7 @@ interface Props {
   name: string;
   min?: string;
   max?: string;
-  required: boolean;
+  required?: boolean;
   disabled?: true | 'start' | 'end';
   value: Period;
   setValue: React.Dispatch<React.SetStateAction<Period>>;
