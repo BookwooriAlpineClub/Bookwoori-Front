@@ -67,7 +67,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.gap[4]};
 
-  padding: ${({ theme }) => `0 ${theme.padding[8]}`}
+  padding: ${({ theme }) => `0 ${theme.padding[8]}`};
   width: calc(100% - 3.125rem);
 `;
 const Wrapper = styled.div`
