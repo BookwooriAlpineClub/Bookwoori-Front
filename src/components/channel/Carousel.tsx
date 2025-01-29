@@ -7,7 +7,7 @@ import { ReactComponent as Next } from '@src/assets/images/channel/carousel_btn.
 import { ReactComponent as More } from '@src/assets/images/channel/carousel_more_btn.svg';
 import RecruitClimbingBottomSheet from '@src/components/climbing/RecruitClimbingBottomSheet';
 
-const Carousel = async ({
+const Carousel = ({
   type,
   list,
 }: {
@@ -20,7 +20,7 @@ const Carousel = async ({
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
   const { openModal: openBottomsheet, closeModal: closeBottomsheet } =
-    await useModal('bottomsheet');
+    useModal('bottomsheet');
 
   useEffect(() => {
     const updateWidth = () => {

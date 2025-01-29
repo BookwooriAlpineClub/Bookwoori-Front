@@ -19,7 +19,7 @@ const useUploadFile = (
     const newFile = selectedFiles[0];
 
     if (!validateMimeTypes(newFile)) {
-      addToast({ content: '.png, .jpeg의 파일 형식만 지원합니다.' });
+      addToast('error', '.png, .jpeg의 파일 형식만 지원합니다.');
       e.target.value = '';
       return;
     }
@@ -40,7 +40,7 @@ const useUploadFile = (
       handleFileDelete();
       return;
     }
-    
+
     setPreview(previewImg);
   }, [previewImg]);
 

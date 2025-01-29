@@ -9,10 +9,9 @@ type MemoProps = {
   isUser: boolean;
 };
 
-const Memo = async ({ memo, isUser }: MemoProps) => {
+const Memo = ({ memo, isUser }: MemoProps) => {
   const { id } = useLoaderData<{ id: number }>();
-  const { openModal: openDialog, closeModal: closeDialog } =
-    await useModal('dialog');
+  const { openModal: openDialog, closeModal: closeDialog } = useModal('dialog');
 
   const handleClickMemo = () => {
     openDialog(

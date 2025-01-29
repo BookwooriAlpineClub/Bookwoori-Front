@@ -31,9 +31,8 @@ const findItemByKey = <T, K extends keyof T>(
   return items.find((item) => item[key] === value) ?? null;
 };
 
-const ChannelEditPage = async () => {
-  const { openModal: openDialog, closeModal: closeDialog } =
-    await useModal('dialog');
+const ChannelEditPage = () => {
+  const { openModal: openDialog, closeModal: closeDialog } = useModal('dialog');
   const addToast = useToast();
 
   const { id: serverId } = useLoaderData<{ id: string }>();
