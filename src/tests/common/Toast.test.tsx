@@ -5,7 +5,7 @@ import Toast from '@src/components/common/Toast';
 const App = ({ toastContent }: { toastContent: string }) => {
   const addToast = useToast();
   return (
-    <button type='button' onClick={() => addToast({ content: toastContent })}>
+    <button type='button' onClick={() => addToast('info', toastContent)}>
       버튼
     </button>
   );
