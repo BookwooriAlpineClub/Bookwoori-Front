@@ -30,7 +30,7 @@ const ChannelAddPage = () => {
   const location = useLocation();
   const defaultKind = new URLSearchParams(location.search).get('kind') || '';
 
-  const { categoryList = [] } = useCategory();
+  const { categoryList } = useCategory();
   const { createChannel } = usePostChannel();
   const { createClimbing } = usePostClimbing();
 

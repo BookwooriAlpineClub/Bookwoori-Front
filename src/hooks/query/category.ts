@@ -21,8 +21,9 @@ export const useCategory = () => {
       rawData?.categories?.map((it) => ({
         categoryId: it.categoryId,
         name: it.name,
-      })) || [],
+      })),
     enabled: serverId !== -1,
+    initialData: { categories: [] },
   });
 
   return {
