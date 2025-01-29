@@ -42,12 +42,7 @@ export const useGetMessageRoomList = () => {
 };
 
 export const useGetDMList = (messageRoomId: number) => {
-  const {
-    data,
-    fetchNextPage,
-    refetch,
-    hasNextPage,
-  } = useInfiniteQuery({
+  const { data, fetchNextPage, refetch, hasNextPage } = useInfiniteQuery({
     queryKey: ['getDMList', messageRoomId],
     queryFn: ({ pageParam = 0 }) =>
       getDmList(messageRoomId, pageParam, MESSAGE_PER_PAGE),
@@ -62,6 +57,7 @@ export const useGetDMList = (messageRoomId: number) => {
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     initialPageParam: 0,
+    enabled: messageRoomId !== -1,
   });
 
   return {

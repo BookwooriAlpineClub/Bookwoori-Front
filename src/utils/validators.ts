@@ -42,3 +42,4 @@ export const isErrorData = (data: unknown): data is ErrorData => {
     'code' in data &&
     'message' in data
   );
+};

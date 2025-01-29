@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import useCategory from '@src/hooks/query/useCategory';
-import useChannel from '@src/hooks/query/useChannel';
-import useDialog from '@src/hooks/useDialog';
+import { useEffect, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { categoryIdState } from '@src/states/atoms';
+import { useCategory } from '@src/hooks/query/category';
+import useModal from '@src/hooks/useModal';
 import useLoaderData from '@src/hooks/useRoaderData';
 import useToast from '@src/hooks/useToast';
 import { encodeId } from '@src/utils/formatters';
@@ -14,24 +15,55 @@ import InputDropdown from '@src/components/common/InputDropdown';
 import ButtonBackground from '@src/components/common/ButtonBackground';
 import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 import UnderlineButton from '@src/components/common/UnderlineButton';
+import {
+  useDeleteChannel,
+  useGetServerChannel,
+  usePatchChannel,
+} from '@src/hooks/query/channel';
+import Section from '@src/components/common/Section';
+import Fieldset from '@src/components/common/Fieldset';
 
-const ChannelEditPage = () => {
+const findItemByKey = <T, K extends keyof T>(
+  items: T[],
+  key: K,
+  value: T[K],
+): T | null => {
+  return items.find((item) => item[key] === value) ?? null;
+};
+
+const ChannelEditPage = async () => {
+  const { openModal: openDialog, closeModal: closeDialog } =
+    await useModal('dialog');
+  const addToast = useToast();
+
   const { id: serverId } = useLoaderData<{ id: string }>();
   const { channelId } = useParams<{ channelId: string }>();
-  const location = useLocation();
-  const { categoryId } = location.state || {};
-  const { categoryList = [] } = useCategory(Number(serverId));
-  const { channels, editChannel, delChannel } = useChannel(Number(serverId));
-  const [findChannel] = useState(
-    channels?.filter((it) => it.categoryId === categoryId)[0],
+  const categoryId = useRecoilValue(categoryIdState);
+  const { categoryList = [] } = useCategory();
+  const { channels } = useGetServerChannel();
+  const { editChannel } = usePatchChannel();
+  const { delChannel } = useDeleteChannel();
+
+  const [name, setName] = useState<string>('');
+  const [category, setCategory] = useState<string>(
+    categoryId?.toString() ?? '0',
   );
-  const [findName] = useState(
-    findChannel?.channels.filter((it) => it.channelId === Number(channelId)),
-  );
-  const [name, setName] = useState<string>(findName?.[0].name ?? '');
-  const [category, setCategory] = useState<string>(categoryId);
-  const { openDialog, closeDialog } = useDialog();
-  const addToast = useToast();
+
+  const currentCategory = useMemo(() => {
+    if (!channels || !categoryId) return null;
+    return findItemByKey(channels, 'categoryId', Number(categoryId));
+  }, [channels, categoryId]);
+
+  useEffect(() => {
+    if (!channelId || !currentCategory) return;
+
+    const channelInfo = findItemByKey(
+      currentCategory.channels,
+      'channelId',
+      Number(channelId),
+    );
+    setName(channelInfo?.name ?? '');
+  }, [currentCategory, channelId]);
 
   const handleClickEdit = () => {
     editChannel.mutate(
@@ -44,7 +76,7 @@ const ChannelEditPage = () => {
       },
       {
         onSuccess: () => {
-          addToast({ content: '수정 완료' });
+          addToast('success', '수정 완료');
           window.location.replace(`/server/${encodeId(Number(serverId))}`);
         },
       },
@@ -55,7 +87,7 @@ const ChannelEditPage = () => {
     delChannel.mutate(Number(channelId), {
       onSuccess: () => {
         closeDialog();
-        addToast({ content: '삭제 완료' });
+        addToast('success', '삭제 완료');
         window.location.replace(`/server/${encodeId(Number(serverId))}`);
       },
     });
@@ -64,38 +96,44 @@ const ChannelEditPage = () => {
   return (
     <>
       <Header text='모임 편집하기' headerType='back' />
-      <SLayout>
-        <InputDropdown
-          title='모임 분류'
-          placeholder='모임 분류를 선택해주세요.'
-          items={
-            findChannel?.name === 'DEFAULT'
-              ? categoryList.map((it) =>
-                  it.name === 'DEFAULT' ? { ...it, name: '기본' } : it,
-                )
-              : categoryList.filter((it) => it.name !== 'DEFAULT')
-          }
-          value={category}
-          setValue={setCategory}
-          required
-          disabled={findChannel?.name === 'DEFAULT'}
-        />
-        <InputText
-          title='모임 이름'
-          placeholder='채널 이름을 입력하세요.'
-          type='short'
-          limit={20}
-          required
-          value={name}
-          setValue={setName}
-        />
-      </SLayout>
+      <Layout>
+        <Fieldset title='모임 분류'>
+          <Section>
+            <InputDropdown
+              name='모임 분류'
+              placeholder='모임 분류를 선택해주세요.'
+              options={categoryList.map((it) =>
+                it.name === 'DEFAULT'
+                  ? { id: Number(it.categoryId), text: '기본' }
+                  : { id: Number(it.categoryId), text: it.name },
+              )}
+              value={category}
+              setValue={setCategory}
+              required
+              disabled={currentCategory?.name === 'DEFAULT'}
+            />
+          </Section>
+        </Fieldset>
+        <Fieldset title='모임 이름'>
+          <Section>
+            <InputText
+              as='input'
+              name='모임 이름'
+              placeholder='채널 이름을 입력하세요.'
+              maxLength={20}
+              required
+              value={name}
+              setValue={setName}
+            />
+          </Section>
+        </Fieldset>
+      </Layout>
       <ButtonBackground color='transparent'>
         <Container>
           <Button disabled={!name || !category} onClick={handleClickEdit}>
             수정하기
           </Button>
-          {!(findChannel?.name === 'DEFAULT') && (
+          {!(currentCategory?.name === 'DEFAULT') && (
             <UnderlineButton
               size='small'
               text='모임 삭제하기'
@@ -117,7 +155,7 @@ const ChannelEditPage = () => {
 
 export default ChannelEditPage;
 
-const SLayout = styled.form`
+const Layout = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -128,7 +166,7 @@ const SLayout = styled.form`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
   padding-bottom: -0.625rem;
 
   width: 100%;

@@ -13,7 +13,7 @@ const Container = styled.section`
   border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral0};
 
-  &:not(:has(input:enabled)) {
+  &:not(:has(input:enabled, textarea:enabled, select:enabled)) {
     background-color: ${({ theme }) => theme.colors.neutral200};
   }
 `;

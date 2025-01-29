@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import type { PostServerReq } from '@src/types/apis/server';
+import type { PostServerReq, GetServersRes } from '@src/types/apis/server';
+import type { AxiosError } from 'axios';
 import useToast from '@src/hooks/useToast';
 import { encodeId } from '@src/utils/formatters';
 import { ROUTE_PATH } from '@src/constants/routePath';
@@ -9,7 +10,9 @@ import {
   getServerOne,
   postServer,
   postServerJoinByCode,
+  getServers
 } from '@src/apis/server';
+
 
 /* 서버 생성 */
 export const usePostServer = (resetFields: () => void) => {
@@ -59,5 +62,13 @@ export const useGetServerOne = (serverId: number) => {
   return useQuery({
     queryKey: ['getServerOne', serverId],
     queryFn: () => getServerOne(serverId),
+  });
+};
+
+export const useGetServerList = () => {
+  return useQuery<GetServersRes, AxiosError>({
+    queryKey: ['getServers'],
+    queryFn: () => getServers(),
+    initialData: { servers: [] },
   });
 };

@@ -6,6 +6,7 @@
   text-decoration: none;
   outline: none;
   box-sizing: border-box;
+  background-color: transparent;
 }
 article,
 aside,

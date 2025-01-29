@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import useClimbingProgress from '@src/hooks/query/useClimbingProgress';
+import { usePatchMemo } from '@src/hooks/query/climbing';
 import SubButton from '@src/components/common/SubButton';
 
 type MemoDialogProps = {
-  id: number;
+  climbingId: number;
   memo: string;
   closeDialog: () => void;
 };
 
-const MemoDialog = ({ memo, closeDialog, id }: MemoDialogProps) => {
+const MemoDialog = ({ memo, closeDialog, climbingId }: MemoDialogProps) => {
   const [value, setValue] = useState<string>(memo);
+  const { editMemo } = usePatchMemo();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > 10) {
@@ -20,22 +21,11 @@ const MemoDialog = ({ memo, closeDialog, id }: MemoDialogProps) => {
     setValue(e.target.value);
   };
 
-  const { editMemo } = useClimbingProgress(id);
-  const handleClickEdit = () => {
-    editMemo.mutate(
-      { memo: value },
-      {
-        onSuccess: () => {
-          window.location.reload();
-          closeDialog();
-        },
-      },
-    );
-  };
+  const handleClickEdit = (content: string) => {
+    if (!climbingId) return;
 
-  const handleClickDelete = () => {
     editMemo.mutate(
-      { memo: '' },
+      { climbingId, body: { memo: content } },
       {
         onSuccess: () => {
           window.location.reload();
@@ -60,8 +50,16 @@ const MemoDialog = ({ memo, closeDialog, id }: MemoDialogProps) => {
         </InputWrapper>
       </InputContainer>
       <ButtonContainer>
-        <SubButton label='삭제하기' width='39vw' onClick={handleClickDelete} />
-        <SubButton label='수정하기' width='39vw' onClick={handleClickEdit} />
+        <SubButton
+          label='삭제하기'
+          width='39vw'
+          onClick={() => handleClickEdit('')}
+        />
+        <SubButton
+          label='수정하기'
+          width='39vw'
+          onClick={() => handleClickEdit(value)}
+        />
       </ButtonContainer>
     </DialogLayout>
   );
