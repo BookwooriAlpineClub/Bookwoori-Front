@@ -10,20 +10,27 @@ import {
   getClimbingMembers,
   patchClimbingMemberMemo,
   postClimbing,
+  patchShareClimbingReview,
+  postClimbingReviewEmoji,
+  getClimbingReviewEmojis,
+  getClimbingReview,
 } from '@src/apis/climbing';
 import {
   ClimbingRecruitListRes,
   getClimbingChannelMembersRes,
-  getClimbingInfoRes,
+  getClimbingRes,
+  getClimbingReviewEmojiRes,
+  getClimbingReviewListRes,
   patchClimbingChannelReq,
   patchClimbingMemoReq,
   postClimbingChannelReq,
 } from '@src/types/apis/climbing';
 import { getServerClimbing } from '@src/apis/server';
+import { EmojiTypeType } from '@src/constants/constants';
 
 export const useGetClimbing = (climbingId: number) => {
   const { data: climbingInfo, isLoading } = useQuery<
-    getClimbingInfoRes,
+    getClimbingRes,
     AxiosError
   >({
     queryKey: ['getClimbing', climbingId],
@@ -149,4 +156,69 @@ export const useDeleteClimbing = () => {
   });
 
   return { delClimbing };
+};
+
+export const usePatchShareReview = () => {
+  const shareReview = useMutation({
+    mutationKey: ['patchShareClimbingReview'],
+    mutationFn: (climbingId: number) => patchShareClimbingReview(climbingId),
+  });
+
+  return { shareReview };
+};
+
+export const usePostReviewEmoji = () => {
+  const postEmoji = useMutation({
+    mutationKey: ['postReviewEmoji'],
+    mutationFn: ({
+      climbingId,
+      reviewId,
+      emoji,
+    }: {
+      climbingId: number;
+      reviewId: number;
+      emoji: EmojiTypeType;
+    }) => postClimbingReviewEmoji(climbingId, reviewId, emoji),
+  });
+
+  return { postEmoji };
+};
+
+export const useGetClimbingReview = (climbingId: number) => {
+  const { data: getReviews, isLoading } = useQuery<
+    getClimbingReviewListRes,
+    AxiosError
+  >({
+    queryKey: ['getClimbingReview', climbingId],
+    queryFn: () => getClimbingReview(climbingId),
+  });
+  return { getReviews, isLoading };
+};
+
+export const useGetReviewEmojis = ({
+  climbingId,
+  reviewId,
+}: {
+  climbingId: number;
+  reviewId: number;
+}) => {
+  const getEmojis = useQuery<getClimbingReviewEmojiRes, AxiosError>({
+    queryKey: ['getClimbingReviewEmojis', climbingId, reviewId],
+    queryFn: () => getClimbingReviewEmojis(climbingId, reviewId),
+  });
+  return { getEmojis };
+};
+
+export const useGetPatchShareClimbingReview = (climbingId: number) => {
+  const shareReview = useMutation({
+    mutationFn: () => patchShareClimbingReview(climbingId),
+    onSuccess: () => {
+      console.log('Review shared successfully!');
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error('Error sharing review:', error);
+    },
+  });
+  return { shareReview };
 };
