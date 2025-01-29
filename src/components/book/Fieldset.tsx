@@ -21,7 +21,7 @@ const Container = styled.fieldset`
   flex-flow: column nowrap;
   gap: 0.625rem;
 
-  padding: 1rem;
+  padding: ${({ theme }) => theme.padding[16]};
 
   border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral50};

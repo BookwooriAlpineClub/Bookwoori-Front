@@ -48,7 +48,7 @@ const Layout = styled.li`
   display: flex;
   gap: 0.125rem;
 
-  padding: 0.9375rem 0.625rem;
+  padding: ${({ theme }) => `${theme.padding[16]} ${theme.padding[12]}`};
 
   border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral0};
@@ -67,7 +67,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 0.25rem;
 
-  padding: 0 0.5rem;
+  padding: ${({ theme }) => `0 ${theme.padding[8]}`}
   width: calc(100% - 3.125rem);
 `;
 const Wrapper = styled.div`

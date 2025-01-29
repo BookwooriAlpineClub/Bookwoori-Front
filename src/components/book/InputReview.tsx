@@ -82,7 +82,7 @@ const IcnStarGray = styled(IcnStar)`
 const Textarea = styled.textarea<{ $height: number }>`
   width: 100%;
   height: ${({ $height }) => $height}px;
-  padding: 0.75rem 1rem;
+  padding: ${({ theme }) => `${theme.padding[12]} ${theme.padding[16]}`};
 
   border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral0};

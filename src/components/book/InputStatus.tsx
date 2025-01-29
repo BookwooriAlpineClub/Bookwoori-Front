@@ -71,7 +71,7 @@ const Label = styled.label`
 
   div {
     display: flex;
-    padding: 0.625rem;
+    padding: ${({ theme }) => theme.padding[12]};
 
     border-radius: ${({ theme }) => theme.rounded[8]};
     background-color: ${({ theme }) => theme.colors.neutral50};

@@ -58,7 +58,6 @@ const Container = styled(NoDataTextLayout)`
   gap: 1.25rem;
 
   main {
-    padding: 0 5%;
     overflow-y: auto;
   }
 `;

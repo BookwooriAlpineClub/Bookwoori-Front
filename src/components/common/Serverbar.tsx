@@ -160,7 +160,7 @@ const Fieldset = styled.fieldset`
   flex-flow: column nowrap;
   gap: 0.62rem;
 
-  padding: 1.25rem 0.94rem;
+  padding: ${({ theme }) => `${theme.padding[24]} ${theme.padding[16]}`};
 
   overflow-y: scroll;
 `;

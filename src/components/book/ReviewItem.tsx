@@ -52,7 +52,7 @@ const RowLayout = styled.div`
 const ComponentWrapper = styled(RowLayout)`
   gap: 0.625rem;
 
-  padding: 0.9375rem;
+  padding: ${({ theme }) => theme.padding[16]};
 
   border-radius: ${({ theme }) => theme.rounded[8]};
   background-color: ${({ theme }) => theme.colors.neutral0};

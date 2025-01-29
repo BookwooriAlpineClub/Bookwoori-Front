@@ -139,8 +139,6 @@ export default RecordEditPage;
 //   flex-flow: column nowrap;
 //   gap: 1.56rem;
 
-//   padding: 1.875rem 7%;
-
 //   header {
 //     margin-bottom: 0.315rem;
 //   }

@@ -90,7 +90,7 @@ const Header = styled.header`
   gap: 0.875rem;
 
   width: 100%;
-  padding: 0.9375rem;
+  padding: ${({ theme }) => theme.padding[16]};
 `;
 const Main = styled.main`
   overflow-y: scroll;
@@ -102,7 +102,7 @@ const Form = styled.form`
 
   width: 19.375rem;
   height: 2.5rem;
-  padding: 0.75rem;
+  padding: ${({ theme }) => theme.padding[12]};
 
   border-radius: ${({ theme }) => theme.rounded[24]};
   background-color: ${({ theme }) => theme.colors.blue100};
