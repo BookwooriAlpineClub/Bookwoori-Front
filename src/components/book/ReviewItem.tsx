@@ -3,7 +3,7 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
-import Chip from '@src/components/common/Tag';
+import Tag from '@src/components/common/Tag';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
 type Props = ElementOfArray<GetReviewListRes>;
@@ -34,7 +34,7 @@ const ReviewItem = ({
       <TextWrapper>
         <RowLayout>
           <Title $line={1}>{title}</Title>
-          <Chip Icon={IcnStar} text={records[0].starReview} />
+          <Tag color='blue' Icon={IcnStar} text={records[0].starReview} />
         </RowLayout>
         <Author $line={1}>{author}</Author>
         <ReviewContent $line={3}>{records[0].contentReview}</ReviewContent>

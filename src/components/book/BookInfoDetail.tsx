@@ -1,14 +1,11 @@
 import type Book from '@src/types/book';
-import type Record from '@src/types/record';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
-import Tag from '@src/components/common/Tag';
 
 type Props = Pick<
   Book,
   'title' | 'author' | 'cover' | 'publisher' | 'pubYear' | 'itemPage'
-> &
-  Pick<Record, 'status'>;
+>;
 
 const BookInfoDetail = ({
   title,
@@ -17,26 +14,11 @@ const BookInfoDetail = ({
   publisher,
   pubYear,
   itemPage,
-  status,
 }: Props) => {
-  const calcStatusText = () => {
-    switch (status) {
-      case 'WISH':
-        return '읽고 싶어요';
-      case 'READING':
-        return '읽고 있어요';
-      case 'FINISHED':
-        return '다 읽었어요';
-      default:
-        return '';
-    }
-  };
-
   return (
     <Container>
       <Img src={cover} alt='책 표지' />
       <InfoWrapper>
-        {status !== 'UNREAD' && <Tag>{calcStatusText()}</Tag>}
         <Title $line={2}>{title}</Title>
         <CaptionEllipsis $line={1}>{author}</CaptionEllipsis>
         <PubWrapper>
