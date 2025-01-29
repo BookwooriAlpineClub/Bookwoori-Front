@@ -19,7 +19,7 @@ const ErrorCatcher = ({ children }: React.PropsWithChildren) => {
 
     if (!isRequestedError(error) || !isDefinedError(error)) throw error;
 
-    if (error.errorHandlingType.type !== 'toast') return;
+    if (error.errorHandlingType !== 'toast') return;
 
     addToast('error', `${ERROR_MESSAGES[error.code]}`);
     setError(null);

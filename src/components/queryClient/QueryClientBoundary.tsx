@@ -29,7 +29,7 @@ const QueryClientBoundary = ({ children }: React.PropsWithChildren) => {
         // 에러 바운더리로 처리가 필요한 경우 return
         if (
           isRequestedError(error) &&
-          error.errorHandlingType.type === 'errorBoundary'
+          error.errorHandlingType === 'errorBoundary'
         ) {
           return;
         }
