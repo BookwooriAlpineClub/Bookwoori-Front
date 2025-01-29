@@ -5,7 +5,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { formatDate, decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useBottomsheet from '@src/hooks/useBottomsheet';
-import useCategory from '@src/hooks/query/useCategory';
+import { useCategory } from '@src/hooks/query/category';
 import useChannel from '@src/hooks/query/useChannel';
 import useClimbing from '@src/hooks/query/useClimbing';
 import styled from 'styled-components';
@@ -35,7 +35,7 @@ const ChannelAddPage = () => {
     'kind',
   ) as DefaultKind;
 
-  const { categoryList } = useCategory(Number(decodedServerId));
+  const { categoryList = [] } = useCategory();
   const { createChannel } = useChannel();
   const { createClimbing } = useClimbing();
 
@@ -117,9 +117,12 @@ const ChannelAddPage = () => {
           />
           {(kind === 'chat' || kind === 'voice') && (
             <InputDropdown
-              title='모임 분류'
+              name='모임 분류'
               placeholder='분류 선택'
-              items={categoryList as Pick<Category, 'categoryId' | 'name'>[]}
+              options={categoryList.map((item) => ({
+                id: item.categoryId,
+                text: item.name,
+              }))}
               required
               value={category}
               setValue={setCategory}
