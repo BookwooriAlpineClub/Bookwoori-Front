@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import BookIcon from '@mui/icons-material/Book';
-import { Climbing } from '@src/types/apis/climbing.d';
+import { Climbing } from '@src/types/climbing';
 
 const ClimbingDetail = ({ data }: { data: Climbing }) => {
   console.log(data);

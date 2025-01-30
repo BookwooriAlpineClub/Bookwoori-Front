@@ -14,11 +14,9 @@ export type patchClimbingChannelReq = Pick<
   'name' | 'description' | 'startDate' | 'endDate'
 > & {};
 
-export interface getClimbingInfoRes extends Climbing {}
+export interface getClimbingRes extends Climbing {}
 
-export interface ClimbingRecruitListRes {
-  readyClimbingList: Climbing[];
-}
+export interface ClimbingRecruitListRes {}
 
 export type getClimbingChannelMembersRes = {
   climbingMemberList: ClimbingMember[];
@@ -26,6 +24,21 @@ export type getClimbingChannelMembersRes = {
 
 export type patchClimbingMemoReq = {
   memo: string | null;
+};
+
+export type getClimbingReviewListRes = {
+  hasShared?: boolean;
+  isShareable?: boolean;
+  ClimbingMemberReviewList: [
+    {
+      profileImg: string;
+      nickname: string;
+      star: number;
+      content: string;
+      reviewId: number;
+      reviewEmojiList: { emoji: EmojiTypeType; emojiCount: number }[];
+    },
+  ];
 };
 
 export type getClimbingReviewEmojiRes = {

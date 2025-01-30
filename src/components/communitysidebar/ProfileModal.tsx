@@ -5,8 +5,7 @@ import { ReactComponent as Chatting } from '@src/assets/icons/md_outline_chat_bu
 import { ReactComponent as Hiking } from '@src/assets/icons/md_outline_auto_stories.svg';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
-import useDialog from '@src/hooks/useDialog';
-import useSideBar from '@src/hooks/useSideBar';
+import useModal from '@src/hooks/useModal';
 
 const buttons = {
   hiking: {
@@ -40,8 +39,8 @@ const buttons = {
 
 const ProfileModal = ({ memberId }: { memberId: number }) => {
   const navigate = useNavigate();
-  const { closeDialog } = useDialog();
-  const { closeSideBar } = useSideBar();
+  const { closeModal: closeDialog } = useModal('dialog');
+  const { closeModal: closeSideBar } = useModal('sidebar');
 
   const handleClickHiking = () => {
     navigate(`${ROUTE_PATH.library}/${memberId}`);
