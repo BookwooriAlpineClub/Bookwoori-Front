@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { categoryIdState } from '@src/states/atoms';
 import { useCategory } from '@src/hooks/query/category';
-import useDialog from '@src/hooks/useDialog';
+import useModal from '@src/hooks/useModal';
 import useLoaderData from '@src/hooks/useRoaderData';
 import useToast from '@src/hooks/useToast';
 import { encodeId } from '@src/utils/formatters';
@@ -32,7 +32,7 @@ const findItemByKey = <T, K extends keyof T>(
 };
 
 const ChannelEditPage = () => {
-  const { openDialog, closeDialog } = useDialog();
+  const { openModal: openDialog, closeModal: closeDialog } = useModal('dialog');
   const addToast = useToast();
 
   const { id: serverId } = useLoaderData<{ id: string }>();

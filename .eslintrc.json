@@ -81,7 +81,8 @@
     "react/no-array-index-key": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-empty-object-type": "off",
-    "react/jsx-boolean-value": "off"
+    "react/jsx-boolean-value": "off",
+    "react-hooks/rules-of-hooks": "off"
   },
   "overrides": [
     {

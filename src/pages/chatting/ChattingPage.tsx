@@ -17,7 +17,7 @@ const ChattingPage = () => {
   const { id: memberId } = useLoaderData<{ id: number }>();
   const { roomInfo } = usePostMessageRoom(memberId);
   const { data, fetchNextPage, hasNextPage, refetch } = useGetDMList(
-    roomInfo?.messageRoomId ?? 0,
+    roomInfo?.messageRoomId ?? -1,
   );
   const [messages, setMessages] = useState<DM[]>([]);
   const [newMessages, setNewMessages] = useState<DM[]>([]);
@@ -111,7 +111,7 @@ const ChattingPage = () => {
             const prevMessage = [...newMessages, ...messages][idx + 1];
             const { date: prevDate } = prevMessage
               ? formatCreatedAt(prevMessage.createdAt)
-              : {};
+              : { date: null };
             const { date: currentDate, time: currentTime } = formatCreatedAt(
               it.createdAt,
             );

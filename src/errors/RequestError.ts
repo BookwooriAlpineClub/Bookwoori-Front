@@ -2,10 +2,7 @@ import { ApiErrorResponse } from '@src/types/apis/apiResponse';
 
 export type RequestErrorType = Error &
   ApiErrorResponse & {
-    errorHandlingType: {
-      type: 'toast' | 'confirm' | 'errorBoundary';
-      func?: () => void;
-    };
+    errorHandlingType: 'toast' | 'errorBoundary';
   };
 
 class RequestError extends Error {

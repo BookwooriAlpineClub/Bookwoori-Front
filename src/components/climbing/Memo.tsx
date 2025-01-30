@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import useDialog from '@src/hooks/useDialog';
+import useModal from '@src/hooks/useModal';
 import useLoaderData from '@src/hooks/useRoaderData';
 import MemoDialog from '@src/components/climbing/MemoDialog';
 import { ReactComponent as Plus } from '@src/assets/icons/hi_outline_plus.svg';
@@ -11,7 +11,7 @@ type MemoProps = {
 
 const Memo = ({ memo, isUser }: MemoProps) => {
   const { id } = useLoaderData<{ id: number }>();
-  const { openDialog, closeDialog } = useDialog();
+  const { openModal: openDialog, closeModal: closeDialog } = useModal('dialog');
 
   const handleClickMemo = () => {
     openDialog(

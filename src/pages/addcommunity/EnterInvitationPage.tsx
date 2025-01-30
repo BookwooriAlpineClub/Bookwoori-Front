@@ -1,12 +1,13 @@
 import Header from '@src/components/common/Header';
 import styled from 'styled-components';
-import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
-import InputField from '@src/components/common/InputField';
 import Button from '@src/components/common/Button';
 import React, { useEffect, useState } from 'react';
 import IntroSection from '@src/components/addcommunity/IntroSection';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import Fieldset from '@src/components/common/Fieldset';
+import InputText from '@src/components/common/InputText';
+import Section from '@src/components/common/Section';
 
 const headerText = '공동체 초대장 입력하기';
 const headerType = 'back';
@@ -23,12 +24,6 @@ const EnterInvitationPage = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const navigate = useNavigate();
 
-  const handleInvitationCodeChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setInvitationCode(e.target.value);
-  };
-
   const handleFindCommunity = () => {
     setIsTransitioning(true);
     setTimeout(() => {
@@ -37,8 +32,6 @@ const EnterInvitationPage = () => {
       );
     }, 300);
   };
-
-  // 유효성 검사 추가
   useEffect(() => {
     const isValidCode = /^[a-z0-9]{10,12}$/.test(invitationCode.trim());
     setIsFormValid(isValidCode);
@@ -59,20 +52,24 @@ const EnterInvitationPage = () => {
       <Header text={headerText} headerType={headerType} />
       <Container>
         <IntroSection title={introTitleText} bodyLines={introBodyLines} />
-        <TitleAndFieldContainer title='초대 코드'>
-          <InputField
-            type='text'
-            value={invitationCode}
-            placeholder='초대장을 입력하세요.'
-            onChange={handleInvitationCodeChange}
-          />
+        <Fieldset title='초대 코드'>
+          <Section>
+            <InputText
+              as='input'
+              name='invitationCode'
+              placeholder='초대장을 입력하세요'
+              maxLength={-1}
+              value={invitationCode}
+              setValue={setInvitationCode}
+              required={true}
+            />
+          </Section>
           {!isFormValid && invitationCode.trim() !== '' && (
             <span style={{ color: '#fa6554', fontSize: '0.7rem' }}>
               초대 코드는 숫자와 영어 소문자를 혼합한 10-12자리입니다.
             </span>
           )}
-        </TitleAndFieldContainer>
-
+        </Fieldset>
         <ButtonWrapper>
           <Button
             type='submit'
@@ -100,6 +97,10 @@ const Container = styled.div`
   min-height: calc(100vh - 4.375rem);
   min-height: calc(100svh - 4.375rem);
   background-color: ${({ theme }) => theme.colors.neutral50};
+
+  fieldset {
+    width: 100%;
+  }
 `;
 
 const ButtonWrapper = styled.div`
