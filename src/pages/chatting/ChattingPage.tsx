@@ -33,8 +33,11 @@ const ChattingPage = () => {
   };
 
   useEffect(() => {
-    if (data && isInitial) {
+    if (!data) return;
+
+    if (isInitial) {
       setMessages(data);
+      setIsInitial(false);
     }
   }, [data]);
 
