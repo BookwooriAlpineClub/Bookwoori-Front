@@ -18,11 +18,11 @@ const renderButton = (type: string, onClick: () => void, Icon: React.FC) => (
   </Button>
 );
 
-const Header = async ({ text, headerType, onClick }: HeaderProps) => {
+const Header = ({ text, headerType, onClick }: HeaderProps) => {
   const navigate = useNavigate();
   const handleClick = () => navigate(-1);
-  const { openModal: openServerbar } = await useModal('serverbar');
-  const { openModal: openSideBar } = await useModal('sidebar');
+  const { openModal: openServerbar } = useModal('serverbar');
+  const { openModal: openSideBar } = useModal('sidebar');
 
   return (
     <Layout>

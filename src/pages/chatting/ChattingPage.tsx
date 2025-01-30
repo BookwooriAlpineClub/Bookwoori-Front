@@ -111,7 +111,7 @@ const ChattingPage = () => {
             const prevMessage = [...newMessages, ...messages][idx + 1];
             const { date: prevDate } = prevMessage
               ? formatCreatedAt(prevMessage.createdAt)
-              : {};
+              : { date: null };
             const { date: currentDate, time: currentTime } = formatCreatedAt(
               it.createdAt,
             );

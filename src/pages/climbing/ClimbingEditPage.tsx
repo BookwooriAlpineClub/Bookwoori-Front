@@ -22,11 +22,10 @@ import UnderlineButton from '@src/components/common/UnderlineButton';
 import Section from '@src/components/common/Section';
 import Fieldset from '@src/components/common/Fieldset';
 
-const ClimbingEditPage = async () => {
+const ClimbingEditPage = () => {
   const navigate = useEncodedNavigation();
   const addToast = useToast();
-  const { openModal: openDialog, closeModal: closeDialog } =
-    await useModal('dialog');
+  const { openModal: openDialog, closeModal: closeDialog } = useModal('dialog');
 
   const serverId = sessionStorage.getItem('currentServer');
   const { id: climbingId } = useLoaderData<{ id: string }>();

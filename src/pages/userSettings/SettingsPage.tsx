@@ -8,11 +8,10 @@ import IconButton from '@src/components/common/IconButton';
 import UserProfile from '@src/components/common/UserProfile';
 import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 
-const SettingsPage = async () => {
+const SettingsPage = () => {
   const navigate = useNavigate();
   const { delAccount } = useDeleteAccount();
-  const { openModal: openDialog, closeModal: closeDialog } =
-    await useModal('dialog');
+  const { openModal: openDialog, closeModal: closeDialog } = useModal('dialog');
 
   const handleDelete = () => {
     delAccount.mutate();

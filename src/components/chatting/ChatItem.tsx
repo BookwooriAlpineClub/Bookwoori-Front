@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { SyntheticEvent, useMemo } from 'react';
-import useBottomsheet from '@src/hooks/useBottomsheet';
+import useModal from '@src/hooks/useModal';
 import useLongPress from '@src/hooks/useLongPress';
 import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
@@ -16,7 +16,7 @@ interface ChatItemProps {
 }
 
 const ChatItem = ({ chatItem, imgUrl, nickname, createdAt }: ChatItemProps) => {
-  const { openBottomsheet } = useBottomsheet();
+  const { openModal: openBottomsheet } = useModal('bottomsheet');
   const longPressHandler = useLongPress({
     onLongPress: () => openBottomsheet(<ChatMenu content={chatItem.content} />),
   });
