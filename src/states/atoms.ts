@@ -1,4 +1,5 @@
-import type { Toast, Modal } from '@src/types/modal';
+import type Toast from '@src/types/toast';
+import type Modal from '@src/types/modal';
 import { atom } from 'recoil';
 
 export const toastState = atom<Toast[]>({

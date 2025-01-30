@@ -1,4 +1,4 @@
-import type { ModalTransition } from '@src/types/modal';
+import type Modal from '@src/types/modal';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { serverbarState, currentServerIdState } from '@src/states/atoms';
@@ -6,7 +6,7 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import { decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useServerbar from '@src/hooks/useServerbar';
-import useServer from '@src/hooks/query/useServer';
+import { useGetServerList } from '@src/hooks/query/server';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 import { ReactComponent as IcnLibrary } from '@src/assets/icons/md_outline_auto_stories.svg';
@@ -53,7 +53,7 @@ const Serverbar = () => {
   }
   setCurrentServerId(decodedServerId);
 
-  const { serverList } = useServer();
+  const { data: serverList } = useGetServerList();
   const isNotiRead = true; // 나중에 수정
   const isChatRead = true; // 나중에 수정
 
@@ -139,7 +139,7 @@ const Serverbar = () => {
 
 export default Serverbar;
 
-const Container = styled.section<{ $transition: ModalTransition }>`
+const Container = styled.section<{ $transition: Modal['transition'] }>`
   position: fixed;
   left: 0;
   top: 0;
@@ -158,9 +158,9 @@ const Container = styled.section<{ $transition: ModalTransition }>`
 const Fieldset = styled.fieldset`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.62rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
-  padding: 1.25rem 0.94rem;
+  padding: ${({ theme }) => `${theme.padding[24]} ${theme.padding[16]}`};
 
   overflow-y: scroll;
 `;
@@ -182,7 +182,7 @@ const SButton = styled.label`
   border-radius: 50%;
 
   &:has(input[type='radio']:checked) {
-    border-radius: 20px;
+    border-radius: ${({ theme }) => theme.rounded[24]};
   }
 
   &.neongreen {

@@ -19,11 +19,11 @@ export default Fieldset;
 const Container = styled.fieldset`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
-  padding: 1rem;
+  padding: ${({ theme }) => theme.padding[16]};
 
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const Legend = styled.legend`

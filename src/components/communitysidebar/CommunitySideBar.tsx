@@ -1,4 +1,4 @@
-import type { ModalTransition } from '@src/types/modal';
+import type Modal from '@src/types/modal';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 import CommunityButton from '@src/components/common/IconButton';
@@ -94,7 +94,7 @@ export default CommunitySideBar;
 
 const SideBarContainer = styled.div<{
   isOpen: boolean;
-  transition: ModalTransition;
+  transition: Modal['transition'];
 }>`
   position: fixed;
   top: 0;

@@ -60,7 +60,7 @@ const Label = styled.label`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   flex-shrink: 0;
 
@@ -71,9 +71,9 @@ const Label = styled.label`
 
   div {
     display: flex;
-    padding: 0.625rem;
+    padding: ${({ theme }) => theme.padding[12]};
 
-    border-radius: 0.5rem;
+    border-radius: ${({ theme }) => theme.rounded[8]};
     background-color: ${({ theme }) => theme.colors.neutral50};
   }
 

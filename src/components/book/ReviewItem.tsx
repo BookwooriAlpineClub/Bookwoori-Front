@@ -3,7 +3,7 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
-import Chip from '@src/components/common/Tag';
+import Tag from '@src/components/common/Tag';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
 type Props = ElementOfArray<GetReviewListRes>;
@@ -34,7 +34,7 @@ const ReviewItem = ({
       <TextWrapper>
         <RowLayout>
           <Title $line={1}>{title}</Title>
-          <Chip Icon={IcnStar} text={records[0].starReview} />
+          <Tag color='blue' Icon={IcnStar} text={records[0].starReview} />
         </RowLayout>
         <Author $line={1}>{author}</Author>
         <ReviewContent $line={3}>{records[0].contentReview}</ReviewContent>
@@ -50,17 +50,16 @@ const RowLayout = styled.div`
   flex-flow: row nowrap;
 `;
 const ComponentWrapper = styled(RowLayout)`
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
-  padding: 0.9375rem;
+  padding: ${({ theme }) => theme.padding[16]};
 
-  border-radius: 0.5rem;
+  border-radius: ${({ theme }) => theme.rounded[8]};
   background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const TextWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.3rem;
 
   width: 100%;
 `;

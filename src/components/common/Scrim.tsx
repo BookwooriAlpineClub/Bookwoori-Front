@@ -1,10 +1,10 @@
-import type { ModalTransition } from '@src/types/modal';
+import type Modal from '@src/types/modal';
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
 
 interface Props {
   isOpen: boolean;
-  transition: ModalTransition;
+  transition: Modal['transition'];
   closeModal: () => void;
   children: React.ReactNode;
 }
@@ -26,7 +26,7 @@ const Scrim = ({ isOpen, transition, closeModal, children }: Props) => {
 
 export default Scrim;
 
-const Background = styled.div<{ $transition: ModalTransition }>`
+const Background = styled.div<{ $transition: Modal['transition'] }>`
   opacity: ${({ $transition }) => ($transition === 'open' ? 1 : 0)};
 
   position: fixed;

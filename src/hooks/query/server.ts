@@ -1,7 +1,7 @@
+import type { AxiosError } from 'axios';
+import type { PostServerReq, GetServersRes } from '@src/types/apis/server';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import type { PostServerReq, GetServersRes } from '@src/types/apis/server';
-import type { AxiosError } from 'axios';
 import useToast from '@src/hooks/useToast';
 import { encodeId } from '@src/utils/formatters';
 import { ROUTE_PATH } from '@src/constants/routePath';
@@ -13,7 +13,28 @@ import {
   getServers
 } from '@src/apis/server';
 
-
+export const useGetServerList = () => {
+  return useQuery<GetServersRes, AxiosError, GetServersRes['servers']>({
+    queryKey: ['getServers'],
+    queryFn: () => getServers(),
+    select: (rawData) => rawData?.servers,
+    initialData: { servers: [] },
+  });
+};
+/* 초대 코드로 서버 확인 */
+export const useGetServerByCode = (inviteCode: string) => {
+  return useQuery({
+    queryKey: ['getServerByCode', inviteCode],
+    queryFn: () => getServerByCode(inviteCode),
+  });
+};
+/* 서버 정보 조회 */
+export const useGetServerOne = (serverId: number) => {
+  return useQuery({
+    queryKey: ['getServerOne', serverId],
+    queryFn: () => getServerOne(serverId),
+  });
+};
 /* 서버 생성 */
 export const usePostServer = (resetFields: () => void) => {
   const navigate = useNavigate();
@@ -30,15 +51,6 @@ export const usePostServer = (resetFields: () => void) => {
   });
   return mutation;
 };
-
-/* 초대 코드로 서버 확인 */
-export const useGetServerByCode = (inviteCode: string) => {
-  return useQuery({
-    queryKey: ['getServerByCode', inviteCode],
-    queryFn: () => getServerByCode(inviteCode),
-  });
-};
-
 export const usePostServerJoin = (inviteCode: string) => {
   const navigate = useNavigate();
   const addToast = useToast();
@@ -55,20 +67,4 @@ export const usePostServerJoin = (inviteCode: string) => {
     },
   });
   return mutation;
-};
-
-/* 서버 정보 조회 */
-export const useGetServerOne = (serverId: number) => {
-  return useQuery({
-    queryKey: ['getServerOne', serverId],
-    queryFn: () => getServerOne(serverId),
-  });
-};
-
-export const useGetServerList = () => {
-  return useQuery<GetServersRes, AxiosError>({
-    queryKey: ['getServers'],
-    queryFn: () => getServers(),
-    initialData: { servers: [] },
-  });
 };

@@ -1,5 +1,5 @@
 import type { RecoilState } from 'recoil';
-import type { Modal } from '@src/types/modal';
+import type Modal from '@src/types/modal';
 import { useSetRecoilState } from 'recoil';
 
 const useModal = async (

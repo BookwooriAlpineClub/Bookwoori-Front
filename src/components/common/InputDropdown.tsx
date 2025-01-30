@@ -8,7 +8,7 @@ interface Props {
     id: number;
     text: string;
   }[];
-  required: boolean;
+  required?: boolean;
   disabled?: boolean;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
@@ -19,7 +19,7 @@ const InputDropdown = ({
   placeholder,
   options,
   required,
-  disabled = false,
+  disabled,
   value,
   setValue,
 }: Props) => {

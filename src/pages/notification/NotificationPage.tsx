@@ -66,7 +66,7 @@ const Layout = styled.div`
 const Ol = styled.ol`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.62rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   flex: 1;
   overflow-y: scroll;

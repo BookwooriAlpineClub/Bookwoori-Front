@@ -1,46 +1,37 @@
 import type Record from '@src/types/record';
-import useRecord from '@src/hooks/query/useRecord';
+import { useGetRecordList } from '@src/hooks/query/record';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import Header from '@src/components/common/Header';
+import SegmentedButton from '@src/components/common/SegmentedButton';
 import Li from '@src/components/book/RecordListItem';
 
 const RecordListPage = () => {
   const [status, setStatus] = useState<Record['status']>('READING');
-  const radioConfigs: {
-    status: Record['status'];
-    text: '읽고 싶어요' | '읽고 있어요' | '다 읽었어요';
+  const configs: {
+    value: Record['status'];
+    label: '읽고 싶어요' | '읽고 있어요' | '다 읽었어요';
   }[] = [
-    { status: 'WISH', text: '읽고 싶어요' },
-    { status: 'READING', text: '읽고 있어요' },
-    { status: 'FINISHED', text: '다 읽었어요' },
+    { value: 'WISH', label: '읽고 싶어요' },
+    { value: 'READING', label: '읽고 있어요' },
+    { value: 'FINISHED', label: '다 읽었어요' },
   ];
 
-  const { recordList: data } = useRecord({ status });
+  const { data: recordList } = useGetRecordList(status);
 
   return (
     <Container>
       <Header text='책 기록' headerType='back' />
-      <Fieldset name='status'>
-        {radioConfigs.map((item) => (
-          <Label key={item.status}>
-            {item.text}
-            <input
-              name='status'
-              type='radio'
-              value={item.status}
-              onChange={(e) => setStatus(e.target.value as Record['status'])}
-              defaultChecked={item.status === 'READING'}
-            />
-          </Label>
-        ))}
-        <Background status={status} />
-      </Fieldset>
+      <SegmentedButton<Record['status']>
+        config={configs}
+        onSegmentChange={setStatus}
+        defaultValue='READING'
+      />
       <main>
-        {data.length !== 0 ? (
+        {recordList.length !== 0 ? (
           <Ul>
-            {data.map((item) => (
+            {recordList.map((item) => (
               <Li key={item.isbn13} {...item} />
             ))}
           </Ul>
@@ -55,76 +46,16 @@ const RecordListPage = () => {
 export default RecordListPage;
 
 const Container = styled(NoDataTextLayout)`
-  gap: 1.25rem;
+  gap: ${({ theme }) => theme.gap[16]};
 
   main {
-    padding: 0 5%;
     overflow-y: auto;
   }
-`;
-const Fieldset = styled.fieldset`
-  position: relative;
-
-  display: flex;
-
-  width: 22.0625rem;
-  height: 2.8125rem;
-  margin: 0 auto;
-  flex-shrink: 0;
-
-  border: ${({ theme }) => theme.colors.neutral0} 0.25rem solid;
-  border-radius: 62.4375rem;
-  background-color: ${({ theme }) => theme.colors.neutral0};
-
-  overflow: hidden;
-`;
-const Label = styled.label`
-  position: relative;
-  z-index: 3;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 33.3%;
-  height: 100%;
-
-  ${({ theme }) => theme.fonts.mountain}
-  color: ${({ theme }) => theme.colors.blue300};
-
-  &:has(input[type='radio']:checked) {
-    color: ${({ theme }) => theme.colors.neutral0};
-  }
-
-  transition: color 0.3s ease-out;
-`;
-const Background = styled.div<{ status: Record['status'] }>`
-  position: absolute;
-  left: ${({ status }) => {
-    switch (status) {
-      case 'WISH':
-        return '0';
-      case 'READING':
-        return '33.3%';
-      case 'FINISHED':
-        return '66.8%';
-      default:
-        return '33.3%';
-    }
-  }};
-  z-index: 1;
-
-  width: 33.3%;
-  height: 100%;
-
-  background-color: ${({ theme }) => theme.colors.blue500};
-
-  transition: left 0.3s ease-out;
 `;
 const Ul = styled.ul`
   display: flex;
   flex-flow: row wrap;
-  gap: 1.5rem 0.75rem;
+  gap: ${({ theme }) => `${theme.gap[16]} ${theme.gap[12]}`};
 
   margin-bottom: 1.25rem;
 

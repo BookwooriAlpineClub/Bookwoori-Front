@@ -1,13 +1,12 @@
 import type Book from '@src/types/book';
-import type { Category } from '@src/types/category';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { formatDate, decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useBottomsheet from '@src/hooks/useBottomsheet';
-import useCategory from '@src/hooks/query/useCategory';
-import useChannel from '@src/hooks/query/useChannel';
-import useClimbing from '@src/hooks/query/useClimbing';
+import { useCategory } from '@src/hooks/query/category';
+import { usePostChannel } from '@src/hooks/query/channel';
+import { usePostClimbing } from '@src/hooks/query/climbing';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
@@ -23,23 +22,19 @@ import { ReactComponent as IcnHash } from '@src/assets/icons/bi_hash.svg';
 import { ReactComponent as IcnVoice } from '@src/assets/icons/hi_outline_volume_up.svg';
 import { ReactComponent as IcnRun } from '@src/assets/icons/bi_run.svg';
 
-type DefaultKind = 'chat' | 'voice' | 'climb' | null;
-
 const ChannelAddPage = () => {
   const navigate = useEncodedNavigate();
   const { openBottomsheet, closeBottomsheet } = useBottomsheet();
   const { serverId } = useParams<{ serverId: string }>();
   const decodedServerId = decodeIdParam(serverId);
   const location = useLocation();
-  const defaultKind: DefaultKind = new URLSearchParams(location.search).get(
-    'kind',
-  ) as DefaultKind;
+  const defaultKind = new URLSearchParams(location.search).get('kind') || '';
 
-  const { categoryList } = useCategory(Number(decodedServerId));
-  const { createChannel } = useChannel();
-  const { createClimbing } = useClimbing();
+  const { categoryList } = useCategory();
+  const { createChannel } = usePostChannel();
+  const { createClimbing } = usePostClimbing();
 
-  const [kind, setKind] = useState<DefaultKind>(defaultKind);
+  const [kind, setKind] = useState<string>(defaultKind);
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [book, setBook] = useState<Pick<Book, 'title' | 'isbn13'>>({
@@ -81,14 +76,12 @@ const ChannelAddPage = () => {
     } else {
       createClimbing.mutate(
         {
-          body: {
-            serverId: Number(decodedServerId),
-            name,
-            isbn: book.isbn13,
-            description,
-            startDate: date.start,
-            endDate: date.end,
-          },
+          serverId: Number(decodedServerId),
+          name,
+          isbn: book.isbn13,
+          description,
+          startDate: date.start,
+          endDate: date.end,
         },
         {
           onSuccess() {
@@ -105,11 +98,11 @@ const ChannelAddPage = () => {
       <Main>
         <Form id='channel-add-form' onSubmit={handleFormSubmit}>
           <InputRadio
-            title='모임 유형'
-            items={[
-              { value: 'chat', icon: <IcnHash /> },
-              { value: 'voice', icon: <IcnVoice /> },
-              { value: 'climb', icon: <IcnRun /> },
+            name='모임 유형'
+            options={[
+              { value: 'chat', Icon: IcnHash, text: '문자' },
+              { value: 'voice', Icon: IcnVoice, text: '전화' },
+              { value: 'climb', Icon: IcnRun, text: '등반' },
             ]}
             defaultValue={defaultKind}
             required
@@ -117,9 +110,12 @@ const ChannelAddPage = () => {
           />
           {(kind === 'chat' || kind === 'voice') && (
             <InputDropdown
-              title='모임 분류'
+              name='모임 분류'
               placeholder='분류 선택'
-              items={categoryList as Pick<Category, 'categoryId' | 'name'>[]}
+              options={categoryList.map((item) => ({
+                id: item.categoryId,
+                text: item.name,
+              }))}
               required
               value={category}
               setValue={setCategory}
@@ -127,10 +123,10 @@ const ChannelAddPage = () => {
           )}
           {!!kind && (
             <InputText
-              title='모임 이름'
+              as='input'
+              name='모임 이름'
               placeholder='모임 이름을 입력하세요.'
-              type='short'
-              limit={20}
+              maxLength={20}
               required
               value={name}
               setValue={setName}
@@ -157,18 +153,18 @@ const ChannelAddPage = () => {
                 />
               </Fieldset>
               <InputDatepicker
-                title='등반 기간'
                 type='period'
+                name='등반 기간'
                 min={formatDate(calcTomorrow())}
                 required
                 value={date}
                 setValue={setDate}
               />
               <InputText
-                title='등반 설명'
+                as='textarea'
+                name='등반 설명'
                 placeholder='사람들에게 등반에 대해 알려주세요.'
-                type='long'
-                limit={150}
+                maxLength={150}
                 required
                 value={description}
                 setValue={setDescription}
