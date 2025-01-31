@@ -1,12 +1,12 @@
 import type Modal from '@src/types/modal';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { serverbarState, currentServerIdState } from '@src/states/atoms';
 import { ROUTE_PATH } from '@src/constants/routePath';
-import { decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
-import useServerbar from '@src/hooks/useServerbar';
+import useModal from '@src/hooks/useModal';
 import { useGetServerList } from '@src/hooks/query/server';
+import { serverbarState, currentServerIdState } from '@src/states/atoms';
+import { decodeIdParam } from '@src/utils/formatters';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 import { ReactComponent as IcnLibrary } from '@src/assets/icons/md_outline_auto_stories.svg';
@@ -38,25 +38,12 @@ type buttonConfig = {
  * openServerbar();
  */
 const Serverbar = () => {
-  const { closeServerbar } = useServerbar();
-  const navigate = useNavigate();
-  const encodedNavigate = useEncodedNavigate();
-  const { serverId: params } = useParams<{ serverId: string }>();
   const location = useLocation();
-
+  const { serverId: params } = useParams<{ serverId: string }>();
   const { isOpen, transition } = useRecoilValue(serverbarState);
-  const setCurrentServerId = useSetRecoilState(currentServerIdState);
-
-  let decodedServerId: number = -1;
-  if (location.pathname.includes('/server')) {
-    decodedServerId = decodeIdParam(params);
-  }
-  setCurrentServerId(decodedServerId);
-
   const { data: serverList } = useGetServerList();
   const isNotiRead = true; // 나중에 수정
   const isChatRead = true; // 나중에 수정
-
   const buttonConfigs: buttonConfig[] = [
     {
       name: '서재',
@@ -90,6 +77,10 @@ const Serverbar = () => {
     },
   ];
 
+  const navigate = useNavigate();
+  const encodedNavigate = useEncodedNavigate();
+  const setCurrentServerId = useSetRecoilState(currentServerIdState);
+  const { closeModal: closeServerbar } = useModal(serverbarState);
   const handleMyClick = (link: string) => {
     navigate(link);
     closeServerbar();
@@ -98,6 +89,12 @@ const Serverbar = () => {
     encodedNavigate('/server', id);
     closeServerbar();
   };
+
+  let decodedServerId: number = -1;
+  if (location.pathname.includes('/server')) {
+    decodedServerId = decodeIdParam(params);
+  }
+  setCurrentServerId(decodedServerId);
 
   return (
     <Scrim isOpen={isOpen} transition={transition} closeModal={closeServerbar}>

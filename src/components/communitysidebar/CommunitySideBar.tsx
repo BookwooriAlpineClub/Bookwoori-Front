@@ -1,19 +1,22 @@
 import type Modal from '@src/types/modal';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
+import useModal from '@src/hooks/useModal';
+import { sidebarState, dialogState } from '@src/states/atoms';
+import { decodeIdParam, encodeId } from '@src/utils/formatters';
 import styled from 'styled-components';
+import Fieldset from '@src/components/common/Fieldset';
 import Scrim from '@src/components/common/Scrim';
 import CommunityButton from '@src/components/common/IconButton';
-import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
-import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 import ProfileModal from '@src/components/communitysidebar/ProfileModal';
-import { useNavigate, useParams } from 'react-router-dom';
-import { ROUTE_PATH } from '@src/constants/routePath';
-import { decodeIdParam, encodeId } from '@src/utils/formatters';
-import Fieldset from '@src/components/common/Fieldset';
-import useModal from '@src/hooks/useModal';
+import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 
 const CommunitySideBar = () => {
-  const { openModal: sideBar, closeModal: closeSideBar } = useModal('sidebar');
-  const { openModal: openDialog } = useModal('dialog');
+  const { isOpen, transition } = useRecoilValue(sidebarState);
+  const { closeModal: closeSideBar } = useModal(sidebarState);
+  const { openModal: openDialog } = useModal(dialogState);
   const { serverId: id } = useParams<{ serverId: string }>();
   const serverId = decodeIdParam(id ?? '-1');
   const { serverInfo, memberList, copyText } = {
@@ -52,13 +55,13 @@ const CommunitySideBar = () => {
 
   return (
     <Scrim
-      isOpen={sideBar.isOpen}
-      transition={sideBar.transition}
+      isOpen={isOpen}
+      transition={transition}
       closeModal={closeSideBar}
     >
       <SideBarContainer
-        isOpen={sideBar.isOpen}
-        transition={sideBar.transition}
+        isOpen={isOpen}
+        transition={transition}
         onClick={(e) => e.stopPropagation()}
       >
         <CommunityTitleContainer>
