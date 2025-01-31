@@ -1,16 +1,16 @@
 import type Modal from '@src/types/modal';
-import styled from 'styled-components';
-import Scrim from '@src/components/common/Scrim';
-import CommunityButton from '@src/components/common/IconButton';
-import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
-import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
-import ProfileModal from '@src/components/communitysidebar/ProfileModal';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
+import useModal from '@src/hooks/useModal';
 import { sidebarState, dialogState } from '@src/states/atoms';
 import { decodeIdParam, encodeId } from '@src/utils/formatters';
+import styled from 'styled-components';
 import Fieldset from '@src/components/common/Fieldset';
-import useModal from '@src/hooks/useModal';
+import Scrim from '@src/components/common/Scrim';
+import CommunityButton from '@src/components/common/IconButton';
+import ProfileModal from '@src/components/communitysidebar/ProfileModal';
+import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 
 const CommunitySideBar = () => {
   const { closeModal: closeSideBar } = useModal(sidebarState);

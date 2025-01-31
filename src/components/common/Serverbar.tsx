@@ -1,12 +1,12 @@
 import type Modal from '@src/types/modal';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { serverbarState, currentServerIdState } from '@src/states/atoms';
 import { ROUTE_PATH } from '@src/constants/routePath';
-import { decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useModal from '@src/hooks/useModal';
 import { useGetServerList } from '@src/hooks/query/server';
+import { serverbarState, currentServerIdState } from '@src/states/atoms';
+import { decodeIdParam } from '@src/utils/formatters';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 import { ReactComponent as IcnLibrary } from '@src/assets/icons/md_outline_auto_stories.svg';

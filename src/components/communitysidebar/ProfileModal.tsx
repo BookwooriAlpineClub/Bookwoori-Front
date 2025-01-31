@@ -1,12 +1,12 @@
-import UserProfile from '@src/components/common/UserProfile';
-import { sidebarState, dialogState } from '@src/states/atoms';
-import styled from 'styled-components';
-import SubButton from '@src/components/common/SubButton';
-import { ReactComponent as Chatting } from '@src/assets/icons/md_outline_chat_bubble.svg';
-import { ReactComponent as Hiking } from '@src/assets/icons/md_outline_auto_stories.svg';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useModal from '@src/hooks/useModal';
+import { sidebarState, dialogState } from '@src/states/atoms';
+import styled from 'styled-components';
+import UserProfile from '@src/components/common/UserProfile';
+import SubButton from '@src/components/common/SubButton';
+import { ReactComponent as Chatting } from '@src/assets/icons/md_outline_chat_bubble.svg';
+import { ReactComponent as Hiking } from '@src/assets/icons/md_outline_auto_stories.svg';
 
 const buttons = {
   hiking: {

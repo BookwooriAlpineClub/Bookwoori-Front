@@ -1,14 +1,14 @@
-import styled from 'styled-components';
-import useLongPress from '@src/hooks/useLongPress';
-import { useGetProfile } from '@src/hooks/query/member';
-import ChatMenu from '@src/components/common/EmojiBottomsheet';
-import Profile from '@src/assets/images/userSettings/background_default.svg';
 import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
 import { SyntheticEvent, useMemo } from 'react';
-import { formatChatItemTime } from '@src/utils/formatters';
+import useLongPress from '@src/hooks/useLongPress';
 import useModal from '@src/hooks/useModal';
+import { useGetProfile } from '@src/hooks/query/member';
 import { bottomsheetState } from '@src/states/atoms';
+import { formatChatItemTime } from '@src/utils/formatters';
+import styled from 'styled-components';
+import ChatMenu from '@src/components/common/EmojiBottomsheet';
+import Profile from '@src/assets/images/userSettings/background_default.svg';
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;

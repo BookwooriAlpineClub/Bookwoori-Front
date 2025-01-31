@@ -16,10 +16,10 @@ openBottomsheet(ConfirmBottomsheet);
 */
 
 import type Modal from '@src/types/modal';
-import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import useModal from '@src/hooks/useModal';
 import { bottomsheetState } from '@src/states/atoms';
+import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 
 const Bottomsheet = () => {

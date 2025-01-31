@@ -1,7 +1,7 @@
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import useModal from '@src/hooks/useModal';
 import { serverbarState, sidebarState } from '@src/states/atoms';
+import styled from 'styled-components';
 import Serverbar from '@src/components/common/Serverbar';
 import { ReactComponent as Hamburger } from '@src/assets/icons/fi_menu.svg';
 import { ReactComponent as Back } from '@src/assets/icons/fi_arrow_left.svg';
