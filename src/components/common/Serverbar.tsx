@@ -18,7 +18,7 @@ import { ReactComponent as IcnPlus } from '@src/assets/icons/hi_outline_plus.svg
 type buttonConfig = {
   name: string;
   link: string;
-  icon: React.ReactElement;
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>;
   className: string;
 };
 
@@ -48,31 +48,31 @@ const Serverbar = () => {
     {
       name: '서재',
       link: ROUTE_PATH.library,
-      icon: <IcnLibrary />,
+      Icon: IcnLibrary,
       className: 'neongreen',
     },
     {
       name: '알림',
       link: ROUTE_PATH.notification,
-      icon: <IcnBell />,
+      Icon: IcnBell,
       className: isNotiRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '채팅',
       link: ROUTE_PATH.dm,
-      icon: <IcnChat />,
+      Icon: IcnChat,
       className: isChatRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '계정 설정',
       link: ROUTE_PATH.setting,
-      icon: <IcnSettings />,
+      Icon: IcnSettings,
       className: 'neongreen',
     },
     {
       name: '서버 추가',
       link: ROUTE_PATH.addServer,
-      icon: <IcnPlus />,
+      Icon: IcnPlus,
       className: 'blue',
     },
   ];
@@ -103,7 +103,7 @@ const Serverbar = () => {
         $transition={transition}
       >
         <Fieldset>
-          {buttonConfigs.map(({ name, link, icon, className }) => (
+          {buttonConfigs.map(({ name, link, Icon, className }) => (
             <>
               <SButton key={name} className={className}>
                 <input
@@ -112,7 +112,7 @@ const Serverbar = () => {
                   onClick={() => handleMyClick(link)}
                   checked={window.location.pathname === link}
                 />
-                {icon}
+                <Icon width={24} height={24} />
               </SButton>
               {(name === '서재' || name === '계정 설정') && <Hr />}
             </>
