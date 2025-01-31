@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 type Props = Omit<ElementOfArray<GetBookListRes>, 'isbn13'>;
 
-const BookinfoItem = ({ title, author, cover, publisher, pubYear }: Props) => {
+const BookListItem = ({ title, author, cover, publisher, pubYear }: Props) => {
   return (
     <Container>
       <Img src={cover} alt='책 표지' loading='lazy' />
@@ -20,7 +20,7 @@ const BookinfoItem = ({ title, author, cover, publisher, pubYear }: Props) => {
   );
 };
 
-export default BookinfoItem;
+export default BookListItem;
 
 const Container = styled.li`
   display: flex;
