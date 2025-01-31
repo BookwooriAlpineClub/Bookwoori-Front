@@ -9,11 +9,11 @@ const addToast = useToast();
 addToast({ kind: 'error', content: '토스트 내용' });
 */
 
-import styled from 'styled-components';
 import type Toast from '@src/types/toast';
 import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
 import { toastState } from '@src/states/atoms';
+import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 import { ReactComponent as IcnInfo } from '@src/assets/icons/toast_info.svg';
 import { ReactComponent as IcnSuccess } from '@src/assets/icons/toast_success.svg';
