@@ -3,7 +3,7 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
 import { TextEllipsis } from '@src/styles/mixins';
-import BookinfoItem from '@src/components/book/BookinfoItem';
+import BookListItem from '@src/components/book/BookListItem';
 import StarReview from '@src/components/book/StarReview';
 
 type Props = ElementOfArray<GetReviewListRes>;
@@ -24,7 +24,7 @@ const ReviewListItem = ({
 
   return (
     <Container onClick={handleItemClick}>
-      <BookinfoItem
+      <BookListItem
         title={title}
         author={author}
         cover={cover}
