@@ -38,25 +38,12 @@ type buttonConfig = {
  * openServerbar();
  */
 const Serverbar = () => {
-  const { closeModal: closeServerbar } = useModal(serverbarState);
-  const navigate = useNavigate();
-  const encodedNavigate = useEncodedNavigate();
-  const { serverId: params } = useParams<{ serverId: string }>();
   const location = useLocation();
-
+  const { serverId: params } = useParams<{ serverId: string }>();
   const { isOpen, transition } = useRecoilValue(serverbarState);
-  const setCurrentServerId = useSetRecoilState(currentServerIdState);
-
-  let decodedServerId: number = -1;
-  if (location.pathname.includes('/server')) {
-    decodedServerId = decodeIdParam(params);
-  }
-  setCurrentServerId(decodedServerId);
-
   const { data: serverList } = useGetServerList();
   const isNotiRead = true; // 나중에 수정
   const isChatRead = true; // 나중에 수정
-
   const buttonConfigs: buttonConfig[] = [
     {
       name: '서재',
@@ -90,6 +77,10 @@ const Serverbar = () => {
     },
   ];
 
+  const navigate = useNavigate();
+  const encodedNavigate = useEncodedNavigate();
+  const setCurrentServerId = useSetRecoilState(currentServerIdState);
+  const { closeModal: closeServerbar } = useModal(serverbarState);
   const handleMyClick = (link: string) => {
     navigate(link);
     closeServerbar();
@@ -98,6 +89,12 @@ const Serverbar = () => {
     encodedNavigate('/server', id);
     closeServerbar();
   };
+
+  let decodedServerId: number = -1;
+  if (location.pathname.includes('/server')) {
+    decodedServerId = decodeIdParam(params);
+  }
+  setCurrentServerId(decodedServerId);
 
   return (
     <Scrim isOpen={isOpen} transition={transition} closeModal={closeServerbar}>
