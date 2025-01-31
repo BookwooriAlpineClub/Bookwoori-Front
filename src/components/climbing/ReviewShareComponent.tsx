@@ -6,6 +6,7 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import UnderlineButton from '@src/components/common/UnderlineButton';
 import type Book from '@src/types/book';
 import { useGetPatchShareClimbingReview } from '@src/hooks/query/climbing';
+// import ReviewListItem from '@src/components/book/ReviewListItem';
 
 /*
  *
@@ -43,11 +44,7 @@ const ReviewShareComponent = ({
       </TextContainer>
       <ItemWrapper>
         {isShareable && (
-          // <ReviewItem
-          //   star={star ?? 0}
-          //   reviewContent={content ?? ''}
-          //   bookInfo={bookInfo}
-          // />
+          // <ReviewListItem />
           <div>book에서 가져올 리뷰 아이템</div>
         )}
         {!isShareable && (
