@@ -2,12 +2,11 @@ import type { GetReviewListRes } from '@src/types/apis/record';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
-import { BookImg, TextEllipsis } from '@src/styles/mixins';
-import Tag from '@src/components/common/Tag';
-import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
+import { TextEllipsis } from '@src/styles/mixins';
+import BookinfoItem from '@src/components/book/BookinfoItem';
+import StarReview from '@src/components/book/StarReview';
 
 type Props = ElementOfArray<GetReviewListRes>;
-// type Listitem = ElementOfArray<ElementOfArray<GetReviewListRes>['records']>;
 
 const ReviewItem = ({
   isbn13,
@@ -19,70 +18,69 @@ const ReviewItem = ({
   records,
 }: Props) => {
   const navigate = useEncodedNavigate();
-
   const handleItemClick = () => {
     navigate(ROUTE_PATH.libraryRecord, Number(isbn13));
   };
 
-  console.log(publisher);
-  console.log(pubYear);
-
-  // 추후 배열로 수정
   return (
-    <ComponentWrapper as='li' onClick={handleItemClick}>
-      <Img src={cover} alt='책 표지' loading='lazy' />
-      <TextWrapper>
-        <RowLayout>
-          <Title $line={1}>{title}</Title>
-          <Tag color='blue' Icon={IcnStar} text={records[0].starReview} />
-        </RowLayout>
-        <Author $line={1}>{author}</Author>
-        <ReviewContent $line={3}>{records[0].contentReview}</ReviewContent>
-      </TextWrapper>
-    </ComponentWrapper>
+    <Container onClick={handleItemClick}>
+      <BookinfoItem
+        title={title}
+        author={author}
+        cover={cover}
+        publisher={publisher}
+        pubYear={pubYear}
+      />
+      {records.map(
+        ({ recordId, startDate, endDate, starReview, contentReview }) => (
+          <>
+            <Hr />
+            <Li key={recordId}>
+              <ReviewInfoWrapper>
+                <Period>{`${startDate} - ${endDate}`}</Period>
+                <StarReview starReview={starReview} />
+              </ReviewInfoWrapper>
+              <ReviewContent $line={3}>{contentReview}</ReviewContent>
+            </Li>
+          </>
+        ),
+      )}
+    </Container>
   );
 };
 
 export default ReviewItem;
 
-const RowLayout = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-`;
-const ComponentWrapper = styled(RowLayout)`
-  gap: ${({ theme }) => theme.gap[10]};
-
-  padding: ${({ theme }) => theme.padding[16]};
-
-  border-radius: ${({ theme }) => theme.rounded[8]};
-  background-color: ${({ theme }) => theme.colors.neutral0};
-`;
-const TextWrapper = styled.div`
+const Container = styled.ul`
   display: flex;
   flex-flow: column nowrap;
+  gap: ${({ theme }) => theme.gap[16]};
 
   width: 100%;
-`;
-const Img = styled.img`
-  width: 4.25rem;
+  padding: ${({ theme }) => theme.padding[16]};
 
-  ${BookImg}
+  border-radius: ${({ theme }) => theme.rounded[12]};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
-const Title = styled.span<{ $line: number }>`
+const Hr = styled.hr`
   width: 100%;
+  height: 0.09375rem;
 
-  ${({ theme }) => theme.fonts.body}
-  ${TextEllipsis}
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
-const Author = styled.span<{ $line: number }>`
-  width: 100%;
-
-  ${({ theme }) => theme.fonts.caption}
-  ${TextEllipsis}
+const Li = styled.li`
+  display: flex;
+  flex-flow: column nowrap;
+  gap: ${({ theme }) => theme.gap[8]};
+`;
+const ReviewInfoWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const Period = styled.p`
+  ${({ theme }) => theme.fonts.mountain};
 `;
 const ReviewContent = styled.p<{ $line: number }>`
-  width: 100%;
-
-  ${({ theme }) => theme.fonts.body}
-  ${TextEllipsis}
+  ${({ theme }) => theme.fonts.body};
+  ${TextEllipsis};
 `;
