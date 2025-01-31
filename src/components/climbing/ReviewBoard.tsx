@@ -1,10 +1,10 @@
-import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
-import styled from 'styled-components';
 import ReviewShareComponent from '@src/components/climbing/ReviewShareComponent';
-import { useGetClimbingReview } from '@src/hooks/query/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
+import { useGetClimbingReview } from '@src/hooks/query/climbing';
+import styled from 'styled-components';
 import Spinner from '@src/components/common/Spinner';
 import ReviewListItem from '@src/components/book/ReviewListItem';
+import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 
 const ReviewBoard = () => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
