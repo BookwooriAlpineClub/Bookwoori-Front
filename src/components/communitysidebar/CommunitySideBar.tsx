@@ -1,5 +1,6 @@
 import type Modal from '@src/types/modal';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 import useModal from '@src/hooks/useModal';
@@ -13,6 +14,7 @@ import ProfileModal from '@src/components/communitysidebar/ProfileModal';
 import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 
 const CommunitySideBar = () => {
+  const { isOpen, transition } = useRecoilValue(sidebarState);
   const { closeModal: closeSideBar } = useModal(sidebarState);
   const { openModal: openDialog } = useModal(dialogState);
   const { serverId: id } = useParams<{ serverId: string }>();
@@ -53,13 +55,13 @@ const CommunitySideBar = () => {
 
   return (
     <Scrim
-      isOpen={sideBar.isOpen}
-      transition={sideBar.transition}
+      isOpen={isOpen}
+      transition={transition}
       closeModal={closeSideBar}
     >
       <SideBarContainer
-        isOpen={sideBar.isOpen}
-        transition={sideBar.transition}
+        isOpen={isOpen}
+        transition={transition}
         onClick={(e) => e.stopPropagation()}
       >
         <CommunityTitleContainer>
