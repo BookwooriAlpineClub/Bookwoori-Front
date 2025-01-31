@@ -8,7 +8,7 @@ import StarReview from '@src/components/book/StarReview';
 
 type Props = ElementOfArray<GetReviewListRes>;
 
-const ReviewItem = ({
+const ReviewListItem = ({
   isbn13,
   title,
   author,
@@ -49,7 +49,7 @@ const ReviewItem = ({
   );
 };
 
-export default ReviewItem;
+export default ReviewListItem;
 
 const Container = styled.ul`
   display: flex;
