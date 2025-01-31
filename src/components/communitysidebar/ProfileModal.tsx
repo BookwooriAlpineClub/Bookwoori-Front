@@ -1,4 +1,5 @@
 import UserProfile from '@src/components/common/UserProfile';
+import { sidebarState, dialogState } from '@src/states/atoms';
 import styled from 'styled-components';
 import SubButton from '@src/components/common/SubButton';
 import { ReactComponent as Chatting } from '@src/assets/icons/md_outline_chat_bubble.svg';
@@ -39,8 +40,8 @@ const buttons = {
 
 const ProfileModal = ({ memberId }: { memberId: number }) => {
   const navigate = useNavigate();
-  const { closeModal: closeDialog } = useModal('dialog');
-  const { closeModal: closeSideBar } = useModal('sidebar');
+  const { closeModal: closeDialog } = useModal(dialogState);
+  const { closeModal: closeSideBar } = useModal(sidebarState);
 
   const handleClickHiking = () => {
     navigate(`${ROUTE_PATH.library}/${memberId}`);

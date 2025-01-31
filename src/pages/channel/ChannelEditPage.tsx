@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { categoryIdState } from '@src/states/atoms';
 import { useCategory } from '@src/hooks/query/category';
 import useModal from '@src/hooks/useModal';
 import useLoaderData from '@src/hooks/useRoaderData';
@@ -21,6 +20,7 @@ import {
   usePatchChannel,
 } from '@src/hooks/query/channel';
 import Section from '@src/components/common/Section';
+import { dialogState, categoryIdState } from '@src/states/atoms';
 import Fieldset from '@src/components/common/Fieldset';
 
 const findItemByKey = <T, K extends keyof T>(
@@ -32,7 +32,7 @@ const findItemByKey = <T, K extends keyof T>(
 };
 
 const ChannelEditPage = () => {
-  const { openModal: openDialog, closeModal: closeDialog } = useModal('dialog');
+  const { openModal: openDialog, closeModal: closeDialog } = useModal(dialogState);
   const addToast = useToast();
 
   const { id: serverId } = useLoaderData<{ id: string }>();

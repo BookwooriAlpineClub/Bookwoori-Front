@@ -7,13 +7,14 @@ import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 import ProfileModal from '@src/components/communitysidebar/ProfileModal';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import { sidebarState, dialogState } from '@src/states/atoms';
 import { decodeIdParam, encodeId } from '@src/utils/formatters';
 import Fieldset from '@src/components/common/Fieldset';
 import useModal from '@src/hooks/useModal';
 
 const CommunitySideBar = () => {
-  const { openModal: sideBar, closeModal: closeSideBar } = useModal('sidebar');
-  const { openModal: openDialog } = useModal('dialog');
+  const { closeModal: closeSideBar } = useModal(sidebarState);
+  const { openModal: openDialog } = useModal(dialogState);
   const { serverId: id } = useParams<{ serverId: string }>();
   const serverId = decodeIdParam(id ?? '-1');
   const { serverInfo, memberList, copyText } = {

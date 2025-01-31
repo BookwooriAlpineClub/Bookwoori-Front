@@ -5,7 +5,7 @@ import { serverbarState, currentServerIdState } from '@src/states/atoms';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
-import useServerbar from '@src/hooks/useServerbar';
+import useModal from '@src/hooks/useModal';
 import { useGetServerList } from '@src/hooks/query/server';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
@@ -38,7 +38,7 @@ type buttonConfig = {
  * openServerbar();
  */
 const Serverbar = () => {
-  const { closeServerbar } = useServerbar();
+  const { closeModal: closeServerbar } = useModal(serverbarState);
   const navigate = useNavigate();
   const encodedNavigate = useEncodedNavigate();
   const { serverId: params } = useParams<{ serverId: string }>();

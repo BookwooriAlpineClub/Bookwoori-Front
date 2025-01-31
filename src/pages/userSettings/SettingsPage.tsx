@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useModal from '@src/hooks/useModal';
 import { useDeleteAccount } from '@src/hooks/query/auth';
+import { dialogState } from '@src/states/atoms';
 import Header from '@src/components/common/Header';
 import IconButton from '@src/components/common/IconButton';
 import UserProfile from '@src/components/common/UserProfile';
@@ -11,7 +12,7 @@ import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 const SettingsPage = () => {
   const navigate = useNavigate();
   const { delAccount } = useDeleteAccount();
-  const { openModal: openDialog, closeModal: closeDialog } = useModal('dialog');
+  const { openModal: openDialog, closeModal: closeDialog } = useModal(dialogState);
 
   const handleDelete = () => {
     delAccount.mutate();

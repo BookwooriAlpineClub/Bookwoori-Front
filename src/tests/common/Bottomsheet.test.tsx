@@ -1,9 +1,10 @@
 import { screen, fireEvent } from '@testing-library/react';
-import useBottomsheet from '@src/hooks/useBottomsheet';
+import useModal from '@src/hooks/useModal';
+import { bottomsheetState } from '@src/states/atoms';
 import Bottomsheet from '@src/components/common/Bottomsheet';
 
 const App = () => {
-  const { openBottomsheet, closeBottomsheet } = useBottomsheet();
+  const { openModal: openBottomsheet, closeModal: closeBottomsheet } = useModal(bottomsheetState);
   const ConfirmBottomsheet: React.ReactNode = (
     <button
       data-testid='bottomsheet-close'

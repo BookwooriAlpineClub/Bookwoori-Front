@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { ClimbingInfo } from '@src/types/climbing';
 import useModal from '@src/hooks/useModal';
 import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
+import { bottomsheetState } from '@src/states/atoms';
 import { ReactComponent as Next } from '@src/assets/images/channel/carousel_btn.svg';
 import { ReactComponent as More } from '@src/assets/images/channel/carousel_more_btn.svg';
 import RecruitClimbingBottomSheet from '@src/components/climbing/RecruitClimbingBottomSheet';
@@ -19,8 +20,7 @@ const Carousel = ({
   const [width, setWidth] = useState<number>(0);
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
-  const { openModal: openBottomsheet, closeModal: closeBottomsheet } =
-    useModal('bottomsheet');
+  const { openModal: openBottomsheet, closeModal: closeBottomsheet } = useModal(bottomsheetState);
 
   useEffect(() => {
     const updateWidth = () => {

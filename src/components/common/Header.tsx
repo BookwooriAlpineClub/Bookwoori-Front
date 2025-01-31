@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import useModal from '@src/hooks/useModal';
+import { serverbarState, sidebarState } from '@src/states/atoms';
 import Serverbar from '@src/components/common/Serverbar';
 import { ReactComponent as Hamburger } from '@src/assets/icons/fi_menu.svg';
 import { ReactComponent as Back } from '@src/assets/icons/fi_arrow_left.svg';
@@ -21,8 +22,8 @@ const renderButton = (type: string, onClick: () => void, Icon: React.FC) => (
 const Header = ({ text, headerType, onClick }: HeaderProps) => {
   const navigate = useNavigate();
   const handleClick = () => navigate(-1);
-  const { openModal: openServerbar } = useModal('serverbar');
-  const { openModal: openSideBar } = useModal('sidebar');
+  const { openModal: openServerbar } = useModal(serverbarState);
+  const { openModal: openSideBar } = useModal(sidebarState);
 
   return (
     <Layout>

@@ -9,6 +9,7 @@ import {
   useGetClimbing,
   usePatchClimbing,
 } from '@src/hooks/query/climbing';
+import { dialogState } from '@src/states/atoms';
 import { encodeId, formatDate } from '@src/utils/formatters';
 import Button from '@src/components/common/Button';
 import ButtonBackground from '@src/components/common/ButtonBackground';
@@ -25,7 +26,7 @@ import Fieldset from '@src/components/common/Fieldset';
 const ClimbingEditPage = () => {
   const navigate = useEncodedNavigation();
   const addToast = useToast();
-  const { openModal: openDialog, closeModal: closeDialog } = useModal('dialog');
+  const { openModal: openDialog, closeModal: closeDialog } = useModal(dialogState);
 
   const serverId = sessionStorage.getItem('currentServer');
   const { id: climbingId } = useLoaderData<{ id: string }>();

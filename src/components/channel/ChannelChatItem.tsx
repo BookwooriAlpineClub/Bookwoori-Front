@@ -8,6 +8,7 @@ import type { ChannelMessage } from '@src/types/channel';
 import { SyntheticEvent, useMemo } from 'react';
 import { formatChatItemTime } from '@src/utils/formatters';
 import useModal from '@src/hooks/useModal';
+import { bottomsheetState } from '@src/states/atoms';
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;
@@ -17,7 +18,7 @@ interface ChatItemProps {
 
 const ChannelChatItem = ({ chatItem, memberId, createdAt }: ChatItemProps) => {
   // long press bottomsheet
-  const { openModal: openBottomsheet } = useModal('bottomsheet');
+  const { openModal: openBottomsheet } = useModal(bottomsheetState);
   const longPressHandler = useLongPress({
     onLongPress: () => openBottomsheet(<ChatMenu content={chatItem.content} />),
   });

@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { formatDate, decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
-import useBottomsheet from '@src/hooks/useBottomsheet';
+import useModal from '@src/hooks/useModal';
 import { useCategory } from '@src/hooks/query/category';
 import { usePostChannel } from '@src/hooks/query/channel';
 import { usePostClimbing } from '@src/hooks/query/climbing';
+import { bottomsheetState } from '@src/states/atoms';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
@@ -24,7 +25,7 @@ import { ReactComponent as IcnRun } from '@src/assets/icons/bi_run.svg';
 
 const ChannelAddPage = () => {
   const navigate = useEncodedNavigate();
-  const { openBottomsheet, closeBottomsheet } = useBottomsheet();
+  const { openModal: openBottomsheet, closeModal: closeBottomsheet } = useModal(bottomsheetState);
   const { serverId } = useParams<{ serverId: string }>();
   const decodedServerId = decodeIdParam(serverId);
   const location = useLocation();

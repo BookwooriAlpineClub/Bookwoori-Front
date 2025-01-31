@@ -1,9 +1,10 @@
 import { screen, fireEvent } from '@testing-library/react';
-import useDialog from '@src/hooks/useDialog';
+import useModal from '@src/hooks/useModal';
+import { dialogState } from '@src/states/atoms';
 import Dialog from '@src/components/common/Dialog';
 
 const App = () => {
-  const { openDialog, closeDialog } = useDialog();
+  const { openModal: openDialog, closeModal: closeDialog } = useModal(dialogState);
   const ConfirmDialog: React.ReactNode = (
     <button
 	  data-testid='dialog-close'
