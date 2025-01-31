@@ -25,7 +25,7 @@ export default BookinfoItem;
 const Container = styled.li`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.gap[16]};
+  gap: ${({ theme }) => theme.gap[12]};
 `;
 const TextWrapper = styled.div`
   display: flex;
