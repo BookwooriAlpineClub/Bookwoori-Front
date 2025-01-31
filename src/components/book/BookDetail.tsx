@@ -7,7 +7,7 @@ type Props = Pick<
   'title' | 'author' | 'cover' | 'publisher' | 'pubYear' | 'itemPage'
 >;
 
-const BookInfoDetail = ({
+const BookDetail = ({
   title,
   author,
   cover,
@@ -32,7 +32,7 @@ const BookInfoDetail = ({
   );
 };
 
-export default BookInfoDetail;
+export default BookDetail;
 
 const Container = styled.section`
   display: flex;
