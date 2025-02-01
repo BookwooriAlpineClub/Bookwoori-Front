@@ -7,11 +7,6 @@ import UnderlineButton from '@src/components/common/UnderlineButton';
 import type Book from '@src/types/book';
 import { useGetPatchShareClimbingReview } from '@src/hooks/query/climbing';
 
-/*
- *
- * { bookInfo, star, reviewContent }: Review
- * */
-
 const ReviewShareComponent = ({
   bookInfo,
   isShareable,

@@ -1,45 +1,58 @@
 import { ReactComponent as IconStar } from '@src/assets/icons/md_star.svg';
 import Tag from '@src/components/common/Tag';
 import styled from 'styled-components';
+import UserAvatar from '@src/components/common/UserAvatar';
+import EmojiList from '@src/components/common/EmojiList';
+import { EmojiType } from '@src/constants/constants';
+import { bottomsheetState } from '@src/states/atoms';
+import useModal from '@src/hooks/useModal';
+import EmojiBottomSheet from '@src/components/climbing/EmojiBottomSheet';
 
 interface ReviewItemProps {
+  climbingId: number;
   review: {
     reviewId: number;
+    memberId: number;
     nickname: string;
     star: number;
-    profileImg: string;
+    profileImg: string | null;
     content: string;
-    reviewEmojiList: { emoji: string; emojiCount: number }[];
+    reviewEmojiList: { emoji: keyof typeof EmojiType; emojiCount: number }[];
   };
 }
 
-const ReviewItem = ({ review }: ReviewItemProps) => {
+const ReviewItem = ({ climbingId, review }: ReviewItemProps) => {
+  if (review.profileImg === null) {
+    review.profileImg = 'https://via.placeholder.com/50';
+  }
+
+  const { openModal } = useModal(bottomsheetState);
+
+  const handleOpenBottomSheet = () => {
+    openModal(
+      <EmojiBottomSheet climbingId={climbingId} reviewId={review.reviewId} />,
+    );
+  };
+
   return (
     <ReviewItemWrapper>
-      <ImageWrapper>
-        <img src={review.profileImg} alt={`${review.nickname}`} />
-      </ImageWrapper>
-      <ReviewBox>
-        <NicknameContainer>
+      <UserAvatar
+        profileImg={review.profileImg}
+        nickname={review.nickname}
+        status='FINISHED' // 임시 상태
+      />
+      <ReviewContent>
+        <UserInfo>
           {review.nickname}
           <Tag Icon={IconStar} text={review.star} color='blue' />
-        </NicknameContainer>
-        <ContentContainer>{review.content}</ContentContainer>
-        {review.reviewEmojiList.map((emoji) => (
-          <EmojiButton key={emoji.emoji} type='button'>
-            <p>{emoji.emoji}</p>
-            <p>{emoji.emojiCount}</p>
-          </EmojiButton>
-        ))}
-        <EmojiButton
-          type='button'
-          onClick={() => {
-            console.log('open bottomsheet');
-          }}
-        >
-          add reaction btn
-        </EmojiButton>
-      </ReviewBox>
+        </UserInfo>
+        <span>{review.content}</span>
+        <EmojiList
+          reviewId={review.reviewId}
+          emojis={review.reviewEmojiList}
+          onAddClick={handleOpenBottomSheet}
+        />
+      </ReviewContent>
     </ReviewItemWrapper>
   );
 };
@@ -47,63 +60,21 @@ const ReviewItem = ({ review }: ReviewItemProps) => {
 export default ReviewItem;
 
 const ReviewItemWrapper = styled.div`
-    display: flex;
-    gap: 0.625rem;
-    padding: 0.9375rem;
-
-    align-items: flex-start;
-
-    width: 100%;
-    background-color: ${({ theme }) => theme.colors.blue500};
-    border: solid 0.05rem ${({ theme }) => theme.colors.blue300};
-    border-radius: 0.2rem;
-    box-shadow: 0 0 0.08rem ${({ theme }) => theme.colors.blue300};
-/
+  display: flex;
+  gap: ${({ theme }) => theme.gap['12']};
 `;
 
-const ReviewBox = styled.div`
+const ReviewContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.05rem;
+  gap: ${({ theme }) => theme.gap['8']};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 
-const NicknameContainer = styled.div`
+const UserInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   ${({ theme }) => theme.fonts.header};
-`;
-
-const ContentContainer = styled.div`
-  display: flex;
-  flex-flow: column;
-  gap: 0.3rem;
-
-  //width: 100%;
-`;
-
-const EmojiButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.125rem 0.325rem;
-  gap: 0.325rem;
-  background-color: ${({ theme }) => theme.colors.neutral50};
-  border: solid 0.0625rem ${({ theme }) => theme.colors.neutral200};
-  border-radius: 0.225rem;
-  ${({ theme }) => theme.fonts.caption};
-`;
-
-const ImageWrapper = styled.div`
-  flex-shrink: 0;
-  width: 3.1rem;
-  height: 3.1rem;
-  border-radius: 50%;
-
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+  color: ${({ theme }) => theme.colors.neutral950};
 `;

@@ -1,4 +1,3 @@
-import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 import styled from 'styled-components';
 import ReviewShareComponent from '@src/components/climbing/ReviewShareComponent';
 import ReviewItem from '@src/components/climbing/ReviewItem';
@@ -11,14 +10,14 @@ const ReviewBoard = () => {
   const { getReviews: data, isLoading } = useGetClimbingReview(climbingId);
 
   if (isLoading) return <Spinner />;
+  if (!data) return null;
 
   return (
     <Container>
-      {data?.hasShared && <ClimbingDescription />}
       <ReviewListContainer>
-        {data?.hasShared ? (
-          data?.ClimbingMemberReviewList.map((review, idx) => (
-            <ReviewItem key={idx} review={review} />
+        {data.hasShared ? (
+          data.ClimbingMemberReviewList.map((review, idx) => (
+            <ReviewItem key={idx} climbingId={climbingId} review={review} />
           ))
         ) : (
           <ReviewShareComponent {...data} />
@@ -34,8 +33,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  height: calc(100% - 4.375rem);
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap['10']};
 `;
 
 const ReviewListContainer = styled.div`
@@ -43,10 +41,10 @@ const ReviewListContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 0.9375rem;
   border-radius: 0.9375rem;
   background-color: ${({ theme }) => theme.colors.neutral0};
-  border: solid 0.12rem ${({ theme }) => theme.colors.neutral200};
-  min-height: 30rem;
+  border: solid 0.1rem ${({ theme }) => theme.colors.neutral200};
+  //min-height: 30rem;
   overflow-y: scroll;
+  padding: ${({ theme }) => theme.padding['16']};
 `;
