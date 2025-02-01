@@ -193,7 +193,7 @@ const WithReplayLayout = styled.div<{ $selected: boolean }>`
 
   background-color: ${({ theme, $selected }) =>
     $selected && theme.colors.blue100};
-  opacity: ${({ $selected }) => $selected && 0.5};
+  opacity: ${({ $selected }) => $selected && 0.7};
 `;
 const ReplyContainer = styled.div`
   display: flex;
