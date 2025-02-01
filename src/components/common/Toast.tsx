@@ -9,7 +9,7 @@ const addToast = useToast();
 addToast({ kind: 'error', content: '토스트 내용' });
 */
 
-import type Toast from '@src/types/toast';
+import type ToastType from '@src/types/toast';
 import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
 import { toastState } from '@src/states/atoms';
@@ -20,7 +20,7 @@ import { ReactComponent as IcnSuccess } from '@src/assets/icons/toast_success.sv
 import { ReactComponent as IcnError } from '@src/assets/icons/toast_error.svg';
 
 const IconConfig: Record<
-  Toast['kind'],
+  ToastType['kind'],
   React.FC<React.SVGProps<SVGSVGElement>>
 > = {
   info: IcnInfo,
