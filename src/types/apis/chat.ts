@@ -22,7 +22,21 @@ export interface ReplyReq extends MessageReq {
   parentId: string;
 }
 
-export type ChatEventRes = NewMessageEvent | ReactEvent | ReplyEvent;
+export interface DeleteReq {
+  id: string;
+}
+
+export interface EditReq {
+  id: string;
+  content: string;
+}
+
+export type ChatEventRes =
+  | NewMessageEvent
+  | ReactEvent
+  | ReplyEvent
+  | ModifyEvent
+  | DeleteEvent;
 
 interface NewMessageEvent extends BaseEvent {
   eventType: 'NEW_MESSAGE';
@@ -50,8 +64,20 @@ interface ReplyEvent extends BaseEvent {
   };
 }
 
+interface ModifyEvent extends BaseEvent {
+  eventType: 'MODIFY';
+  payload: Payload & {
+    modifiedAt: 'string';
+  };
+}
+
+interface DeleteEvent extends BaseEvent {
+  eventType: 'DELETE';
+  payload: string;
+}
+
 interface BaseEvent {
-  eventType: 'NEW_MESSAGE' | 'REACT' | 'REPLY';
+  eventType: 'NEW_MESSAGE' | 'REACT' | 'REPLY' | 'MODIFY' | 'DELETE';
   messageRoomId?: number;
   channelId?: number;
 }

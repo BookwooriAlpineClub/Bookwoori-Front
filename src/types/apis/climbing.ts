@@ -17,7 +17,9 @@ export type patchClimbingChannelReq = Pick<
 
 export interface getClimbingRes extends Climbing {}
 
-export interface ClimbingRecruitListRes {}
+export interface ClimbingRecruitListRes {
+  readyClimbingList: Climbing[];
+}
 
 export type getClimbingChannelMembersRes = {
   climbingMemberList: ClimbingMember[];

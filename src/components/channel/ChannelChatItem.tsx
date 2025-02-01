@@ -20,7 +20,8 @@ const ChannelChatItem = ({ chatItem, memberId, createdAt }: ChatItemProps) => {
   // long press bottomsheet
   const { openModal: openBottomsheet } = useModal(bottomsheetState);
   const longPressHandler = useLongPress({
-    onLongPress: () => openBottomsheet(<ChatMenu content={chatItem.content} />),
+    onLongPress: () =>
+      openBottomsheet(<ChatMenu id={chatItem.id} content={chatItem.content} />),
   });
 
   // user data (nickname, profileImg)
