@@ -73,7 +73,7 @@ interface ModifyEvent extends BaseEvent {
 
 interface DeleteEvent extends BaseEvent {
   eventType: 'DELETE';
-  payload: Pick<Payload, 'id'>;
+  payload: string;
 }
 
 interface BaseEvent {
