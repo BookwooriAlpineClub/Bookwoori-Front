@@ -15,7 +15,7 @@ const useCopyToClipboard = (copyText: string) => {
     try {
       await navigator.clipboard.writeText(copyText);
       setIsCopied(true);
-      addToast({ content: '초대코드 복사완료' });
+      addToast('success', '복사완료');
       setTimeout(() => {
         setIsCopied(false);
       }, 1000);
