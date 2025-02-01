@@ -1,16 +1,12 @@
-import Button from '@src/components/common/Button';
-import styled from 'styled-components';
-import useLoaderData from '@src/hooks/useRoaderData';
+import type Book from '@src/types/book';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
-import UnderlineButton from '@src/components/common/UnderlineButton';
-import type Book from '@src/types/book';
+import useLoaderData from '@src/hooks/useRoaderData';
 import { useGetPatchShareClimbingReview } from '@src/hooks/query/climbing';
-
-/*
- *
- * { bookInfo, star, reviewContent }: Review
- * */
+import styled from 'styled-components';
+import Button from '@src/components/common/Button';
+import UnderlineButton from '@src/components/common/UnderlineButton';
+// import ReviewListItem from '@src/components/book/ReviewListItem';
 
 const ReviewShareComponent = ({
   bookInfo,
@@ -43,11 +39,7 @@ const ReviewShareComponent = ({
       </TextContainer>
       <ItemWrapper>
         {isShareable && (
-          // <ReviewItem
-          //   star={star ?? 0}
-          //   reviewContent={content ?? ''}
-          //   bookInfo={bookInfo}
-          // />
+          // <ReviewListItem />
           <div>book에서 가져올 리뷰 아이템</div>
         )}
         {!isShareable && (

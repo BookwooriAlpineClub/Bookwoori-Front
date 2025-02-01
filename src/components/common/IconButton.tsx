@@ -29,58 +29,61 @@ interface IconButtonProps {
   testId?: string; // 테스트를 하지 않는 버튼 대비 optional 처리
 }
 
-const buttonConfig = {
+const buttonConfig: Record<
+  IconButtonType,
+  { name: string; Icon: React.FC<React.SVGProps<SVGSVGElement>> }
+> = {
   transferAuthority: {
     name: '공동체 권한 넘기기',
-    icon: <BiCrown />,
+    Icon: BiCrown,
   },
   deleteCommunity: {
     name: '공동체 삭제하기',
-    icon: <FiTrash />,
+    Icon: FiTrash,
   },
   leaveCommunity: {
     name: '공동체 나가기',
-    icon: <FiLogOut />,
+    Icon: FiLogOut,
   },
   copyInvitation: {
     name: '공동체 초대장 복사하기',
-    icon: <BIUserPlus />,
+    Icon: BIUserPlus,
   },
   detailInfoSetting: {
     name: '공동체 정보 및 설정 보기',
-    icon: <FiSettings />,
+    Icon: FiSettings,
   },
   editUserInfo: {
     name: '인물 정보 수정하기',
-    icon: <HiOutlinePencil />,
+    Icon: HiOutlinePencil,
   },
   navigateExp: {
     name: '지나온 길 보기',
-    icon: <HiOutlineFlag />,
+    Icon: HiOutlineFlag,
   },
   deleteAccount: {
     name: '계정 삭제하기',
-    icon: <FiTrash />,
+    Icon: FiTrash,
   },
   editMessage: {
     name: '수정하기',
-    icon: <HiOutlinePencil />,
+    Icon: HiOutlinePencil,
   },
   deleteMessage: {
     name: '삭제하기',
-    icon: <FiTrash />,
+    Icon: FiTrash,
   },
   copyMessage: {
     name: '복사하기',
-    icon: <MdOutlineContentCopy />,
+    Icon: MdOutlineContentCopy,
   },
 };
 
 const IconButton: React.FC<IconButtonProps> = ({ type, onClick, testId }) => {
-  const { name, icon } = buttonConfig[type];
+  const { name, Icon } = buttonConfig[type];
   return (
     <ButtonContainer onClick={onClick} data-testid={testId} aria-label={name}>
-      <IconWrapper>{icon}</IconWrapper>
+      <Icon width={20} height={20} />
       <TextWrapper>{name}</TextWrapper>
     </ButtonContainer>
   );
@@ -99,14 +102,11 @@ const ButtonContainer = styled.button`
   align-self: stretch;
   border-radius: 6.1875rem;
   background-color: ${({ theme }) => theme.colors.neutral0};
-`;
 
-const IconWrapper = styled.div`
-  width: 1.25rem;
-  height: 1.25rem;
-  color: ${({ theme }) => theme.colors.blue700};
+  svg {
+    color: ${({ theme }) => theme.colors.blue500};
+  }
 `;
-
 const TextWrapper = styled.span`
   font-family: ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.neutral950};

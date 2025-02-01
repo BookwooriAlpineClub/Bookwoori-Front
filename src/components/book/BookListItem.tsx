@@ -1,20 +1,11 @@
 import type { GetBookListRes } from '@src/types/apis/book';
 import styled, { css } from 'styled-components';
 
-interface Props extends Omit<ElementOfArray<GetBookListRes>, 'isbn13'> {
-  onClick?: () => void;
-}
+type Props = Omit<ElementOfArray<GetBookListRes>, 'isbn13'>;
 
-const BookinfoItem = ({
-  title,
-  author,
-  cover,
-  publisher,
-  pubYear,
-  onClick,
-}: Props) => {
+const BookListItem = ({ title, author, cover, publisher, pubYear }: Props) => {
   return (
-    <Container onClick={onClick}>
+    <Container>
       <Img src={cover} alt='책 표지' loading='lazy' />
       <TextWrapper>
         <BodyEllipsis>{title}</BodyEllipsis>
@@ -29,12 +20,12 @@ const BookinfoItem = ({
   );
 };
 
-export default BookinfoItem;
+export default BookListItem;
 
 const Container = styled.li`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.gap[16]};
+  gap: ${({ theme }) => theme.gap[12]};
 `;
 const TextWrapper = styled.div`
   display: flex;

@@ -69,14 +69,10 @@ const StarFieldset = styled.fieldset`
   justify-content: center;
   gap: ${({ theme }) => theme.gap[6]};
 `;
-const IcnStarBlue = styled(IcnStar)`
-  width: 40px;
-  height: 40px;
+const IcnStarBlue = styled(IcnStar).attrs({ width: 40, height: 40 })`
   color: ${({ theme }) => theme.colors.blue500};
 `;
-const IcnStarGray = styled(IcnStar)`
-  width: 40px;
-  height: 40px;
+const IcnStarGray = styled(IcnStar).attrs({ width: 40, height: 40 })`
   color: ${({ theme }) => theme.colors.neutral400};
 `;
 const Textarea = styled.textarea<{ $height: number }>`

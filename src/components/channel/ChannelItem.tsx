@@ -15,16 +15,17 @@ interface Props {
   categoryId?: number;
 }
 
-const icons: { [key: string]: React.ReactNode } = {
-  CHAT: <Hash />,
-  VOICE: <Voice />,
-  CLIMB: <Run />,
+const Icons: { [key: string]: React.FC<React.SVGProps<SVGSVGElement>> } = {
+  CHAT: Hash,
+  VOICE: Voice,
+  CLIMB: Run,
 };
 
 const ChannelItem = ({ type, channelId, categoryId, children }: Props) => {
   const navigate = useNavigate();
   const serverId = useRecoilValue(currentServerIdState);
   const setCategoryId = useSetRecoilState(categoryIdState);
+  const Icon = Icons[type];
 
   const handleNavigateChannel: { [key: string]: () => void } = {
     CHAT: () => navigate(`/server/${encodeId(serverId)}/${channelId}`),
@@ -39,10 +40,11 @@ const ChannelItem = ({ type, channelId, categoryId, children }: Props) => {
   return (
     <Item>
       <Wrapper onClick={handleNavigateChannel[type]}>
-        {icons[type]} {children}
+        <Icon width={20} height={20} />
+        {children}
       </Wrapper>
       {type !== 'CLIMB' && (
-        <Edit width='20' height='20' onClick={handleClickEdit} />
+        <Edit width={20} height={20} onClick={handleClickEdit} />
       )}
     </Item>
   );

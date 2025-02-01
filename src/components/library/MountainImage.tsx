@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import ProfileCircle from '@src/components/common/ProfileCircle';
+import ProfileCircle from '@src/components/common/UserAvatar';
 import { Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
 
 const remToPx = (rem: number): number =>

@@ -48,11 +48,11 @@ export type NotificationTypeType =
 
 /* 이모지 유형 */
 export const EmojiType = {
-  GOOD: '👍',
-  HEART: '❤️',
-  SMILE: '😊',
-  CRY: '😢',
-  THINK: '🤔',
+  GOOD: { key: 'GOOD', value: '👍' },
+  HEART: { key: 'HEART', value: '❤️' },
+  SMILE: { key: 'SMILE', value: '😊' },
+  CRY: { key: 'CRY', value: '😢' },
+  THINK: { key: 'THINK', value: '🤔' },
 } as const;
 
 export type EmojiTypeType = (typeof EmojiType)[keyof typeof EmojiType];

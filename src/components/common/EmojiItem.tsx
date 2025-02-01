@@ -1,9 +1,9 @@
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import type { EmojiTypeType } from '@src/constants/constants';
+import { EmojiType } from '@src/constants/constants';
 
 export interface EmojiItemProps {
-  emoji: EmojiTypeType | ReactElement;
+  emoji: keyof typeof EmojiType | ReactElement;
   initialIsSelected?: boolean;
   count?: number;
   onClick: () => void;
@@ -14,7 +14,7 @@ const LONG_PRESS_DURATION = 500;
 
 const EmojiItem = ({
   emoji,
-  initialIsSelected = false,
+  initialIsSelected = true,
   count = -1,
   onClick,
   onLongPress,
@@ -27,6 +27,14 @@ const EmojiItem = ({
   const [animationDirection, setAnimationDirection] = useState<
     'up' | 'down' | null
   >(null);
+
+  if (typeof emoji !== 'string') {
+    return (
+      <Item isSelected={false} onClick={onClick}>
+        <Emoji>{emoji}</Emoji>
+      </Item>
+    );
+  }
 
   const handleClick = async () => {
     if (count === -1) {
@@ -64,6 +72,8 @@ const EmojiItem = ({
     return () => {};
   }, [animationDirection]);
 
+  const apiEmojiKey: keyof typeof EmojiType = emoji;
+  console.log(emoji);
   return emojiState.count ? (
     <Item
       isSelected={emojiState.isSelected}
@@ -72,7 +82,7 @@ const EmojiItem = ({
       onMouseLeave={handleMouseUp}
       onClick={handleClick}
     >
-      <Emoji>{emoji}</Emoji>
+      <Emoji>{EmojiType[apiEmojiKey].value}</Emoji>
       {emojiState.count > 0 && (
         <Count animationDirection={animationDirection}>
           {emojiState.count}
@@ -84,30 +94,24 @@ const EmojiItem = ({
 export default EmojiItem;
 
 // Styled Components
-const Item = styled.div<{ isSelected: boolean }>`
+const Item = styled.button<{ isSelected: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   ${({ theme }) => theme.fonts.caption}
   color: ${({ theme }) => theme.colors.neutral600};
   padding: ${({ theme }) => theme.padding[4]} ${({ theme }) => theme.padding[6]};
+  gap: ${({ theme }) => theme.gap[2]};
   width: fit-content;
   border: ${({ isSelected, theme }) =>
     isSelected
       ? `0.05rem solid ${theme.colors.blue500}`
-      : '0.05rem solid transparent'};
+      : `0.05rem solid ${theme.colors.neutral200}`};
   border-radius: ${({ theme }) => theme.rounded[24]};
   background-color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.blue100 : theme.colors.neutral0};
   transition: 50ms ease-in;
   user-select: none;
-
-  &:hover {
-    border: ${({ isSelected, theme }) =>
-      isSelected
-        ? `0.05rem solid ${theme.colors.blue500}`
-        : `0.05rem solid ${theme.colors.neutral200}`};
-  }
 
   &:active {
     background-color: ${({ isSelected, theme }) =>
