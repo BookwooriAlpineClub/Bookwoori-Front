@@ -46,6 +46,7 @@ const EmojiBottomsheet = ({
       await deleteHandler({ id }, '/pub/direct/delete');
       console.log('Message deleted successfully');
       closeModal();
+      closeBottomsheet();
     } catch (error) {
       console.error('Failed to delete message:', error);
     }
