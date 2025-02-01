@@ -1,9 +1,17 @@
 import styled from 'styled-components';
-import { SyntheticEvent, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  forwardRef,
+  SyntheticEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   bottomsheetState,
   editChatIdState,
+  replyChatIdState,
   replyChatState,
 } from '@src/states/atoms';
 import useLongPress from '@src/hooks/useLongPress';
@@ -16,6 +24,7 @@ import { formatChatItemTime } from '@src/utils/formatters';
 import ChatMenu from '@src/components/common/EmojiBottomsheet';
 import Profile from '@src/assets/images/userSettings/background_default.svg';
 import { ReactComponent as Response } from '@src/assets/icons/response.svg';
+import { ReactComponent as ReplyLine } from '@src/assets/images/chat/reply_line.svg';
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;
@@ -26,132 +35,192 @@ interface ChatItemProps {
 
 const MIN_HEIGHT = 32;
 
-const ChatItem = ({ chatItem, imgUrl, nickname, createdAt }: ChatItemProps) => {
-  const [editChatId, setEditChatId] = useRecoilState(editChatIdState);
-  const setReplyChat = useSetRecoilState(replyChatState);
-  const [editContent, setEditContent] = useState(chatItem.content);
-  const { openModal: openBottomsheet, closeModal: closeBottomsheet } =
-    useModal(bottomsheetState);
-  const longPressHandler = useLongPress({
-    onLongPress: () =>
-      openBottomsheet(
-        <ChatMenu
-          id={chatItem.id}
-          content={chatItem.content}
-          closeBottomsheet={closeBottomsheet}
-        />,
-      ),
-  });
-  const addToast = useToast();
-  const inputRef = useRef<HTMLTextAreaElement | null>(null);
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-      const { length } = editContent;
-      inputRef.current.setSelectionRange(length, length);
-      adjustHeight();
-    }
-  }, [editChatId, editContent]);
-
-  const handleImgError = (e: SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = Profile;
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleEditMessage();
-    }
-    if (e.key === 'Escape') {
-      setEditContent(chatItem.content);
-      setEditChatId(null);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setEditContent(e.target.value);
-    adjustHeight();
-  };
-
-  const adjustHeight = () => {
-    if (inputRef.current) {
-      inputRef.current.style.height = `${MIN_HEIGHT}px`;
-
-      if (inputRef.current.scrollHeight > MIN_HEIGHT) {
-        inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
-      }
-    }
-  };
-
-  const handleEditMessage = async () => {
-    if (editContent.length === 0) {
-      addToast('error', '수정할 내용을 입력해주세요.');
-      return;
-    }
-
-    try {
-      await editHandler(
-        { id: chatItem.id, content: editContent },
-        '/pub/direct/modify',
-      );
-      console.log('Message edited successfully');
-      setEditChatId(null);
-    } catch (error) {
-      console.error('Failed to edit message:', error);
-    }
-  };
-
-  const handleReply = () => {
-    setReplyChat({
-      ...chatItem,
-      nickname,
+const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
+  ({ chatItem, imgUrl, nickname, createdAt }: ChatItemProps, ref) => {
+    const [editChatId, setEditChatId] = useRecoilState(editChatIdState);
+    const setReplyChat = useSetRecoilState(replyChatState);
+    const [replyChatId, setReplyChatId] = useRecoilState(replyChatIdState);
+    const [editContent, setEditContent] = useState(chatItem.content);
+    const [isSelected, setIsSelected] = useState<boolean>(false);
+    const { openModal: openBottomsheet, closeModal: closeBottomsheet } =
+      useModal(bottomsheetState);
+    const longPressHandler = useLongPress({
+      onLongPress: () =>
+        openBottomsheet(
+          <ChatMenu
+            id={chatItem.id}
+            content={chatItem.content}
+            closeBottomsheet={closeBottomsheet}
+          />,
+        ),
     });
-  };
+    const addToast = useToast();
+    const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
-  return (
-    <Layout {...longPressHandler}>
-      <Img src={imgUrl ?? Profile} onError={handleImgError} />
-      <Container>
-        <Wrapper>
-          <Nickname>{nickname}</Nickname>
-          <Time>
-            {useMemo(
-              () => createdAt && formatChatItemTime(createdAt),
-              [createdAt],
-            )}
-          </Time>
-        </Wrapper>
-        {editChatId === chatItem.id ? (
-          <Form>
-            <Textarea
-              ref={inputRef}
-              value={editContent}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-            />
-            <Span>ESC 키로 취소 • Enter 키로 저장</Span>
-          </Form>
-        ) : (
-          <Text>{chatItem.content}</Text>
+    useEffect(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+        const { length } = editContent;
+        inputRef.current.setSelectionRange(length, length);
+        adjustHeight();
+      }
+    }, [editChatId, editContent]);
+
+    const handleImgError = (e: SyntheticEvent<HTMLImageElement>) => {
+      e.currentTarget.src = Profile;
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleEditMessage();
+      }
+      if (e.key === 'Escape') {
+        setEditContent(chatItem.content);
+        setEditChatId(null);
+      }
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setEditContent(e.target.value);
+      adjustHeight();
+    };
+
+    const adjustHeight = () => {
+      if (inputRef.current) {
+        inputRef.current.style.height = `${MIN_HEIGHT}px`;
+
+        if (inputRef.current.scrollHeight > MIN_HEIGHT) {
+          inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+        }
+      }
+    };
+
+    const handleEditMessage = async () => {
+      if (editContent.length === 0) {
+        addToast('error', '수정할 내용을 입력해주세요.');
+        return;
+      }
+
+      try {
+        await editHandler(
+          { id: chatItem.id, content: editContent },
+          '/pub/direct/modify',
+        );
+        console.log('Message edited successfully');
+        setEditChatId(null);
+      } catch (error) {
+        console.error('Failed to edit message:', error);
+      }
+    };
+
+    const handleReply = () => {
+      setReplyChat({
+        ...chatItem,
+        nickname,
+      });
+    };
+
+    useEffect(() => {
+      if (replyChatId === chatItem.id) {
+        setIsSelected(true);
+
+        setTimeout(() => {
+          setIsSelected(false);
+          setReplyChatId(undefined);
+        }, 1500);
+      }
+    }, [replyChatId, chatItem.id]);
+
+    return (
+      <WithReplayLayout ref={ref} $selected={isSelected}>
+        {chatItem.parentId && (
+          <ReplyContainer>
+            <LineWrapper>
+              <ReplyLine width={30} height={20} />
+            </LineWrapper>
+            <ReplySpan onClick={() => setReplyChatId(chatItem.parentId)}>
+              {chatItem.parentContent}
+            </ReplySpan>
+          </ReplyContainer>
         )}
-      </Container>
-      <ReplyMenu onClick={handleReply}>
-        <Response width={25} height={25} />
-      </ReplyMenu>
-    </Layout>
-  );
-};
+        <Layout {...longPressHandler}>
+          <Img src={imgUrl ?? Profile} onError={handleImgError} />
+          <Container>
+            <Wrapper>
+              <Nickname>{nickname}</Nickname>
+              <Time>
+                {useMemo(
+                  () => createdAt && formatChatItemTime(createdAt),
+                  [createdAt],
+                )}
+              </Time>
+            </Wrapper>
+            {editChatId === chatItem.id ? (
+              <Form>
+                <Textarea
+                  ref={inputRef}
+                  value={editContent}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                />
+                <Span>ESC 키로 취소 • Enter 키로 저장</Span>
+              </Form>
+            ) : (
+              <Text>{chatItem.content}</Text>
+            )}
+          </Container>
+          <ReplyMenu onClick={handleReply}>
+            <Response width={25} height={25} />
+          </ReplyMenu>
+        </Layout>
+      </WithReplayLayout>
+    );
+  },
+);
+
+ChatItem.displayName = 'ChatItem';
 
 export default ChatItem;
 
+const WithReplayLayout = styled.div<{ $selected: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.gap[4]};
+
+  width: 100%;
+  padding: 0.9375rem 1.25rem;
+
+  background-color: ${({ theme, $selected }) =>
+    $selected && theme.colors.blue100};
+  opacity: ${({ $selected }) => $selected && 0.5};
+`;
+const ReplyContainer = styled.div`
+  display: flex;
+  align-items: end;
+
+  width: 100%;
+  margin-left: 1.25rem;
+`;
+const LineWrapper = styled.div`
+  margin-bottom: -0.6875rem;
+`;
+const ReplySpan = styled.span`
+  padding: ${({ theme }) => theme.padding[4]} ${({ theme }) => theme.padding[8]};
+  border-radius: ${({ theme }) => theme.rounded[8]};
+
+  background-color: ${({ theme }) => theme.colors.blue100};
+
+  ${({ theme }) => theme.fonts.body}
+  font-size: 0.75rem;
+  cursor: pointer;
+`;
 const Layout = styled.div`
   display: flex;
   position: relative;
   gap: ${({ theme }) => theme.gap[12]};
 
   width: 100%;
-  padding: 0.9375rem 1.25rem;
 
   &:hover > button {
     opacity: 1;
@@ -219,7 +288,7 @@ const ReplyMenu = styled.button`
   display: flex;
   position: absolute;
   top: 30%;
-  right: 25px;
+  right: 0;
 
   transform: translateY(-50%);
   opacity: 0;
