@@ -8,11 +8,6 @@ import Button from '@src/components/common/Button';
 import UnderlineButton from '@src/components/common/UnderlineButton';
 // import ReviewListItem from '@src/components/book/ReviewListItem';
 
-/*
- *
- * { bookInfo, star, reviewContent }: Review
- * */
-
 const ReviewShareComponent = ({
   bookInfo,
   isShareable,

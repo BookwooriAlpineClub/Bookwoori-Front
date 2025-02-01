@@ -11,7 +11,7 @@ import {
   patchClimbingMemberMemo,
   postClimbing,
   patchShareClimbingReview,
-  postClimbingReviewEmoji,
+  putClimbingReviewEmoji,
   getClimbingReviewEmojis,
   getClimbingReview,
 } from '@src/apis/climbing';
@@ -20,13 +20,13 @@ import {
   getClimbingChannelMembersRes,
   getClimbingRes,
   getClimbingReviewEmojiRes,
-  getClimbingReviewListRes,
+  getClimbingReviewRes,
   patchClimbingChannelReq,
   patchClimbingMemoReq,
   postClimbingChannelReq,
 } from '@src/types/apis/climbing';
 import { getServerClimbing } from '@src/apis/server';
-import { EmojiTypeType } from '@src/constants/constants';
+import { EmojiType } from '@src/constants/constants';
 
 export const useGetClimbing = (climbingId: number) => {
   const { data: climbingInfo, isLoading } = useQuery<
@@ -63,8 +63,7 @@ export const useGetClimbingRecruitList = () => {
         '/ready',
       ),
   });
-
-  return { data: data?.readyClimbingList };
+  console.log(data);
 };
 
 export const usePutParticipate = (climbingId: number) => {
@@ -167,26 +166,9 @@ export const usePatchShareReview = () => {
   return { shareReview };
 };
 
-export const usePostReviewEmoji = () => {
-  const postEmoji = useMutation({
-    mutationKey: ['postReviewEmoji'],
-    mutationFn: ({
-      climbingId,
-      reviewId,
-      emoji,
-    }: {
-      climbingId: number;
-      reviewId: number;
-      emoji: EmojiTypeType;
-    }) => postClimbingReviewEmoji(climbingId, reviewId, emoji),
-  });
-
-  return { postEmoji };
-};
-
 export const useGetClimbingReview = (climbingId: number) => {
   const { data: getReviews, isLoading } = useQuery<
-    getClimbingReviewListRes,
+    getClimbingReviewRes,
     AxiosError
   >({
     queryKey: ['getClimbingReview', climbingId],
@@ -221,4 +203,59 @@ export const useGetPatchShareClimbingReview = (climbingId: number) => {
     },
   });
   return { shareReview };
+};
+
+export const usePutEmojiOnReview = (climbingId: number, reviewId: number) => {
+  const queryClient = useQueryClient();
+  const putEmojiMutation = useMutation({
+    mutationFn: (emoji: string) =>
+      putClimbingReviewEmoji(climbingId, reviewId, emoji),
+    onMutate: async (emoji: keyof typeof EmojiType) => {
+      await queryClient.cancelQueries({
+        queryKey: ['getClimbingReview', climbingId],
+      });
+      const previousData = queryClient.getQueryData<getClimbingReviewRes>([
+        'getClimbingReview',
+        climbingId,
+      ]);
+      if (previousData && 'ClimbingMemberReviewList' in previousData) {
+        queryClient.setQueryData<getClimbingReviewRes>(
+          ['getClimbingReview', climbingId],
+          (oldData) => {
+            if (!oldData || !('ClimbingMemberReviewList' in oldData))
+              return oldData;
+            return {
+              ...oldData,
+              ClimbingMemberReviewList: oldData.ClimbingMemberReviewList.map(
+                (review) => {
+                  const emojiItem = review.reviewEmojiList.find(
+                    (item) => item.emoji === emoji,
+                  );
+                  let updatedReviewEmojiList;
+                  if (emojiItem) {
+                    updatedReviewEmojiList = review.reviewEmojiList.map(
+                      (item) =>
+                        item.emoji === emoji
+                          ? { ...item, emojiCount: item.emojiCount + 1 }
+                          : item,
+                    );
+                  } else {
+                    updatedReviewEmojiList = [
+                      ...review.reviewEmojiList,
+                      { emoji, emojiCount: 1 },
+                    ];
+                  }
+                  return {
+                    ...review,
+                    reviewEmojiList: updatedReviewEmojiList,
+                  };
+                },
+              ),
+            };
+          },
+        );
+      }
+    },
+  });
+  return { putEmoji: putEmojiMutation };
 };

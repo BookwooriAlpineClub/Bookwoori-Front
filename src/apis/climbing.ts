@@ -4,12 +4,11 @@ import {
   getClimbingChannelMembersRes,
   getClimbingRes,
   getClimbingReviewEmojiRes,
-  getClimbingReviewListRes,
+  getClimbingReviewRes,
   patchClimbingChannelReq,
   patchClimbingMemoReq,
   postClimbingChannelReq,
 } from '@src/types/apis/climbing';
-import type { EmojiTypeType } from '@src/constants/constants';
 
 const CLIMB_BASE_URL = '/climbs';
 const buildClimbUrl = (path: string = '') => `${CLIMB_BASE_URL}${path}`;
@@ -65,12 +64,12 @@ export const patchShareClimbingReview = async (
 };
 
 /* 클라이밍 감상평 이모지 추가 & 삭제 */
-export const postClimbingReviewEmoji = async (
+export const putClimbingReviewEmoji = async (
   climbingId: number,
   reviewId: number,
-  emoji: EmojiTypeType,
+  emoji: string,
 ): Promise<void> => {
-  const response = await authClient.post(
+  const response = await authClient.put(
     buildClimbUrl(`/${climbingId}/reviews/${reviewId}/emojis/${emoji}`),
   );
   return response.data;
@@ -111,10 +110,10 @@ export const patchClimbingMemberMemo = async (
 /* 클라이밍 채널 감상평 공유 가능 여부/ 리스트 조회 (수정 필요) */
 export const getClimbingReview = async (
   climbingId: number,
-): Promise<getClimbingReviewListRes> => {
+): Promise<getClimbingReviewRes> => {
   const response = await authClient.get<
-    getClimbingReviewListRes,
-    AxiosResponse<getClimbingReviewListRes>
+    getClimbingReviewRes,
+    AxiosResponse<getClimbingReviewRes>
   >(buildClimbUrl(`/${climbingId}/reviews`));
   return response.data;
 };
