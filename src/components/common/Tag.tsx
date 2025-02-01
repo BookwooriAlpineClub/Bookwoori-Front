@@ -5,12 +5,13 @@ interface Props {
   Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
   text: string | number;
   color: TagColor;
+  onClick?: () => void;
   className?: string;
 }
 
-const Tag = ({ Icon, text, color, className }: Props) => {
+const Tag = ({ Icon, text, color, onClick, className }: Props) => {
   return (
-    <Wrapper className={className} color={color}>
+    <Wrapper className={className} onClick={onClick} color={color}>
       {Icon && <Icon width={12} height={12} />}
       <span>{text}</span>
     </Wrapper>
