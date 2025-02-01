@@ -15,13 +15,6 @@ import { ReactComponent as IcnChat } from '@src/assets/icons/md_outline_chat_bub
 import { ReactComponent as IcnSettings } from '@src/assets/icons/fi_settings.svg';
 import { ReactComponent as IcnPlus } from '@src/assets/icons/hi_outline_plus.svg';
 
-type buttonConfig = {
-  name: string;
-  link: string;
-  Icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  className: string;
-};
-
 /**
  * Serverbar 컴포넌트 사용법
  *
@@ -44,7 +37,12 @@ const Serverbar = () => {
   const { data: serverList } = useGetServerList();
   const isNotiRead = true; // 나중에 수정
   const isChatRead = true; // 나중에 수정
-  const buttonConfigs: buttonConfig[] = [
+  const buttonConfigs: {
+    name: string;
+    link: string;
+    Icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    className: string;
+  }[] = [
     {
       name: '서재',
       link: ROUTE_PATH.library,
