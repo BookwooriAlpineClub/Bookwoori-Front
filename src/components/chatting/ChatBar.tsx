@@ -22,6 +22,11 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
+      if (replyChatItem) {
+        handleSendReply();
+        return;
+      }
+      
       handleSendMessage();
     }
   };
