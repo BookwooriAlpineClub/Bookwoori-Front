@@ -16,10 +16,14 @@ const ChatMenu = ({ emoji, content }: { emoji?: string; content: string }) => {
   const emojiList = ['👍', '🫶', '☺️', '😢', '🤔'];
   const { handleCopy } = useCopyToClipboard(content);
   const [clickedEmoji, setClickedEmoji] = useState<string | undefined>(emoji);
-  const buttonData = [
-    // { icon: <Edit width='20px' height='20px' />, label: '수정하기' },
-    { icon: <Copy />, label: '글자 복사하기', onClick: handleCopy },
-    // { icon: <Delete />, label: '삭제하기' },
+  const buttonData: {
+    Icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    label: string;
+    onClick: () => void;
+  }[] = [
+    // { Icon: Edit, label: '수정하기' },
+    { Icon: Copy, label: '글자 복사하기', onClick: handleCopy },
+    // { Icon: Delete, label: '삭제하기' },
   ];
 
   const handleClickEmoji = (
@@ -48,9 +52,9 @@ const ChatMenu = ({ emoji, content }: { emoji?: string; content: string }) => {
           </SEmoji>
         ))}
       </SContainer>
-      {buttonData.map(({ icon, label, onClick }) => (
+      {buttonData.map(({ Icon, label, onClick }) => (
         <SButton key={label} type='button' onClick={onClick}>
-          <Icon>{icon}</Icon>
+          <Icon width={20} height={20} />
           {label}
         </SButton>
       ))}
@@ -97,7 +101,8 @@ const SButton = styled.button`
 
   ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.neutral950};
-`;
-const Icon = styled.span`
-  color: ${({ theme }) => theme.colors.blue500};
+
+  svg {
+    color: ${({ theme }) => theme.colors.blue500};
+  }
 `;

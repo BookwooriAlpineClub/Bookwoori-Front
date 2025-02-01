@@ -62,24 +62,22 @@ const LibraryHomePage = () => {
               <>
                 <BookButton
                   onClick={() => handleButton(ROUTE_PATH.libraryBookSearch)}
-                  icon={<SearchIcon />}
+                  Icon={SearchIcon}
                   text='책 검색'
                 />
-
                 <BookButton
                   onClick={() => handleButton(ROUTE_PATH.libraryRecord)}
-                  icon={<BookmarkIcon />}
+                  Icon={BookmarkIcon}
                   text='책 기록'
                 />
                 <BookButton
                   onClick={() => handleButton(ROUTE_PATH.libraryReview)}
-                  icon={<StarIcon />}
+                  Icon={StarIcon}
                   text='책 평가'
                 />
               </>
             )}
           </ButtonContainer>
-
           <ExpContainer>
             {exp.map((item) => (
               <ExpBox key={item.text}>

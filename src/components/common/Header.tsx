@@ -13,9 +13,13 @@ interface HeaderProps {
   onClick?: () => void;
 }
 
-const renderButton = (type: string, onClick: () => void, Icon: React.FC) => (
+const renderButton = (
+  type: string,
+  onClick: () => void,
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>,
+) => (
   <Button type='button' onClick={onClick} aria-label={type}>
-    <Icon />
+    <Icon width={24} height={24} />
   </Button>
 );
 

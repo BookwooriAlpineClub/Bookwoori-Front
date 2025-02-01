@@ -61,7 +61,7 @@ const RecruitClimbingItem = ({
       <Content>
         <Title>{item.name}</Title>
         <ContentWrapper>
-          <Book width='16' />
+          <Book width={16} height={16} />
           <Body>
             {item.bookInfo.author}, 《{item.bookInfo.title}》,{' '}
             {item.bookInfo.itemPage}p
@@ -74,12 +74,12 @@ const RecruitClimbingItem = ({
       </Content>
       {item.isOWner ? (
         <SButton $color={item.isOWner} onClick={handleClickEdit}>
-          <Edit width='12' height='12' />
+          <Edit width={12} height={12} />
           편집하기
         </SButton>
       ) : (
         <SButton $color={item.isJoined} onClick={handleClickJoin}>
-          {item.isJoined && <Check width='12' height='12' />}
+          {item.isJoined && <Check width={12} height={12} />}
           참여하기
         </SButton>
       )}
