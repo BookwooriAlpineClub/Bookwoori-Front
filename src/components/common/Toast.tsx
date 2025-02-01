@@ -19,7 +19,10 @@ import { ReactComponent as IcnInfo } from '@src/assets/icons/toast_info.svg';
 import { ReactComponent as IcnSuccess } from '@src/assets/icons/toast_success.svg';
 import { ReactComponent as IcnError } from '@src/assets/icons/toast_error.svg';
 
-const Icon: Record<Toast['kind'], React.FC<React.SVGProps<SVGSVGElement>>> = {
+const IconConfig: Record<
+  Toast['kind'],
+  React.FC<React.SVGProps<SVGSVGElement>>
+> = {
   info: IcnInfo,
   success: IcnSuccess,
   error: IcnError,
@@ -32,10 +35,10 @@ const Toast = () => {
     <List>
       {toasts &&
         toasts.map(({ id, kind, content }) => {
-          const IconComponent = Icon[kind];
+          const Icon = IconConfig[kind];
           return (
             <Item key={id} role='alert'>
-              <IconComponent width={20} height={20} />
+              <Icon width={20} height={20} />
               {content}
             </Item>
           );

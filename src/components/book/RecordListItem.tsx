@@ -18,7 +18,7 @@ const RecordListItem = ({
   records,
 }: Props) => {
   const navigate = useEncodedNavigate();
-  const chips: { [key: string]: React.ReactElement | null } = {
+  const tagConfig: { [key: string]: React.ReactElement | null } = {
     WISH: null,
     READING: (
       <STag
@@ -45,7 +45,7 @@ const RecordListItem = ({
       <Img src={cover} alt='책 표지' />
       <Title $line={1}>{title}</Title>
       <Author $line={1}>{author}</Author>
-      {chips[records[0].status]}
+      {tagConfig[records[0].status]}
     </Container>
   );
 };

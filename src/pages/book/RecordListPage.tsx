@@ -7,7 +7,7 @@ import Header from '@src/components/common/Header';
 import SegmentedButton from '@src/components/common/SegmentedButton';
 import Li from '@src/components/book/RecordListItem';
 
-const configs: {
+const segmentConfigs: {
   value: Record['status'];
   label: '읽고 싶어요' | '읽고 있어요' | '다 읽었어요';
 }[] = [
@@ -25,7 +25,7 @@ const RecordListPage = () => {
     <Container>
       <Header text='책 기록' headerType='back' />
       <SegmentedButton<Record['status']>
-        config={configs}
+        config={segmentConfigs}
         onSegmentChange={setStatus}
         defaultValue='READING'
       />
