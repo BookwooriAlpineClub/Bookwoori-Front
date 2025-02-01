@@ -2,15 +2,16 @@ import styled from 'styled-components';
 
 type TagColor = 'lime' | 'blue' | 'neutral';
 interface Props {
+  color: TagColor;
   Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
   text: string | number;
-  color: TagColor;
+  onClick?: () => void;
   className?: string;
 }
 
-const Tag = ({ Icon, text, color, className }: Props) => {
+const Tag = ({ color, Icon, text, onClick, className }: Props) => {
   return (
-    <Wrapper className={className} color={color}>
+    <Wrapper className={className} onClick={onClick} $color={color}>
       {Icon && <Icon width={12} height={12} />}
       <span>{text}</span>
     </Wrapper>
@@ -19,7 +20,7 @@ const Tag = ({ Icon, text, color, className }: Props) => {
 
 export default Tag;
 
-const Wrapper = styled.mark<{ color: TagColor }>`
+const Wrapper = styled.mark<{ $color: TagColor }>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -33,8 +34,8 @@ const Wrapper = styled.mark<{ color: TagColor }>`
 
   ${({ theme }) => theme.fonts.caption};
 
-  ${({ color, theme }) => {
-    switch (color) {
+  ${({ $color, theme }) => {
+    switch ($color) {
       case 'lime':
         return `
           background-color: ${theme.colors.lime100};
