@@ -2,8 +2,11 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { checkAuthLoader, isParamLoader } from '@src/router/loader';
-import { RootLayout } from '@src/router/RootLayout';
-import { BottomButtonLayout, NoDataTextLayout } from '@src/styles/Layout';
+import {
+  RootLayout,
+  NoDataTextLayout,
+  BottomButtonLayout,
+} from '@src/router/Layout';
 
 /* example */
 const RouterExamplePage = React.lazy(
