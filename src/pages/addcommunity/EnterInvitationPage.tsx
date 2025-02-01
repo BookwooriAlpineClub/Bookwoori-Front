@@ -38,55 +38,58 @@ const EnterInvitationPage = () => {
   }, [invitationCode]);
 
   return (
-    <div
-      style={{
-        transform: isTransitioning ? 'translateX(-100%)' : 'translateX(0)',
-        transition: 'transform 300ms ease-in-out',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-      }}
-    >
+    <Container isTransitioning={isTransitioning}>
       <Header text={headerText} headerType={headerType} />
-      <Container>
-        <IntroSection title={introTitleText} bodyLines={introBodyLines} />
-        <Fieldset title='초대 코드'>
-          <Section>
+      <Main>
+        <div className='scroll-area'>
+          <IntroSection title={introTitleText} bodyLines={introBodyLines} />
+          <Fieldset title='초대 코드'>
+            <Section>
             <InputText
               as='input'
-              name='invitationCode'
-              placeholder='초대장을 입력하세요'
+              name={invitationCode}
+              placeholder='초대장을 입력하세요.'
               maxLength={-1}
+              required
               value={invitationCode}
               setValue={setInvitationCode}
-              required={true}
             />
-          </Section>
-          {!isFormValid && invitationCode.trim() !== '' && (
-            <span style={{ color: '#fa6554', fontSize: '0.7rem' }}>
-              초대 코드는 숫자와 영어 소문자를 혼합한 10-12자리입니다.
-            </span>
-          )}
-        </Fieldset>
-        <ButtonWrapper>
-          <Button
-            type='submit'
-            disabled={!isFormValid}
-            onClick={handleFindCommunity}
-          >
-            공동체 찾기
-          </Button>
-        </ButtonWrapper>
-      </Container>
-    </div>
+            </Section>
+            {!isFormValid && invitationCode.trim() !== '' && (
+              <span style={{ color: '#fa6554', fontSize: '0.7rem' }}>
+                초대 코드는 숫자와 영어 소문자를 혼합한 10-12자리입니다.
+              </span>
+            )}
+          </Fieldset>
+        </div>
+        <Button
+          type='submit'
+          disabled={!isFormValid}
+          onClick={handleFindCommunity}
+        >
+          공동체 찾기
+        </Button>
+      </Main>
+    </Container>
   );
 };
 
 export default EnterInvitationPage;
 
-const Container = styled.div`
+const Container = styled.div<{ isTransitioning: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  transform: translateX(
+    ${({ isTransitioning }) => (isTransitioning ? '-100%' : 0)}
+  );
+  transition: transform 300ms ease-in-out;
+`;
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,13 +104,4 @@ const Container = styled.div`
   fieldset {
     width: 100%;
   }
-`;
-
-const ButtonWrapper = styled.div`
-  position: fixed;
-  bottom: calc(1.875rem + 2px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  padding: 0 1.25rem;
 `;

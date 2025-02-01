@@ -7,7 +7,7 @@ const RedirectionPage = () => {
   const [searchParams] = useSearchParams();
   const accessToken = searchParams.get('accessToken');
   const refreshToken = searchParams.get('refreshToken');
-        
+
   if (accessToken && refreshToken) {
     localStorage.setItem('accessToken', accessToken);
     sessionStorage.setItem('refreshToken', refreshToken);
@@ -17,15 +17,15 @@ const RedirectionPage = () => {
   }
 
   return (
-    <Layout>
+    <Main>
       <Spinner />
-    </Layout>
+    </Main>
   );
 };
 
 export default RedirectionPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   height: 100%;
   justify-content: center;

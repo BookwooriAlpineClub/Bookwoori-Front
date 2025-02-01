@@ -18,7 +18,6 @@ import Fieldset from '@src/components/common/Fieldset';
 import Section from '@src/components/common/Section';
 import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
 import Button from '@src/components/common/Button';
-import ButtonBackground from '@src/components/common/ButtonBackground';
 import UnderlineButton from '@src/components/common/UnderlineButton';
 import InputText from '@src/components/common/InputText';
 import InputDropdown from '@src/components/common/InputDropdown';
@@ -95,13 +94,14 @@ const ChannelEditPage = () => {
   return (
     <>
       <Header text='모임 편집하기' headerType='back' />
-      <Layout>
-        <Fieldset title='모임 분류'>
+      <main>
+        <Form className='scroll-area'>
+          <Fieldset title='모임 분류'>
           <Section>
-            <InputDropdown
-              name='모임 분류'
-              placeholder='모임 분류를 선택해주세요.'
-              options={categoryList.map((it) =>
+          <InputDropdown
+            name='모임 분류'
+            placeholder='모임 분류를 선택해주세요.'
+            options={categoryList.map((it) =>
                 it.name === 'DEFAULT'
                   ? { id: Number(it.categoryId), text: '기본' }
                   : { id: Number(it.categoryId), text: it.name },
@@ -110,24 +110,23 @@ const ChannelEditPage = () => {
               setValue={setCategory}
               required
               disabled={currentCategory?.name === 'DEFAULT'}
-            />
+          />
           </Section>
-        </Fieldset>
-        <Fieldset title='모임 이름'>
+          </Fieldset>
+          <Fieldset title='모임 이름'>
           <Section>
-            <InputText
-              as='input'
-              name='모임 이름'
-              placeholder='채널 이름을 입력하세요.'
-              maxLength={20}
-              required
-              value={name}
-              setValue={setName}
-            />
+          <InputText
+            as='input'
+            name='모임 이름'
+            placeholder='채널 이름을 입력하세요.'
+            maxLength={20}
+            required
+            value={name}
+            setValue={setName}
+          />
           </Section>
-        </Fieldset>
-      </Layout>
-      <ButtonBackground color='transparent'>
+          </Fieldset>
+        </Form>
         <Container>
           <Button disabled={!name || !category} onClick={handleClickEdit}>
             수정하기
@@ -147,14 +146,14 @@ const ChannelEditPage = () => {
             />
           )}
         </Container>
-      </ButtonBackground>
+      </main>
     </>
   );
 };
 
 export default ChannelEditPage;
 
-const Layout = styled.form`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;

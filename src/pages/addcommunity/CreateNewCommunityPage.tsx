@@ -53,59 +53,58 @@ const CreateNewCommunityPage = () => {
   return (
     <>
       <Header text={headerText} headerType={headerType} />
-      <Container>
-        <Fieldset title='공동체 이름'>
-          <Section>
+      <Main>
+        <div className='scroll-area'>
+          <Fieldset title='공동체 이름'>
+            <Section>
             <InputText
               as='input'
-              name='communityName'
+              name={communityName}
               placeholder='공동체 이름을 입력하세요'
               maxLength={20}
+              required
               value={communityName}
               setValue={setCommunityName}
-              required={true}
             />
-          </Section>
-        </Fieldset>
-        <Fieldset title='공동체 사진'>
-          <ImageUploadField
-            previewImg={
-              communityImage ? URL.createObjectURL(communityImage) : ''
-            }
-            // onFileChange={handleFileUpload}
-          />
-        </Fieldset>
-        <Fieldset title='공동체 소개'>
-          <Section>
+            </Section>
+          </Fieldset>
+          <Fieldset title='공동체 사진'>
+            <ImageUploadField
+              previewImg={
+                communityImage ? URL.createObjectURL(communityImage) : ''
+              }
+              // onFileChange={handleFileUpload}
+            />
+          </Fieldset>
+          <Fieldset title='공동체 소개'>
+            <Section>
             <InputText
               as='textarea'
-              name='communityDescription'
+              name={communityDescription}
               placeholder='사람들에게 공동체에 대해 조금 더 알려주세요.'
               maxLength={200}
-              required={false}
+              required
               value={communityDescription}
               setValue={setCommunityDescription}
             />
-          </Section>
-        </Fieldset>
-        <ButtonWrapper>
-          <Button
-            type='submit'
-            disabled={!isFormValid}
-            onClick={handleCreateCommunity}
-          >
-            생성하기
-          </Button>
-        </ButtonWrapper>
-        <BottomSpacer />
-      </Container>
+            </Section>
+          </Fieldset>
+        </div>
+        <Button
+          type='submit'
+          disabled={!isFormValid}
+          onClick={handleCreateCommunity}
+        >
+          생성하기
+        </Button>
+      </Main>
     </>
   );
 };
 
 export default CreateNewCommunityPage;
 
-const Container = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -130,18 +129,4 @@ const Container = styled.div`
       border-radius: 0.2rem;
     }
   }
-`;
-
-const ButtonWrapper = styled.div`
-  position: fixed;
-  bottom: calc(1.875rem + 2px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  padding: 0 1.25rem;
-`;
-
-const BottomSpacer = styled.div`
-  height: calc(1.875rem + 2px + 2.56rem + 2.56rem);
-  width: 100%;
 `;

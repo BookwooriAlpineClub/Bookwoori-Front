@@ -33,25 +33,27 @@ const ReviewShareComponent = ({
 
   return (
     <>
-      <TextContainer>
-        <Text>감상평을 공유해주세요!</Text>
-        <SubText>나의 감상평을 공유하고 멤버들과 감상을 나눠보세요.</SubText>
-      </TextContainer>
-      <ItemWrapper>
-        {isShareable && (
-          // <ReviewListItem />
-          <div>book에서 가져올 리뷰 아이템</div>
-        )}
-        {!isShareable && (
-          <Wrapper>
-            <div>아직 감상평을 작성하지 않았어요.</div>
-            <UnderlineButton
-              text='감상평 작성하러가기'
-              onClick={handleNavigate}
-            />
-          </Wrapper>
-        )}
-      </ItemWrapper>
+      <div className='scroll-area'>
+        <TextContainer>
+          <Text>감상평을 공유해주세요!</Text>
+          <SubText>나의 감상평을 공유하고 멤버들과 감상을 나눠보세요.</SubText>
+        </TextContainer>
+        <ItemWrapper>
+          {isShareable && (
+            // <ReviewListItem />
+            <div>book에서 가져올 리뷰 아이템</div>
+          )}
+          {!isShareable && (
+            <Wrapper>
+              <div>아직 감상평을 작성하지 않았어요.</div>
+              <UnderlineButton
+                text='감상평 작성하러가기'
+                onClick={handleNavigate}
+              />
+            </Wrapper>
+          )}
+        </ItemWrapper>
+      </div>
       <Button type='submit' onClick={handleSubmit} disabled={!isShareable}>
         나도 공유하기
       </Button>

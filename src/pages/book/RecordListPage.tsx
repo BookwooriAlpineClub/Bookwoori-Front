@@ -30,7 +30,7 @@ const RecordListPage = () => {
         defaultValue='READING'
       />
       <main>
-        {recordList.length !== 0 ? (
+        {recordList.length > 0 ? (
           <Ul>
             {recordList.map((item) => (
               <Li key={item.isbn13} {...item} />

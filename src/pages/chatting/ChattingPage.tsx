@@ -104,7 +104,7 @@ const ChattingPage = () => {
         headerType='back'
         onClick={handleRefresh}
       />
-      <Layout ref={chatRef} $isExistReply={Boolean(replyChatItem)}>
+      <Main ref={chatRef} $isExistReply={Boolean(replyChatItem)}>
         <Container>
           {allMessages.map((it, idx) => {
             const participant = roomInfo?.participants?.[String(it.memberId)];
@@ -133,7 +133,7 @@ const ChattingPage = () => {
           })}
           <div ref={targetRef} />
         </Container>
-      </Layout>
+      </Main>
       <ChatBar nickname={roomInfo?.title ?? ''} />
     </>
   );
@@ -141,7 +141,7 @@ const ChattingPage = () => {
 
 export default ChattingPage;
 
-const Layout = styled.div<{ $isExistReply: boolean }>`
+const Main = styled.main<{ $isExistReply: boolean }>`
   display: flex;
   position: relative;
   flex-direction: column;

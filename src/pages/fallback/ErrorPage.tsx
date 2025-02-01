@@ -14,7 +14,7 @@ const ErrorPage = ({ h2, h3, buttonLabel, onClick }: ErrorPageType) => {
   };
 
   return (
-    <Layout>
+    <Main>
       <Container>
         <Title>{h2 ?? '현재 페이지를 표시할 수 없습니다.'}</Title>
         <h3>{h3 ?? '잠시 후 다시 시도해주세요.'}</h3>
@@ -24,13 +24,13 @@ const ErrorPage = ({ h2, h3, buttonLabel, onClick }: ErrorPageType) => {
         label={buttonLabel ?? '새로고침'}
         onClick={onClick ?? reloadPage}
       />
-    </Layout>
+    </Main>
   );
 };
 
 export default ErrorPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -89,7 +89,8 @@ const ClimbingEditPage = () => {
   return (
     <>
       <Header text='등반 편집하기' headerType='back' />
-      <Layout>
+      <main>
+      <Form className='scroll-area'>
         <Fieldset title='등반 이름'>
           <Section>
             <InputText
@@ -143,8 +144,7 @@ const ClimbingEditPage = () => {
             />
           </Section>
         </Fieldset>
-      </Layout>
-      <ButtonBackground color='transparent'>
+      </Form>
         <Container>
           <Button
             disabled={!climbingName || !description || !date.end}
@@ -165,14 +165,14 @@ const ClimbingEditPage = () => {
             }
           />
         </Container>
-      </ButtonBackground>
+      </main>
     </>
   );
 };
 
 export default ClimbingEditPage;
 
-const Layout = styled.form`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;

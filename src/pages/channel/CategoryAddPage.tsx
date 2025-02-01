@@ -36,8 +36,8 @@ const CategoryAddPage = () => {
   return (
     <SLayout>
       <Header text='분류 추가하기' headerType='back' />
-      <SContainer>
-        <SBox>
+      <Main>
+        <SBox className='scroll-area'>
           <SLabel>분류 이름</SLabel>
           <SWrapper>
             <SInput
@@ -52,7 +52,7 @@ const CategoryAddPage = () => {
         <Button disabled={!(value && length <= 10)} onClick={handleSubmit}>
           추가하기
         </Button>
-      </SContainer>
+      </Main>
     </SLayout>
   );
 };
@@ -64,7 +64,7 @@ const SLayout = styled.div`
   flex-direction: column;
   height: 100svh;
 `;
-const SContainer = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

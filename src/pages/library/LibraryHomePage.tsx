@@ -43,7 +43,7 @@ const LibraryHomePage = () => {
   return (
     <>
       <Header text='서재' headerType='hamburger' />
-      <MountainContainer>
+      <Main>
         <TierContainer>{tier}</TierContainer>
         <MountainImage
           mountainData={
@@ -87,19 +87,18 @@ const LibraryHomePage = () => {
             ))}
           </ExpContainer>
         </MountainMenu>
-      </MountainContainer>
+      </Main>
     </>
   );
 };
 export default LibraryHomePage;
 
-const MountainContainer = styled.div`
+const Main = styled.main`
   position: relative;
   display: flex;
   flex-direction: column;
   height: calc(100% - 4.375rem);
 `;
-
 const MountainMenu = styled.div<{ seasonalColor: string }>`
   background-color: ${({ seasonalColor }) => seasonalColor};
   flex: 1;
@@ -108,14 +107,12 @@ const MountainMenu = styled.div<{ seasonalColor: string }>`
   padding: 1.25rem;
   gap: 1.25rem;
 `;
-
 const ButtonContainer = styled.div`
   display: flex;
   gap: 0.5rem;
   justify-content: space-between;
   width: 100%;
 `;
-
 const ExpContainer = styled.div`
   display: flex;
   padding: 1.88rem 2.5rem;
@@ -123,22 +120,18 @@ const ExpContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral0};
   border-radius: 1.3125rem;
 `;
-
 const ExpBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
-
 const TypographyNumber = styled.span`
   ${({ theme }) => theme.fonts.mountain};
 `;
-
 const TypographyText = styled.span`
   ${({ theme }) => theme.fonts.mountain};
   color: ${({ theme }) => theme.colors.neutral400};
 `;
-
 const TierContainer = styled.div`
   position: absolute;
   background-color: ${({ theme }) => theme.colors.lime300};

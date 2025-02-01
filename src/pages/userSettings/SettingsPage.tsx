@@ -21,7 +21,7 @@ const SettingsPage = () => {
   return (
     <>
       <Header text='설정' headerType='hamburger' />
-      <Layout>
+      <Main>
         <UserProfile memberId='me' />
         <Container>
           <IconButton
@@ -44,14 +44,14 @@ const SettingsPage = () => {
             }
           />
         </Container>
-      </Layout>
+      </Main>
     </>
   );
 };
 
 export default SettingsPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;

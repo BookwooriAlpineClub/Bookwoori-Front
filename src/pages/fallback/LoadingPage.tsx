@@ -3,15 +3,15 @@ import Spinner from '@src/components/common/Spinner';
 
 const LoadingPage = () => {
   return (
-    <Layout>
+    <Main>
       <Spinner />
-    </Layout>
+    </Main>
   );
 };
 
 export default LoadingPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;

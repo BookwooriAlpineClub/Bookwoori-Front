@@ -7,19 +7,19 @@ const ClimbingProgressPage = ({ name: headerText }: { name: string }) => {
   return (
     <>
       <Header text={headerText} headerType='back' />
-      <Layout>
+      <Main>
         <Wrapper>
           <ClimbingDescription />
         </Wrapper>
         <ClimbingBoard />
-      </Layout>
+      </Main>
     </>
   );
 };
 
 export default ClimbingProgressPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   gap: 0.9375rem;

@@ -90,7 +90,11 @@ const ChannelAddPage = () => {
     <Container>
       <Header text='모임 추가하기' headerType='back' />
       <Main>
-        <Form id='channel-add-form' onSubmit={handleFormSubmit}>
+        <Form
+          id='channel-add-form'
+          className='scroll-area'
+          onSubmit={handleFormSubmit}
+        >
           <InputRadio
             name='모임 유형'
             options={[
