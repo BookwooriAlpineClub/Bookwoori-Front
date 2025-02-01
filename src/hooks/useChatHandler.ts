@@ -7,7 +7,7 @@ import { MessageRoomRes } from '@src/types/apis/messageRoom';
 interface UseChatHandlerProps {
   roomInfo: MessageRoomRes | undefined;
   setNewMessages: React.Dispatch<React.SetStateAction<DM[]>>;
-  setMessages: React.Dispatch<React.SetStateAction<DM[]>>;
+  setMessages?: React.Dispatch<React.SetStateAction<DM[]>>;
 }
 
 const useChatHandler = ({
@@ -30,6 +30,9 @@ const useChatHandler = ({
               : msg,
           ),
         );
+
+        if (!setMessages) return;
+
         setMessages((prevMessages) =>
           prevMessages.map((msg) =>
             msg.id === message.payload.id
@@ -43,6 +46,9 @@ const useChatHandler = ({
         setNewMessages((prevMessages) =>
           prevMessages.filter((msg) => msg.id !== message.payload),
         );
+
+        if (!setMessages) return;
+
         setMessages((prevMessages) =>
           prevMessages.filter((msg) => msg.id !== message.payload),
         );
