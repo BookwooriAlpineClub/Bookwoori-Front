@@ -12,9 +12,7 @@ import styled from 'styled-components';
  */
 export const NoDataTextLayout = () => (
   <NoDataTextLayoutStyle>
-    <main>
-      <Outlet />
-    </main>
+    <Outlet />
   </NoDataTextLayoutStyle>
 );
 
@@ -27,9 +25,7 @@ export const NoDataTextLayout = () => (
  */
 export const BottomButtonLayout = () => (
   <BottomButtonLayoutStyle>
-    <main>
-      <Outlet />
-    </main>
+    <Outlet />
   </BottomButtonLayoutStyle>
 );
 
