@@ -1,6 +1,8 @@
 import type Toast from '@src/types/toast';
 import type Modal from '@src/types/modal';
 import { atom } from 'recoil';
+import { DM } from '@src/types/messageRoom';
+import { ChannelMessage } from '@src/types/channel';
 
 export const toastState = atom<Toast[]>({
   key: 'toastState',
@@ -58,5 +60,15 @@ export const categoryIdState = atom<number | undefined>({
 });
 export const errorState = atom<Error | null>({
   key: 'errorState',
+  default: null,
+});
+export const editChatIdState = atom<string | null>({
+  key: 'editChatIdState',
+  default: null,
+});
+export const replyChatState = atom<
+  (DM & { nickname?: string }) | (ChannelMessage & { nickname?: string }) | null
+>({
+  key: 'replyChatState',
   default: null,
 });
