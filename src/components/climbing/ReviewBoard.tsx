@@ -1,10 +1,10 @@
-import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
-import styled from 'styled-components';
 import ReviewShareComponent from '@src/components/climbing/ReviewShareComponent';
-import ReviewItem from '@src/components/climbing/ReviewItem';
-import { useGetClimbingReview } from '@src/hooks/query/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
+import { useGetClimbingReview } from '@src/hooks/query/climbing';
+import styled from 'styled-components';
 import Spinner from '@src/components/common/Spinner';
+import ReviewListItem from '@src/components/book/ReviewListItem';
+import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 
 const ReviewBoard = () => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
@@ -18,7 +18,7 @@ const ReviewBoard = () => {
       <ReviewListContainer>
         {data?.hasShared ? (
           data?.ClimbingMemberReviewList.map((review, idx) => (
-            <ReviewItem key={idx} review={review} />
+            <ReviewListItem key={idx} />
           ))
         ) : (
           <ReviewShareComponent {...data} />

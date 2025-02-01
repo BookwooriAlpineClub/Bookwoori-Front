@@ -2,7 +2,7 @@ import { useGetReviewList } from '@src/hooks/query/record';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import Header from '@src/components/common/Header';
-import ReviewItem from '@src/components/book/ReviewItem';
+import ReviewListItem from '@src/components/book/ReviewListItem';
 
 const ReviewListPage = () => {
   const { data: reviewList } = useGetReviewList();
@@ -14,7 +14,7 @@ const ReviewListPage = () => {
         {reviewList.length !== 0 ? (
           <Ul>
             {reviewList.map((item) => (
-              <ReviewItem key={item.isbn13} {...item} />
+              <ReviewListItem key={item.isbn13} {...item} />
             ))}
           </Ul>
         ) : (
