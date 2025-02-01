@@ -26,7 +26,7 @@ const RecruitClimbingBottomSheet = ({
       <Wrapper>
         <span>모집 중인 등반</span>
         <button type='button' onClick={handleClick}>
-          <Plus />
+          <Plus width={20} height={20} />
         </button>
       </Wrapper>
       <Container>

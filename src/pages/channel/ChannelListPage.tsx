@@ -55,14 +55,14 @@ const ChannelListPage = () => {
       <Layout>
         <ButtonContainer>
           <SubButton
-            icon={<CategoryAdd width='16' height='16' />}
+            icon={<CategoryAdd width={16} height={16} />}
             label='분류 추가'
             onClick={() =>
               navigate(`/server/${encodeId(serverId)}/create/category`)
             }
           />
           <SubButton
-            icon={<ChannelAdd width='18' height='18' />}
+            icon={<ChannelAdd width={18} height={18} />}
             label='모임 추가'
             onClick={() =>
               navigate(`/server/${encodeId(serverId)}/create/channel`)

@@ -7,7 +7,9 @@ const Spinner = () => {
 
 export default Spinner;
 
-const AnimatedSpinner = styled(IcnSpinner)`
+const AnimatedSpinner = styled(IcnSpinner).attrs({ width: 24, height: 24 })`
+  color: ${({ theme }) => theme.colors.blue300};
+
   @keyframes spin {
     from {
       transform: rotate(0);
