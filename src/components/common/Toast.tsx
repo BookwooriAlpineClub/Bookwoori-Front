@@ -19,13 +19,14 @@ import { ReactComponent as IcnInfo } from '@src/assets/icons/toast_info.svg';
 import { ReactComponent as IcnSuccess } from '@src/assets/icons/toast_success.svg';
 import { ReactComponent as IcnError } from '@src/assets/icons/toast_error.svg';
 
+const Icon: Record<Toast['kind'], React.FC<React.SVGProps<SVGSVGElement>>> = {
+  info: IcnInfo,
+  success: IcnSuccess,
+  error: IcnError,
+};
+
 const Toast = () => {
   const toasts = useRecoilValue(toastState);
-  const Icon: Record<Toast['kind'], React.FC<React.SVGProps<SVGSVGElement>>> = {
-    info: IcnInfo,
-    success: IcnSuccess,
-    error: IcnError,
-  };
 
   return createPortal(
     <List>
