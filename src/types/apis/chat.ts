@@ -22,6 +22,15 @@ export interface ReplyReq extends MessageReq {
   parentId: string;
 }
 
+export interface DeleteReq {
+  id: string;
+}
+
+export interface EditReq {
+  id: string;
+  content: string;
+}
+
 export type ChatEventRes = NewMessageEvent | ReactEvent | ReplyEvent;
 
 interface NewMessageEvent extends BaseEvent {
