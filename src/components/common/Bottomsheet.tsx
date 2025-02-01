@@ -70,6 +70,6 @@ const HandleBar = styled.button`
   width: 1.875rem;
   height: 0.1875rem;
 
-  border-radius: 50%;
+  border-radius: 6.1875rem;
   background-color: ${({ theme }) => theme.colors.blue300};
 `;
