@@ -1,27 +1,27 @@
-import styled from 'styled-components';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { categoryIdState } from '@src/states/atoms';
-import { useCategory } from '@src/hooks/query/category';
 import useModal from '@src/hooks/useModal';
 import useLoaderData from '@src/hooks/useRoaderData';
 import useToast from '@src/hooks/useToast';
-import { encodeId } from '@src/utils/formatters';
-import Header from '@src/components/common/Header';
-import Button from '@src/components/common/Button';
-import InputText from '@src/components/common/InputText';
-import InputDropdown from '@src/components/common/InputDropdown';
-import ButtonBackground from '@src/components/common/ButtonBackground';
-import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
-import UnderlineButton from '@src/components/common/UnderlineButton';
+import { useCategory } from '@src/hooks/query/category';
 import {
   useDeleteChannel,
   useGetServerChannel,
   usePatchChannel,
 } from '@src/hooks/query/channel';
-import Section from '@src/components/common/Section';
+import { dialogState, categoryIdState } from '@src/states/atoms';
+import { encodeId } from '@src/utils/formatters';
+import styled from 'styled-components';
+import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
+import Section from '@src/components/common/Section';
+import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
+import Button from '@src/components/common/Button';
+import ButtonBackground from '@src/components/common/ButtonBackground';
+import UnderlineButton from '@src/components/common/UnderlineButton';
+import InputText from '@src/components/common/InputText';
+import InputDropdown from '@src/components/common/InputDropdown';
 
 const findItemByKey = <T, K extends keyof T>(
   items: T[],
@@ -32,7 +32,7 @@ const findItemByKey = <T, K extends keyof T>(
 };
 
 const ChannelEditPage = () => {
-  const { openModal: openDialog, closeModal: closeDialog } = useModal('dialog');
+  const { openModal: openDialog, closeModal: closeDialog } = useModal(dialogState);
   const addToast = useToast();
 
   const { id: serverId } = useLoaderData<{ id: string }>();

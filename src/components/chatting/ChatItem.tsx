@@ -1,10 +1,11 @@
-import styled from 'styled-components';
-import { SyntheticEvent, useMemo } from 'react';
-import useModal from '@src/hooks/useModal';
-import useLongPress from '@src/hooks/useLongPress';
 import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
+import { SyntheticEvent, useMemo } from 'react';
+import useLongPress from '@src/hooks/useLongPress';
+import useModal from '@src/hooks/useModal';
+import { bottomsheetState } from '@src/states/atoms';
 import { formatChatItemTime } from '@src/utils/formatters';
+import styled from 'styled-components';
 import ChatMenu from '@src/components/common/EmojiBottomsheet';
 import Profile from '@src/assets/images/userSettings/background_default.svg';
 
@@ -16,7 +17,7 @@ interface ChatItemProps {
 }
 
 const ChatItem = ({ chatItem, imgUrl, nickname, createdAt }: ChatItemProps) => {
-  const { openModal: openBottomsheet } = useModal('bottomsheet');
+  const { openModal: openBottomsheet } = useModal(bottomsheetState);
   const longPressHandler = useLongPress({
     onLongPress: () => openBottomsheet(<ChatMenu content={chatItem.content} />),
   });

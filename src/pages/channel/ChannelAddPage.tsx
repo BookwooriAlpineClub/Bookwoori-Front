@@ -1,35 +1,31 @@
 import type Book from '@src/types/book';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { formatDate, decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
-import useBottomsheet from '@src/hooks/useBottomsheet';
+import useModal from '@src/hooks/useModal';
 import { useCategory } from '@src/hooks/query/category';
 import { usePostChannel } from '@src/hooks/query/channel';
 import { usePostClimbing } from '@src/hooks/query/climbing';
+import { bottomsheetState } from '@src/states/atoms';
+import { formatDate, decodeIdParam } from '@src/utils/formatters';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
+import Button from '@src/components/common/Button';
 import InputRadio from '@src/components/common/InputRadio';
 import InputDropdown from '@src/components/common/InputDropdown';
 import InputText from '@src/components/common/InputText';
-import InputDatepicker, {
-  type Period,
-} from '@src/components/common/InputDatepicker';
-import Button from '@src/components/common/Button';
+import InputDatepicker, { type Period } from '@src/components/common/InputDatepicker';
 import SearchBottomsheet from '@src/components/channel/SearchBottomsheet';
 import { ReactComponent as IcnHash } from '@src/assets/icons/bi_hash.svg';
 import { ReactComponent as IcnVoice } from '@src/assets/icons/hi_outline_volume_up.svg';
 import { ReactComponent as IcnRun } from '@src/assets/icons/bi_run.svg';
 
 const ChannelAddPage = () => {
-  const navigate = useEncodedNavigate();
-  const { openBottomsheet, closeBottomsheet } = useBottomsheet();
   const { serverId } = useParams<{ serverId: string }>();
   const decodedServerId = decodeIdParam(serverId);
   const location = useLocation();
   const defaultKind = new URLSearchParams(location.search).get('kind') || '';
-
   const { categoryList } = useCategory();
   const { createChannel } = usePostChannel();
   const { createClimbing } = usePostClimbing();
@@ -37,13 +33,12 @@ const ChannelAddPage = () => {
   const [kind, setKind] = useState<string>(defaultKind);
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [book, setBook] = useState<Pick<Book, 'title' | 'isbn13'>>({
-    title: '',
-    isbn13: '',
-  });
+  const [book, setBook] = useState<Pick<Book, 'title' | 'isbn13'>>({ title: '', isbn13: '' });
   const [date, setDate] = useState<Period>({ start: '', end: '' });
   const [description, setDescription] = useState<string>('');
 
+  const navigate = useEncodedNavigate();
+  const { openModal: openBottomsheet, closeModal: closeBottomsheet } = useModal(bottomsheetState);
   const calcTomorrow = (): Date => {
     const day = new Date();
     day.setDate(day.getDate() + 1);
@@ -54,7 +49,6 @@ const ChannelAddPage = () => {
     if (kind === 'climb') return !(kind && name && book && date && description);
     return true;
   };
-
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
