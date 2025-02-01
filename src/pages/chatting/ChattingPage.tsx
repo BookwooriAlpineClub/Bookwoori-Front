@@ -22,21 +22,25 @@ const ChattingPage = () => {
   const { id: memberId } = useLoaderData<{ id: number }>();
   const setEditChatId = useSetRecoilState(editChatIdState);
   const [replyChatItem, setReplyChatItem] = useRecoilState(replyChatState);
+  const replyChatId = useRecoilValue(replyChatIdState);
+
   const { roomInfo } = usePostMessageRoom(memberId);
   const { data, fetchNextPage, hasNextPage, refetch } = useGetDMList(
     roomInfo?.messageRoomId ?? -1,
   );
+
   const [messages, setMessages] = useState<DM[]>([]);
   const [newMessages, setNewMessages] = useState<DM[]>([]);
-  useChatHandler({ roomInfo, setNewMessages, setMessages });
   const allMessages: DM[] = useMemo(() => {
     return [...newMessages, ...messages];
   }, [newMessages, messages]);
   const [isInitial, setIsInitial] = useState<boolean>(true);
+
   const { ref: targetRef, inView } = useInView();
   const chatRef = useRef<HTMLDivElement>(null);
   const replyChatRef = useRef<HTMLDivElement | null>(null);
-  const replyChatId = useRecoilValue(replyChatIdState);
+
+  useChatHandler({ roomInfo, setNewMessages, setMessages });
 
   const navigate = useNavigate();
 
