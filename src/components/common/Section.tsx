@@ -10,10 +10,10 @@ const Section = ({ children }: Props) => {
 const Container = styled.section`
   padding: ${({ theme }) => theme.padding[16]};
 
-  border-radius: ${({ theme }) => theme.rounded[16]};
+  border-radius: ${({ theme }) => theme.rounded[12]};
   background-color: ${({ theme }) => theme.colors.neutral0};
 
-  &:not(:has(input:enabled)) {
+  &:not(:has(input:enabled, textarea:enabled, select:enabled)) {
     background-color: ${({ theme }) => theme.colors.neutral200};
   }
 `;

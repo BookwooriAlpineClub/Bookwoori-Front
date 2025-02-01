@@ -57,8 +57,11 @@ const Container = styled.header`
 const ButtonWrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  gap: 1rem;
 `;
 const Button = styled.button`
   display: flex;
+
+  svg {
+    color: ${({ theme }) => theme.colors.neutral950};
+  }
 `;

@@ -1,25 +1,41 @@
-import type { ModalTransition } from '@src/types/modal';
-import styled from 'styled-components';
-import Scrim from '@src/components/common/Scrim';
-import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
-import CommunityButton from '@src/components/common/IconButton';
-import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
-import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
-import useDialog from '@src/hooks/useDialog';
-import ProfileModal from '@src/components/communitysidebar/ProfileModal';
-import useSideBar from '@src/hooks/useSideBar';
-import useSideBarData from '@src/hooks/query/useSideBarData';
+import type Modal from '@src/types/modal';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
+import useModal from '@src/hooks/useModal';
+import { sidebarState, dialogState } from '@src/states/atoms';
 import { decodeIdParam, encodeId } from '@src/utils/formatters';
+import styled from 'styled-components';
+import Fieldset from '@src/components/common/Fieldset';
+import Scrim from '@src/components/common/Scrim';
+import CommunityButton from '@src/components/common/IconButton';
+import ProfileModal from '@src/components/communitysidebar/ProfileModal';
+import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 
 const CommunitySideBar = () => {
-  const { sideBar, closeSideBar } = useSideBar();
+  const { isOpen, transition } = useRecoilValue(sidebarState);
+  const { closeModal: closeSideBar } = useModal(sidebarState);
+  const { openModal: openDialog } = useModal(dialogState);
   const { serverId: id } = useParams<{ serverId: string }>();
   const serverId = decodeIdParam(id ?? '-1');
-  const { serverInfo, memberList, copyText } = useSideBarData(serverId);
+  const { serverInfo, memberList, copyText } = {
+    serverInfo: { serverImg: '', name: '', memberCount: 0 },
+    memberList: {
+      members: [
+        {
+          memberId: 1,
+          profileImg: '',
+          nickname: '',
+          level: 1,
+          mountain: '',
+          role: 'OWNER',
+        },
+      ],
+    },
+    copyText: '',
+  };
   const { handleCopy } = useCopyToClipboard(copyText);
-  const { openDialog } = useDialog();
 
   const navigate = useNavigate();
 
@@ -39,29 +55,27 @@ const CommunitySideBar = () => {
 
   return (
     <Scrim
-      isOpen={sideBar.isOpen}
-      transition={sideBar.transition}
+      isOpen={isOpen}
+      transition={transition}
       closeModal={closeSideBar}
     >
       <SideBarContainer
-        isOpen={sideBar.isOpen}
-        transition={sideBar.transition}
-        onClick={(e) => e.stopPropagation()} // 이벤트 버블링 방지
+        isOpen={isOpen}
+        transition={transition}
+        onClick={(e) => e.stopPropagation()}
       >
         <CommunityTitleContainer>
           <img src={serverInfo?.serverImg ?? ''} alt='server profile' />
           <span>{serverInfo?.name}</span>
         </CommunityTitleContainer>
-        <TitleAndFieldContainer title='공동체 기능'>
+        <Fieldset as='section' title='공동체 기능'>
           <CommunityButton
             type='detailInfoSetting'
             onClick={handleClickInfoSetting}
           />
           <CommunityButton type='copyInvitation' onClick={handleCopy} />
-        </TitleAndFieldContainer>
-        <TitleAndFieldContainer
-          title={`멤버 목록 (${serverInfo?.memberCount})`}
-        >
+        </Fieldset>
+        <Fieldset as='section' title={`멤버 목록 (${serverInfo?.memberCount})`}>
           <MemberListContainer>
             {memberList?.members.map((member) => (
               <MemberItem
@@ -80,13 +94,13 @@ const CommunitySideBar = () => {
                 </div>
                 {member.role === 'OWNER' && (
                   <IconWrapper>
-                    <BiCrown />
+                    <BiCrown width={16} height={16} />
                   </IconWrapper>
                 )}
               </MemberItem>
             ))}
           </MemberListContainer>
-        </TitleAndFieldContainer>
+        </Fieldset>
       </SideBarContainer>
     </Scrim>
   );
@@ -96,7 +110,7 @@ export default CommunitySideBar;
 
 const SideBarContainer = styled.div<{
   isOpen: boolean;
-  transition: ModalTransition;
+  transition: Modal['transition'];
 }>`
   position: fixed;
   top: 0;

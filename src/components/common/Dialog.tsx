@@ -15,16 +15,16 @@ const ConfirmDialog: React.ReactNode = (
 openDialog(ConfirmDialog);
 */
 
-import type { ModalTransition } from '@src/types/modal';
-import styled from 'styled-components';
+import type Modal from '@src/types/modal';
 import { useRecoilValue } from 'recoil';
+import useModal from '@src/hooks/useModal';
 import { dialogState } from '@src/states/atoms';
-import useDialog from '@src/hooks/useDialog';
+import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 
 const Dialog = () => {
   const { isOpen, transition, content } = useRecoilValue(dialogState);
-  const { closeDialog } = useDialog();
+  const { closeModal: closeDialog } = useModal(dialogState);
 
   return (
     <Scrim isOpen={isOpen} transition={transition} closeModal={closeDialog}>
@@ -41,7 +41,7 @@ const Dialog = () => {
 
 export default Dialog;
 
-const Layout = styled.section<{ $transition: ModalTransition }>`
+const Layout = styled.section<{ $transition: Modal['transition'] }>`
   position: fixed;
   left: 50%;
   top: 50%;

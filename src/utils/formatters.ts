@@ -109,3 +109,7 @@ export const formatCreatedAt = (createdAt: string) => {
 
   return { date: datePart, time: timePart };
 };
+
+export const formatDateWithHyphen = (date: string) => {
+  return date.split('-').join('.').concat('.');
+};

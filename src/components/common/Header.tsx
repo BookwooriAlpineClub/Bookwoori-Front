@@ -1,7 +1,7 @@
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import useSideBar from '@src/hooks/useSideBar';
-import useServerbar from '@src/hooks/useServerbar';
+import useModal from '@src/hooks/useModal';
+import { serverbarState, sidebarState } from '@src/states/atoms';
+import styled from 'styled-components';
 import Serverbar from '@src/components/common/Serverbar';
 import { ReactComponent as Hamburger } from '@src/assets/icons/fi_menu.svg';
 import { ReactComponent as Back } from '@src/assets/icons/fi_arrow_left.svg';
@@ -13,17 +13,21 @@ interface HeaderProps {
   onClick?: () => void;
 }
 
-const renderButton = (type: string, onClick: () => void, Icon: React.FC) => (
+const renderButton = (
+  type: string,
+  onClick: () => void,
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>,
+) => (
   <Button type='button' onClick={onClick} aria-label={type}>
-    <Icon />
+    <Icon width={24} height={24} />
   </Button>
 );
 
 const Header = ({ text, headerType, onClick }: HeaderProps) => {
   const navigate = useNavigate();
   const handleClick = () => navigate(-1);
-  const { openServerbar } = useServerbar();
-  const { openSideBar } = useSideBar();
+  const { openModal: openServerbar } = useModal(serverbarState);
+  const { openModal: openSideBar } = useModal(sidebarState);
 
   return (
     <Layout>
@@ -46,6 +50,7 @@ const Layout = styled.header`
   justify-content: space-between;
   position: fixed;
   top: 0;
+  left: 0;
   z-index: ${({ theme }) => theme.zIndex.header};
 
   width: 100%;

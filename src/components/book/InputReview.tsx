@@ -67,24 +67,20 @@ const StarFieldset = styled.fieldset`
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  gap: 0.3125rem;
+  gap: ${({ theme }) => theme.gap[6]};
 `;
-const IcnStarBlue = styled(IcnStar)`
-  width: 40px;
-  height: 40px;
+const IcnStarBlue = styled(IcnStar).attrs({ width: 40, height: 40 })`
   color: ${({ theme }) => theme.colors.blue500};
 `;
-const IcnStarGray = styled(IcnStar)`
-  width: 40px;
-  height: 40px;
+const IcnStarGray = styled(IcnStar).attrs({ width: 40, height: 40 })`
   color: ${({ theme }) => theme.colors.neutral400};
 `;
 const Textarea = styled.textarea<{ $height: number }>`
   width: 100%;
   height: ${({ $height }) => $height}px;
-  padding: 0.75rem 1rem;
+  padding: ${({ theme }) => `${theme.padding[12]} ${theme.padding[16]}`};
 
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral0};
 
   ${({ theme }) => theme.fonts.body}

@@ -1,45 +1,43 @@
-import type Record from '@src/types/record';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { SESSION_STORAGE } from '@src/constants/sessionStorage';
-import useBook from '@src/hooks/query/useBook';
+// import type Record from '@src/types/record';
+// import { useParams, useLocation, useNavigate } from 'react-router-dom';
+// import { SESSION_STORAGE } from '@src/constants/sessionStorage';
+// import { useGetBookDetail } from '@src/hooks/query/book';
 import styled from 'styled-components';
-import Header from '@src/components/book/Header';
-import BookInfoDetail from '@src/components/book/BookInfoDetail';
+// import Header from '@src/components/book/Header';
+// import BookDetail from '@src/components/book/BookDetail';
 
 const BookDetailPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { bookId: isbn13 } = useParams<{ bookId: string }>();
-  const { bookDetail } = useBook({ isbn13 });
+  //   const navigate = useNavigate();
+  //   const location = useLocation();
+  //   const { bookId: isbn13 = '' } = useParams<{ bookId: string }>();
+  //   const { data: bookDetail } = useGetBookDetail(isbn13);
 
-  const status: Record['status'] = 'UNREAD';
-
-  const handleEditClick = () => {
-    const jsonData = JSON.stringify({
-      isbn13: '',
-      title: '',
-      author: '',
-      cover: '',
-      publisher: '',
-      pubYear: '',
-      description: '',
-      itemPage: -1,
-      records: [],
-    });
-    sessionStorage.setItem(SESSION_STORAGE.RECORD_EDIT, jsonData);
-    navigate(`${location.pathname.replace('/book', '/record')}/edit`);
-  };
+  //   const handleEditClick = () => {
+  //     const jsonData = JSON.stringify({
+  //       isbn13: '',
+  //       title: '',
+  //       author: '',
+  //       cover: '',
+  //       publisher: '',
+  //       pubYear: '',
+  //       description: '',
+  //       itemPage: -1,
+  //       records: [],
+  //     });
+  //     sessionStorage.setItem(SESSION_STORAGE.RECORD_EDIT, jsonData);
+  //     navigate(`${location.pathname.replace('/book', '/record')}/edit`);
+  //   };
 
   return (
     <Container>
-      <Header buttonList={['edit']} handleEditClick={handleEditClick} />
+      {/* <Header buttonList={['edit']} handleEditClick={handleEditClick} />
       <main>
         <BookInfoDetail status={status} {...bookDetail} />
         <Description>
           <h2>책 소개</h2>
           <p>{bookDetail.description}</p>
         </Description>
-      </main>
+      </main> */}
     </Container>
   );
 };
@@ -49,7 +47,7 @@ export default BookDetailPage;
 const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: 1.56rem;
+  gap: ${({ theme }) => theme.gap[16]};
 
   margin: 1.875rem 7% 0;
 
@@ -68,19 +66,20 @@ const Container = styled.div`
     width: 100%;
     height: -webkit-fill-available;
 
-    border-radius: 1.125rem 1.125rem 0rem 0rem;
+    border-radius: ${({ theme }) =>
+      `${theme.rounded[16]} ${theme.rounded[16]} 0 0`};
     background-color: ${({ theme }) => theme.colors.neutral0};
   }
 `;
-const Description = styled.section`
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 0.94rem;
+// const Description = styled.section`
+//   display: flex;
+//   flex-flow: column nowrap;
+//   gap: ${({ theme }) => theme.gap[16]};
 
-  h2 {
-    ${({ theme }) => theme.fonts.mountain}
-  }
-  p {
-    ${({ theme }) => theme.fonts.body}
-  }
-`;
+//   h2 {
+//     ${({ theme }) => theme.fonts.mountain}
+//   }
+//   p {
+//     ${({ theme }) => theme.fonts.body}
+//   }
+// `;

@@ -11,8 +11,8 @@ interface Props<ValueType> {
     disabled?: boolean;
   }[];
   defaultValue?: ValueType;
-  required: boolean;
-  disabled: boolean;
+  required?: boolean;
+  disabled?: boolean;
   setValue: React.Dispatch<React.SetStateAction<ValueType>>;
 }
 

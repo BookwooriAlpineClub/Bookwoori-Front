@@ -1,39 +1,35 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as Plus } from '@src/assets/icons/hi_outline_plus.svg';
-import RecruitClimbingItem from '@src/components/climbing/RecruitClimbingItem';
-import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
-import { encodeId } from '@src/utils/formatters';
 import { useRecoilValue } from 'recoil';
+import { encodeId } from '@src/utils/formatters';
 import { currentServerIdState } from '@src/states/atoms';
+import RecruitClimbingItem from '@src/components/climbing/RecruitClimbingItem';
+import { useGetClimbingRecruitList } from '@src/hooks/query/climbing';
+import { ReactComponent as Plus } from '@src/assets/icons/hi_outline_plus.svg';
 
 const RecruitClimbingBottomSheet = ({
   closeBottomSheet,
 }: {
   closeBottomSheet: () => void;
 }) => {
-  // const { serverId } = useParams<{ serverId: string }>();
-  // const decodedServerId = decodeIdParam(serverId);
-  const serverId = useRecoilValue(currentServerIdState);
-  const { data = [] } = useClimbingRecruit(serverId);
   const navigate = useNavigate();
+  const serverId = useRecoilValue(currentServerIdState);
+  const { data = [] } = useGetClimbingRecruitList();
 
   const handleClick = () => {
     closeBottomSheet();
-    navigate(`/server/${encodeId(serverId)}/create/channel?kind=climb`, {
-      state: serverId,
-    });
+    navigate(`/server/${encodeId(serverId)}/create/channel?kind=climb`);
   };
 
   return (
     <>
-      <SWrapper>
+      <Wrapper>
         <span>모집 중인 등반</span>
         <button type='button' onClick={handleClick}>
-          <SPlus />
+          <Plus width={20} height={20} />
         </button>
-      </SWrapper>
-      <SContainer>
+      </Wrapper>
+      <Container>
         {data.length > 0 ? (
           data.map((it) => (
             <RecruitClimbingItem
@@ -43,37 +39,36 @@ const RecruitClimbingBottomSheet = ({
             />
           ))
         ) : (
-          <Wrapper>
+          <NoDataWrapper>
             <Span>아직 모집 중인 등반이 없습니다.</Span>
-          </Wrapper>
+          </NoDataWrapper>
         )}
-      </SContainer>
+      </Container>
     </>
   );
 };
 
 export default RecruitClimbingBottomSheet;
 
-const SWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   padding: 1.25rem 1.25rem 0.625rem;
+
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
-const SContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.9375rem;
+  gap: ${({ theme }) => theme.gap[12]};
 
   height: 80vh;
   padding: 0 0.9375rem;
   overflow: scroll;
 `;
-const SPlus = styled(Plus)`
-  fill: ${({ theme }) => theme.colors.neutral950};
-`;
-const Wrapper = styled.div`
+const NoDataWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
 
@@ -81,6 +76,6 @@ const Wrapper = styled.div`
 `;
 const Span = styled.span`
   margin: auto;
-  ${({ theme }) => theme.fonts.body}
+
   color: ${({ theme }) => theme.colors.neutral400};
 `;

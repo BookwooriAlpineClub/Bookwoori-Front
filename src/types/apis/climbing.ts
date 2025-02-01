@@ -1,5 +1,6 @@
 import { Climbing, ClimbingMember } from '@src/types/climbing';
-import { EmojiTypeType } from '@src/constants/constants';
+import { EmojiType, EmojiTypeType } from '@src/constants/constants';
+import Book from '@src/types/book';
 
 export type postClimbingChannelReq = Pick<
   Climbing,
@@ -14,7 +15,11 @@ export type patchClimbingChannelReq = Pick<
   'name' | 'description' | 'startDate' | 'endDate'
 > & {};
 
-export interface getClimbingInfoRes extends Climbing {}
+export interface getClimbingRes extends Climbing {}
+
+export interface ClimbingRecruitListRes {
+  readyClimbingList: Climbing[];
+}
 
 export type getClimbingChannelMembersRes = {
   climbingMemberList: ClimbingMember[];
@@ -22,6 +27,30 @@ export type getClimbingChannelMembersRes = {
 
 export type patchClimbingMemoReq = {
   memo: string | null;
+};
+
+export type getClimbingReviewRes =
+  | getClimbingReviewRes1
+  | getClimbingReviewRes2;
+
+type getClimbingReviewRes1 = {
+  hasShared: true;
+  isShareable: true;
+  ClimbingMemberReviewList: {
+    memberId: number;
+    profileImg: string | null;
+    nickname: string;
+    star: number;
+    content: string;
+    reviewId: number;
+    reviewEmojiList: { emoji: keyof typeof EmojiType; emojiCount: number }[];
+  }[];
+};
+
+type getClimbingReviewRes2 = {
+  hasShared: false;
+  isShareable: boolean;
+  bookInfo: Book;
 };
 
 export type getClimbingReviewEmojiRes = {

@@ -1,11 +1,11 @@
-import useRecord from '@src/hooks/query/useRecord';
+import { useGetReviewList } from '@src/hooks/query/record';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import Header from '@src/components/common/Header';
-import ReviewItem from '@src/components/book/ReviewItem';
+import ReviewListItem from '@src/components/book/ReviewListItem';
 
 const ReviewListPage = () => {
-  const { reviewList } = useRecord({});
+  const { data: reviewList } = useGetReviewList();
 
   return (
     <NoDataTextLayout>
@@ -14,7 +14,7 @@ const ReviewListPage = () => {
         {reviewList.length > 0 ? (
           <Ul>
             {reviewList.map((item) => (
-              <ReviewItem key={item.isbn13} {...item} />
+              <ReviewListItem key={item.isbn13} {...item} />
             ))}
           </Ul>
         ) : (
@@ -30,5 +30,5 @@ export default ReviewListPage;
 const Ul = styled.ul`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.94rem;
+  gap: ${({ theme }) => theme.gap[16]};
 `;

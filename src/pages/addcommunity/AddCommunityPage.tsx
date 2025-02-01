@@ -9,36 +9,38 @@ const headerText = '공동체 추가';
 const headerType = 'hamburger';
 const introTitleText = '공동체를 만들어보세요.';
 const introBodyLines = [
-  { id: 'line1', text: '공동체는 나와 친구들이 함께 어울리는 공간입니다.' },
-  { id: 'line2', text: '내 공동체를 만들고 공동체를 시작해보세요.' },
+  { text: '공동체는 나와 친구들이 함께 어울리는 공간입니다.' },
+  { text: '내 공동체를 만들고 공동체를 시작해보세요.' },
 ];
 
 const buttonConfig = [
   {
     name: '새로운 공동체 생성하기',
-    type: 'create',
     path: ROUTE_PATH.createServer,
   },
   {
     name: '기존 공동체에 참여하기',
-    type: 'join',
     path: ROUTE_PATH.invitationCode,
   },
 ];
 
 const AddCommunityPage = () => {
   const navigate = useNavigate();
+  const handleButtonClick = (path: string) => () => {
+    navigate(path);
+  };
+
   return (
     <>
       <Header text={headerText} headerType={headerType} />
       <Main>
         <IntroSection title={introTitleText} bodyLines={introBodyLines} />
         <AddOptionContainer>
-          {buttonConfig.map((button) => (
+          {buttonConfig.map((button, idx) => (
             <AddCommunityButton
-              key={button.type}
+              key={idx}
               name={button.name}
-              onClick={() => navigate(button.path)}
+              onClick={handleButtonClick(button.path)}
             />
           ))}
         </AddOptionContainer>

@@ -5,6 +5,16 @@ import { ReactComponent as IcnWish } from '@src/assets/icons/md_book.svg';
 import { ReactComponent as IcnReading } from '@src/assets/icons/md_auto_stories.svg';
 import { ReactComponent as IcnFinished } from '@src/assets/icons/done.svg';
 
+const radioConfigs: {
+  value: Record['status'];
+  Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  text: string;
+}[] = [
+  { value: 'WISH', Icon: IcnWish, text: '읽고 싶어요' },
+  { value: 'READING', Icon: IcnReading, text: '읽고 있어요' },
+  { value: 'FINISHED', Icon: IcnFinished, text: '다 읽었어요' },
+];
+
 interface Props {
   name: string;
   setValue: React.Dispatch<React.SetStateAction<Record['status']>>;
@@ -12,16 +22,6 @@ interface Props {
 }
 
 const InputStatus = ({ name, setValue, status }: Props) => {
-  const radioConfigs: {
-    value: Record['status'];
-    Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
-    text: string;
-  }[] = [
-    { value: 'WISH', Icon: IcnWish, text: '읽고 싶어요' },
-    { value: 'READING', Icon: IcnReading, text: '읽고 있어요' },
-    { value: 'FINISHED', Icon: IcnFinished, text: '다 읽었어요' },
-  ];
-
   return (
     <Container>
       {radioConfigs.map(({ value, Icon, text }) => (
@@ -60,7 +60,7 @@ const Label = styled.label`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   flex-shrink: 0;
 
@@ -71,9 +71,9 @@ const Label = styled.label`
 
   div {
     display: flex;
-    padding: 0.625rem;
+    padding: ${({ theme }) => theme.padding[12]};
 
-    border-radius: 0.5rem;
+    border-radius: ${({ theme }) => theme.rounded[8]};
     background-color: ${({ theme }) => theme.colors.neutral50};
   }
 

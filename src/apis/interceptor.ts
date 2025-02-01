@@ -87,8 +87,13 @@ const handleErrorByStatus = async ({
     return handleTokenRefresh({ config });
   }
 
-  if (status === 401 && (isTokenWrong(data) || isRefreshExpired(data))) {
-    handleInvalidToken();
+  if (
+    status === 401 &&
+    (isTokenWrong(data) ||
+      isRefreshExpired(data) ||
+      data.message === 'Unauthorized')
+  ) {
+    return handleInvalidToken();
   }
 
   throw createError(data);
@@ -97,17 +102,21 @@ const handleErrorByStatus = async ({
 const handleTokenRefresh = async ({
   config,
 }: HandleTokenRefreshType): Promise<unknown> => {
-  await postRefreshToken();
-  const accessToken = localStorage.getItem('accessToken');
+  try {
+    await postRefreshToken();
+    const accessToken = localStorage.getItem('accessToken');
 
-  if (accessToken) {
-    authClient.defaults.headers.Authorization = `Bearer ${accessToken}`;
-    const updatedConfig = updateConfig(config, accessToken);
+    if (accessToken) {
+      authClient.defaults.headers.Authorization = `Bearer ${accessToken}`;
+      const updatedConfig = updateConfig(config, accessToken);
 
-    return authClient(updatedConfig);
+      return authClient(updatedConfig);
+    }
+  } catch {
+    handleAuthFailure();
   }
 
-  return handleAuthFailure();
+  return true;
 };
 
 const updateConfig = (
@@ -146,6 +155,6 @@ const createError = (data: ErrorData) => {
     message: data.message,
     path: data.path,
     stack: data.stack,
-    errorHandlingType: ERROR_HANDLING[data.code] ?? { type: 'errorBoundary' },
+    errorHandlingType: ERROR_HANDLING[data.code] ?? 'errorBoundary',
   });
 };

@@ -6,7 +6,7 @@
 // import useRecord from '@src/hooks/query/useRecord';
 // import styled from 'styled-components';
 // import Header from '@src/components/book/Header';
-// import BookInfoDetail from '@src/components/book/BookInfoDetail';
+// import BookDetail from '@src/components/book/BookDetail';
 // import InputPeriod from '@src/components/book/InputPeriod';
 // import InputPage from '@src/components/book/InputPage';
 // import InputReview from '@src/components/book/InputReview';
@@ -48,7 +48,7 @@ const RecordDetailPage = () => {
     //     handleEditClick={handleEditClick}
     //     handleDeleteClick={handleDeleteClick}
     //   />
-    //   <BookInfoDetail status={status} {...recordDetail} />
+    //   <BookDetail status={status} {...recordDetail} />
     //   <Form>
     //     {(status === 'READING' || status === 'FINISHED') && (
     //       <InputPeriod
@@ -90,9 +90,6 @@ export default RecordDetailPage;
 
 //   display: flex;
 //   flex-flow: column nowrap;
-//   gap: 1.56rem;
-
-//   padding: 1.875rem 7%;
 
 //   header {
 //     margin-bottom: 0.315rem;
@@ -109,19 +106,17 @@ export default RecordDetailPage;
 //     width: 100%;
 //     height: -webkit-fill-available;
 
-//     border-radius: 1.125rem 1.125rem 0rem 0rem;
+//     border-radius: ${({ theme }) => `${theme.rounded[16]} ${theme.rounded[16]} 0 0`};
 //     background-color: ${({ theme }) => theme.colors.neutral0};
 //   }
 // `;
 // const Form = styled.form`
 //   display: flex;
 //   flex-flow: column nowrap;
-//   gap: 1.56rem;
 // `;
 // const Description = styled.section`
 //   display: flex;
 //   flex-flow: column nowrap;
-//   gap: 0.94rem;
 
 //   h2 {
 //     ${({ theme }) => theme.fonts.mountain}

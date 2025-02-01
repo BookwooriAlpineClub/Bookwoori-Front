@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 
 interface Props {
@@ -6,9 +6,9 @@ interface Props {
   name: string;
   placeholder: string;
   maxLength: number;
-  required: boolean;
+  required?: boolean;
   disabled?: boolean;
-  value?: string;
+  value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -27,29 +27,37 @@ const InputText = ({
   setValue,
 }: Props) => {
   return (
-    <Input
-      as={as}
-      type='text'
-      name={name}
-      placeholder={placeholder}
-      maxLength={maxLength}
-      required={required}
-      disabled={disabled}
-      value={value}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-        setValue(e.target.value)
-      }
-    />
+    <Container>
+      <Input
+        as={as}
+        type='text'
+        name={name}
+        placeholder={placeholder}
+        maxLength={maxLength}
+        required={required}
+        disabled={disabled}
+        value={value}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setValue(e.target.value)
+        }
+      />
+      {maxLength >= 0 && (
+        <Limit>
+          {value.length}/{maxLength}
+        </Limit>
+      )}
+    </Container>
   );
 };
 
 export default InputText;
 
-const Input = styled.input<{ as: string; value: string; maxLength: number }>`
+const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
   gap: ${({ theme }) => theme.gap[4]};
-
+`;
+const Input = styled.input<{ as: string }>`
   width: 100%;
   height: ${({ as }) => (as === 'input' ? '1.25rem' : '8.75rem')};
 
@@ -61,23 +69,15 @@ const Input = styled.input<{ as: string; value: string; maxLength: number }>`
   &::placeholder {
     color: ${({ theme }) => theme.colors.neutral400};
   }
-  ${({ value, maxLength }) =>
-    maxLength >= 0 &&
-    css`
-      &::after {
-        content: '${value ? value.length : 0} / ${maxLength}';
-
-        align-self: flex-end;
-
-        ${({ theme }) => theme.fonts.body};
-        color: ${({ theme }) => theme.colors.neutral400};
-
-        ${NoSelect}
-      }
-    `}
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.neutral200};
-
     color: ${({ theme }) => theme.colors.neutral400};
   }
+`;
+const Limit = styled.span`
+  align-self: flex-end;
+
+  ${({ theme }) => theme.fonts.body};
+  color: ${({ theme }) => theme.colors.neutral400};
+
+  ${NoSelect}
 `;

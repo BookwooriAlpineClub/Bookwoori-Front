@@ -4,6 +4,7 @@ import { ERROR_MESSAGES } from '@src/constants/constants';
 import { errorState } from '@src/states/atoms';
 import { isRequestedError } from '@src/utils/validators';
 import { RequestErrorType } from '@src/errors/RequestError';
+import useToast from '@src/hooks/useToast';
 
 const isDefinedError = (error: RequestErrorType) => {
   return ERROR_MESSAGES[error.code] !== undefined;
@@ -11,25 +12,20 @@ const isDefinedError = (error: RequestErrorType) => {
 
 const ErrorCatcher = ({ children }: React.PropsWithChildren) => {
   const [error, setError] = useRecoilState(errorState);
+  const addToast = useToast();
 
   useEffect(() => {
     if (!error) return;
 
     if (!isRequestedError(error) || !isDefinedError(error)) throw error;
 
-    if (error.errorHandlingType.type === 'confirm') {
-      // confirm으로 처리
-      alert(`confirm: ${ERROR_MESSAGES[error.code]}`);
-      setError(null);
-      return;
-    }
+    if (error.errorHandlingType !== 'toast') return;
 
-    // toast로 처리
-    alert(`toast: ${ERROR_MESSAGES[error.code]}`);
+    addToast('error', `${ERROR_MESSAGES[error.code]}`);
     setError(null);
   }, [error]);
 
-  return children;
+  return <>{children}</>;
 };
 
 export default ErrorCatcher;

@@ -1,38 +1,25 @@
-import Button from '@src/components/common/Button';
-import styled from 'styled-components';
-import { ClimbingResponse } from '@src/types/apis/climbing';
-import ReviewItem from '@src/components/book/ReviewItem';
-import { useMutation } from '@tanstack/react-query';
-import { patchShareClimbingReview } from '@src/apis/climbing';
-import useLoaderData from '@src/hooks/useRoaderData';
+import type Book from '@src/types/book';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import useLoaderData from '@src/hooks/useRoaderData';
+import { useGetPatchShareClimbingReview } from '@src/hooks/query/climbing';
+import styled from 'styled-components';
+import Button from '@src/components/common/Button';
 import UnderlineButton from '@src/components/common/UnderlineButton';
-
-/*
- *
- * { bookInfo, star, reviewContent }: Review
- * */
+// import ReviewListItem from '@src/components/book/ReviewListItem';
 
 const ReviewShareComponent = ({
-  star,
-  content,
   bookInfo,
   isShareable,
-}: ClimbingResponse) => {
+}: {
+  bookInfo: Book;
+  isShareable: boolean;
+}) => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
-  const mutation = useMutation({
-    mutationFn: () => patchShareClimbingReview(climbingId),
-    onSuccess: () => {
-      console.log('Review shared successfully!');
-      window.location.reload();
-    },
-    onError: (error) => {
-      console.error('Error sharing review:', error);
-    },
-  });
+  const { shareReview } = useGetPatchShareClimbingReview(climbingId);
+
   const handleSubmit = () => {
-    mutation.mutate();
+    shareReview.mutate();
   };
 
   const navigate = useNavigate();
@@ -53,11 +40,8 @@ const ReviewShareComponent = ({
         </TextContainer>
         <ItemWrapper>
           {isShareable && (
-            <ReviewItem
-              star={star ?? 0}
-              reviewContent={content ?? ''}
-              bookInfo={bookInfo}
-            />
+            // <ReviewListItem />
+            <div>book에서 가져올 리뷰 아이템</div>
           )}
           {!isShareable && (
             <Wrapper>

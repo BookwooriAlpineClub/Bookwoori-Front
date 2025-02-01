@@ -1,10 +1,10 @@
 import type Book from '@src/types/book';
 import type { GetBookListRes } from '@src/types/apis/book';
 import { useState } from 'react';
-import useBook from '@src/hooks/query/useBook';
+import { useGetBookList } from '@src/hooks/query/book';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
-import BookinfoItem from '@src/components/book/BookinfoItem';
+import BookListItem from '@src/components/book/BookListItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 
 type BookReturnData = Pick<Book, 'isbn13' | 'title'>;
@@ -17,7 +17,7 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
   const [keyword, setKeyword] = useState<string>('');
 
   // API 요청
-  const { bookList } = useBook({ keyword });
+  const { data: bookList } = useGetBookList(keyword);
   const data: GetBookListRes = bookList as GetBookListRes;
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -54,16 +54,18 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
             {data.length !== 0 ? (
               <Ul>
                 {data.map((item) => (
-                  <BookinfoItem
+                  <button
                     key={item.isbn13}
-                    {...item}
-                    onClick={() =>
+                    type='button'
+                    onClick={() => {
                       handleItemClick({
                         title: item.title,
                         isbn13: item.isbn13,
-                      })
-                    }
-                  />
+                      });
+                    }}
+                  >
+                    <BookListItem {...item} />
+                  </button>
                 ))}
               </Ul>
             ) : (
@@ -87,10 +89,10 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.875rem;
+  gap: ${({ theme }) => theme.gap[16]};
 
   width: 100%;
-  padding: 0.9375rem;
+  padding: ${({ theme }) => theme.padding[16]};
 `;
 const Main = styled.main`
   overflow-y: scroll;
@@ -98,13 +100,13 @@ const Main = styled.main`
 const Form = styled.form`
   display: flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: ${({ theme }) => theme.gap[6]};
 
   width: 19.375rem;
   height: 2.5rem;
-  padding: 0.75rem;
+  padding: ${({ theme }) => theme.padding[12]};
 
-  border-radius: 1.875rem;
+  border-radius: ${({ theme }) => theme.rounded[24]};
   background-color: ${({ theme }) => theme.colors.blue100};
 
   color: ${({ theme }) => theme.colors.blue500};
@@ -125,5 +127,5 @@ const Input = styled.input`
 const Ul = styled.ul`
   display: flex;
   flex-flow: column nowrap;
-  gap: 1.25rem;
+  gap: ${({ theme }) => theme.gap[16]};
 `;

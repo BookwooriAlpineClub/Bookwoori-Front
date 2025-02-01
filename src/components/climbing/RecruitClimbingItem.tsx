@@ -1,9 +1,12 @@
 import styled from 'styled-components';
-import { ClimbingRecruitItem } from '@src/types/domain/climbingTemp';
-import { ROUTE_PATH } from '@src/constants/routePath';
+import { useRecoilValue } from 'recoil';
+import { currentServerIdState } from '@src/states/atoms';
+import type { Climbing } from '@src/types/climbing';
+import { usePutParticipate } from '@src/hooks/query/climbing';
 import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
-import useClimbingRecruit from '@src/hooks/query/useClimbingRecruit';
 import usePopover from '@src/hooks/usePopover';
+import { formatDateWithHyphen } from '@src/utils/formatters';
+import { ROUTE_PATH } from '@src/constants/routePath';
 import Popover from '@src/components/common/Popover';
 import ParticipantList from '@src/components/climbing/ParticipantList';
 import Button from '@src/components/common/Button';
@@ -13,34 +16,18 @@ import { ReactComponent as Book } from '@src/assets/icons/md_book.svg';
 import { ReactComponent as Walk } from '@src/assets/icons/md_directions_walk.svg';
 import { ReactComponent as Edit } from '@src/assets/icons/hi_outline_pencil.svg';
 import { ReactComponent as Check } from '@src/assets/icons/md_check.svg';
-// import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { currentServerIdState } from '@src/states/atoms';
 
 const RecruitClimbingItem = ({
   item,
   closeBottomSheet,
 }: {
-  item: ClimbingRecruitItem;
+  item: Climbing;
   closeBottomSheet: () => void;
 }) => {
-  // const { serverId: id } = useParams<{ serverId: string }>();
-  // let serverId = id;
-  // if (!id) {
-  //   console.error('바텀시트 서버 아이디 못 읽어옴');
-  //   serverId = '임시id';
-  // }
-  const serverId = useRecoilValue(currentServerIdState);
-  const { participateClimbing } = useClimbingRecruit(
-    Number(serverId),
-    item.climbingId,
-  );
-  const { anchorEl, isOpen, openPopover, closePopover } = usePopover();
   const navigate = useEncodedNavigation();
-
-  const formatDate = (date: string) => {
-    return date.split('-').join('.').concat('.');
-  };
+  const serverId = useRecoilValue(currentServerIdState);
+  const { participateClimbing } = usePutParticipate(item.climbingId);
+  const { anchorEl, isOpen, openPopover, closePopover } = usePopover();
 
   const handleClickEdit = () => {
     closeBottomSheet();
@@ -53,91 +40,91 @@ const RecruitClimbingItem = ({
   };
 
   return (
-    <SLayout>
-      <SContainer>
-        <SWrapper>
-          <SCalendar />
-          <SCaption>
-            {formatDate(item.startDate)} - {formatDate(item.endDate)}
-          </SCaption>
-        </SWrapper>
-        <SWrapper>
-          <SGroupButton onClick={openPopover}>
+    <Layout>
+      <Container>
+        <Wrapper>
+          <Calendar />
+          <Caption>
+            {formatDateWithHyphen(item.startDate)} -
+            {formatDateWithHyphen(item.endDate)}
+          </Caption>
+        </Wrapper>
+        <Wrapper>
+          <GroupButton onClick={openPopover}>
             <Group /> {item.memberCount}
-          </SGroupButton>
+          </GroupButton>
           <Popover anchorEl={anchorEl} isOpen={isOpen} onClose={closePopover}>
             <ParticipantList climbingId={item.climbingId} />
           </Popover>
-        </SWrapper>
-      </SContainer>
-      <SContent>
-        <STitle>{item.name}</STitle>
-        <SContentWrapper>
-          <SBook width='1.1875rem' />
-          <SBody>
+        </Wrapper>
+      </Container>
+      <Content>
+        <Title>{item.name}</Title>
+        <ContentWrapper>
+          <Book width={16} height={16} />
+          <Body>
             {item.bookInfo.author}, 《{item.bookInfo.title}》,{' '}
             {item.bookInfo.itemPage}p
-          </SBody>
-        </SContentWrapper>
-        <SContentWrapper>
-          <SWalk />
-          <SBody>{item.description}</SBody>
-        </SContentWrapper>
-      </SContent>
+          </Body>
+        </ContentWrapper>
+        <ContentWrapper>
+          <Walk />
+          <Body>{item.description}</Body>
+        </ContentWrapper>
+      </Content>
       {item.isOWner ? (
         <SButton $color={item.isOWner} onClick={handleClickEdit}>
-          <SEdit />
+          <Edit width={12} height={12} />
           편집하기
         </SButton>
       ) : (
         <SButton $color={item.isJoined} onClick={handleClickJoin}>
-          {item.isJoined && <SCheck />}
+          {item.isJoined && <Check width={12} height={12} />}
           참여하기
         </SButton>
       )}
-    </SLayout>
+    </Layout>
   );
 };
 
 export default RecruitClimbingItem;
 
-const SLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: ${({ theme }) => theme.gap[12]};
 
   padding: 1.25rem 0.9375rem;
-  border-radius: 0.9375rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral0};
 `;
-const SContainer = styled.div`
+const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   width: 100%;
 `;
-const SWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   position: relative;
   align-items: center;
-  gap: 0.3125rem;
+  gap: ${({ theme }) => theme.gap[6]};
+
+  color: ${({ theme }) => theme.colors.blue500};
 `;
-const SCalendar = styled(Calendar)`
-  fill: ${({ theme }) => theme.colors.blue500};
-`;
-const SCaption = styled.span`
+const Caption = styled.span`
   width: 100%;
 
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.neutral400};
 `;
-const SGroupButton = styled.button`
+const GroupButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
+  gap: ${({ theme }) => theme.gap[4]};
 
   width: 2.25rem;
   height: 1.5625rem;
@@ -147,36 +134,30 @@ const SGroupButton = styled.button`
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.neutral950};
 `;
-const SContent = styled.div`
+const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   width: 100%;
 `;
-const STitle = styled.label`
+const Title = styled.label`
   ${({ theme }) => theme.fonts.body};
 `;
-const SContentWrapper = styled.div`
+const ContentWrapper = styled.div`
   display: flex;
-  gap: 0.3125rem;
+  gap: ${({ theme }) => theme.gap[6]};
 
   color: ${({ theme }) => theme.colors.neutral400};
 `;
-const SBook = styled(Book)`
-  fill: ${({ theme }) => theme.colors.neutral400};
-`;
-const SBody = styled.label`
+const Body = styled.label`
   width: 100%;
 
   ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.neutral400};
-`;
-const SWalk = styled(Walk)`
-  fill: ${({ theme }) => theme.colors.neutral400};
 `;
 const SButton = styled(Button)<{ $color: boolean }>`
-  gap: 0.25rem;
+  gap: ${({ theme }) => theme.gap[4]};
   padding: 0.6875rem 0;
   font-size: 0.75rem;
 
@@ -184,12 +165,4 @@ const SButton = styled(Button)<{ $color: boolean }>`
     $color ? theme.colors.blue300 : theme.colors.neutral0};
   background-color: ${({ theme, $color }) =>
     $color ? theme.colors.blue100 : theme.colors.blue500};
-`;
-const SEdit = styled(Edit)`
-  width: 12px;
-  height: 12px;
-`;
-const SCheck = styled(Check)`
-  width: 12px;
-  height: 12px;
 `;

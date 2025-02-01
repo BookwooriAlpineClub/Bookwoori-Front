@@ -1,10 +1,15 @@
 import type { GetBookListRes } from '@src/types/apis/book';
-import { useNavigate, createSearchParams, useLocation } from 'react-router-dom';
+import {
+  Link,
+  useNavigate,
+  createSearchParams,
+  useLocation,
+} from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
-import useBook from '@src/hooks/query/useBook';
+import { useGetBookList } from '@src/hooks/query/book';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
-import BookinfoItem from '@src/components/book/BookinfoItem';
+import BookListItem from '@src/components/book/BookListItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 import { ReactComponent as IcnClose } from '@src/assets/icons/ck_close.svg';
 
@@ -14,7 +19,7 @@ const SearchPage = () => {
   const keyword: string = new URLSearchParams(location.search).get('keyword') ?? '';
 
   // API 요청
-  const { bookList } = useBook({ keyword });
+  const { data: bookList } = useGetBookList(keyword);
   const data: GetBookListRes = bookList ?? [];
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -33,9 +38,6 @@ const SearchPage = () => {
   };
   const handleButtonClick = () => {
     navigate(-1);
-  };
-  const handleItemClick = (isbn13: string): void => {
-    navigate(`${ROUTE_PATH.libraryBookSearch}/${isbn13}`);
   };
 
   return (
@@ -58,11 +60,12 @@ const SearchPage = () => {
           {data.length !== 0 ? (
             <Ul>
               {data.map((item) => (
-                <BookinfoItem
+                <Link
                   key={item.isbn13}
-                  {...item}
-                  onClick={() => handleItemClick(item.isbn13)}
-                />
+                  to={`${ROUTE_PATH.libraryBookSearch}/${item.isbn13}`}
+                >
+                  <BookListItem {...item} />
+                </Link>
               ))}
             </Ul>
           ) : (
@@ -80,23 +83,23 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.875rem;
+  gap: ${({ theme }) => theme.gap[16]};
 
   width: 100%;
-  padding: 0.9375rem;
+  padding: ${({ theme }) => theme.padding[16]};
 
   background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const Form = styled.form`
   display: flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: ${({ theme }) => theme.gap[6]};
 
   width: 19.375rem;
   height: 2.5rem;
-  padding: 0.75rem;
+  padding: ${({ theme }) => theme.padding[12]};
 
-  border-radius: 1.875rem;
+  border-radius: ${({ theme }) => theme.rounded[24]};
   background-color: ${({ theme }) => theme.colors.blue100};
 
   color: ${({ theme }) => theme.colors.blue500};
@@ -122,5 +125,5 @@ const Button = styled.button`
 const Ul = styled.ul`
   display: flex;
   flex-flow: column nowrap;
-  gap: 1.25rem;
+  gap: ${({ theme }) => theme.gap[16]};
 `;

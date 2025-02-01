@@ -9,7 +9,7 @@
 // // import useRecord from '@src/hooks/query/useRecord';
 // import styled from 'styled-components';
 // import Header from '@src/components/book/Header';
-// import BookInfoDetail from '@src/components/book/BookInfoDetail';
+// import BookDetail from '@src/components/book/BookDetail';
 // import InputStatus from '@src/components/book/InputStatus';
 // import InputPeriod, { type Period } from '@src/components/book/InputPeriod';
 // import InputPage from '@src/components/book/InputPage';
@@ -88,7 +88,7 @@ const RecordEditPage = () => {
     <div />
     // <Container>
     //   <Header buttonList={['save']} />
-    //   <BookInfoDetail readingStatus='UNREAD' {...bookInfo} />
+    //   <BookDetail readingStatus='UNREAD' {...bookInfo} />
     //   <Form onSubmit={handleFormSubmit}>
     //     <InputStatus
     //       name='status'
@@ -137,9 +137,6 @@ export default RecordEditPage;
 
 //   display: flex;
 //   flex-flow: column nowrap;
-//   gap: 1.56rem;
-
-//   padding: 1.875rem 7%;
 
 //   header {
 //     margin-bottom: 0.315rem;
@@ -156,19 +153,17 @@ export default RecordEditPage;
 //     width: 100%;
 //     height: -webkit-fill-available;
 
-//     border-radius: 1.125rem 1.125rem 0rem 0rem;
+//     border-radius: ${({ theme }) => `${theme.rounded[16]} ${theme.rounded[16]} 0 0`};
 //     background-color: ${({ theme }) => theme.colors.neutral0};
 //   }
 // `;
 // const Form = styled.form`
 //   display: flex;
 //   flex-flow: column nowrap;
-//   gap: 1.56rem;
 // `;
 // const Description = styled.section`
 //   display: flex;
 //   flex-flow: column nowrap;
-//   gap: 0.94rem;
 
 //   h2 {
 //     ${({ theme }) => theme.fonts.mountain}

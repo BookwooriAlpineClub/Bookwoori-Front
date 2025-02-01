@@ -1,12 +1,12 @@
-import type { ModalTransition } from '@src/types/modal';
+import type Modal from '@src/types/modal';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { serverbarState, currentServerIdState } from '@src/states/atoms';
 import { ROUTE_PATH } from '@src/constants/routePath';
-import { decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
-import useServerbar from '@src/hooks/useServerbar';
-import useServer from '@src/hooks/query/useServer';
+import useModal from '@src/hooks/useModal';
+import { useGetServerList } from '@src/hooks/query/server';
+import { serverbarState, currentServerIdState } from '@src/states/atoms';
+import { decodeIdParam } from '@src/utils/formatters';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/Scrim';
 import { ReactComponent as IcnLibrary } from '@src/assets/icons/md_outline_auto_stories.svg';
@@ -14,13 +14,6 @@ import { ReactComponent as IcnBell } from '@src/assets/icons/fi_bell.svg';
 import { ReactComponent as IcnChat } from '@src/assets/icons/md_outline_chat_bubble_outline.svg';
 import { ReactComponent as IcnSettings } from '@src/assets/icons/fi_settings.svg';
 import { ReactComponent as IcnPlus } from '@src/assets/icons/hi_outline_plus.svg';
-
-type buttonConfig = {
-  name: string;
-  link: string;
-  icon: React.ReactElement;
-  className: string;
-};
 
 /**
  * Serverbar 컴포넌트 사용법
@@ -38,58 +31,54 @@ type buttonConfig = {
  * openServerbar();
  */
 const Serverbar = () => {
-  const { closeServerbar } = useServerbar();
-  const navigate = useNavigate();
-  const encodedNavigate = useEncodedNavigate();
-  const { serverId: params } = useParams<{ serverId: string }>();
   const location = useLocation();
-
+  const { serverId: params } = useParams<{ serverId: string }>();
   const { isOpen, transition } = useRecoilValue(serverbarState);
-  const setCurrentServerId = useSetRecoilState(currentServerIdState);
-
-  let decodedServerId: number = -1;
-  if (location.pathname.includes('/server')) {
-    decodedServerId = decodeIdParam(params);
-  }
-  setCurrentServerId(decodedServerId);
-
-  const { serverList } = useServer();
+  const { data: serverList } = useGetServerList();
   const isNotiRead = true; // 나중에 수정
   const isChatRead = true; // 나중에 수정
-
-  const buttonConfigs: buttonConfig[] = [
+  const buttonConfigs: {
+    name: string;
+    link: string;
+    Icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    className: string;
+  }[] = [
     {
       name: '서재',
       link: ROUTE_PATH.library,
-      icon: <IcnLibrary />,
+      Icon: IcnLibrary,
       className: 'neongreen',
     },
     {
       name: '알림',
       link: ROUTE_PATH.notification,
-      icon: <IcnBell />,
+      Icon: IcnBell,
       className: isNotiRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '채팅',
       link: ROUTE_PATH.dm,
-      icon: <IcnChat />,
+      Icon: IcnChat,
       className: isChatRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '계정 설정',
       link: ROUTE_PATH.setting,
-      icon: <IcnSettings />,
+      Icon: IcnSettings,
       className: 'neongreen',
     },
     {
       name: '서버 추가',
       link: ROUTE_PATH.addServer,
-      icon: <IcnPlus />,
+      Icon: IcnPlus,
       className: 'blue',
     },
   ];
 
+  const navigate = useNavigate();
+  const encodedNavigate = useEncodedNavigate();
+  const setCurrentServerId = useSetRecoilState(currentServerIdState);
+  const { closeModal: closeServerbar } = useModal(serverbarState);
   const handleMyClick = (link: string) => {
     navigate(link);
     closeServerbar();
@@ -99,6 +88,12 @@ const Serverbar = () => {
     closeServerbar();
   };
 
+  let decodedServerId: number = -1;
+  if (location.pathname.includes('/server')) {
+    decodedServerId = decodeIdParam(params);
+  }
+  setCurrentServerId(decodedServerId);
+
   return (
     <Scrim isOpen={isOpen} transition={transition} closeModal={closeServerbar}>
       <Container
@@ -106,7 +101,7 @@ const Serverbar = () => {
         $transition={transition}
       >
         <Fieldset>
-          {buttonConfigs.map(({ name, link, icon, className }) => (
+          {buttonConfigs.map(({ name, link, Icon, className }) => (
             <>
               <SButton key={name} className={className}>
                 <input
@@ -115,7 +110,7 @@ const Serverbar = () => {
                   onClick={() => handleMyClick(link)}
                   checked={window.location.pathname === link}
                 />
-                {icon}
+                <Icon width={24} height={24} />
               </SButton>
               {(name === '서재' || name === '계정 설정') && <Hr />}
             </>
@@ -139,7 +134,7 @@ const Serverbar = () => {
 
 export default Serverbar;
 
-const Container = styled.section<{ $transition: ModalTransition }>`
+const Container = styled.section<{ $transition: Modal['transition'] }>`
   position: fixed;
   left: 0;
   top: 0;
@@ -158,9 +153,9 @@ const Container = styled.section<{ $transition: ModalTransition }>`
 const Fieldset = styled.fieldset`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.62rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
-  padding: 1.25rem 0.94rem;
+  padding: ${({ theme }) => `${theme.padding[24]} ${theme.padding[16]}`};
 
   overflow-y: scroll;
 `;
@@ -182,7 +177,7 @@ const SButton = styled.label`
   border-radius: 50%;
 
   &:has(input[type='radio']:checked) {
-    border-radius: 20px;
+    border-radius: ${({ theme }) => theme.rounded[24]};
   }
 
   &.neongreen {

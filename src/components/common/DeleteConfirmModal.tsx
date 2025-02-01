@@ -4,17 +4,19 @@ import SubButton from '@src/components/common/SubButton';
 const NOTI_TEXT = `삭제한 정보는 복구할 수 없습니다.\n정말 삭제하시겠습니까?`;
 
 interface DeleteConfirmModalProps {
+  text?: string;
   closeDialog: () => void;
   onClickDelete: () => void;
 }
 
 const DeleteConfirmModal = ({
+  text,
   closeDialog,
   onClickDelete,
 }: DeleteConfirmModalProps) => {
   return (
     <DialogLayout>
-      <TextContainer>{NOTI_TEXT}</TextContainer>
+      <TextContainer>{text ?? NOTI_TEXT}</TextContainer>
       <ButtonContainer>
         <SubButton label='삭제하기' onClick={onClickDelete} width='39vw' />
         <SubButton label='돌아가기' width='39vw' onClick={closeDialog} />

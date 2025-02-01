@@ -1,42 +1,24 @@
 import type Book from '@src/types/book';
-import type Record from '@src/types/record';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
-import Tag from '@src/components/common/Tag';
 
 type Props = Pick<
   Book,
   'title' | 'author' | 'cover' | 'publisher' | 'pubYear' | 'itemPage'
-> &
-  Pick<Record, 'status'>;
+>;
 
-const BookInfoDetail = ({
+const BookDetail = ({
   title,
   author,
   cover,
   publisher,
   pubYear,
   itemPage,
-  status,
 }: Props) => {
-  const calcStatusText = () => {
-    switch (status) {
-      case 'WISH':
-        return '읽고 싶어요';
-      case 'READING':
-        return '읽고 있어요';
-      case 'FINISHED':
-        return '다 읽었어요';
-      default:
-        return '';
-    }
-  };
-
   return (
     <Container>
       <Img src={cover} alt='책 표지' />
       <InfoWrapper>
-        {status !== 'UNREAD' && <Tag>{calcStatusText()}</Tag>}
         <Title $line={2}>{title}</Title>
         <CaptionEllipsis $line={1}>{author}</CaptionEllipsis>
         <PubWrapper>
@@ -50,18 +32,18 @@ const BookInfoDetail = ({
   );
 };
 
-export default BookInfoDetail;
+export default BookDetail;
 
 const Container = styled.section`
   display: flex;
   flex-flow: row nowrap;
   align-items: end;
-  gap: 1.25rem;
+  gap: ${({ theme }) => theme.gap[16]};
 `;
 const InfoWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.31rem;
+  gap: ${({ theme }) => theme.gap[8]};
 
   mark {
     margin-bottom: 0.44rem;
@@ -70,7 +52,7 @@ const InfoWrapper = styled.div`
 const PubWrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  gap: 0.19rem;
+  gap: ${({ theme }) => theme.gap[4]};
 `;
 const Img = styled.img`
   width: 7.5rem;

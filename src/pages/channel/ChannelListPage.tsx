@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { currentServerIdState } from '@src/states/atoms';
 import useDraggable from '@src/hooks/useDraggable';
-import useChannel from '@src/hooks/query/useChannel';
-import useCategory from '@src/hooks/query/useCategory';
-// import useLoaderData from '@src/hooks/useRoaderData';
-import useSideBarData from '@src/hooks/query/useSideBarData';
+import {
+  useGetServerChannel,
+  useGetServerClimbing,
+} from '@src/hooks/query/channel';
+import { usePatchCategoryLocation } from '@src/hooks/query/category';
 import { encodeId } from '@src/utils/formatters';
 import SubButton from '@src/components/common/SubButton';
 import Header from '@src/components/common/Header';
@@ -17,53 +18,56 @@ import ChannelList from '@src/components/channel/ChannelList';
 import { ReactComponent as CategoryAdd } from '@src/assets/icons/bi_book_add.svg';
 import { ReactComponent as ChannelAdd } from '@src/assets/icons/md_outline_playlist_add.svg';
 
-interface ButtonData {
-  icon: React.ReactNode;
-  label: string;
-  onClick: () => void;
-}
-
 const ChannelListPage = () => {
-  const serverId = useRecoilValue(currentServerIdState);
-  // const { id: serverId } = useLoaderData<{ id: number }>();'
   const navigate = useNavigate();
-  const buttonData: ButtonData[] = [
-    {
-      icon: <CategoryAdd width='16' height='16' />,
-      label: '분류 추가',
-      onClick: () => navigate(`/server/${encodeId(serverId)}/create/category`),
-    },
-    {
-      icon: <ChannelAdd width='18' height='18' />,
-      label: '모임 추가',
-      onClick: () => navigate(`/server/${encodeId(serverId)}/create/channel`),
-    },
-  ];
-  const { channels, climbingList } = useChannel(serverId);
-  const { categoryList: channelNameData = [] } = useCategory(serverId);
-  const { list, handleDraggable } = useDraggable(channelNameData);
-  const { serverInfo } = useSideBarData(serverId);
-  const ref = useRef(channelNameData);
+  const serverId = useRecoilValue(currentServerIdState);
+
+  const serverInfo = { name: '서버' };
+  const { channels = [] } = useGetServerChannel();
+  const { climbingList } = useGetServerClimbing();
+  const { editLocation } = usePatchCategoryLocation();
+
+  const { list, handleDraggable, beforeIdx, categoryId } =
+    useDraggable(channels);
+  const ref = useRef(channels);
 
   useEffect(() => {
+    if (categoryId === -1 || beforeIdx === -1) return;
+
     if (JSON.stringify(ref.current) !== JSON.stringify(list)) {
-      // 백에 데이터 전송
+      editLocation.mutate(
+        {
+          categoryId,
+          body: { beforeCategoryId: beforeIdx },
+        },
+        {
+          onSuccess: () => {
+            if (list) ref.current = list;
+          },
+        },
+      );
     }
-  }, [list]);
+  }, [list, beforeIdx, categoryId]);
 
   return (
     <>
       <Header headerType='server' text={serverInfo?.name ?? '서버'} />
       <Main>
         <ButtonContainer>
-          {buttonData.map((buttonItem) => (
-            <SubButton
-              key={buttonItem.label}
-              icon={buttonItem.icon}
-              label={buttonItem.label}
-              onClick={buttonItem.onClick}
-            />
-          ))}
+          <SubButton
+            icon={<CategoryAdd width={16} height={16} />}
+            label='분류 추가'
+            onClick={() =>
+              navigate(`/server/${encodeId(serverId)}/create/category`)
+            }
+          />
+          <SubButton
+            icon={<ChannelAdd width={18} height={18} />}
+            label='모임 추가'
+            onClick={() =>
+              navigate(`/server/${encodeId(serverId)}/create/channel`)
+            }
+          />
         </ButtonContainer>
         <Container>
           <Accordion key='나의 등반' title={<Label>나의 등반</Label>}>
@@ -72,10 +76,10 @@ const ChannelListPage = () => {
           <Accordion key='모집 중인 등반' title={<Label>모집 중인 등반</Label>}>
             <Carousel type='more' list={climbingList?.readyClimbings ?? []} />
           </Accordion>
-          {channels?.map((data, idx) => (
+          {list?.map((data) => (
             <Accordion
-              id={idx}
-              key={data.name}
+              dataIdx={data.categoryId}
+              key={data.categoryId}
               title={
                 data.name === 'DEFAULT' ? (
                   <Label>기본</Label>
@@ -83,7 +87,7 @@ const ChannelListPage = () => {
                   <Label>{data.name}</Label>
                 )
               }
-              {...handleDraggable(idx)}
+              {...handleDraggable(data.categoryId)}
             >
               {data.channels.length > 0 && (
                 <ChannelList
@@ -114,21 +118,23 @@ export default ChannelListPage;
 const Main = styled.main`
   display: flex;
   flex-direction: column;
-  gap: 0.9375rem;
+  gap: ${({ theme }) => theme.gap[12]};
 
   padding: 0.9063rem 1.25rem 2.5625rem;
 `;
+
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 `;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.9375rem;
+  gap: ${({ theme }) => theme.gap[12]};
 `;
+
 const Label = styled.label`
-  ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.neutral950};
 `;

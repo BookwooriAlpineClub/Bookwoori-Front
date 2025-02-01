@@ -3,6 +3,8 @@ import type {
   ReactionReq,
   ReplyReq,
   ChatEventRes,
+  DeleteReq,
+  EditReq,
 } from '@src/types/apis/chat';
 import { Client, Frame, IMessage } from '@stomp/stompjs';
 
@@ -120,6 +122,42 @@ export const replyHandler = async (
       stompClient.publish({
         destination: replyUrl,
         body: JSON.stringify(reply),
+      });
+      resolve();
+    } else {
+      reject(new Error('WebSocket is not connected'));
+    }
+  });
+};
+
+// 메시지 삭제 전송
+export const deleteHandler = async (
+  id: DeleteReq,
+  deleteUrl: string,
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (stompClient && stompClient.connected) {
+      stompClient.publish({
+        destination: deleteUrl,
+        body: JSON.stringify(id),
+      });
+      resolve();
+    } else {
+      reject(new Error('WebSocket is not connected'));
+    }
+  });
+};
+
+// 메시지 수정 전송
+export const editHandler = async (
+  edit: EditReq,
+  editUrl: string,
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (stompClient && stompClient.connected) {
+      stompClient.publish({
+        destination: editUrl,
+        body: JSON.stringify(edit),
       });
       resolve();
     } else {

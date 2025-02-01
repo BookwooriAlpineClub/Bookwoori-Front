@@ -64,11 +64,11 @@ export default InputPage;
 const Container = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  gap: 0.62rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
-  padding: 0.75rem 1rem;
+  padding: ${({ theme }) => `${theme.padding[12]} ${theme.padding[16]}`};
 
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.neutral0};
 
   &:has(input:read-only) {

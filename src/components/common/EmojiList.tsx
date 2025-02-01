@@ -1,22 +1,29 @@
 import EmojiItem from '@src/components/common/EmojiItem';
 import styled from 'styled-components';
 import { ReactComponent as AddIcon } from '@src/assets/icons/hi_face_smile.svg';
-import { EmojiTypeType } from '@src/constants/constants';
+import { EmojiType } from '@src/constants/constants';
+import { usePutEmojiOnReview } from '@src/hooks/query/climbing';
+import useLoaderData from '@src/hooks/useRoaderData';
 
 interface EmojiListProps {
+  reviewId: number;
   emojis: {
-    emoji: EmojiTypeType;
-    initialIsSelected: boolean;
-    count?: number;
+    emoji: keyof typeof EmojiType;
+    emojiCount: number;
   }[];
-  onAddClick: boolean;
+  onAddClick?: () => void;
 }
 
-const EmojiList = ({ emojis, onAddClick }: EmojiListProps) => {
-  const handleEmojiClick = () => {};
-  const handleEmojiLongPress = () => {};
+const EmojiList = ({ reviewId, emojis, onAddClick }: EmojiListProps) => {
+  const { id: climbingId } = useLoaderData<{ id: number }>();
+  const { putEmoji } = usePutEmojiOnReview(climbingId, reviewId);
 
-  const handleAddClick = () => {};
+  const handleEmojiClick = (emoji: keyof typeof EmojiType) => {
+    putEmoji.mutate(emoji);
+  };
+  const handleEmojiLongPress = () => {
+    alert('open 참여자 리스트');
+  };
 
   return (
     <ListContainer>
@@ -24,16 +31,16 @@ const EmojiList = ({ emojis, onAddClick }: EmojiListProps) => {
         <EmojiItem
           key={index}
           emoji={item.emoji}
-          initialIsSelected={item.initialIsSelected}
-          count={item.count}
-          onClick={handleEmojiClick}
+          // initialIsSelected={item.initialIsSelected}
+          count={item.emojiCount}
+          onClick={() => handleEmojiClick(item.emoji)}
           onLongPress={handleEmojiLongPress}
         />
       ))}
       {onAddClick && (
         <EmojiItem
           emoji={<AddIcon />}
-          onClick={handleAddClick}
+          onClick={onAddClick}
           initialIsSelected={false}
         />
       )}
@@ -48,8 +55,6 @@ const ListContainer = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.gap[4]};
-  padding: ${({ theme }) => theme.padding[4]};
-  background-color: ${({ theme }) => theme.colors.neutral50};
   border-radius: ${({ theme }) => theme.rounded[4]};
   overflow-x: auto;
   scrollbar-width: none;

@@ -1,43 +1,26 @@
-import { AxiosError } from 'axios';
 import client from '@src/apis/client';
-import authClient from './authClient';
+import authClient from '@src/apis/authClient';
 
-const postLogout = async () => {
-  try {
-    await authClient.post('auth/logout');
-  } catch (e) {
-    if (e instanceof Error) {
-      throw new Error(e.message);
-    }
-  }
+export const postLogout = async <Res = void>(): Promise<Res> => {
+  const res = await authClient.post('auth/logout');
+  return res.data;
 };
 
-const postRefreshToken = async () => {
-  try {
-    const refreshToken = sessionStorage.getItem('refreshToken');
-    const res = await client.post(
-      'auth/token',
-      {
-        refreshToken,
-      },
-      { withCredentials: true },
-    );
-    localStorage.setItem('accessToken', res.data.accessToken);
-  } catch (e) {
-    if (e instanceof AxiosError) {
-      throw new Error(e.message);
-    }
-  }
+export const postRefreshToken = async <Res = void>(): Promise<Res> => {
+  const refreshToken = sessionStorage.getItem('refreshToken');
+  const res = await client.post(
+    'auth/token',
+    {
+      refreshToken,
+    },
+    { withCredentials: true },
+  );
+  localStorage.setItem('accessToken', res.data.accessToken);
+
+  return res.data;
 };
 
-const deleteAccount = async () => {
-  try {
-    await authClient.patch('auth/delete');
-  } catch (e) {
-    if (e instanceof Error) {
-      throw new Error(e.message);
-    }
-  }
+export const deleteAccount = async <Res = void>(): Promise<Res> => {
+  const res = await authClient.patch('auth/delete');
+  return res.data;
 };
-
-export { postLogout, postRefreshToken, deleteAccount };
