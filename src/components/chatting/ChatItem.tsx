@@ -1,12 +1,5 @@
 import styled from 'styled-components';
-import {
-  forwardRef,
-  SyntheticEvent,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   bottomsheetState,
@@ -21,6 +14,7 @@ import { editHandler } from '@src/apis/chat';
 import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
 import { formatChatItemTime } from '@src/utils/formatters';
+import { handleImgError } from '@src/utils/helpers';
 import ChatMenu from '@src/components/common/EmojiBottomsheet';
 import Profile from '@src/assets/images/userSettings/background_default.svg';
 import { ReactComponent as Response } from '@src/assets/icons/response.svg';
@@ -38,12 +32,13 @@ const MIN_HEIGHT = 32;
 const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
   ({ chatItem, imgUrl, nickname, createdAt }: ChatItemProps, ref) => {
     const [editChatId, setEditChatId] = useRecoilState(editChatIdState);
-    const setReplyChat = useSetRecoilState(replyChatState);
     const [replyChatId, setReplyChatId] = useRecoilState(replyChatIdState);
+    const setReplyChat = useSetRecoilState(replyChatState);
     const [editContent, setEditContent] = useState(chatItem.content);
     const [isSelected, setIsSelected] = useState<boolean>(false);
     const { openModal: openBottomsheet, closeModal: closeBottomsheet } =
       useModal(bottomsheetState);
+    const addToast = useToast();
     const longPressHandler = useLongPress({
       onLongPress: () =>
         openBottomsheet(
@@ -54,9 +49,9 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
           />,
         ),
     });
-    const addToast = useToast();
     const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
+    // 메시지 수정 textarea focus, 높이 조절
     useEffect(() => {
       if (inputRef.current) {
         inputRef.current.focus();
@@ -65,21 +60,6 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
         adjustHeight();
       }
     }, [editChatId, editContent]);
-
-    const handleImgError = (e: SyntheticEvent<HTMLImageElement>) => {
-      e.currentTarget.src = Profile;
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        handleEditMessage();
-      }
-      if (e.key === 'Escape') {
-        setEditContent(chatItem.content);
-        setEditChatId(null);
-      }
-    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setEditContent(e.target.value);
@@ -96,6 +76,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
       }
     };
 
+    // 메시지 수정 요청
     const handleEditMessage = async () => {
       if (editContent.length === 0) {
         addToast('error', '수정할 내용을 입력해주세요.');
@@ -114,6 +95,19 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
       }
     };
 
+    // 메시지 수정 키조작 함수
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleEditMessage();
+      }
+      if (e.key === 'Escape') {
+        setEditContent(chatItem.content);
+        setEditChatId(null);
+      }
+    };
+
+    // 답장 보낼 부모 메시지 저장
     const handleReply = () => {
       setReplyChat({
         ...chatItem,
@@ -121,6 +115,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
       });
     };
 
+    // 답장 부모 메시지 이동 시 배경색 변화 
     useEffect(() => {
       if (replyChatId === chatItem.id) {
         setIsSelected(true);
@@ -145,7 +140,10 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
           </ReplyContainer>
         )}
         <Layout {...longPressHandler}>
-          <Img src={imgUrl ?? Profile} onError={handleImgError} />
+          <Img
+            src={imgUrl ?? Profile}
+            onError={(e) => handleImgError(e, Profile)}
+          />
           <Container>
             <Wrapper>
               <Nickname>{nickname}</Nickname>
