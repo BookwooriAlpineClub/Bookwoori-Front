@@ -63,8 +63,7 @@ export const useGetClimbingRecruitList = () => {
         '/ready',
       ),
   });
-
-  // return { data: data?.readyClimbingList };
+  console.log(data);
 };
 
 export const usePutParticipate = (climbingId: number) => {

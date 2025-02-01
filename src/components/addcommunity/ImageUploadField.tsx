@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CameraIcon } from '@src/assets/icons/md_camera_alt.svg';
 import useUploadFile from '@src/hooks/useUploadFile';
@@ -6,14 +6,14 @@ import { communityFileState } from '@src/states/atoms';
 
 interface ImageUploadFieldProps {
   previewImg?: string;
-  onFileChange: (file: File | null) => void;
+  // onFileChange: (file: File | null) => void;
 }
 
 const ImageUploadField = ({
   previewImg,
-  onFileChange,
+  // onFileChange,
 }: ImageUploadFieldProps) => {
-  const { file, preview, handleFileUpload, handleFileDelete } = useUploadFile(
+  const { preview, handleFileUpload, handleFileDelete } = useUploadFile(
     previewImg,
     communityFileState,
   );
@@ -23,9 +23,9 @@ const ImageUploadField = ({
     fileInputRef.current?.click();
   };
 
-  useEffect(() => {
-    onFileChange(file);
-  }, [file, onFileChange]);
+  // useEffect(() => {
+  //   onFileChange(file);
+  // }, [file, onFileChange]);
 
   return (
     <ImageUploadContainer>

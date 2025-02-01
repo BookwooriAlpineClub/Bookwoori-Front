@@ -35,6 +35,7 @@ const CreateNewCommunityPage = () => {
     );
   }, [communityName, communityDescription]);
 
+  // eslint-disable-next-line
   const handleFileUpload = (file: File | null) => {
     setCommunityImage(file);
   };
@@ -71,7 +72,7 @@ const CreateNewCommunityPage = () => {
             previewImg={
               communityImage ? URL.createObjectURL(communityImage) : ''
             }
-            onFileChange={handleFileUpload}
+            // onFileChange={handleFileUpload}
           />
         </Fieldset>
         <Fieldset title='공동체 소개'>

@@ -1,6 +1,6 @@
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { EmojiType, EmojiTypeType } from '@src/constants/constants';
+import { EmojiType } from '@src/constants/constants';
 
 export interface EmojiItemProps {
   emoji: keyof typeof EmojiType | ReactElement;

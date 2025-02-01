@@ -23,6 +23,7 @@ interface ReviewItemProps {
 
 const ReviewItem = ({ climbingId, review }: ReviewItemProps) => {
   if (review.profileImg === null) {
+    // eslint-disable-next-line
     review.profileImg = 'https://via.placeholder.com/50';
   }
 
