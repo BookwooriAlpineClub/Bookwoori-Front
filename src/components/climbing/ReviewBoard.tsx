@@ -3,7 +3,7 @@ import useLoaderData from '@src/hooks/useRoaderData';
 import { useGetClimbingReview } from '@src/hooks/query/climbing';
 import styled from 'styled-components';
 import Spinner from '@src/components/common/Spinner';
-import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
+import ReviewItem from '@src/components/climbing/ReviewItem';
 
 const ReviewBoard = () => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
