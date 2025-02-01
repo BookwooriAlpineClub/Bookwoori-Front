@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 type TagColor = 'lime' | 'blue' | 'neutral';
 interface Props {
+  color: TagColor;
   Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
   text: string | number;
-  color: TagColor;
   onClick?: () => void;
   className?: string;
 }
 
-const Tag = ({ Icon, text, color, onClick, className }: Props) => {
+const Tag = ({ color, Icon, text, onClick, className }: Props) => {
   return (
     <Wrapper className={className} onClick={onClick} $color={color}>
       {Icon && <Icon width={12} height={12} />}
