@@ -22,7 +22,7 @@ const EmojiBottomsheet = ({
   id,
   closeBottomsheet = () => {},
 }: EmojiBottomsheetType) => {
-  const emojiList = Object.values(EmojiType);
+  const emojiList = Object.values(EmojiType).map(({ value }) => value);
   const { handleCopy } = useCopyToClipboard(content);
   const [clickedEmoji, setClickedEmoji] = useState<string[]>(emoji);
   const { openModal, closeModal } = useModal(dialogState);
