@@ -7,16 +7,17 @@ import Header from '@src/components/common/Header';
 import SegmentedButton from '@src/components/common/SegmentedButton';
 import Li from '@src/components/book/RecordListItem';
 
+const segmentConfigs: {
+  value: Record['status'];
+  label: '읽고 싶어요' | '읽고 있어요' | '다 읽었어요';
+}[] = [
+  { value: 'WISH', label: '읽고 싶어요' },
+  { value: 'READING', label: '읽고 있어요' },
+  { value: 'FINISHED', label: '다 읽었어요' },
+];
+
 const RecordListPage = () => {
   const [status, setStatus] = useState<Record['status']>('READING');
-  const configs: {
-    value: Record['status'];
-    label: '읽고 싶어요' | '읽고 있어요' | '다 읽었어요';
-  }[] = [
-    { value: 'WISH', label: '읽고 싶어요' },
-    { value: 'READING', label: '읽고 있어요' },
-    { value: 'FINISHED', label: '다 읽었어요' },
-  ];
 
   const { data: recordList } = useGetRecordList(status);
 
@@ -24,7 +25,7 @@ const RecordListPage = () => {
     <Container>
       <Header text='책 기록' headerType='back' />
       <SegmentedButton<Record['status']>
-        config={configs}
+        config={segmentConfigs}
         onSegmentChange={setStatus}
         defaultValue='READING'
       />

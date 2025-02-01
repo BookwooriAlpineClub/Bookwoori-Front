@@ -9,32 +9,40 @@ const addToast = useToast();
 addToast({ kind: 'error', content: '토스트 내용' });
 */
 
-import styled from 'styled-components';
+import type Toast from '@src/types/toast';
 import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
 import { toastState } from '@src/states/atoms';
+import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 import { ReactComponent as IcnInfo } from '@src/assets/icons/toast_info.svg';
 import { ReactComponent as IcnSuccess } from '@src/assets/icons/toast_success.svg';
 import { ReactComponent as IcnError } from '@src/assets/icons/toast_error.svg';
 
+const IconConfig: Record<
+  Toast['kind'],
+  React.FC<React.SVGProps<SVGSVGElement>>
+> = {
+  info: IcnInfo,
+  success: IcnSuccess,
+  error: IcnError,
+};
+
 const Toast = () => {
   const toasts = useRecoilValue(toastState);
-  const icon = {
-    info: <IcnInfo />,
-    success: <IcnSuccess />,
-    error: <IcnError />,
-  };
 
   return createPortal(
     <List>
       {toasts &&
-        toasts.map(({ id, kind, content }) => (
-          <Item key={id} role='alert'>
-            {icon[kind]}
-            {content}
-          </Item>
-        ))}
+        toasts.map(({ id, kind, content }) => {
+          const Icon = IconConfig[kind];
+          return (
+            <Item key={id} role='alert'>
+              <Icon width={20} height={20} />
+              {content}
+            </Item>
+          );
+        })}
     </List>,
     document.getElementById('toast') as HTMLElement,
   );

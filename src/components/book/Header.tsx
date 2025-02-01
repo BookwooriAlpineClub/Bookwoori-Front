@@ -60,4 +60,8 @@ const ButtonWrapper = styled.div`
 `;
 const Button = styled.button`
   display: flex;
+
+  svg {
+    color: ${({ theme }) => theme.colors.neutral950};
+  }
 `;

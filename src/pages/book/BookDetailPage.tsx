@@ -4,7 +4,7 @@
 // import { useGetBookDetail } from '@src/hooks/query/book';
 import styled from 'styled-components';
 // import Header from '@src/components/book/Header';
-// import BookInfoDetail from '@src/components/book/BookInfoDetail';
+// import BookDetail from '@src/components/book/BookDetail';
 
 const BookDetailPage = () => {
   //   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const BookDetailPage = () => {
   return (
     <Container>
       {/* <Header buttonList={['edit']} handleEditClick={handleEditClick} />
-      <BookInfoDetail {...bookDetail} />
+      <BookDetail {...bookDetail} />
       <Description>
         <h2>책 소개</h2>
         <p>{bookDetail.description}</p>

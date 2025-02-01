@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useGetBookList } from '@src/hooks/query/book';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
-import BookinfoItem from '@src/components/book/BookinfoItem';
+import BookListItem from '@src/components/book/BookListItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 
 type BookReturnData = Pick<Book, 'isbn13' | 'title'>;
@@ -54,16 +54,18 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
             {data.length !== 0 ? (
               <Ul>
                 {data.map((item) => (
-                  <BookinfoItem
+                  <button
                     key={item.isbn13}
-                    {...item}
-                    onClick={() =>
+                    type='button'
+                    onClick={() => {
                       handleItemClick({
                         title: item.title,
                         isbn13: item.isbn13,
-                      })
-                    }
-                  />
+                      });
+                    }}
+                  >
+                    <BookListItem {...item} />
+                  </button>
                 ))}
               </Ul>
             ) : (

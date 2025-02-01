@@ -15,13 +15,6 @@ import { ReactComponent as IcnChat } from '@src/assets/icons/md_outline_chat_bub
 import { ReactComponent as IcnSettings } from '@src/assets/icons/fi_settings.svg';
 import { ReactComponent as IcnPlus } from '@src/assets/icons/hi_outline_plus.svg';
 
-type buttonConfig = {
-  name: string;
-  link: string;
-  icon: React.ReactElement;
-  className: string;
-};
-
 /**
  * Serverbar 컴포넌트 사용법
  *
@@ -44,35 +37,40 @@ const Serverbar = () => {
   const { data: serverList } = useGetServerList();
   const isNotiRead = true; // 나중에 수정
   const isChatRead = true; // 나중에 수정
-  const buttonConfigs: buttonConfig[] = [
+  const buttonConfigs: {
+    name: string;
+    link: string;
+    Icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    className: string;
+  }[] = [
     {
       name: '서재',
       link: ROUTE_PATH.library,
-      icon: <IcnLibrary />,
+      Icon: IcnLibrary,
       className: 'neongreen',
     },
     {
       name: '알림',
       link: ROUTE_PATH.notification,
-      icon: <IcnBell />,
+      Icon: IcnBell,
       className: isNotiRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '채팅',
       link: ROUTE_PATH.dm,
-      icon: <IcnChat />,
+      Icon: IcnChat,
       className: isChatRead ? 'neongreen' : 'neongreen new',
     },
     {
       name: '계정 설정',
       link: ROUTE_PATH.setting,
-      icon: <IcnSettings />,
+      Icon: IcnSettings,
       className: 'neongreen',
     },
     {
       name: '서버 추가',
       link: ROUTE_PATH.addServer,
-      icon: <IcnPlus />,
+      Icon: IcnPlus,
       className: 'blue',
     },
   ];
@@ -103,7 +101,7 @@ const Serverbar = () => {
         $transition={transition}
       >
         <Fieldset>
-          {buttonConfigs.map(({ name, link, icon, className }) => (
+          {buttonConfigs.map(({ name, link, Icon, className }) => (
             <>
               <SButton key={name} className={className}>
                 <input
@@ -112,7 +110,7 @@ const Serverbar = () => {
                   onClick={() => handleMyClick(link)}
                   checked={window.location.pathname === link}
                 />
-                {icon}
+                <Icon width={24} height={24} />
               </SButton>
               {(name === '서재' || name === '계정 설정') && <Hr />}
             </>

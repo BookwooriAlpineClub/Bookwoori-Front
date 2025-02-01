@@ -1,10 +1,15 @@
 import type { GetBookListRes } from '@src/types/apis/book';
-import { useNavigate, createSearchParams, useLocation } from 'react-router-dom';
+import {
+  Link,
+  useNavigate,
+  createSearchParams,
+  useLocation,
+} from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { useGetBookList } from '@src/hooks/query/book';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
-import BookinfoItem from '@src/components/book/BookinfoItem';
+import BookListItem from '@src/components/book/BookListItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 import { ReactComponent as IcnClose } from '@src/assets/icons/ck_close.svg';
 
@@ -34,9 +39,6 @@ const SearchPage = () => {
   const handleButtonClick = () => {
     navigate(-1);
   };
-  const handleItemClick = (isbn13: string): void => {
-    navigate(`${ROUTE_PATH.libraryBookSearch}/${isbn13}`);
-  };
 
   return (
     <NoDataTextLayout>
@@ -58,11 +60,12 @@ const SearchPage = () => {
           {data.length !== 0 ? (
             <Ul>
               {data.map((item) => (
-                <BookinfoItem
+                <Link
                   key={item.isbn13}
-                  {...item}
-                  onClick={() => handleItemClick(item.isbn13)}
-                />
+                  to={`${ROUTE_PATH.libraryBookSearch}/${item.isbn13}`}
+                >
+                  <BookListItem {...item} />
+                </Link>
               ))}
             </Ul>
           ) : (

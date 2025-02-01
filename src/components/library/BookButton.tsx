@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
 interface BookButtonProps {
-  icon: React.ReactNode;
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>;
   text: string;
   onClick?: () => void;
 }
 
-const BookButton = ({ icon, text, onClick }: BookButtonProps) => {
+const BookButton = ({ Icon, text, onClick }: BookButtonProps) => {
   return (
     <ButtonContainer onClick={onClick}>
-      <IconContainer>{icon}</IconContainer>
+      <Icon width={21} height={21} />
       <span>{text}</span>
     </ButtonContainer>
   );
@@ -28,12 +28,4 @@ const ButtonContainer = styled.button`
   background-color: ${({ theme }) => theme.colors.neutral0};
   border-radius: 4.125rem;
   gap: 0.3rem;
-`;
-
-const IconContainer = styled.div`
-  width: 1.3rem;
-  height: 1.3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

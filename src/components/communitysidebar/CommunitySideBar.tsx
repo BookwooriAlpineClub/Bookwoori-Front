@@ -94,7 +94,7 @@ const CommunitySideBar = () => {
                 </div>
                 {member.role === 'OWNER' && (
                   <IconWrapper>
-                    <BiCrown />
+                    <BiCrown width={16} height={16} />
                   </IconWrapper>
                 )}
               </MemberItem>
