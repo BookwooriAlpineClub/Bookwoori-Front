@@ -13,14 +13,14 @@ type EmojiBottomsheetType = {
   emoji?: string[];
   content: string;
   id: string;
-  closeBottomsheet: () => void;
+  closeBottomsheet?: () => void;
 };
 
 const EmojiBottomsheet = ({
   emoji = [],
   content,
   id,
-  closeBottomsheet,
+  closeBottomsheet = () => {},
 }: EmojiBottomsheetType) => {
   const emojiList = Object.values(EmojiType);
   const { handleCopy } = useCopyToClipboard(content);
