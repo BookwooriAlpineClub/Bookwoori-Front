@@ -4,6 +4,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import ReviewBoard from '@src/components/climbing/ReviewBoard';
 import SegmentedButton from '@src/components/common/SegmentedButton';
+import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 
 export type ViewType = 'climbing' | 'review';
 
@@ -26,6 +27,7 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
           onSegmentChange={handleSegmentChange}
           defaultValue='review'
         />
+        <ClimbingDescription />
         {selectedView === 'climbing' && <ClimbingBoard />}
         {selectedView === 'review' && <ReviewBoard />}
       </Container>
@@ -44,4 +46,5 @@ const Container = styled.div`
   min-height: calc(100% - 4.375rem);
   position: relative;
   height: calc(100% - 4.375rem);
+  margin-top: 100px;
 `;
