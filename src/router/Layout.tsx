@@ -6,6 +6,7 @@ import ErrorCatcher from '@src/components/errorBoundary/ErrorCatcher';
 import LoadingPage from '@src/pages/fallback/LoadingPage';
 import Bottomsheet from '@src/components/common/modal/Bottomsheet';
 import Dialog from '@src/components/common/modal/Dialog';
+import GlobalDrawer from '@src/components/common/modal/GlobalDrawer';
 import CommunityDrawer from '@src/components/common/modal/CommunityDrawer';
 import {
   NoDataTextLayout as NoDataTextLayoutStyle,
@@ -20,6 +21,7 @@ export const RootLayout = () => (
           <Outlet />
           <Bottomsheet />
           <Dialog />
+          <GlobalDrawer />
           <CommunityDrawer />
         </React.Suspense>
       </ErrorCatcher>
