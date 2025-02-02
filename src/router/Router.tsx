@@ -24,21 +24,21 @@ const RedirectionPage = React.lazy(
 const LibraryHomePage = React.lazy(
   () => import('@src/pages/library/LibraryHomePage'),
 );
-const SearchPage = React.lazy(() => import('@src/pages/book/SearchPage'));
+const SearchPage = React.lazy(() => import('@src/pages/library/SearchPage'));
 const RecordListPage = React.lazy(
-  () => import('@src/pages/book/RecordListPage'),
+  () => import('@src/pages/library/RecordListPage'),
 );
 const ReviewListPage = React.lazy(
-  () => import('@src/pages/book/ReviewListPage'),
+  () => import('@src/pages/library/ReviewListPage'),
 );
 const BookDetailPage = React.lazy(
-  () => import('@src/pages/book/BookDetailPage'),
+  () => import('@src/pages/library/BookDetailPage'),
 );
 const RecordDetailPage = React.lazy(
-  () => import('@src/pages/book/RecordDetailPage'),
+  () => import('@src/pages/library/RecordDetailPage'),
 );
 const RecordEditPage = React.lazy(
-  () => import('@src/pages/book/RecordEditPage'),
+  () => import('@src/pages/library/RecordEditPage'),
 );
 /* notification */
 const NotificationPage = React.lazy(

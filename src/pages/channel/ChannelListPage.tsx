@@ -10,7 +10,7 @@ import {
 } from '@src/hooks/query/channel';
 import { usePatchCategoryLocation } from '@src/hooks/query/category';
 import { encodeId } from '@src/utils/formatters';
-import SubButton from '@src/components/common/SubButton';
+import SubButton from '@src/components/common/button/SubButton';
 import Header from '@src/components/common/Header';
 import Accordion from '@src/components/common/Accordion';
 import Carousel from '@src/components/channel/Carousel';

@@ -16,7 +16,7 @@ interface Props {
   setValue: React.Dispatch<React.SetStateAction<Period>>;
 }
 
-const InputDatepicker = ({
+const Datepicker = ({
   type,
   name,
   min,
@@ -61,7 +61,7 @@ const InputDatepicker = ({
   );
 };
 
-export default InputDatepicker;
+export default Datepicker;
 export type { Period };
 
 const Container = styled.div`

@@ -20,7 +20,7 @@ import { useRecoilValue } from 'recoil';
 import useModal from '@src/hooks/useModal';
 import { dialogState } from '@src/states/atoms';
 import styled from 'styled-components';
-import Scrim from '@src/components/common/Scrim';
+import Scrim from '@src/components/common/modal/Scrim';
 
 const Dialog = () => {
   const { isOpen, transition, content } = useRecoilValue(dialogState);

@@ -1,7 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react';
 import useModal from '@src/hooks/useModal';
 import { dialogState } from '@src/states/atoms';
-import Dialog from '@src/components/common/Dialog';
+import Dialog from '@src/components/common/modal/Dialog';
 
 const App = () => {
   const { openModal: openDialog, closeModal: closeDialog } = useModal(dialogState);

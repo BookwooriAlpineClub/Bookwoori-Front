@@ -5,11 +5,11 @@
 // import { decodeIdParam } from '@src/utils/formatters';
 // import useRecord from '@src/hooks/query/useRecord';
 // import styled from 'styled-components';
-// import Header from '@src/components/book/Header';
-// import BookDetail from '@src/components/book/BookDetail';
-// import InputPeriod from '@src/components/book/InputPeriod';
-// import InputPage from '@src/components/book/InputPage';
-// import InputReview from '@src/components/book/InputReview';
+// import Header from '@src/components/library/Header';
+// import BookDetail from '@src/components/library/BookDetail';
+// import PeriodField from '@src/components/library/PeriodField';
+// import PageField from '@src/components/library/PageField';
+// import ReviewField from '@src/components/library/ReviewField';
 
 const RecordDetailPage = () => {
   //   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const RecordDetailPage = () => {
     //   <BookDetail status={status} {...recordDetail} />
     //   <Form>
     //     {(status === 'READING' || status === 'FINISHED') && (
-    //       <InputPeriod
+    //       <PeriodField
     //         name='독서 기간'
     //         readOnly
     //         value={{ start: startDate, end: endDate }}
@@ -59,7 +59,7 @@ const RecordDetailPage = () => {
     //       />
     //     )}
     //     {status === 'READING' && (
-    //       <InputPage
+    //       <PageField
     //         name='독서 현황'
     //         readOnly
     //         currentPage={currentPage}
@@ -67,7 +67,7 @@ const RecordDetailPage = () => {
     //       />
     //     )}
     //     {status === 'FINISHED' && (
-    //       <InputReview
+    //       <ReviewField
     //         name={{ num: '별점', str: '줄글' }}
     //         readOnly
     //         num={starReview}

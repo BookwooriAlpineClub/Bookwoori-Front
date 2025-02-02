@@ -14,7 +14,7 @@ interface Props {
   setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const InputDropdown = ({
+const Dropdown = ({
   name,
   placeholder,
   options,
@@ -45,7 +45,7 @@ const InputDropdown = ({
   );
 };
 
-export default InputDropdown;
+export default Dropdown;
 
 const Container = styled.div`
   display: flex;

@@ -9,7 +9,7 @@ interface ImageUploadFieldProps {
   // onFileChange: (file: File | null) => void;
 }
 
-const ImageUploadField = ({
+const ImageField = ({
   previewImg,
   // onFileChange,
 }: ImageUploadFieldProps) => {
@@ -49,7 +49,7 @@ const ImageUploadField = ({
   );
 };
 
-export default ImageUploadField;
+export default ImageField;
 
 const ImageUploadContainer = styled.div`
   display: flex;

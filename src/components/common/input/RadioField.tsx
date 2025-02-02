@@ -23,7 +23,7 @@ interface Props<ValueType> {
  * @property {string} text - 중앙 텍스트
  * @property {boolean} disabled - 선택지 비활성화 여부
  */
-const InputRadio = <ValueType extends string>({
+const RadioField = <ValueType extends string>({
   name,
   options,
   defaultValue,
@@ -53,7 +53,7 @@ const InputRadio = <ValueType extends string>({
   );
 };
 
-export default InputRadio;
+export default RadioField;
 
 const Container = styled.div`
   display: flex;

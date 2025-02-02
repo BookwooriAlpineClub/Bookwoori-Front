@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useModal from '@src/hooks/useModal';
-import { sidebarState, dialogState } from '@src/states/atoms';
+import { communityDrawerState, dialogState } from '@src/states/atoms';
 import styled from 'styled-components';
 import UserProfile from '@src/components/common/UserProfile';
-import SubButton from '@src/components/common/SubButton';
+import SubButton from '@src/components/common/button/SubButton';
 import { ReactComponent as Chatting } from '@src/assets/icons/md_outline_chat_bubble.svg';
 import { ReactComponent as Hiking } from '@src/assets/icons/md_outline_auto_stories.svg';
 
@@ -41,19 +41,19 @@ const buttons = {
 const ProfileModal = ({ memberId }: { memberId: number }) => {
   const navigate = useNavigate();
   const { closeModal: closeDialog } = useModal(dialogState);
-  const { closeModal: closeSideBar } = useModal(sidebarState);
+  const { closeModal: closeCommunityDrawer } = useModal(communityDrawerState);
 
   const handleClickHiking = () => {
     navigate(`${ROUTE_PATH.library}/${memberId}`);
     closeDialog();
-    closeSideBar();
+    closeCommunityDrawer();
   };
 
   const handleclickMessage = () => {
     // const roomId = getMessageRoomIdByMemberId(data.messageRooms, memberId);
     navigate(`${ROUTE_PATH.dmChat}/${memberId}`);
     closeDialog();
-    closeSideBar();
+    closeCommunityDrawer();
   };
 
   return (

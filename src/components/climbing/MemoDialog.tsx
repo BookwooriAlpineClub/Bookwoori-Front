@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { usePatchMemo } from '@src/hooks/query/climbing';
-import SubButton from '@src/components/common/SubButton';
+import SubButton from '@src/components/common/button/SubButton';
 
 type MemoDialogProps = {
   climbingId: number;

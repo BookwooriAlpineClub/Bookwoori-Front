@@ -3,8 +3,8 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
 import { TextEllipsis } from '@src/styles/mixins';
-import BookListItem from '@src/components/book/BookListItem';
-import StarReview from '@src/components/book/StarReview';
+import BookListItem from '@src/components/library/BookListItem';
+import StarReview from '@src/components/library/StarReview';
 
 type Props = ElementOfArray<GetReviewListRes>;
 

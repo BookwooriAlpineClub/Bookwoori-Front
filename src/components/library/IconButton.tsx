@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-interface BookButtonProps {
+interface IconButtonProps {
   Icon: React.FC<React.SVGProps<SVGSVGElement>>;
   text: string;
   onClick?: () => void;
 }
 
-const BookButton = ({ Icon, text, onClick }: BookButtonProps) => {
+const IconButton = ({ Icon, text, onClick }: IconButtonProps) => {
   return (
     <ButtonContainer onClick={onClick}>
       <Icon width={21} height={21} />
@@ -15,7 +15,7 @@ const BookButton = ({ Icon, text, onClick }: BookButtonProps) => {
   );
 };
 
-export default BookButton;
+export default IconButton;
 
 const ButtonContainer = styled.button`
   display: flex;

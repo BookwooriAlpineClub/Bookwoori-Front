@@ -1,4 +1,4 @@
-import CommunityButton from '@src/components/common/IconButton';
+import CommunityButton from '@src/components/common/button/IconButton';
 import Fieldset from '@src/components/common/Fieldset';
 
 const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {

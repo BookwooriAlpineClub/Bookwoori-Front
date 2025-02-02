@@ -4,8 +4,8 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import Header from '@src/components/common/Header';
-import SegmentedButton from '@src/components/common/SegmentedButton';
-import Li from '@src/components/book/RecordListItem';
+import SegmentedControl from '@src/components/common/SegmentedControl';
+import Li from '@src/components/library/RecordListItem';
 
 const segmentConfigs: {
   value: Record['status'];
@@ -24,7 +24,7 @@ const RecordListPage = () => {
   return (
     <Container>
       <Header text='책 기록' headerType='back' />
-      <SegmentedButton<Record['status']>
+      <SegmentedControl<Record['status']>
         config={segmentConfigs}
         onSegmentChange={setStatus}
         defaultValue='READING'

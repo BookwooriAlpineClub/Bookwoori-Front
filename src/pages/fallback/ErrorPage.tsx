@@ -1,4 +1,4 @@
-import SubButton from '@src/components/common/SubButton';
+import SubButton from '@src/components/common/button/SubButton';
 import styled from 'styled-components';
 
 interface ErrorPageType {

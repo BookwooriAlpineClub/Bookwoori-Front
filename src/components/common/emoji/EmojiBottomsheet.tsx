@@ -4,9 +4,9 @@ import { dialogState, editChatIdState } from '@src/states/atoms';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 import { EmojiType } from '@src/constants/constants';
 import { deleteHandler } from '@src/apis/chat';
-import IconButton from '@src/components/common/IconButton';
+import IconButton from '@src/components/common/button/IconButton';
 import useModal from '@src/hooks/useModal';
-import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
+import DeleteConfirmDialog from '@src/components/common/modal/DeleteConfirmDialog';
 import { useSetRecoilState } from 'recoil';
 
 type EmojiBottomsheetType = {
@@ -54,7 +54,7 @@ const EmojiBottomsheet = ({
 
   const handleDelete = () => {
     openModal(
-      <DeleteConfirmModal
+      <DeleteConfirmDialog
         text={`정말 이 메시지를 삭제할까요?\n"${content}"`}
         closeDialog={closeModal}
         onClickDelete={() => handleDeleteMessage()}

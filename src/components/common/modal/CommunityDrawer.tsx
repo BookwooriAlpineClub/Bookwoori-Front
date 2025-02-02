@@ -4,18 +4,18 @@ import { useRecoilValue } from 'recoil';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 import useModal from '@src/hooks/useModal';
-import { sidebarState, dialogState } from '@src/states/atoms';
+import { communityDrawerState, dialogState } from '@src/states/atoms';
 import { decodeIdParam, encodeId } from '@src/utils/formatters';
 import styled from 'styled-components';
 import Fieldset from '@src/components/common/Fieldset';
-import Scrim from '@src/components/common/Scrim';
-import CommunityButton from '@src/components/common/IconButton';
-import ProfileModal from '@src/components/communitysidebar/ProfileModal';
+import Scrim from '@src/components/common/modal/Scrim';
+import CommunityButton from '@src/components/common/button/IconButton';
+import ProfileModal from '@src/components/community/ProfileModal';
 import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 
-const CommunitySideBar = () => {
-  const { isOpen, transition } = useRecoilValue(sidebarState);
-  const { closeModal: closeSideBar } = useModal(sidebarState);
+const CommunityDrawer = () => {
+  const { isOpen, transition } = useRecoilValue(communityDrawerState);
+  const { closeModal: closeCommunityDrawer } = useModal(communityDrawerState);
   const { openModal: openDialog } = useModal(dialogState);
   const { serverId: id } = useParams<{ serverId: string }>();
   const serverId = decodeIdParam(id ?? '-1');
@@ -50,16 +50,16 @@ const CommunitySideBar = () => {
       encodeId(serverId),
     );
     navigate(`${serverSetting}`);
-    closeSideBar();
+    closeCommunityDrawer();
   };
 
   return (
     <Scrim
       isOpen={isOpen}
       transition={transition}
-      closeModal={closeSideBar}
+      closeModal={closeCommunityDrawer}
     >
-      <SideBarContainer
+      <CommunityDrawerContainer
         isOpen={isOpen}
         transition={transition}
         onClick={(e) => e.stopPropagation()}
@@ -101,14 +101,14 @@ const CommunitySideBar = () => {
             ))}
           </MemberListContainer>
         </Fieldset>
-      </SideBarContainer>
+      </CommunityDrawerContainer>
     </Scrim>
   );
 };
 
-export default CommunitySideBar;
+export default CommunityDrawer;
 
-const SideBarContainer = styled.div<{
+const CommunityDrawerContainer = styled.div<{
   isOpen: boolean;
   transition: Modal['transition'];
 }>`

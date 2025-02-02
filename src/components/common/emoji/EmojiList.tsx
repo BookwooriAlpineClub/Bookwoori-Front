@@ -1,4 +1,4 @@
-import EmojiItem from '@src/components/common/EmojiItem';
+import EmojiItem from '@src/components/common/emoji/EmojiItem';
 import styled from 'styled-components';
 import { ReactComponent as AddIcon } from '@src/assets/icons/hi_face_smile.svg';
 import { EmojiType } from '@src/constants/constants';

@@ -1,12 +1,12 @@
 import Header from '@src/components/common/Header';
 import styled from 'styled-components';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import React, { useEffect, useState } from 'react';
 import IntroSection from '@src/components/addcommunity/IntroSection';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import Fieldset from '@src/components/common/Fieldset';
-import InputText from '@src/components/common/InputText';
+import TextField from '@src/components/common/input/TextField';
 import Section from '@src/components/common/Section';
 
 const headerText = '공동체 초대장 입력하기';
@@ -45,15 +45,15 @@ const EnterInvitationPage = () => {
           <IntroSection title={introTitleText} bodyLines={introBodyLines} />
           <Fieldset title='초대 코드'>
             <Section>
-            <InputText
-              as='input'
-              name={invitationCode}
-              placeholder='초대장을 입력하세요.'
-              maxLength={-1}
-              required
-              value={invitationCode}
-              setValue={setInvitationCode}
-            />
+              <TextField
+                as='input'
+                name={invitationCode}
+                placeholder='초대장을 입력하세요.'
+                maxLength={-1}
+                required
+                value={invitationCode}
+                setValue={setInvitationCode}
+              />
             </Section>
             {!isFormValid && invitationCode.trim() !== '' && (
               <span style={{ color: '#fa6554', fontSize: '0.7rem' }}>

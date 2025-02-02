@@ -9,7 +9,7 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import { useGetBookList } from '@src/hooks/query/book';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
-import BookListItem from '@src/components/book/BookListItem';
+import BookListItem from '@src/components/library/BookListItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 import { ReactComponent as IcnClose } from '@src/assets/icons/ck_close.svg';
 

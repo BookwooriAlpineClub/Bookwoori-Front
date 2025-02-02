@@ -5,10 +5,10 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import useModal from '@src/hooks/useModal';
 import { useGetServerList } from '@src/hooks/query/server';
-import { serverbarState, currentServerIdState } from '@src/states/atoms';
+import { globalDrawerState, currentServerIdState } from '@src/states/atoms';
 import { decodeIdParam } from '@src/utils/formatters';
 import styled from 'styled-components';
-import Scrim from '@src/components/common/Scrim';
+import Scrim from '@src/components/common/modal/Scrim';
 import { ReactComponent as IcnLibrary } from '@src/assets/icons/md_outline_auto_stories.svg';
 import { ReactComponent as IcnBell } from '@src/assets/icons/fi_bell.svg';
 import { ReactComponent as IcnChat } from '@src/assets/icons/md_outline_chat_bubble_outline.svg';
@@ -16,24 +16,24 @@ import { ReactComponent as IcnSettings } from '@src/assets/icons/fi_settings.svg
 import { ReactComponent as IcnPlus } from '@src/assets/icons/hi_outline_plus.svg';
 
 /**
- * Serverbar 컴포넌트 사용법
+ * GlobalDrawer 컴포넌트 사용법
  *
- * 0. Serverbar 컴포넌트를 추가한다.
- * 1. useServerbar 훅을 불러온다.
- * 2. openServerbar()로 연다.
+ * 0. GlobalDrawer 컴포넌트를 추가한다.
+ * 1. useGlobalDrawer 훅을 불러온다.
+ * 2. openGlobalDrawer()로 연다.
  *
  * @example
- * <Serverbar />
+ * <GlobalDrawer />
  *
- * import useServerbar from '@src/hooks/useServerbar';
- * const { openServerbar } = useServerbar();
+ * import useGlobalDrawer from '@src/hooks/useGlobalDrawer';
+ * const { openGlobalDrawer } = useGlobalDrawer();
  *
- * openServerbar();
+ * openGlobalDrawer();
  */
-const Serverbar = () => {
+const GlobalDrawer = () => {
   const location = useLocation();
   const { serverId: params } = useParams<{ serverId: string }>();
-  const { isOpen, transition } = useRecoilValue(serverbarState);
+  const { isOpen, transition } = useRecoilValue(globalDrawerState);
   const { data: serverList } = useGetServerList();
   const isNotiRead = true; // 나중에 수정
   const isChatRead = true; // 나중에 수정
@@ -78,14 +78,14 @@ const Serverbar = () => {
   const navigate = useNavigate();
   const encodedNavigate = useEncodedNavigate();
   const setCurrentServerId = useSetRecoilState(currentServerIdState);
-  const { closeModal: closeServerbar } = useModal(serverbarState);
+  const { closeModal: closeGlobalDrawer } = useModal(globalDrawerState);
   const handleMyClick = (link: string) => {
     navigate(link);
-    closeServerbar();
+    closeGlobalDrawer();
   };
   const handleServerClick = (id: number) => {
     encodedNavigate('/server', id);
-    closeServerbar();
+    closeGlobalDrawer();
   };
 
   let decodedServerId: number = -1;
@@ -95,7 +95,11 @@ const Serverbar = () => {
   setCurrentServerId(decodedServerId);
 
   return (
-    <Scrim isOpen={isOpen} transition={transition} closeModal={closeServerbar}>
+    <Scrim
+      isOpen={isOpen}
+      transition={transition}
+      closeModal={closeGlobalDrawer}
+    >
       <Container
         onClick={(event) => event.stopPropagation()}
         $transition={transition}
@@ -106,7 +110,7 @@ const Serverbar = () => {
               <SButton key={name} className={className}>
                 <input
                   type='radio'
-                  name='serverbar'
+                  name='globaldrawer'
                   onClick={() => handleMyClick(link)}
                   checked={window.location.pathname === link}
                 />
@@ -120,7 +124,7 @@ const Serverbar = () => {
               <ImageButton key={serverId} $img={serverImg || ''}>
                 <input
                   type='radio'
-                  name='serverbar'
+                  name='globaldrawer'
                   onChange={() => handleServerClick(serverId)}
                   checked={decodedServerId === serverId}
                 />
@@ -132,7 +136,7 @@ const Serverbar = () => {
   );
 };
 
-export default Serverbar;
+export default GlobalDrawer;
 
 const Container = styled.section<{ $transition: Modal['transition'] }>`
   position: fixed;

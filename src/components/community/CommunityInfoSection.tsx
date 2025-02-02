@@ -1,4 +1,4 @@
-import CommunityInfoCard from '@src/components/common/CommunityInfoCard';
+import CommunityInfoCard from '@src/components/community/CommunityInfoCard';
 import Fieldset from '@src/components/common/Fieldset';
 
 export interface CommunityInfoProps {

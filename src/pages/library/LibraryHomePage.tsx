@@ -1,7 +1,7 @@
 import MountainImage from '@src/components/library/MountainImage';
 import Header from '@src/components/common/Header';
 import styled from 'styled-components';
-import BookButton from '@src/components/library/BookButton';
+import IconButton from '@src/components/library/IconButton';
 import { ReactComponent as SearchIcon } from '@src/assets/icons/md_outline_search.svg';
 import { ReactComponent as BookmarkIcon } from '@src/assets/icons/md_collection_bookmark.svg';
 import { ReactComponent as StarIcon } from '@src/assets/icons/md_star.svg';
@@ -60,17 +60,17 @@ const LibraryHomePage = () => {
           <ButtonContainer>
             {!memberId && (
               <>
-                <BookButton
+                <IconButton
                   onClick={() => handleButton(ROUTE_PATH.libraryBookSearch)}
                   Icon={SearchIcon}
                   text='책 검색'
                 />
-                <BookButton
+                <IconButton
                   onClick={() => handleButton(ROUTE_PATH.libraryRecord)}
                   Icon={BookmarkIcon}
                   text='책 기록'
                 />
-                <BookButton
+                <IconButton
                   onClick={() => handleButton(ROUTE_PATH.libraryReview)}
                   Icon={StarIcon}
                   text='책 평가'

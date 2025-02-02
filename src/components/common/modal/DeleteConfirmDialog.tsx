@@ -1,19 +1,19 @@
 import styled from 'styled-components';
-import SubButton from '@src/components/common/SubButton';
+import SubButton from '@src/components/common/button/SubButton';
 
 const NOTI_TEXT = `삭제한 정보는 복구할 수 없습니다.\n정말 삭제하시겠습니까?`;
 
-interface DeleteConfirmModalProps {
+interface DeleteConfirmDialogProps {
   text?: string;
   closeDialog: () => void;
   onClickDelete: () => void;
 }
 
-const DeleteConfirmModal = ({
+const DeleteConfirmDialog = ({
   text,
   closeDialog,
   onClickDelete,
-}: DeleteConfirmModalProps) => {
+}: DeleteConfirmDialogProps) => {
   return (
     <DialogLayout>
       <TextContainer>{text ?? NOTI_TEXT}</TextContainer>
@@ -25,7 +25,7 @@ const DeleteConfirmModal = ({
   );
 };
 
-export default DeleteConfirmModal;
+export default DeleteConfirmDialog;
 
 const DialogLayout = styled.div`
   width: 80vw;

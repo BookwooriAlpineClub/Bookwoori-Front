@@ -16,7 +16,7 @@ interface Props {
  * @props as - 'input'은 input[type='text'] 태그, 'textarea'는 textarea 태그를 사용합니다.
  * @props maxLength - 입력 가능한 최대 글자 수를 제한합니다. -1로 설정 시 제한이 없으며 글자 수를 표시하지 않습니다.
  */
-const InputText = ({
+const TextField = ({
   as,
   name,
   placeholder,
@@ -50,7 +50,7 @@ const InputText = ({
   );
 };
 
-export default InputText;
+export default TextField;
 
 const Container = styled.div`
   display: flex;

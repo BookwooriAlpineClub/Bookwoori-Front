@@ -24,15 +24,15 @@ export const dialogState = atom<Modal>({
     transition: 'close',
   },
 });
-export const serverbarState = atom<Modal>({
-  key: 'serverbarState',
+export const globalDrawerState = atom<Modal>({
+  key: 'globalDrawerState',
   default: {
     isOpen: false,
     transition: 'close',
   },
 });
-export const sidebarState = atom<Modal>({
-  key: 'sidebarState',
+export const communityDrawerState = atom<Modal>({
+  key: 'communityDrawerState',
   default: {
     isOpen: false,
     transition: 'close',

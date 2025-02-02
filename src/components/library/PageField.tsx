@@ -11,7 +11,7 @@ interface Props {
   itemPage: number;
 }
 
-const InputPage = ({
+const PageField = ({
   name = '독서 현황',
   readOnly = false,
   value,
@@ -59,7 +59,7 @@ const InputPage = ({
   );
 };
 
-export default InputPage;
+export default PageField;
 
 const Container = styled.div`
   display: flex;

@@ -12,7 +12,7 @@ interface Props {
   setStr?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const InputReview = ({
+const ReviewField = ({
   name,
   readOnly = false,
   num,
@@ -61,7 +61,7 @@ const InputReview = ({
   );
 };
 
-export default InputReview;
+export default ReviewField;
 
 const StarFieldset = styled.fieldset`
   display: flex;

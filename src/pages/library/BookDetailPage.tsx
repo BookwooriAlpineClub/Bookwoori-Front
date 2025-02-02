@@ -3,8 +3,8 @@
 // import { SESSION_STORAGE } from '@src/constants/sessionStorage';
 // import { useGetBookDetail } from '@src/hooks/query/book';
 import styled from 'styled-components';
-// import Header from '@src/components/book/Header';
-// import BookDetail from '@src/components/book/BookDetail';
+// import Header from '@src/components/library/Header';
+// import BookDetail from '@src/components/library/BookDetail';
 
 const BookDetailPage = () => {
   //   const navigate = useNavigate();

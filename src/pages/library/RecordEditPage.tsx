@@ -8,12 +8,12 @@
 // // import { SESSION_STORAGE } from '@src/constants/sessionStorage';
 // // import useRecord from '@src/hooks/query/useRecord';
 // import styled from 'styled-components';
-// import Header from '@src/components/book/Header';
-// import BookDetail from '@src/components/book/BookDetail';
-// import InputStatus from '@src/components/book/InputStatus';
-// import InputPeriod, { type Period } from '@src/components/book/InputPeriod';
-// import InputPage from '@src/components/book/InputPage';
-// import InputReview from '@src/components/book/InputReview';
+// import Header from '@src/components/library/Header';
+// import BookDetail from '@src/components/library/BookDetail';
+// import StatusField from '@src/components/library/StatusField';
+// import PeriodField, { type Period } from '@src/components/library/PeriodField';
+// import PageField from '@src/components/library/PageField';
+// import ReviewField from '@src/components/library/ReviewField';
 
 // type Data = RecordEdit &
 //   Pick<RecordDetail, 'bookInfo'> & {
@@ -90,13 +90,13 @@ const RecordEditPage = () => {
     //   <Header buttonList={['save']} />
     //   <BookDetail readingStatus='UNREAD' {...bookInfo} />
     //   <Form onSubmit={handleFormSubmit}>
-    //     <InputStatus
+    //     <StatusField
     //       name='status'
     //       setValue={setStatus}
     //       readingStatus={readingStatus}
     //     />
     //     {(status === 'READING' || status === 'FINISHED') && (
-    //       <InputPeriod
+    //       <PeriodField
     //         name='독서 기간'
     //         value={period}
     //         setValue={setPeriod}
@@ -104,7 +104,7 @@ const RecordEditPage = () => {
     //       />
     //     )}
     //     {status === 'READING' && (
-    //       <InputPage
+    //       <PageField
     //         name='독서 현황'
     //         value={page}
     //         setValue={setPage}
@@ -113,7 +113,7 @@ const RecordEditPage = () => {
     //       />
     //     )}
     //     {status === 'FINISHED' && (
-    //       <InputReview
+    //       <ReviewField
     //         name={{ num: '별점', str: '줄글' }}
     //         num={num}
     //         setNum={setNum}

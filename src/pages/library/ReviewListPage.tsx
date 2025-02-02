@@ -2,7 +2,7 @@ import { useGetReviewList } from '@src/hooks/query/record';
 import styled from 'styled-components';
 import { NoDataTextLayout } from '@src/styles/mixins';
 import Header from '@src/components/common/Header';
-import ReviewListItem from '@src/components/book/ReviewListItem';
+import ReviewListItem from '@src/components/library/ReviewListItem';
 
 const ReviewListPage = () => {
   const { data: reviewList } = useGetReviewList();

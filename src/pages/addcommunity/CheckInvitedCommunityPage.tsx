@@ -1,9 +1,9 @@
 import Header from '@src/components/common/Header';
 import styled from 'styled-components';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import IntroSection from '@src/components/addcommunity/IntroSection';
 import React from 'react';
-import CommunityInfoCard from '@src/components/common/CommunityInfoCard';
+import CommunityInfoCard from '@src/components/community/CommunityInfoCard';
 import { useParams } from 'react-router-dom';
 import Spinner from '@src/components/common/Spinner';
 import { useGetServerByCode, usePostServerJoin } from '@src/hooks/query/server';

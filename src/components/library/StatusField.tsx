@@ -21,7 +21,7 @@ interface Props {
   status: Record['status'];
 }
 
-const InputStatus = ({ name, setValue, status }: Props) => {
+const StatusField = ({ name, setValue, status }: Props) => {
   return (
     <Container>
       {radioConfigs.map(({ value, Icon, text }) => (
@@ -46,7 +46,7 @@ const InputStatus = ({ name, setValue, status }: Props) => {
   );
 };
 
-export default InputStatus;
+export default StatusField;
 
 const Container = styled.fieldset`
   display: flex;

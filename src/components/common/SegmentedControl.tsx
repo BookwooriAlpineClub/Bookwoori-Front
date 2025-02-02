@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 /**
- * Props for SegmentedButton component
+ * Props for SegmentedControl component
  * @template T - Type of value in config, must be string
  */
 interface SegmentedButtonProps<T extends string> {
@@ -23,7 +23,7 @@ interface SegmentedButtonProps<T extends string> {
   defaultValue?: T;
 }
 
-const SegmentedButton = <T extends string>({
+const SegmentedControl = <T extends string>({
   config,
   onSegmentChange,
   defaultValue,
@@ -62,7 +62,7 @@ const SegmentedButton = <T extends string>({
   );
 };
 
-export default SegmentedButton;
+export default SegmentedControl;
 
 // Styled Components
 const ButtonsContainer = styled.div<{ length: number }>`

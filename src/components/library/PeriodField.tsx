@@ -14,7 +14,7 @@ interface Props {
   readingStatus: 'WISH' | 'READING' | 'FINISHED';
 }
 
-const InputPeriod = ({
+const PeriodField = ({
   name = '독서 기간',
   readOnly = false,
   value,
@@ -56,7 +56,7 @@ const InputPeriod = ({
   );
 };
 
-export default InputPeriod;
+export default PeriodField;
 
 const Container = styled.div`
   display: flex;
