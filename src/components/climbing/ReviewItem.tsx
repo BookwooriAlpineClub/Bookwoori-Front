@@ -2,7 +2,7 @@ import { ReactComponent as IconStar } from '@src/assets/icons/md_star.svg';
 import Tag from '@src/components/common/Tag';
 import styled from 'styled-components';
 import UserAvatar from '@src/components/common/UserAvatar';
-import EmojiList from '@src/components/common/EmojiList';
+import EmojiList from '@src/components/common/emoji/EmojiList';
 import { EmojiType } from '@src/constants/constants';
 import { bottomsheetState } from '@src/states/atoms';
 import useModal from '@src/hooks/useModal';

@@ -4,12 +4,11 @@ import { useRecoilState } from 'recoil';
 import { bgFileState, profileState } from '@src/states/atoms';
 import { useGetProfile, usePatchProfile } from '@src/hooks/query/member';
 import UserProfileImg from '@src/components/userSettings/UserProfileImg';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import Header from '@src/components/common/Header';
-import ButtonBackground from '@src/components/common/ButtonBackground';
 import Fieldset from '@src/components/common/Fieldset';
 import Section from '@src/components/common/Section';
-import InputText from '@src/components/common/InputText';
+import TextField from '@src/components/common/input/TextField';
 
 const addNicknamePromise = (
   promises: Promise<void>[],
@@ -89,7 +88,7 @@ const EditUserInfoPage = () => {
           />
           <Fieldset title='별명'>
             <Section>
-              <InputText
+              <TextField
                 as='input'
                 name='nickname'
                 placeholder='별명을 입력하세요.'

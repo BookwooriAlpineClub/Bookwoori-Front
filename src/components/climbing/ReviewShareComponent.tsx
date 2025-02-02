@@ -4,9 +4,9 @@ import { ROUTE_PATH } from '@src/constants/routePath';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useGetPatchShareClimbingReview } from '@src/hooks/query/climbing';
 import styled from 'styled-components';
-import Button from '@src/components/common/Button';
-import UnderlineButton from '@src/components/common/UnderlineButton';
-// import ReviewListItem from '@src/components/book/ReviewListItem';
+import Button from '@src/components/common/button/Button';
+import UnderlineButton from '@src/components/common/button/UnderlineButton';
+// import ReviewListItem from '@src/components/library/ReviewListItem';
 
 const ReviewShareComponent = ({
   bookInfo,

@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import CommunitySettingSection from '@src/components/communityinfosetting/CommunitySettingSection';
+import CommunitySettingSection from '@src/components/community/CommunitySettingSection';
 import renderWithProviders from '@src/tests/utils/renderWithProvider.setup';
 
 describe('CommunitySettingSection', () => {

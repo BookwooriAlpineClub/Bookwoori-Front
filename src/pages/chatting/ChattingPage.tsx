@@ -15,7 +15,7 @@ import useChatHandler from '@src/hooks/useChatHandler';
 import { formatCreatedAt } from '@src/utils/formatters';
 import ChatBar from '@src/components/chatting/ChatBar';
 import ChatItem from '@src/components/chatting/ChatItem';
-import DateLine from '@src/components/common/DateLine';
+import DateLine from '@src/components/chatting/DateLine';
 import Header from '@src/components/common/Header';
 
 const ChattingPage = () => {

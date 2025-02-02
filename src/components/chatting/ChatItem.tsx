@@ -15,7 +15,7 @@ import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
 import { formatChatItemTime } from '@src/utils/formatters';
 import { handleImgError } from '@src/utils/helpers';
-import ChatMenu from '@src/components/common/EmojiBottomsheet';
+import ChatMenu from '@src/components/common/emoji/EmojiBottomsheet';
 import Profile from '@src/assets/images/userSettings/background_default.svg';
 import { ReactComponent as Response } from '@src/assets/icons/response.svg';
 import { ReactComponent as ReplyLine } from '@src/assets/images/chat/reply_line.svg';

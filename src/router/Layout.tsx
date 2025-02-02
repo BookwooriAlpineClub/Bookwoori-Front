@@ -4,9 +4,9 @@ import QueryClientBoundary from '@src/components/queryClient/QueryClientBoundary
 import RootErrorBoundary from '@src/components/errorBoundary/RootErrorBoundary';
 import ErrorCatcher from '@src/components/errorBoundary/ErrorCatcher';
 import LoadingPage from '@src/pages/fallback/LoadingPage';
-import Bottomsheet from '@src/components/common/Bottomsheet';
-import Dialog from '@src/components/common/Dialog';
-import CommunitySideBar from '@src/components/communitysidebar/CommunitySideBar';
+import Bottomsheet from '@src/components/common/modal/Bottomsheet';
+import Dialog from '@src/components/common/modal/Dialog';
+import CommunityDrawer from '@src/components/common/modal/CommunityDrawer';
 import {
   NoDataTextLayout as NoDataTextLayoutStyle,
   BottomButtonLayout as BottomButtonLayoutStyle,
@@ -20,7 +20,7 @@ export const RootLayout = () => (
           <Outlet />
           <Bottomsheet />
           <Dialog />
-          <CommunitySideBar />
+          <CommunityDrawer />
         </React.Suspense>
       </ErrorCatcher>
     </RootErrorBoundary>

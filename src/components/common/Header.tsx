@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import useModal from '@src/hooks/useModal';
-import { serverbarState, sidebarState } from '@src/states/atoms';
+import { globalDrawerState, communityDrawerState } from '@src/states/atoms';
 import styled from 'styled-components';
-import Serverbar from '@src/components/common/Serverbar';
+import GlobalDrawer from '@src/components/common/modal/GlobalDrawer';
 import { ReactComponent as Hamburger } from '@src/assets/icons/fi_menu.svg';
 import { ReactComponent as Back } from '@src/assets/icons/fi_arrow_left.svg';
 import { ReactComponent as Users } from '@src/assets/icons/fi_users.svg';
@@ -26,18 +26,19 @@ const renderButton = (
 const Header = ({ text, headerType, onClick }: HeaderProps) => {
   const navigate = useNavigate();
   const handleClick = () => navigate(-1);
-  const { openModal: openServerbar } = useModal(serverbarState);
-  const { openModal: openSideBar } = useModal(sidebarState);
+  const { openModal: openGlobalDrawer } = useModal(globalDrawerState);
+  const { openModal: openCommunityDrawer } = useModal(communityDrawerState);
 
   return (
     <Layout>
       {headerType === 'back' &&
         renderButton('back', onClick ?? handleClick, Back)}
       {(headerType === 'hamburger' || headerType === 'server') &&
-        renderButton('hamburger', openServerbar, Hamburger)}
-      <Serverbar />
+        renderButton('hamburger', openGlobalDrawer, Hamburger)}
+      <GlobalDrawer />
       <Label>{text}</Label>
-      {headerType === 'server' && renderButton('server', openSideBar, Users)}
+      {headerType === 'server' &&
+        renderButton('server', openCommunityDrawer, Users)}
     </Layout>
   );
 };

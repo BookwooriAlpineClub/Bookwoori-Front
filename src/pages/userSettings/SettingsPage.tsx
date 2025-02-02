@@ -6,8 +6,8 @@ import { dialogState } from '@src/states/atoms';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import UserProfile from '@src/components/common/UserProfile';
-import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
-import IconButton from '@src/components/common/IconButton';
+import DeleteConfirmDialog from '@src/components/common/modal/DeleteConfirmDialog';
+import IconButton from '@src/components/common/button/IconButton';
 
 const SettingsPage = () => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const SettingsPage = () => {
             type='deleteAccount'
             onClick={() =>
               openDialog(
-                <DeleteConfirmModal
+                <DeleteConfirmDialog
                   closeDialog={closeDialog}
                   onClickDelete={handleDelete}
                 />,
