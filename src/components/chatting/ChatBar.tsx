@@ -26,7 +26,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
         handleSendReply();
         return;
       }
-      
+
       handleSendMessage();
     }
   };
