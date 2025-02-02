@@ -1,7 +1,7 @@
 import Header from '@src/components/common/Header';
 import styled from 'styled-components';
 import Button from '@src/components/common/button/Button';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import IntroSection from '@src/components/addcommunity/IntroSection';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';

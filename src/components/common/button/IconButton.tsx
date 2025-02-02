@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 import { ReactComponent as FiTrash } from '@src/assets/icons/fi_trash_2.svg';
