@@ -14,7 +14,7 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
     setSelectedView(value);
   };
   const SEGMENTED_BUTTON_CONFIG: { value: ViewType; label: string }[] = [
-    { value: 'climbing', label: '클라이밍' },
+    { value: 'climbing', label: '등반' },
     { value: 'review', label: '감상평' },
   ];
 
