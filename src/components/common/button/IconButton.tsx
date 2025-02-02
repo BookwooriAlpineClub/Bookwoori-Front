@@ -78,7 +78,7 @@ const buttonConfig: Record<
   },
 };
 
-const IconButton: React.FC<IconButtonProps> = ({ type, onClick, testId }) => {
+const IconButton = ({ type, onClick, testId }: IconButtonProps) => {
   const { name, Icon } = buttonConfig[type];
   return (
     <ButtonContainer onClick={onClick} data-testid={testId} aria-label={name}>
