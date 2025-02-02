@@ -153,5 +153,5 @@ const Input = styled.input`
 const Button = styled.button`
   display: flex;
   justify-content: center;
-  align-itmes: center;
+  align-items: center;
 `;
