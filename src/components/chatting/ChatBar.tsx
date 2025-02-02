@@ -121,8 +121,7 @@ const ReplyLayout = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  padding: ${({ theme }) => theme.padding[8]}
-    ${({ theme }) => theme.padding[24]};
+  padding: ${({ theme }) => `${theme.padding[8]} ${theme.padding[24]}`};
   background-color: ${({ theme }) => theme.colors.blue100};
 `;
 const ReplyContainer = styled.div`
