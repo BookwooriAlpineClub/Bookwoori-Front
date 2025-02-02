@@ -2,7 +2,6 @@ import type Record from '@src/types/record';
 import { useGetRecordList } from '@src/hooks/query/record';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { NoDataTextLayout } from '@src/styles/mixins';
 import Header from '@src/components/common/Header';
 import SegmentedControl from '@src/components/common/SegmentedControl';
 import Li from '@src/components/library/RecordListItem';
@@ -46,7 +45,7 @@ const RecordListPage = () => {
 
 export default RecordListPage;
 
-const Container = styled(NoDataTextLayout)`
+const Container = styled.div`
   gap: ${({ theme }) => theme.gap[16]};
 
   main {

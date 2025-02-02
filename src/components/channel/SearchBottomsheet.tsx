@@ -3,7 +3,6 @@ import type { GetBookListRes } from '@src/types/apis/book';
 import { useState } from 'react';
 import { useGetBookList } from '@src/hooks/query/book';
 import styled from 'styled-components';
-import { NoDataTextLayout } from '@src/styles/mixins';
 import BookListItem from '@src/components/library/BookListItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 
@@ -38,42 +37,40 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
 
   return (
     <Container>
-      <NoDataTextLayout>
-        <Header>
-          <Form onSubmit={handleFormSubmit}>
-            <IcnSearch width={20} height={20} />
-            <Input
-              type='text'
-              name='keyword'
-              placeholder='책 제목, 작가를 검색해 보세요.'
-            />
-          </Form>
-        </Header>
-        {keyword && (
-          <Main>
-            {data.length !== 0 ? (
-              <Ul>
-                {data.map((item) => (
-                  <button
-                    key={item.isbn13}
-                    type='button'
-                    onClick={() => {
-                      handleItemClick({
-                        title: item.title,
-                        isbn13: item.isbn13,
-                      });
-                    }}
-                  >
-                    <BookListItem {...item} />
-                  </button>
-                ))}
-              </Ul>
-            ) : (
-              <strong>검색 결과가 없어요.</strong>
-            )}
-          </Main>
-        )}
-      </NoDataTextLayout>
+      <Header>
+        <Form onSubmit={handleFormSubmit}>
+          <IcnSearch width={20} height={20} />
+          <Input
+            type='text'
+            name='keyword'
+            placeholder='책 제목, 작가를 검색해 보세요.'
+          />
+        </Form>
+      </Header>
+      {keyword && (
+        <Main>
+          {data.length !== 0 ? (
+            <Ul>
+              {data.map((item) => (
+                <button
+                  key={item.isbn13}
+                  type='button'
+                  onClick={() => {
+                    handleItemClick({
+                      title: item.title,
+                      isbn13: item.isbn13,
+                    });
+                  }}
+                >
+                  <BookListItem {...item} />
+                </button>
+              ))}
+            </Ul>
+          ) : (
+            <strong>검색 결과가 없어요.</strong>
+          )}
+        </Main>
+      )}
     </Container>
   );
 };
