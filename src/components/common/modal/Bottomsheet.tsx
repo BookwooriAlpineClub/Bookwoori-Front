@@ -1,20 +1,3 @@
-/*
-Bottomsheet 컴포넌트 사용법
-
-1. useBottomsheet 훅을 불러온다.
-import useBottomsheet from '@src/hooks/useBottomsheet';
-const { openBottomsheet, closeBottomsheet } = useBottomsheet();
-
-2. openBottomsheet()로 열고, closeBottomsheet()로 닫는다.
-const ConfirmBottomsheet: React.ReactNode = (
-  <div>
-    <button type='button' onClick={closeBottomsheet}>취소</button>
-    <button type='button' onClick={() => {action(); closeBottomsheet();}}>확인</button>
-  </div>
-);
-openBottomsheet(ConfirmBottomsheet);
-*/
-
 import type Modal from '@src/types/modal';
 import { useRecoilValue } from 'recoil';
 import useModal from '@src/hooks/useModal';
@@ -22,6 +5,29 @@ import { bottomsheetState } from '@src/states/atoms';
 import styled from 'styled-components';
 import Scrim from '@src/components/common/modal/Scrim';
 
+/**
+ * 컴포넌트 사용법
+ *
+ * 1. useModal 훅과 bottomsheetState를 불러온다.
+ * 2. useModal 훅에 bottomsheetState를 넘기고 openModal과 closeModal을 가져온다.
+ * 3. openModal()로 열고, closeModal()로 닫는다.
+ *
+ * @example
+ *
+ * import useModal from '@src/hooks/useModal';
+ * import { bottomsheetState } from '@src/states/atoms';
+ *
+ * const { openModal: openBottomsheet, closeModal: closeBottomsheet } = useModal(bottomsheetState);
+ *
+ * const ConfirmBottomsheet: React.ReactNode = (
+ *   <div>
+ *     <button type='button' onClick={closeBottomsheet}>취소</button>
+ *     <button type='button' onClick={() => {action(); closeBottomsheet();}}>확인</button>
+ *   </div>
+ * );
+ *
+ * openBottomsheet(ConfirmBottomsheet);
+ */
 const Bottomsheet = () => {
   const { isOpen, transition, content } = useRecoilValue(bottomsheetState);
   const { closeModal: closeBottomsheet } = useModal(bottomsheetState);
