@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
-import Fieldset from '@src/components/book/Fieldset';
+import Fieldset from '@src/components/library/Fieldset';
 
 interface Props {
   name: string;
