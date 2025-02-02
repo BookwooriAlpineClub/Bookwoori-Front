@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CameraIcon } from '@src/assets/icons/md_camera_alt.svg';
 import useUploadFile from '@src/hooks/useUploadFile';

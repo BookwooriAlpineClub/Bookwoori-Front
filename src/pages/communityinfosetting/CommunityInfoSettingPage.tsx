@@ -1,4 +1,3 @@
-import React from 'react';
 import CommunityInfoSection from '@src/components/community/CommunityInfoSection';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';

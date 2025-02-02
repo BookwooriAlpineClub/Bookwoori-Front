@@ -16,17 +16,18 @@ import { ReactComponent as IcnSettings } from '@src/assets/icons/fi_settings.svg
 import { ReactComponent as IcnPlus } from '@src/assets/icons/hi_outline_plus.svg';
 
 /**
- * GlobalDrawer 컴포넌트 사용법
+ * 컴포넌트 사용법
  *
- * 0. GlobalDrawer 컴포넌트를 추가한다.
- * 1. useGlobalDrawer 훅을 불러온다.
- * 2. openGlobalDrawer()로 연다.
+ * 1. useModal 훅과 globalDrawerState를 불러온다.
+ * 2. useModal 훅에 globalDrawerState를 넘기고 openModal과 closeModal을 가져온다.
+ * 3. openModal()로 열고, closeModal()로 닫는다.
  *
  * @example
- * <GlobalDrawer />
  *
- * import useGlobalDrawer from '@src/hooks/useGlobalDrawer';
- * const { openGlobalDrawer } = useGlobalDrawer();
+ * import useModal from '@src/hooks/useModal';
+ * import { globalDrawerState } from '@src/states/atoms';
+ *
+ * const { openModal: openGlobalDrawer, closeModal: closeGlobalDrawer } = useModal(globalDrawerState);
  *
  * openGlobalDrawer();
  */

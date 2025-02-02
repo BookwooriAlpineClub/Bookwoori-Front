@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import useModal from '@src/hooks/useModal';
 import { globalDrawerState, communityDrawerState } from '@src/states/atoms';
 import styled from 'styled-components';
-import GlobalDrawer from '@src/components/common/modal/GlobalDrawer';
 import { ReactComponent as Hamburger } from '@src/assets/icons/fi_menu.svg';
 import { ReactComponent as Back } from '@src/assets/icons/fi_arrow_left.svg';
 import { ReactComponent as Users } from '@src/assets/icons/fi_users.svg';
@@ -35,7 +34,6 @@ const Header = ({ text, headerType, onClick }: HeaderProps) => {
         renderButton('back', onClick ?? handleClick, Back)}
       {(headerType === 'hamburger' || headerType === 'server') &&
         renderButton('hamburger', openGlobalDrawer, Hamburger)}
-      <GlobalDrawer />
       <Label>{text}</Label>
       {headerType === 'server' &&
         renderButton('server', openCommunityDrawer, Users)}

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { replyChatState } from '@src/states/atoms';
 import useLoaderData from '@src/hooks/useRoaderData';
@@ -26,7 +26,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
         handleSendReply();
         return;
       }
-      
+
       handleSendMessage();
     }
   };
@@ -121,8 +121,7 @@ const ReplyLayout = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  padding: ${({ theme }) => theme.padding[8]}
-    ${({ theme }) => theme.padding[24]};
+  padding: ${({ theme }) => `${theme.padding[8]} ${theme.padding[24]}`};
   background-color: ${({ theme }) => theme.colors.blue100};
 `;
 const ReplyContainer = styled.div`
@@ -153,5 +152,5 @@ const Input = styled.input`
 const Button = styled.button`
   display: flex;
   justify-content: center;
-  align-itmes: center;
+  align-items: center;
 `;

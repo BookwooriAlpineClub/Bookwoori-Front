@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
 import { ReactComponent as FiTrash } from '@src/assets/icons/fi_trash_2.svg';
@@ -79,7 +78,7 @@ const buttonConfig: Record<
   },
 };
 
-const IconButton: React.FC<IconButtonProps> = ({ type, onClick, testId }) => {
+const IconButton = ({ type, onClick, testId }: IconButtonProps) => {
   const { name, Icon } = buttonConfig[type];
   return (
     <ButtonContainer onClick={onClick} data-testid={testId} aria-label={name}>

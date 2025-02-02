@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ReactComponent as Down } from '@src/assets/icons/hi_outline_chevron_down.svg';
 
 /**
