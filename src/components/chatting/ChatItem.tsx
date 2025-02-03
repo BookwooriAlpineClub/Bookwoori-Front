@@ -115,7 +115,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
       });
     };
 
-    // 답장 부모 메시지 이동 시 배경색 변화 
+    // 답장 부모 메시지 이동 시 배경색 변화
     useEffect(() => {
       if (replyChatId === chatItem.id) {
         setIsSelected(true);
@@ -168,9 +168,11 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
               <Text>{chatItem.content}</Text>
             )}
           </Container>
-          <ReplyMenu onClick={handleReply}>
-            <Response width={25} height={25} />
-          </ReplyMenu>
+          {editChatId !== chatItem.id && (
+            <ReplyMenu onClick={handleReply}>
+              <Response width={25} height={25} />
+            </ReplyMenu>
+          )}
         </Layout>
       </WithReplayLayout>
     );
@@ -285,7 +287,7 @@ const Text = styled.p`
 const ReplyMenu = styled.button`
   display: flex;
   position: absolute;
-  top: 30%;
+  top: 15%;
   right: 0;
 
   transform: translateY(-50%);
