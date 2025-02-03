@@ -2,7 +2,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import renderWithProviders from '@src/tests/utils/renderWithProvider.setup';
 import CommunityButton, {
   IconButtonType,
-} from '@src/components/common/IconButton';
+} from '@src/components/common/button/IconButton';
 
 describe('CommunityButton', () => {
   const buttonTypes: {

@@ -16,11 +16,11 @@ import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
 import Section from '@src/components/common/Section';
-import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
-import Button from '@src/components/common/Button';
-import UnderlineButton from '@src/components/common/UnderlineButton';
-import InputText from '@src/components/common/InputText';
-import InputDropdown from '@src/components/common/InputDropdown';
+import DeleteConfirmDialog from '@src/components/common/modal/DeleteConfirmDialog';
+import Button from '@src/components/common/button/Button';
+import UnderlineButton from '@src/components/common/button/UnderlineButton';
+import TextField from '@src/components/common/input/TextField';
+import Dropdown from '@src/components/common/input/Dropdown';
 
 const findItemByKey = <T, K extends keyof T>(
   items: T[],
@@ -97,34 +97,34 @@ const ChannelEditPage = () => {
       <main>
         <Form className='scroll-area'>
           <Fieldset title='모임 분류'>
-          <Section>
-          <InputDropdown
-            name='모임 분류'
-            placeholder='모임 분류를 선택해주세요.'
-            options={categoryList.map((it) =>
-                it.name === 'DEFAULT'
-                  ? { id: Number(it.categoryId), text: '기본' }
-                  : { id: Number(it.categoryId), text: it.name },
-              )}
-              value={category}
-              setValue={setCategory}
-              required
-              disabled={currentCategory?.name === 'DEFAULT'}
-          />
-          </Section>
+            <Section>
+              <Dropdown
+                name='모임 분류'
+                placeholder='모임 분류를 선택해주세요.'
+                options={categoryList.map((it) =>
+                  it.name === 'DEFAULT'
+                    ? { id: Number(it.categoryId), text: '기본' }
+                    : { id: Number(it.categoryId), text: it.name },
+                )}
+                value={category}
+                setValue={setCategory}
+                required
+                disabled={currentCategory?.name === 'DEFAULT'}
+              />
+            </Section>
           </Fieldset>
           <Fieldset title='모임 이름'>
-          <Section>
-          <InputText
-            as='input'
-            name='모임 이름'
-            placeholder='채널 이름을 입력하세요.'
-            maxLength={20}
-            required
-            value={name}
-            setValue={setName}
-          />
-          </Section>
+            <Section>
+              <TextField
+                as='input'
+                name='모임 이름'
+                placeholder='채널 이름을 입력하세요.'
+                maxLength={20}
+                required
+                value={name}
+                setValue={setName}
+              />
+            </Section>
           </Fieldset>
         </Form>
         <Container>
@@ -137,7 +137,7 @@ const ChannelEditPage = () => {
               text='모임 삭제하기'
               onClick={() =>
                 openDialog(
-                  <DeleteConfirmModal
+                  <DeleteConfirmDialog
                     closeDialog={closeDialog}
                     onClickDelete={handleClickDelete}
                   />,

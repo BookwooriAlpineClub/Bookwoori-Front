@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
-import Button from '@src/components/common/Button';
-import ImageUploadField from '@src/components/addcommunity/ImageUploadField';
+import Button from '@src/components/common/button/Button';
+import ImageField from '@src/components/common/input/ImageField';
 import Fieldset from '@src/components/common/Fieldset';
-import InputText from '@src/components/common/InputText';
+import TextField from '@src/components/common/input/TextField';
 import Section from '@src/components/common/Section';
 import { usePostServer } from '@src/hooks/query/server';
 
@@ -57,19 +57,19 @@ const CreateNewCommunityPage = () => {
         <div className='scroll-area'>
           <Fieldset title='공동체 이름'>
             <Section>
-            <InputText
-              as='input'
-              name={communityName}
-              placeholder='공동체 이름을 입력하세요'
-              maxLength={20}
-              required
-              value={communityName}
-              setValue={setCommunityName}
-            />
+              <TextField
+                as='input'
+                name={communityName}
+                placeholder='공동체 이름을 입력하세요'
+                maxLength={20}
+                required
+                value={communityName}
+                setValue={setCommunityName}
+              />
             </Section>
           </Fieldset>
           <Fieldset title='공동체 사진'>
-            <ImageUploadField
+            <ImageField
               previewImg={
                 communityImage ? URL.createObjectURL(communityImage) : ''
               }
@@ -78,15 +78,15 @@ const CreateNewCommunityPage = () => {
           </Fieldset>
           <Fieldset title='공동체 소개'>
             <Section>
-            <InputText
-              as='textarea'
-              name={communityDescription}
-              placeholder='사람들에게 공동체에 대해 조금 더 알려주세요.'
-              maxLength={200}
-              required
-              value={communityDescription}
-              setValue={setCommunityDescription}
-            />
+              <TextField
+                as='textarea'
+                name={communityDescription}
+                placeholder='사람들에게 공동체에 대해 조금 더 알려주세요.'
+                maxLength={200}
+                required
+                value={communityDescription}
+                setValue={setCommunityDescription}
+              />
             </Section>
           </Fieldset>
         </div>

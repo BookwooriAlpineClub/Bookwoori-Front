@@ -11,11 +11,11 @@ import { formatDate, decodeIdParam } from '@src/utils/formatters';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
-import Button from '@src/components/common/Button';
-import InputRadio from '@src/components/common/InputRadio';
-import InputDropdown from '@src/components/common/InputDropdown';
-import InputText from '@src/components/common/InputText';
-import InputDatepicker, { type Period } from '@src/components/common/InputDatepicker';
+import Button from '@src/components/common/button/Button';
+import RadioField from '@src/components/common/input/RadioField';
+import Dropdown from '@src/components/common/input/Dropdown';
+import TextField from '@src/components/common/input/TextField';
+import Datepicker, { type Period } from '@src/components/common/input/Datepicker';
 import SearchBottomsheet from '@src/components/channel/SearchBottomsheet';
 import { ReactComponent as IcnHash } from '@src/assets/icons/bi_hash.svg';
 import { ReactComponent as IcnVoice } from '@src/assets/icons/hi_outline_volume_up.svg';
@@ -95,7 +95,7 @@ const ChannelAddPage = () => {
           className='scroll-area'
           onSubmit={handleFormSubmit}
         >
-          <InputRadio
+          <RadioField
             name='모임 유형'
             options={[
               { value: 'chat', Icon: IcnHash, text: '문자' },
@@ -107,7 +107,7 @@ const ChannelAddPage = () => {
             setValue={setKind}
           />
           {(kind === 'chat' || kind === 'voice') && (
-            <InputDropdown
+            <Dropdown
               name='모임 분류'
               placeholder='분류 선택'
               options={categoryList.map((item) => ({
@@ -120,7 +120,7 @@ const ChannelAddPage = () => {
             />
           )}
           {!!kind && (
-            <InputText
+            <TextField
               as='input'
               name='모임 이름'
               placeholder='모임 이름을 입력하세요.'
@@ -150,7 +150,7 @@ const ChannelAddPage = () => {
                   }}
                 />
               </Fieldset>
-              <InputDatepicker
+              <Datepicker
                 type='period'
                 name='등반 기간'
                 min={formatDate(calcTomorrow())}
@@ -158,7 +158,7 @@ const ChannelAddPage = () => {
                 value={date}
                 setValue={setDate}
               />
-              <InputText
+              <TextField
                 as='textarea'
                 name='등반 설명'
                 placeholder='사람들에게 등반에 대해 알려주세요.'

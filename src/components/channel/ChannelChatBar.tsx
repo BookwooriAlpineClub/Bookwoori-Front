@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { sendHandler } from '@src/apis/chat';
 import { ReactComponent as Send } from '@src/assets/icons/ck_arrow_up.svg';
 import { ReactComponent as SendGreen } from '@src/assets/icons/ck_arrow_right.svg';

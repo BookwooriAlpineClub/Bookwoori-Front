@@ -1,7 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react';
 import useModal from '@src/hooks/useModal';
 import { bottomsheetState } from '@src/states/atoms';
-import Bottomsheet from '@src/components/common/Bottomsheet';
+import Bottomsheet from '@src/components/common/modal/Bottomsheet';
 
 const App = () => {
   const { openModal: openBottomsheet, closeModal: closeBottomsheet } = useModal(bottomsheetState);

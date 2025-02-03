@@ -14,14 +14,11 @@ import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
 import Section from '@src/components/common/Section';
-import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
-import Button from '@src/components/common/Button';
-import ButtonBackground from '@src/components/common/ButtonBackground';
-import UnderlineButton from '@src/components/common/UnderlineButton';
-import InputText from '@src/components/common/InputText';
-import InputDatepicker, {
-  Period,
-} from '@src/components/common/InputDatepicker';
+import DeleteConfirmDialog from '@src/components/common/modal/DeleteConfirmDialog';
+import Button from '@src/components/common/button/Button';
+import UnderlineButton from '@src/components/common/button/UnderlineButton';
+import TextField from '@src/components/common/input/TextField';
+import Datepicker, { type Period } from '@src/components/common/input/Datepicker';
 
 const ClimbingEditPage = () => {
   const navigate = useEncodedNavigation();
@@ -90,61 +87,61 @@ const ClimbingEditPage = () => {
     <>
       <Header text='등반 편집하기' headerType='back' />
       <main>
-      <Form className='scroll-area'>
-        <Fieldset title='등반 이름'>
-          <Section>
-            <InputText
-              as='input'
-              name='등반 이름'
-              placeholder='등반 이름을 입력하세요.'
-              maxLength={20}
-              required
-              value={climbingName}
-              setValue={setClimbingName}
-            />
-          </Section>
-        </Fieldset>
-        <Fieldset title='책 제목'>
-          <Section>
-            <InputText
-              as='input'
-              name='책 제목'
-              placeholder='책 제목을 입력하세요.'
-              maxLength={-1}
-              required
-              value={bookTitle}
-              setValue={setBookTitle}
-              disabled
-            />
-          </Section>
-        </Fieldset>
-        <Fieldset title='등반 시기'>
-          <Section>
-            <InputDatepicker
-              name='등반 시기'
-              type='period'
-              min={formatDate(new Date())}
-              required
-              disabled='start'
-              value={date}
-              setValue={setDate}
-            />
-          </Section>
-        </Fieldset>
-        <Fieldset title='등반 설명'>
-          <Section>
-            <InputText
-              as='textarea'
-              name='등반 설명'
-              placeholder='사람들에게 등반에 대해 알려주세요.'
-              maxLength={150}
-              required
-              value={description}
-              setValue={setDescription}
-            />
-          </Section>
-        </Fieldset>
-      </Form>
+        <Form className='scroll-area'>
+          <Fieldset title='등반 이름'>
+            <Section>
+              <TextField
+                as='input'
+                name='등반 이름'
+                placeholder='등반 이름을 입력하세요.'
+                maxLength={20}
+                required
+                value={climbingName}
+                setValue={setClimbingName}
+              />
+            </Section>
+          </Fieldset>
+          <Fieldset title='책 제목'>
+            <Section>
+              <TextField
+                as='input'
+                name='책 제목'
+                placeholder='책 제목을 입력하세요.'
+                maxLength={-1}
+                required
+                value={bookTitle}
+                setValue={setBookTitle}
+                disabled
+              />
+            </Section>
+          </Fieldset>
+          <Fieldset title='등반 시기'>
+            <Section>
+              <Datepicker
+                name='등반 시기'
+                type='period'
+                min={formatDate(new Date())}
+                required
+                disabled='start'
+                value={date}
+                setValue={setDate}
+              />
+            </Section>
+          </Fieldset>
+          <Fieldset title='등반 설명'>
+            <Section>
+              <TextField
+                as='textarea'
+                name='등반 설명'
+                placeholder='사람들에게 등반에 대해 알려주세요.'
+                maxLength={150}
+                required
+                value={description}
+                setValue={setDescription}
+              />
+            </Section>
+          </Fieldset>
+        </Form>
         <Container>
           <Button
             disabled={!climbingName || !description || !date.end}
@@ -157,7 +154,7 @@ const ClimbingEditPage = () => {
             text='모임 삭제하기'
             onClick={() =>
               openDialog(
-                <DeleteConfirmModal
+                <DeleteConfirmDialog
                   closeDialog={closeDialog}
                   onClickDelete={handleClickDelete}
                 />,

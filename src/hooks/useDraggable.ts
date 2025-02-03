@@ -1,5 +1,5 @@
 import type { Category } from '@src/types/category';
-import React, { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 const updateList = (
   prevList: Category[],

@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import CommunityInfoSection from '@src/components/communityinfosetting/CommunityInfoSection';
+import CommunityInfoSection from '@src/components/community/CommunityInfoSection';
 import { CommunityInfoType } from '@src/pages/communityinfosetting/CommunityInfoSettingPage';
 import renderWithProviders from '@src/tests/utils/renderWithProvider.setup';
 
