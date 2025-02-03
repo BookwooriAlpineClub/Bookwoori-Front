@@ -15,9 +15,9 @@ import { editHandler } from '@src/apis/chat';
 import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
 import { formatChatItemTime } from '@src/utils/formatters';
-import { handleImgError } from '@src/utils/helpers';
+import { adjustHeight } from '@src/utils/helpers';
 import ChatMenu from '@src/components/common/emoji/EmojiBottomsheet';
-import Profile from '@src/assets/images/userSettings/background_default.svg';
+import UserAvatar from '@src/components/common/UserAvatar';
 import { ReactComponent as Response } from '@src/assets/icons/response.svg';
 import { ReactComponent as ReplyLine } from '@src/assets/images/chat/reply_line.svg';
 
@@ -58,23 +58,13 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
         inputRef.current.focus();
         const { length } = editContent;
         inputRef.current.setSelectionRange(length, length);
-        adjustHeight();
+        adjustHeight(inputRef, MIN_HEIGHT);
       }
     }, [editChatId, editContent]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setEditContent(e.target.value);
-      adjustHeight();
-    };
-
-    const adjustHeight = () => {
-      if (inputRef.current) {
-        inputRef.current.style.height = `${MIN_HEIGHT}px`;
-
-        if (inputRef.current.scrollHeight > MIN_HEIGHT) {
-          inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
-        }
-      }
+      adjustHeight(inputRef, MIN_HEIGHT);
     };
 
     // 메시지 수정 요청
@@ -141,9 +131,9 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
           </ReplyContainer>
         )}
         <Layout {...longPressHandler}>
-          <Img
-            src={user?.profileImg ?? Profile}
-            onError={(e) => handleImgError(e, Profile)}
+          <UserAvatar
+            profileImg={user?.profileImg ?? ''}
+            nickname={user?.nickname}
           />
           <Container>
             <Wrapper>
@@ -201,16 +191,16 @@ const ReplyContainer = styled.div`
   align-items: end;
 
   width: 100%;
-  margin-left: 1.25rem;
+  margin-left: 1.5rem;
 `;
 const LineWrapper = styled.div`
   margin-bottom: -0.6875rem;
 `;
 const ReplySpan = styled.span`
-  padding: ${({ theme }) => theme.padding[4]} ${({ theme }) => theme.padding[8]};
+  padding: ${({ theme }) => `${theme.padding[2]} ${theme.padding[12]}`};
   border-radius: ${({ theme }) => theme.rounded[8]};
 
-  background-color: ${({ theme }) => theme.colors.blue100};
+  background-color: ${({ theme }) => theme.colors.neutral200};
 
   ${({ theme }) => theme.fonts.body}
   font-size: 0.75rem;
@@ -219,7 +209,7 @@ const ReplySpan = styled.span`
 const Layout = styled.div`
   display: flex;
   position: relative;
-  gap: ${({ theme }) => theme.gap[12]};
+  gap: ${({ theme }) => theme.gap[8]};
 
   width: 100%;
 
@@ -228,17 +218,12 @@ const Layout = styled.div`
     transform: translateY(0);
   }
 `;
-const Img = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
-
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.blue100};
-`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.gap[4]};
+  justify-content: space-around;
+  gap: ${({ theme }) => theme.gap[2]};
+  
   width: 100%;
 `;
 const Wrapper = styled.div`
@@ -286,6 +271,7 @@ const Text = styled.p`
   font-weight: 600;
 
   cursor: default;
+  white-space: pre-wrap;
 `;
 const ReplyMenu = styled.button`
   display: flex;
