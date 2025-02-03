@@ -4,6 +4,7 @@ import { useGetClimbingReview } from '@src/hooks/query/climbing';
 import styled from 'styled-components';
 import Spinner from '@src/components/common/Spinner';
 import ReviewItem from '@src/components/climbing/ReviewItem';
+import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 
 const ReviewBoard = () => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
@@ -14,6 +15,7 @@ const ReviewBoard = () => {
 
   return (
     <Container>
+      <ClimbingDescription />
       <ReviewListContainer>
         {data.hasShared ? (
           data.ClimbingMemberReviewList.map((review, idx) => (

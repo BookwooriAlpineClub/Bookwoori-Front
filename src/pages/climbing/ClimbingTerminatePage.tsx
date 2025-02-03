@@ -4,7 +4,6 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import ReviewBoard from '@src/components/climbing/ReviewBoard';
 import SegmentedControl from '@src/components/common/SegmentedControl';
-import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 
 export type ViewType = 'climbing' | 'review';
 
@@ -27,7 +26,6 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
           onSegmentChange={handleSegmentChange}
           defaultValue='review'
         />
-        <ClimbingDescription />
         {selectedView === 'climbing' && <ClimbingBoard />}
         {selectedView === 'review' && <ReviewBoard />}
       </Main>
