@@ -10,6 +10,7 @@ import {
 import useLongPress from '@src/hooks/useLongPress';
 import useModal from '@src/hooks/useModal';
 import useToast from '@src/hooks/useToast';
+import { useGetProfile } from '@src/hooks/query/member';
 import { editHandler } from '@src/apis/chat';
 import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
@@ -22,15 +23,14 @@ import { ReactComponent as ReplyLine } from '@src/assets/images/chat/reply_line.
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;
-  nickname: string;
   createdAt: string;
-  imgUrl?: string;
 }
 
 const MIN_HEIGHT = 32;
 
 const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
-  ({ chatItem, imgUrl, nickname, createdAt }: ChatItemProps, ref) => {
+  ({ chatItem, createdAt }: ChatItemProps, ref) => {
+    const { profileData: user } = useGetProfile(chatItem.memberId);
     const [editChatId, setEditChatId] = useRecoilState(editChatIdState);
     const [replyChatId, setReplyChatId] = useRecoilState(replyChatIdState);
     const setReplyChat = useSetRecoilState(replyChatState);
@@ -41,6 +41,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
     const addToast = useToast();
     const longPressHandler = useLongPress({
       onLongPress: () =>
+        user?.isMine &&
         openBottomsheet(
           <ChatMenu
             id={chatItem.id}
@@ -111,7 +112,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
     const handleReply = () => {
       setReplyChat({
         ...chatItem,
-        nickname,
+        nickname: user?.nickname,
       });
     };
 
@@ -141,12 +142,12 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
         )}
         <Layout {...longPressHandler}>
           <Img
-            src={imgUrl ?? Profile}
+            src={user?.profileImg ?? Profile}
             onError={(e) => handleImgError(e, Profile)}
           />
           <Container>
             <Wrapper>
-              <Nickname>{nickname}</Nickname>
+              <Nickname>{user?.nickname}</Nickname>
               <Time>
                 {useMemo(
                   () => createdAt && formatChatItemTime(createdAt),
@@ -247,10 +248,12 @@ const Wrapper = styled.div`
 `;
 const Nickname = styled.label`
   line-height: 1.25rem;
+  cursor: default;
 `;
 const Time = styled.label`
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.neutral600};
+  cursor: default;
 `;
 const Form = styled.form`
   display: flex;
