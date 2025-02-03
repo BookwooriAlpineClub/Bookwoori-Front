@@ -43,10 +43,8 @@ const ReviewListContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  border-radius: 0.9375rem;
+  border-radius: ${({ theme }) => theme.rounded['16']};
   background-color: ${({ theme }) => theme.colors.neutral0};
-  border: solid 0.1rem ${({ theme }) => theme.colors.neutral200};
-  //min-height: 30rem;
   overflow-y: scroll;
   padding: ${({ theme }) => theme.padding['16']};
 `;
