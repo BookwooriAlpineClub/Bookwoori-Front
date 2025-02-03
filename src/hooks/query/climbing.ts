@@ -234,12 +234,18 @@ export const usePutEmojiOnReview = (climbingId: number, reviewId: number) => {
                   );
                   let updatedReviewEmojiList;
                   if (emojiItem) {
-                    updatedReviewEmojiList = review.reviewEmojiList.map(
-                      (item) =>
-                        item.emoji === emoji
-                          ? { ...item, emojiCount: item.emojiCount + 1 }
-                          : item,
-                    );
+                    if (emojiItem.emojiCount === 1) {
+                      updatedReviewEmojiList = review.reviewEmojiList.filter(
+                        (item) => item.emoji !== emoji,
+                      );
+                    } else {
+                      updatedReviewEmojiList = review.reviewEmojiList.map(
+                        (item) =>
+                          item.emoji === emoji
+                            ? { ...item, emojiCount: item.emojiCount - 1 }
+                            : item,
+                      );
+                    }
                   } else {
                     updatedReviewEmojiList = [
                       ...review.reviewEmojiList,
