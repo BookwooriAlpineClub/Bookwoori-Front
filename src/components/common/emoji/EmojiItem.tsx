@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { EmojiType } from '@src/constants/constants';
 
@@ -14,19 +14,17 @@ const LONG_PRESS_DURATION = 500;
 
 const EmojiItem = ({
   emoji,
-  initialIsSelected = true,
+  initialIsSelected: isSelected = true,
   count = -1,
   onClick,
   onLongPress,
 }: EmojiItemProps) => {
-  let pressTimer: NodeJS.Timeout;
-  const [emojiState, setEmojiState] = useState({
-    isSelected: initialIsSelected,
-    count,
-  });
+  const pressTimerRef = useRef<NodeJS.Timeout | null>(null);
+
   const [animationDirection, setAnimationDirection] = useState<
     'up' | 'down' | null
   >(null);
+  const [isLongPress, setIsLongPress] = useState(false);
 
   if (typeof emoji !== 'string') {
     return (
@@ -37,31 +35,36 @@ const EmojiItem = ({
   }
 
   const handleClick = async () => {
-    if (count === -1) {
-      onClick();
+    if (isLongPress) {
+      setIsLongPress(false);
       return;
     }
-    setEmojiState((prev) => {
-      const newState = {
-        isSelected: !prev.isSelected,
-        count: prev.isSelected ? prev.count - 1 : prev.count + 1,
-      };
-
-      setAnimationDirection(newState.isSelected ? 'up' : 'down');
-      return newState;
-    });
-
     onClick();
   };
 
   const handleMouseDown = useCallback(() => {
     if (count > 0 && onLongPress) {
-      pressTimer = setTimeout(onLongPress, LONG_PRESS_DURATION);
+      pressTimerRef.current = setTimeout(() => {
+        setIsLongPress(true);
+        onLongPress();
+      }, LONG_PRESS_DURATION);
     }
   }, [count, onLongPress]);
 
   const handleMouseUp = useCallback(() => {
-    clearTimeout(pressTimer);
+    if (pressTimerRef.current) {
+      clearTimeout(pressTimerRef.current);
+      pressTimerRef.current = null;
+      setIsLongPress(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (pressTimerRef.current) {
+        clearTimeout(pressTimerRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -73,20 +76,20 @@ const EmojiItem = ({
   }, [animationDirection]);
 
   const apiEmojiKey: keyof typeof EmojiType = emoji;
-  console.log(emoji);
-  return emojiState.count ? (
+  return count ? (
     <Item
-      isSelected={emojiState.isSelected}
+      isSelected={isSelected}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
+      onTouchStart={handleMouseDown}
+      onTouchEnd={handleMouseUp}
+      onTouchCancel={handleMouseUp}
       onClick={handleClick}
     >
       <Emoji>{EmojiType[apiEmojiKey].value}</Emoji>
-      {emojiState.count > 0 && (
-        <Count animationDirection={animationDirection}>
-          {emojiState.count}
-        </Count>
+      {count > 0 && (
+        <Count animationDirection={animationDirection}>{count}</Count>
       )}
     </Item>
   ) : null;

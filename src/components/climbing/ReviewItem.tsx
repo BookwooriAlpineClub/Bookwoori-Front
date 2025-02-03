@@ -7,6 +7,7 @@ import { EmojiType } from '@src/constants/constants';
 import { bottomsheetState } from '@src/states/atoms';
 import useModal from '@src/hooks/useModal';
 import EmojiBottomSheet from '@src/components/climbing/EmojiBottomSheet';
+import { useGetReviewEmojis } from '@src/hooks/query/climbing';
 
 interface ReviewItemProps {
   climbingId: number;
@@ -23,6 +24,10 @@ interface ReviewItemProps {
 
 const ReviewItem = ({ climbingId, review }: ReviewItemProps) => {
   const { openModal } = useModal(bottomsheetState);
+  const { getEmojis } = useGetReviewEmojis({
+    climbingId,
+    reviewId: review.reviewId,
+  });
 
   const handleOpenBottomSheet = () => {
     openModal(
@@ -46,6 +51,7 @@ const ReviewItem = ({ climbingId, review }: ReviewItemProps) => {
         <EmojiList
           reviewId={review.reviewId}
           emojis={review.reviewEmojiList}
+          emojiMembers={getEmojis.data}
           onAddClick={handleOpenBottomSheet}
         />
       </ReviewContent>
