@@ -75,12 +75,15 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
       {replyChatItem && (
         <ReplyLayout>
           <ReplyContainer>
-            <Span>{replyChatItem.nickname}에게 답장</Span>
-            <ReplyContent>{replyChatItem.content}</ReplyContent>
+            <ReplyWrapper>
+              <Span>{replyChatItem.nickname}에게 답장</Span>
+              <ReplyContent>{replyChatItem.content}</ReplyContent>
+            </ReplyWrapper>
+            <Button type='button' onClick={() => setReplyChatItem(null)}>
+              <Delete width={25} height={25} />
+            </Button>
           </ReplyContainer>
-          <Button type='button' onClick={() => setReplyChatItem(null)}>
-            <Delete width={25} height={25} />
-          </Button>
+          <Line />
         </ReplyLayout>
       )}
       <Container>
@@ -118,13 +121,19 @@ const Layout = styled.div`
 `;
 const ReplyLayout = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-
-  padding: ${({ theme }) => `${theme.padding[8]} ${theme.padding[24]}`};
-  background-color: ${({ theme }) => theme.colors.blue100};
 `;
 const ReplyContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  padding: ${({ theme }) => `${theme.padding[8]} ${theme.padding[24]}`};
+  background-color: ${({ theme }) => theme.colors.neutral0};
+`;
+const ReplyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.gap[2]};
@@ -134,6 +143,12 @@ const Span = styled.span`
 `;
 const ReplyContent = styled.p`
   color: ${({ theme }) => theme.colors.neutral950};
+`;
+const Line = styled.line`
+  height: 0.0625rem;
+  width: 95%;
+
+  background-color: ${({ theme }) => theme.colors.neutral200};
 `;
 const Container = styled.div`
   display: flex;
