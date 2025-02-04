@@ -18,7 +18,9 @@ import ReviewField from '@src/components/library/ReviewField';
 
 const RecordDetailPage = () => {
   const { bookId: isbn13 = '' } = useParams<{ bookId: string }>();
-  const { data: bookDetail } = useGetBookDetail(isbn13);
+  const {
+    data: { title, author, cover, publisher, pubYear, description, itemPage },
+  } = useGetBookDetail(isbn13);
   const [isTop, setIsTop] = useState<boolean>(true);
 
   const navigate = useNavigate();
@@ -32,11 +34,18 @@ const RecordDetailPage = () => {
   }, []);
 
   return (
-    <Container $cover={bookDetail.cover}>
+    <Container $cover={cover}>
       <SHeader text='' headerType='back' $isTop={isTop} />
       <main>
-        <BookDetail status={status} {...bookDetail} />
-        <Description>{bookDetail?.description}</Description>
+        <BookDetail
+          title={title}
+          author={author}
+          cover={cover}
+          publisher={publisher}
+          pubYear={pubYear}
+          itemPage={itemPage}
+        />
+        <Description>{description}</Description>
       </main>
     </Container>
   );
