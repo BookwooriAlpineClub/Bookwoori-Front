@@ -34,9 +34,9 @@ const RecordDetailPage = () => {
   }, []);
 
   return (
-    <Container $cover={cover}>
+    <>
       <SHeader text='' headerType='back' $isTop={isTop} />
-      <main>
+      <Main $cover={cover}>
         <BookDetail
           title={title}
           author={author}
@@ -46,14 +46,14 @@ const RecordDetailPage = () => {
           itemPage={itemPage}
         />
         <Description>{description}</Description>
-      </main>
-    </Container>
+      </Main>
+    </>
   );
 };
 
 export default RecordDetailPage;
 
-const Container = styled.div<{ $cover: Book['cover'] }>`
+const Main = styled.main<{ $cover: Book['cover'] }>`
   display: flex;
   flex-flow: column nowrap;
   gap: ${({ theme }) => theme.gap[16]};
