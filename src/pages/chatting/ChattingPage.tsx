@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   editChatIdState,
   replyChatIdState,
@@ -21,11 +21,11 @@ import Header from '@src/components/common/Header';
 const ChattingPage = () => {
   const { id: memberId } = useLoaderData<{ id: number }>();
   const setEditChatId = useSetRecoilState(editChatIdState);
-  const [replyChatItem, setReplyChatItem] = useRecoilState(replyChatState);
+  const setReplyChatItem = useSetRecoilState(replyChatState);
   const replyChatId = useRecoilValue(replyChatIdState);
 
   const { roomInfo } = usePostMessageRoom(memberId);
-  const { data, fetchNextPage, hasNextPage, refetch } = useGetDMList(
+  const { data, refetch, hasNextPage, fetchNextPage } = useGetDMList(
     roomInfo?.messageRoomId ?? -1,
   );
 
@@ -60,27 +60,36 @@ const ChattingPage = () => {
     }
   }, [replyChatId]);
 
+  // 최초 데이터 저장
   useEffect(() => {
+    if (!isInitial) return;
     if (!data) return;
 
-    if (isInitial) {
+    setMessages(data);
+    setIsInitial(false);
+    setTimeout(() => {
+      if (chatRef.current) {
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      }
+    }, 0);
+  }, [data, isInitial]);
+
+  // 페이지 패칭
+  useEffect(() => {
+    if (!inView) return;
+    if (!hasNextPage) return;
+
+    const prevHeight = chatRef.current?.scrollHeight ?? 0;
+    fetchNextPage().then(() => {
+      if (!data) return;
       setMessages(data);
-      setIsInitial(false);
 
       setTimeout(() => {
         if (chatRef.current) {
-          chatRef.current.scrollTop = chatRef.current.scrollHeight;
+          chatRef.current.scrollTop = chatRef.current.scrollHeight - prevHeight;
         }
       }, 0);
-    }
-  }, [data]);
-
-  // 데이터 패칭
-  useEffect(() => {
-    if (!inView) return;
-
-    if (hasNextPage) fetchNextPage();
-    if (data) setMessages(data);
+    });
   }, [inView, hasNextPage]);
 
   // 새로운 메시지 보냈을 때 스크롤 이동
@@ -104,18 +113,17 @@ const ChattingPage = () => {
         headerType='back'
         onClick={handleRefresh}
       />
-      <Main ref={chatRef} $isExistReply={Boolean(replyChatItem)}>
+      <Main ref={chatRef}>
         <Container>
           {allMessages.map((it, idx) => {
-            const participant = roomInfo?.participants?.[String(it.memberId)];
-            const prevMessage = [...newMessages, ...messages][idx + 1];
+            const prevMessage = allMessages[idx + 1];
             const { date: prevDate } = prevMessage
               ? formatCreatedAt(prevMessage.createdAt)
               : { date: null };
             const { date: currentDate, time: currentTime } = formatCreatedAt(
               it.createdAt,
             );
-            const showDateLine = prevDate !== currentDate;
+            const showDateLine = hasNextPage ? false : prevDate !== currentDate;
 
             return (
               <React.Fragment key={it.id}>
@@ -124,8 +132,6 @@ const ChattingPage = () => {
                   key={it.id}
                   chatItem={it}
                   createdAt={currentTime}
-                  imgUrl={participant?.profileImg ?? undefined}
-                  nickname={participant?.nickname ?? ''}
                 />
                 {showDateLine && <DateLine date={currentDate} />}
               </React.Fragment>
@@ -141,14 +147,12 @@ const ChattingPage = () => {
 
 export default ChattingPage;
 
-const Main = styled.main<{ $isExistReply: boolean }>`
+const Main = styled.main`
   display: flex;
   position: relative;
   flex-direction: column;
 
-  padding-top: 4.375rem;
-  padding-bottom: ${({ $isExistReply }) =>
-    $isExistReply ? '8.0625rem' : '4.4375rem'};
+  padding-bottom: 4.5625rem;
   width: 100%;
   height: 100%;
 
