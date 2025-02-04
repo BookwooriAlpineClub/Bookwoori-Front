@@ -3,6 +3,7 @@ import { NoSelect } from '@src/styles/mixins';
 
 interface Props {
   name: string;
+  required?: boolean;
   readOnly?: boolean;
   value?: number;
   setValue?: React.Dispatch<React.SetStateAction<number>>;
@@ -11,8 +12,9 @@ interface Props {
 }
 
 const PageField = ({
-  name = '독서 현황',
-  readOnly = false,
+  name,
+  required,
+  readOnly,
   value,
   setValue,
   currentPage,
@@ -44,7 +46,7 @@ const PageField = ({
         type='tel'
         name={name}
         placeholder={`${currentPage}쪽`}
-        required
+        required={required}
         readOnly={readOnly}
         value={`${value}쪽`}
         onKeyDown={handleKeydown}
