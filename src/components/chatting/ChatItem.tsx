@@ -15,10 +15,11 @@ import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
 import { formatChatItemTime } from '@src/utils/formatters';
 import { handleImgError } from '@src/utils/helpers';
-import ChatMenu from '@src/components/common/emoji/EmojiBottomsheet';
+import ChatMenu from '@src/components/common/emoji/ChattingBottomsheet';
 import Profile from '@src/assets/images/userSettings/background_default.svg';
 import { ReactComponent as Response } from '@src/assets/icons/response.svg';
 import { ReactComponent as ReplyLine } from '@src/assets/images/chat/reply_line.svg';
+import EmojiList from '@src/components/chatting/EmojiList';
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;
@@ -115,7 +116,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
       });
     };
 
-    // 답장 부모 메시지 이동 시 배경색 변화 
+    // 답장 부모 메시지 이동 시 배경색 변화
     useEffect(() => {
       if (replyChatId === chatItem.id) {
         setIsSelected(true);
@@ -165,7 +166,16 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
                 <Span>ESC 키로 취소 • Enter 키로 저장</Span>
               </Form>
             ) : (
-              <Text>{chatItem.content}</Text>
+              <>
+                <Text>{chatItem.content}</Text>
+                {chatItem.reactions &&
+                  Object.keys(chatItem.reactions).length > 0 && (
+                    <EmojiList
+                      reactions={chatItem.reactions}
+                      id={chatItem.id}
+                    />
+                  )}
+              </>
             )}
           </Container>
           <ReplyMenu onClick={handleReply}>
