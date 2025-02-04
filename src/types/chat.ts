@@ -3,6 +3,7 @@ export type Payload =
   | ({ channelId: number } & BasePayload);
 
 export interface BasePayload {
+  parentMemberId?: number;
   parentId?: string;
   parentContent?: string;
   id: string;

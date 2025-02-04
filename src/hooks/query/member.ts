@@ -12,6 +12,7 @@ export const useGetProfile = (userId: number | 'me') => {
   const { data } = useQuery<ProfileRes, AxiosError>({
     queryKey: ['getProfile', userId],
     queryFn: () => getProfile(userId),
+    enabled: userId !== -1,
   });
 
   return { profileData: data };

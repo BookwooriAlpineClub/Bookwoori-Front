@@ -32,6 +32,7 @@ const MIN_HEIGHT = 32;
 const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
   ({ chatItem, createdAt }: ChatItemProps, ref) => {
     const { profileData: user } = useGetProfile(chatItem.memberId);
+    const { profileData: other } = useGetProfile(chatItem.parentMemberId ?? -1);
     const [editChatId, setEditChatId] = useRecoilState(editChatIdState);
     const [replyChatId, setReplyChatId] = useRecoilState(replyChatIdState);
     const setReplyChat = useSetRecoilState(replyChatState);
@@ -108,7 +109,6 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
     };
 
     // 답장 부모 메시지 이동 시 배경색 변화
-    // 답장 부모 메시지 이동 시 배경색 변화
     useEffect(() => {
       if (replyChatId === chatItem.id) {
         setIsSelected(true);
@@ -128,6 +128,8 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
               <ReplyLine width={30} height={20} />
             </LineWrapper>
             <ReplySpan onClick={() => setReplyChatId(chatItem.parentId)}>
+              <ReplyNickname>{other?.nickname}에게 답장</ReplyNickname>
+              {'\n'}
               {chatItem.parentContent}
             </ReplySpan>
           </ReplyContainer>
@@ -213,8 +215,16 @@ const ReplySpan = styled.span`
 
   background-color: ${({ theme }) => theme.colors.neutral0};
 
+  color: ${({ theme }) => theme.colors.neutral600};
   ${({ theme }) => theme.fonts.body}
   font-size: 0.75rem;
+  cursor: pointer;
+  white-space: pre-wrap;
+`;
+const ReplyNickname = styled.span`
+  color: ${({ theme }) => theme.colors.neutral950};
+  ${({ theme }) => theme.fonts.body}
+  font-size: 0.7rem;
   cursor: pointer;
 `;
 const Layout = styled.div`
@@ -239,7 +249,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-around;
   gap: ${({ theme }) => theme.gap[2]};
-  
+
   width: 100%;
 `;
 const Wrapper = styled.div`
