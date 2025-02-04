@@ -13,6 +13,9 @@ import {
   getServers,
   getServerMembers,
   postServerInvitationCode,
+  deleteServerMember,
+  patchServerMemberOwner,
+  deleteServer,
 } from '@src/apis/server';
 
 export const useGetServerList = () => {
@@ -89,6 +92,31 @@ export const useGetServerMembers = (serverId: number) => {
 export const usePostServerInviteCode = (serverId: number) => {
   const mutation = useMutation({
     mutationFn: () => postServerInvitationCode(serverId),
+  });
+  return mutation;
+};
+
+/* 서버 나가기 */
+export const useDeleteServerMember = (serverId: number) => {
+  const mutation = useMutation({
+    mutationFn: () => deleteServerMember(serverId),
+  });
+  return mutation;
+};
+
+/* 서버 권한 위임 */
+export const usePatchServerMemberOwner = (serverId: number) => {
+  const mutation = useMutation({
+    mutationFn: (memberId: number) =>
+      patchServerMemberOwner(serverId, { memberId }),
+  });
+  return mutation;
+};
+
+/* 서버 삭제 */
+export const useDeleteServer = (serverId: number) => {
+  const mutation = useMutation({
+    mutationFn: () => deleteServer(serverId),
   });
   return mutation;
 };

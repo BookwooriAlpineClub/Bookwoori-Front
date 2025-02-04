@@ -131,18 +131,6 @@ export const patchServerOwner = async (
   return response.data;
 };
 
-export const deleteServerMember = async <Res = void, Req = void>(
-  serverId: number,
-  body: Req,
-  headers?: Record<string, string>,
-): Promise<Res> => {
-  const response = await authClient.delete<Res, AxiosResponse<Res>>(
-    buildServerUrl(`/${serverId}/members`),
-    { data: body, headers },
-  );
-  return response.data;
-};
-
 export const getServerChannels = async <Res = []>(
   serverId: number,
   headers?: Record<string, string>,
@@ -171,6 +159,31 @@ export const postServerInvitationCode = async (
 ): Promise<GetInviteCodeRes> => {
   const response = await authClient.post<GetInviteCodeRes>(
     buildServerUrl(`/code/${serverId}`),
+  );
+  return response.data;
+};
+
+export const deleteServerMember = async (serverId: number): Promise<void> => {
+  const response = await authClient.delete<void>(
+    buildServerUrl(`/${serverId}/members`),
+  );
+  return response.data;
+};
+
+export const patchServerMemberOwner = async (
+  serverId: number,
+  body: PatchServerMemberRoleReq,
+): Promise<void> => {
+  const response = await authClient.patch<void>(
+    buildServerUrl(`/${serverId}/members`),
+    body,
+  );
+  return response.data;
+};
+
+export const deleteServer = async (serverId: number): Promise<void> => {
+  const response = await authClient.delete<void>(
+    buildServerUrl(`/${serverId}`),
   );
   return response.data;
 };
