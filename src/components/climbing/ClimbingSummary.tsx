@@ -49,7 +49,7 @@ const ClimbingSummary = ({
         <DateText>{`${startDate} ~ ${endDate}, `}</DateText>
         <HighlightText>{`${dDay}`}</HighlightText>
       </DateInfo>
-      <Tag Icon={GroupIcon} text={memberCount} color='blue' />
+      <StyledTag Icon={GroupIcon} text={memberCount} color='blue' />
     </Container>
   );
 };
@@ -84,4 +84,9 @@ const HighlightText = styled.span`
 const StyledCalendarIcon = styled(CalendarIcon)`
   color: ${({ theme }) => theme.colors.blue500};
   font-size: 1.0625rem;
+`;
+
+const StyledTag = styled(Tag)`
+  color: ${({ theme }) => theme.colors.neutral600};
+  border-radius: ${({ theme }) => theme.rounded['12']};
 `;

@@ -55,10 +55,10 @@ type getClimbingReviewRes2 = {
 
 export type getClimbingReviewEmojiRes = {
   reviewEmojiList: {
-    emoji: EmojiTypeType;
+    emoji: string;
     reviewEmojiMemberList: Pick<
       ClimbingMember,
       'memberId' | 'nickname' | 'profileImg' | 'level' | 'mountain'
     >[];
-  };
+  }[];
 };

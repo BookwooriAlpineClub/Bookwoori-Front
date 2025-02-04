@@ -7,7 +7,7 @@ import { useGetProfile } from '@src/hooks/query/member';
 import { bottomsheetState } from '@src/states/atoms';
 import { formatChatItemTime } from '@src/utils/formatters';
 import styled from 'styled-components';
-import ChatMenu from '@src/components/common/emoji/EmojiBottomsheet';
+import ChatMenu from '@src/components/common/emoji/ChattingBottomsheet';
 import Profile from '@src/assets/images/userSettings/background_default.svg';
 
 interface ChatItemProps {

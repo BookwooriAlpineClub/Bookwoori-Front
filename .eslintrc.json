@@ -70,6 +70,13 @@
       "error",
       { "namedComponents": ["arrow-function", "function-declaration"] }
     ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
     "no-use-before-define": "off",
