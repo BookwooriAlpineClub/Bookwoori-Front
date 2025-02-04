@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { authClient } from '@src/apis/index';
-import type {
+import {
   PostServerReq,
   GetServerOneRes,
   PatchServerOneReq,
@@ -9,6 +9,7 @@ import type {
   GetServerMembersRes,
   PatchServerMemberRoleReq,
   GetServersRes,
+  GetInviteCodeRes,
 } from '@src/types/apis/server';
 
 const SERVER_BASE_URL = '/servers';
@@ -161,6 +162,15 @@ export const getServerClimbing = async <Res = []>(
   const response = await authClient.get<Res, AxiosResponse<Res>>(
     buildServerUrl(`/${serverId}/climbs${query || ''}`),
     { headers },
+  );
+  return response.data;
+};
+
+export const postServerInvitationCode = async (
+  serverId: number,
+): Promise<GetInviteCodeRes> => {
+  const response = await authClient.post<GetInviteCodeRes>(
+    buildServerUrl(`/code/${serverId}`),
   );
   return response.data;
 };

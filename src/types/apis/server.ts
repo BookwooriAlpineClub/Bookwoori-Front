@@ -12,9 +12,7 @@ export interface GetServerOneRes extends Server {
   isOwner: boolean;
 }
 
-export interface GetInviteCodeRes {
-  inviteCode: string;
-}
+export type GetInviteCodeRes = string;
 
 export interface PatchServerOneReq
   extends Pick<Server, 'name' | 'description'> {}
