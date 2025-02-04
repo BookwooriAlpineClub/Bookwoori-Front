@@ -33,13 +33,10 @@ const RecordDetailPage = () => {
   return (
     <Container>
       <SHeader text='' headerType='back' $isTop={isTop} />
-      {/* <main>
-        <BookInfoDetail status={status} {...bookDetail} />
-        <Description>
-          <h2>책 소개</h2>
-          <p>{bookDetail.description}</p>
-        </Description>
-      </main> */}
+      <main>
+        <BookDetail status={status} {...bookDetail} />
+        <Description>{bookDetail?.description}</Description>
+      </main>
     </Container>
   );
 };
@@ -71,15 +68,6 @@ const SHeader = styled(Header)<{ $isTop: boolean }>`
   background-color: ${({ $isTop, theme }) =>
     $isTop ? 'transparent' : theme.colors.neutral0};
 `;
-// const Description = styled.section`
-//   display: flex;
-//   flex-flow: column nowrap;
-//   gap: ${({ theme }) => theme.gap[16]};
-
-//   h2 {
-//     ${({ theme }) => theme.fonts.mountain}
-//   }
-//   p {
-//     ${({ theme }) => theme.fonts.body}
-//   }
-// `;
+const Description = styled.p`
+  ${({ theme }) => theme.fonts.body}
+`;
