@@ -14,7 +14,7 @@ const ReviewListItem = ({
   author,
   cover,
   publisher,
-  pubYear,
+  pubDate,
   records,
 }: Props) => {
   const navigate = useEncodedNavigate();
@@ -29,7 +29,7 @@ const ReviewListItem = ({
         author={author}
         cover={cover}
         publisher={publisher}
-        pubYear={pubYear}
+        pubDate={pubDate}
       />
       {records.map(
         ({ recordId, startDate, endDate, starReview, contentReview }) => (

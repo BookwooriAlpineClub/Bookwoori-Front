@@ -19,7 +19,7 @@ import ReviewField from '@src/components/library/ReviewField';
 const RecordDetailPage = () => {
   const { bookId: isbn13 = '' } = useParams<{ bookId: string }>();
   const {
-    data: { title, author, cover, publisher, pubYear, description, itemPage },
+    data: { title, author, cover, publisher, pubDate, description, itemPage },
   } = useGetBookDetail(isbn13);
   const [isTop, setIsTop] = useState<boolean>(true);
 
@@ -42,7 +42,7 @@ const RecordDetailPage = () => {
           author={author}
           cover={cover}
           publisher={publisher}
-          pubYear={pubYear}
+          pubDate={pubDate}
           itemPage={itemPage}
         />
         <Description>{description}</Description>

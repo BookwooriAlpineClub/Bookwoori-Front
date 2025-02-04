@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 type Props = Omit<ElementOfArray<GetBookListRes>, 'isbn13'>;
 
-const BookListItem = ({ title, author, cover, publisher, pubYear }: Props) => {
+const BookListItem = ({ title, author, cover, publisher, pubDate }: Props) => {
   return (
     <Container>
       <Img src={cover} alt='책 표지' loading='lazy' />
@@ -13,7 +13,7 @@ const BookListItem = ({ title, author, cover, publisher, pubYear }: Props) => {
         <PubWrapper>
           <CaptionEllipsis>{publisher}</CaptionEllipsis>
           <Caption>·</Caption>
-          <Caption>{pubYear}</Caption>
+          <Caption>{pubDate}</Caption>
         </PubWrapper>
       </TextWrapper>
     </Container>

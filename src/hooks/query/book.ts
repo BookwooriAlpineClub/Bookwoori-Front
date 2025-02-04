@@ -21,7 +21,7 @@ const useGetBookDetail = (isbn13: Book['isbn13']) => {
       author: '',
       cover: '',
       publisher: '',
-      pubYear: '',
+      pubDate: '',
       description: '',
       itemPage: -1,
     },

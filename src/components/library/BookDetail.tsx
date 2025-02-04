@@ -4,7 +4,7 @@ import { BookImg, TextEllipsis } from '@src/styles/mixins';
 
 type Props = Pick<
   Book,
-  'title' | 'author' | 'cover' | 'publisher' | 'pubYear' | 'itemPage'
+  'title' | 'author' | 'cover' | 'publisher' | 'pubDate' | 'itemPage'
 >;
 
 const BookDetail = ({
@@ -12,7 +12,7 @@ const BookDetail = ({
   author,
   cover,
   publisher,
-  pubYear,
+  pubDate,
   itemPage,
 }: Props) => {
   return (
@@ -24,7 +24,7 @@ const BookDetail = ({
         <PubWrapper>
           <CaptionEllipsis $line={1}>{publisher}</CaptionEllipsis>
           <Caption>·</Caption>
-          <Caption>{pubYear}</Caption>
+          <Caption>{pubDate}</Caption>
         </PubWrapper>
         <CaptionEllipsis $line={1}>{itemPage}쪽</CaptionEllipsis>
       </InfoWrapper>

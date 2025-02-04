@@ -26,7 +26,7 @@ export type GetReviewListRes = {
   readonly author: Book['author'];
   readonly cover: Book['cover'];
   readonly publisher: Book['publisher'];
-  readonly pubYear: Book['pubYear'];
+  readonly pubDate: Book['pubDate'];
   records: {
     readonly recordId: Record['recordId'];
     startDate: NonNullable<Record['startDate']>;
