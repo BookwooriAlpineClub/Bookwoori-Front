@@ -197,10 +197,10 @@ const LineWrapper = styled.div`
   margin-bottom: -0.6875rem;
 `;
 const ReplySpan = styled.span`
-  padding: ${({ theme }) => `${theme.padding[2]} ${theme.padding[12]}`};
+  padding: ${({ theme }) => `${theme.padding[2]} ${theme.padding[8]}`};
   border-radius: ${({ theme }) => theme.rounded[8]};
 
-  background-color: ${({ theme }) => theme.colors.neutral200};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 
   ${({ theme }) => theme.fonts.body}
   font-size: 0.75rem;
@@ -217,6 +217,11 @@ const Layout = styled.div`
     opacity: 1;
     transform: translateY(0);
   }
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-use-select: none;
+  user-select: none;
 `;
 const Container = styled.div`
   display: flex;
