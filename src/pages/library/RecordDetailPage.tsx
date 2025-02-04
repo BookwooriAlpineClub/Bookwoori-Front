@@ -1,3 +1,4 @@
+import Book from '@src/types/book';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
@@ -31,7 +32,7 @@ const RecordDetailPage = () => {
   }, []);
 
   return (
-    <Container>
+    <Container $cover={bookDetail.cover}>
       <SHeader text='' headerType='back' $isTop={isTop} />
       <main>
         <BookDetail status={status} {...bookDetail} />
@@ -43,12 +44,22 @@ const RecordDetailPage = () => {
 
 export default RecordDetailPage;
 
-const Container = styled.div`
+const Container = styled.div<{ $cover: Book['cover'] }>`
   display: flex;
   flex-flow: column nowrap;
   gap: ${({ theme }) => theme.gap[16]};
 
   &::before {
+    content: '';
+
+    position: absolute;
+    z-index: -2;
+
+    opacity: 60%;
+    background: url(${({ $cover }) => $cover}) center / cover no-repeat;
+    filter: blur(12px);
+  }
+  &::after {
     content: '';
 
     position: absolute;
