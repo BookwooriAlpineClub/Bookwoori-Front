@@ -24,7 +24,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
 
   useEffect(() => {
     adjustHeight(inputRef, MIN_HEIGHT);
-  }, []);
+  }, [chat]);
 
   // 답장 보낼 때 채팅바 포커싱, 높이 조절
   useEffect(() => {
@@ -55,6 +55,8 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      
       if (replyChatItem) {
         handleSendReply();
         return;
