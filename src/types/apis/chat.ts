@@ -9,13 +9,8 @@ export interface MessageReq {
 
 export interface ReactionReq {
   id: string;
-  emoji:
-    | 'thumps_up'
-    | 'heart_hands'
-    | 'smiling_face'
-    | 'crying_face'
-    | 'thinking_face';
-  action: 'add' | 'remove';
+  emoji: string;
+  action: string;
 }
 
 export interface ReplyReq extends MessageReq {

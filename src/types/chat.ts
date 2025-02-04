@@ -12,7 +12,14 @@ export interface BasePayload {
   reactions?: Reactions;
 }
 
-export type Reactions = Partial<Record<EmojiTypeType, ReactionDetail>>;
+export interface Reactions {
+  [reactionName: string]: ReactionDetail;
+}
+
+interface ReactionDetail {
+  count: number;
+  members: number[];
+}
 
 interface ReactionDetail {
   count: number;
