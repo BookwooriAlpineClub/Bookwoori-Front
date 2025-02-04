@@ -15,6 +15,16 @@ const useGetBookDetail = (isbn13: Book['isbn13']) => {
   return useQuery<GetBookDetailRes, AxiosError>({
     queryKey: ['getBookDetail', isbn13],
     queryFn: () => getBookDetail(isbn13),
+    initialData: {
+      isbn13: '',
+      title: '',
+      author: '',
+      cover: '',
+      publisher: '',
+      pubYear: '',
+      description: '',
+      itemPage: -1,
+    },
   });
 };
 
