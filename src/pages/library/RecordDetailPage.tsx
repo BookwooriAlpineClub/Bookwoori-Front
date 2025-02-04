@@ -18,13 +18,22 @@ import ReviewField from '@src/components/library/ReviewField';
 const RecordDetailPage = () => {
   const { bookId: isbn13 = '' } = useParams<{ bookId: string }>();
   const { data: bookDetail } = useGetBookDetail(isbn13);
+  const [isTop, setIsTop] = useState<boolean>(true);
 
   const navigate = useNavigate();
+  const handleScroll = () => {
+    setIsTop(window.scrollY < 70);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <Container>
-      {/* <Header buttonList={['edit']} handleEditClick={handleEditClick} />
-      <main>
+      <SHeader text='' headerType='back' $isTop={isTop} />
+      {/* <main>
         <BookInfoDetail status={status} {...bookDetail} />
         <Description>
           <h2>책 소개</h2>
@@ -57,6 +66,10 @@ const Container = styled.div`
       `${theme.rounded[16]} ${theme.rounded[16]} 0 0`};
     background-color: ${({ theme }) => theme.colors.neutral0};
   }
+`;
+const SHeader = styled(Header)<{ $isTop: boolean }>`
+  background-color: ${({ $isTop, theme }) =>
+    $isTop ? 'transparent' : theme.colors.neutral0};
 `;
 // const Description = styled.section`
 //   display: flex;

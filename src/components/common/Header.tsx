@@ -10,6 +10,7 @@ interface HeaderProps {
   text: string;
   headerType: 'hamburger' | 'back' | 'server';
   onClick?: () => void;
+  className?: string;
 }
 
 const renderButton = (
@@ -22,14 +23,14 @@ const renderButton = (
   </Button>
 );
 
-const Header = ({ text, headerType, onClick }: HeaderProps) => {
+const Header = ({ text, headerType, onClick, className }: HeaderProps) => {
   const navigate = useNavigate();
   const handleClick = () => navigate(-1);
   const { openModal: openGlobalDrawer } = useModal(globalDrawerState);
   const { openModal: openCommunityDrawer } = useModal(communityDrawerState);
 
   return (
-    <Layout>
+    <Layout className={className}>
       {headerType === 'back' &&
         renderButton('back', onClick ?? handleClick, Back)}
       {(headerType === 'hamburger' || headerType === 'server') &&
