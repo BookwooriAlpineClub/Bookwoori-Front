@@ -2,10 +2,7 @@ import type Book from '@src/types/book';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
 
-type Props = Pick<
-  Book,
-  'title' | 'author' | 'cover' | 'publisher' | 'pubDate' | 'itemPage'
->;
+type Props = Omit<Book, 'isbn13' | 'description'>;
 
 const BookDetail = ({
   title,
