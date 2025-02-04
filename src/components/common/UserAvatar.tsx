@@ -33,16 +33,16 @@ const ProfileContainer = styled.div<{ status?: 'FINISHED' | 'FAILED' }>`
   border-radius: 50%;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 
   border: ${({ status, theme }) =>
-    status === 'FINISHED'
-      ? `0.1rem solid ${theme.colors.blue500}`
-      : '0.1rem solid transparent'};
+    status === 'FINISHED' ? `0.1rem solid ${theme.colors.blue500}` : 'null'};
+
+  background-color: ${({ theme }) => theme.colors.blue100};
 
   img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
     object-fit: cover;
   }
 `;
