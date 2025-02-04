@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface ProfileCircleProps {
-  profileImg: string;
+  profileImg: string | null;
   nickname: string | undefined;
   status?: 'FINISHED' | 'FAILED';
 }
