@@ -31,14 +31,8 @@ const RecordListPage = React.lazy(
 const ReviewListPage = React.lazy(
   () => import('@src/pages/library/ReviewListPage'),
 );
-const BookDetailPage = React.lazy(
-  () => import('@src/pages/library/BookDetailPage'),
-);
 const RecordDetailPage = React.lazy(
   () => import('@src/pages/library/RecordDetailPage'),
-);
-const RecordEditPage = React.lazy(
-  () => import('@src/pages/library/RecordEditPage'),
 );
 /* notification */
 const NotificationPage = React.lazy(
@@ -167,17 +161,12 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.libraryBookDetail,
-        element: <BookDetailPage />,
+        element: <RecordDetailPage />,
         loader: (args) => isParamLoader(args, 'bookId'),
       },
       {
         path: ROUTE_PATH.libraryRecordDetail,
         element: <RecordDetailPage />,
-        loader: (args) => isParamLoader(args, 'recordId'),
-      },
-      {
-        path: ROUTE_PATH.libraryEditRecordOne,
-        element: <RecordEditPage />,
         loader: (args) => isParamLoader(args, 'recordId'),
       },
       /* notification */

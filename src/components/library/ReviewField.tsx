@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Fieldset from '@src/components/library/Fieldset';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
 interface Props {
@@ -30,7 +29,7 @@ const ReviewField = ({
   }, [textareaRef.current?.value]);
 
   return (
-    <Fieldset title='감상평'>
+    <>
       <StarFieldset>
         {Array.from({ length: 5 }, (_, index) => (
           <label key={index}>
@@ -46,18 +45,16 @@ const ReviewField = ({
           </label>
         ))}
       </StarFieldset>
-      <fieldset>
-        <Textarea
-          ref={textareaRef}
-          $height={textareaHeight}
-          name={name.str}
-          placeholder='이 책은 어떠셨나요? 감상평을 적어주세요.'
-          readOnly={readOnly}
-          defaultValue={str}
-          onChange={(e) => setStr?.(e.target.value)}
-        />
-      </fieldset>
-    </Fieldset>
+      <Textarea
+        ref={textareaRef}
+        $height={textareaHeight}
+        name={name.str}
+        placeholder='이 책은 어떠셨나요? 감상평을 적어주세요.'
+        readOnly={readOnly}
+        defaultValue={str}
+        onChange={(e) => setStr?.(e.target.value)}
+      />
+    </>
   );
 };
 
