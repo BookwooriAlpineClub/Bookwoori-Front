@@ -1,41 +1,40 @@
+import styled from 'styled-components';
+import useModal from '@src/hooks/useModal';
 import type Modal from '@src/types/modal';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import {
+  communityDrawerState,
+  currentServerIdState,
+  dialogState,
+} from '@src/states/atoms';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
-import useModal from '@src/hooks/useModal';
-import { communityDrawerState, dialogState } from '@src/states/atoms';
-import { decodeIdParam, encodeId } from '@src/utils/formatters';
-import styled from 'styled-components';
+import { encodeId } from '@src/utils/formatters';
+
 import Fieldset from '@src/components/common/Fieldset';
 import Scrim from '@src/components/common/modal/Scrim';
 import CommunityButton from '@src/components/common/button/IconButton';
 import ProfileModal from '@src/components/community/ProfileModal';
+
 import { ReactComponent as BiCrown } from '@src/assets/icons/bi_crown.svg';
+import {
+  useGetServerMembers,
+  useGetServerOne,
+  usePostServerInviteCode,
+} from '@src/hooks/query/server';
+import ExpandableList from '@src/components/common/ExpandableList';
+import UserAvatar from '@src/components/common/UserAvatar';
 
 const CommunityDrawer = () => {
   const { isOpen, transition } = useRecoilValue(communityDrawerState);
   const { closeModal: closeCommunityDrawer } = useModal(communityDrawerState);
   const { openModal: openDialog } = useModal(dialogState);
-  const { serverId: id } = useParams<{ serverId: string }>();
-  const serverId = decodeIdParam(id ?? '-1');
-  const { serverInfo, memberList, copyText } = {
-    serverInfo: { serverImg: '', name: '', memberCount: 0 },
-    memberList: {
-      members: [
-        {
-          memberId: 1,
-          profileImg: '',
-          nickname: '',
-          level: 1,
-          mountain: '',
-          role: 'OWNER',
-        },
-      ],
-    },
-    copyText: '',
-  };
-  const { handleCopy } = useCopyToClipboard(copyText);
+  const serverId = useRecoilValue(currentServerIdState);
+  const { data: memberList } = useGetServerMembers(serverId);
+  const { data: serverInfo } = useGetServerOne(serverId);
+  const { mutate: generateInviteCode } = usePostServerInviteCode(serverId);
+  const { handleCopy } = useCopyToClipboard();
 
   const navigate = useNavigate();
 
@@ -51,6 +50,17 @@ const CommunityDrawer = () => {
     );
     navigate(`${serverSetting}`);
     closeCommunityDrawer();
+  };
+
+  const handleClickCopyButton = async () => {
+    generateInviteCode(undefined, {
+      onSuccess: (inviteCodeText) => {
+        handleCopy(inviteCodeText);
+      },
+      onError: (err) => {
+        console.error('초대 코드 생성 실패:', err);
+      },
+    });
   };
 
   return (
@@ -69,37 +79,53 @@ const CommunityDrawer = () => {
           <span>{serverInfo?.name}</span>
         </CommunityTitleContainer>
         <Fieldset as='section' title='공동체 기능'>
-          <CommunityButton
-            type='detailInfoSetting'
-            onClick={handleClickInfoSetting}
-          />
-          <CommunityButton type='copyInvitation' onClick={handleCopy} />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '0.5rem',
+            }}
+          >
+            <CommunityButton
+              type='detailInfoSetting'
+              onClick={handleClickInfoSetting}
+            />
+            <CommunityButton
+              type='copyInvitation'
+              onClick={handleClickCopyButton}
+            />
+          </div>
         </Fieldset>
+
         <Fieldset as='section' title={`멤버 목록 (${serverInfo?.memberCount})`}>
-          <MemberListContainer>
-            {memberList?.members.map((member) => (
-              <MemberItem
-                key={member.memberId}
-                onClick={() => openProfileModal(member.memberId)}
-              >
-                <img
-                  src={member.profileImg ?? ''}
-                  alt={`${member.nickname} profile`}
-                />
-                <div>
-                  <Nickname>{member.nickname}</Nickname>
-                  <Mountain>
-                    {member.level}번째, {member.mountain}
-                  </Mountain>
-                </div>
-                {member.role === 'OWNER' && (
-                  <IconWrapper>
-                    <BiCrown width={16} height={16} />
-                  </IconWrapper>
-                )}
-              </MemberItem>
-            ))}
-          </MemberListContainer>
+          {memberList && (
+            <ExpandableList
+              items={memberList}
+              renderItem={(member) => (
+                <MemberItem
+                  key={member.memberId}
+                  onClick={() => openProfileModal(member.memberId)}
+                >
+                  <UserAvatar
+                    profileImg={member.profileImg}
+                    nickname={member.nickname}
+                  />
+                  <div>
+                    <Nickname>{member.nickname}</Nickname>
+                    <Mountain>
+                      {member.level}번째, {member.mountain}
+                    </Mountain>
+                  </div>
+                  {member.role === 'OWNER' && (
+                    <IconWrapper>
+                      <BiCrown width={24} height={24} />
+                    </IconWrapper>
+                  )}
+                </MemberItem>
+              )}
+            />
+          )}
         </Fieldset>
       </CommunityDrawerContainer>
     </Scrim>
@@ -118,7 +144,6 @@ const CommunityDrawerContainer = styled.div<{
   height: 100%;
   width: 80%;
   background-color: ${({ theme }) => theme.colors.neutral50};
-  border-left: 0.05rem solid ${({ theme }) => theme.colors.neutral400};
   box-shadow: -0.1rem 0 0.3rem rgba(0, 0, 0, 0.2);
   transform: ${({ transition }) =>
     transition === 'open' ? 'translateX(0)' : 'translateX(100%)'};
@@ -131,20 +156,24 @@ const CommunityDrawerContainer = styled.div<{
   gap: 1.25rem;
 
   overflow-y: scroll;
+
+  section {
+    width: 100%;
+  }
 `;
 
 const CommunityTitleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap['10']};
   width: 100%;
 
   img {
     width: 1.875rem;
     height: 1.875rem;
-    border-radius: 0.625rem;
-    background-color: ${({ theme }) => theme.colors.neutral400};
+    border-radius: ${({ theme }) => theme.rounded['8']};
+    object-fit: cover;
   }
 
   span {
@@ -153,43 +182,14 @@ const CommunityTitleContainer = styled.div`
   }
 `;
 
-const MemberListContainer = styled.div`
-  display: flex;
-  padding: 0 0.9375rem;
-  flex-direction: column;
-  align-items: flex-start;
-  align-self: stretch;
-  border-radius: 1.25rem;
-  background-color: ${({ theme }) => theme.colors.neutral0};
-`;
-
 const MemberItem = styled.div`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0.9375rem 0;
+  gap: ${({ theme }) => theme.gap['8']};
+  ]padding: 0.9375rem 0;
   width: 100%;
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.12rem;
-    margin-left: 0.625rem;
-  }
-
-  &:not(:first-child) {
-    border-top: 0.1rem solid ${({ theme }) => theme.colors.neutral50};
-  }
-
-  img {
-    display: flex;
-    width: 2.5rem;
-    height: 2.5rem;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-  }
 `;
 
 const Nickname = styled.p`
@@ -207,4 +207,5 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
   right: 0;
+  color: ${({ theme }) => theme.colors.lime300};
 `;
