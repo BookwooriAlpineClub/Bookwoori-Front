@@ -5,16 +5,9 @@ import { checkAuthLoader, isParamLoader } from '@src/router/loader';
 import {
   RootLayout,
   NoDataTextLayout,
-  BottomButtonLayout,
+  DefaultLayout,
 } from '@src/router/Layout';
 
-/* example */
-const RouterExamplePage = React.lazy(
-  () => import('@src/pages/RouterExamplePage'),
-);
-const RouterExampleDetailPage = React.lazy(
-  () => import('@src/pages/RouterExampleDetailPage'),
-);
 /* auth */
 const LoginPage = React.lazy(() => import('@src/pages/login/LoginPage'));
 const RedirectionPage = React.lazy(
@@ -103,40 +96,19 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     loader: checkAuthLoader,
     children: [
+      /* No layout */
       {
-        /* Button이 잇는 경우 Layout */
-        element: <BottomButtonLayout />,
-        children: [
-          {
-            path: ROUTE_PATH.createServer,
-            element: <CreateNewCommunityPage />,
-          },
-        ],
+        path: ROUTE_PATH.library,
+        element: <LibraryHomePage />,
       },
-      {
-        /* 데이터가 없는 경우 Layout */
-        element: <NoDataTextLayout />,
-        children: [
-          {
-            path: ROUTE_PATH.libraryBookSearch,
-            element: <SearchPage />,
-          },
-        ],
-      },
-      /* 이외의 경우 */
-      {
-        path: ROUTE_PATH.example,
-        element: <RouterExamplePage />,
-      },
-      {
-        path: ROUTE_PATH.exampleId,
-        element: <RouterExampleDetailPage />,
-        loader: (args) => isParamLoader(args, 'id'),
-      },
-      /* auth */
       {
         path: ROUTE_PATH.root,
         element: <LibraryHomePage />,
+      },
+      {
+        path: ROUTE_PATH.libraryMember,
+        element: <LibraryHomePage />,
+        loader: (args) => isParamLoader(args, 'memberId'),
       },
       {
         path: ROUTE_PATH.redirection,
@@ -146,112 +118,10 @@ const router = createBrowserRouter([
         path: ROUTE_PATH.signIn,
         element: <LoginPage />,
       },
-      /* library */
-      {
-        path: ROUTE_PATH.library,
-        element: <LibraryHomePage />,
-      },
-      {
-        path: ROUTE_PATH.libraryMember,
-        element: <LibraryHomePage />,
-        loader: (args) => isParamLoader(args, 'memberId'),
-      },
-
-      {
-        path: ROUTE_PATH.libraryRecord,
-        element: <RecordListPage />,
-      },
-      {
-        path: ROUTE_PATH.libraryReview,
-        element: <ReviewListPage />,
-      },
-      {
-        path: ROUTE_PATH.libraryBookDetail,
-        element: <BookDetailPage />,
-        loader: (args) => isParamLoader(args, 'bookId'),
-      },
-      {
-        path: ROUTE_PATH.libraryRecordDetail,
-        element: <RecordDetailPage />,
-        loader: (args) => isParamLoader(args, 'recordId'),
-      },
-      {
-        path: ROUTE_PATH.libraryEditRecordOne,
-        element: <RecordEditPage />,
-        loader: (args) => isParamLoader(args, 'recordId'),
-      },
-      /* notification */
-      {
-        path: ROUTE_PATH.notification,
-        element: <NotificationPage />,
-      },
-      /* dm */
-      {
-        path: ROUTE_PATH.dm,
-        element: <ChattingListPage />,
-      },
       {
         path: ROUTE_PATH.dmChatMember,
         element: <ChattingPage />,
         loader: (args) => isParamLoader(args, 'memberId'),
-      },
-      /* setting */
-      {
-        path: ROUTE_PATH.setting,
-        element: <SettingsPage />,
-      },
-      {
-        path: ROUTE_PATH.settingProfile,
-        element: <EditUserInfoPage />,
-      },
-      {
-        path: ROUTE_PATH.settingExp,
-        element: <ExpHistoryPage />,
-      },
-      /* add-server */
-      {
-        path: ROUTE_PATH.addServer,
-        element: <AddCommunityPage />,
-      },
-      {
-        path: ROUTE_PATH.createServer,
-        element: <CreateNewCommunityPage />,
-      },
-      {
-        path: ROUTE_PATH.invitationServer,
-        element: <CheckInvitedCommunityPage />,
-      },
-      {
-        path: ROUTE_PATH.invitationCode,
-        element: <EnterInvitationPage />,
-      },
-      {
-        path: ROUTE_PATH.joinServer,
-        element: <EnterInvitationPage />,
-      },
-      /* server */
-      {
-        path: ROUTE_PATH.server,
-        element: <ChannelListPage />,
-        loader: (args) => isParamLoader(args, 'serverId'),
-      },
-      {
-        path: ROUTE_PATH.addCategory,
-        element: <CategoryAddPage />,
-      },
-      {
-        path: ROUTE_PATH.addChannel,
-        element: <ChannelAddPage />,
-      },
-      {
-        path: ROUTE_PATH.editChannelOne,
-        element: <ChannelEditPage />,
-        loader: (args) => isParamLoader(args, 'serverId'),
-      },
-      {
-        path: ROUTE_PATH.climbingEditOne,
-        element: <ClimbingEditPage />,
-        loader: (args) => isParamLoader(args, 'climbingId'),
       },
       {
         path: ROUTE_PATH.serverChannel,
@@ -259,19 +129,128 @@ const router = createBrowserRouter([
         loader: (args) => isParamLoader(args, 'serverId'),
       },
       {
-        path: ROUTE_PATH.climbing,
-        element: <ClimbingPage />,
-        loader: (args) => isParamLoader(args, 'climbingId'),
-      },
-      {
-        path: ROUTE_PATH.serverSetting,
-        element: <CommunityInfoSettingPage />,
-        loader: (args) => isParamLoader(args, 'serverId'),
-      },
-      /* 404 */
-      {
         path: '*',
         element: <h1>404 Not Found</h1>,
+      },
+      /* 기본 Layout */
+      {
+        element: <DefaultLayout />,
+        children: [
+          /* addcommunity */
+          {
+            path: ROUTE_PATH.addServer,
+            element: <AddCommunityPage />,
+          },
+          {
+            path: ROUTE_PATH.invitationServer,
+            element: <CheckInvitedCommunityPage />,
+          },
+          {
+            path: ROUTE_PATH.createServer,
+            element: <CreateNewCommunityPage />,
+          },
+          {
+            path: ROUTE_PATH.invitationCode,
+            element: <EnterInvitationPage />,
+          },
+          {
+            path: ROUTE_PATH.joinServer,
+            element: <EnterInvitationPage />,
+          },
+          /* channel */
+          {
+            path: ROUTE_PATH.addCategory,
+            element: <CategoryAddPage />,
+          },
+          {
+            path: ROUTE_PATH.addChannel,
+            element: <ChannelAddPage />,
+          },
+          {
+            path: ROUTE_PATH.editChannelOne,
+            element: <ChannelEditPage />,
+            loader: (args) => isParamLoader(args, 'serverId'),
+          },
+          {
+            path: ROUTE_PATH.server,
+            element: <ChannelListPage />,
+            loader: (args) => isParamLoader(args, 'serverId'),
+          },
+          /* chatting */
+          {
+            path: ROUTE_PATH.dm,
+            element: <ChattingListPage />,
+          },
+          /* climbing */
+          {
+            path: ROUTE_PATH.climbingEditOne,
+            element: <ClimbingEditPage />,
+            loader: (args) => isParamLoader(args, 'climbingId'),
+          },
+          {
+            path: ROUTE_PATH.climbing,
+            element: <ClimbingPage />,
+            loader: (args) => isParamLoader(args, 'climbingId'),
+          },
+          /* communityinfosetting */
+          {
+            path: ROUTE_PATH.serverSetting,
+            element: <CommunityInfoSettingPage />,
+            loader: (args) => isParamLoader(args, 'serverId'),
+          },
+          /* library */
+          {
+            path: ROUTE_PATH.libraryBookDetail,
+            element: <BookDetailPage />,
+            loader: (args) => isParamLoader(args, 'bookId'),
+          },
+          {
+            path: ROUTE_PATH.libraryRecordDetail,
+            element: <RecordDetailPage />,
+            loader: (args) => isParamLoader(args, 'recordId'),
+          },
+          {
+            path: ROUTE_PATH.libraryEditRecordOne,
+            element: <RecordEditPage />,
+            loader: (args) => isParamLoader(args, 'recordId'),
+          },
+          {
+            path: ROUTE_PATH.libraryRecord,
+            element: <RecordListPage />,
+          },
+          {
+            path: ROUTE_PATH.libraryReview,
+            element: <ReviewListPage />,
+          },
+          /* notification */
+          {
+            path: ROUTE_PATH.notification,
+            element: <NotificationPage />,
+          },
+          /* user setting */
+          {
+            path: ROUTE_PATH.settingProfile,
+            element: <EditUserInfoPage />,
+          },
+          {
+            path: ROUTE_PATH.settingExp,
+            element: <ExpHistoryPage />,
+          },
+          {
+            path: ROUTE_PATH.setting,
+            element: <SettingsPage />,
+          },
+        ],
+      },
+      /* 데이터가 없는 경우 Layout */
+      {
+        element: <NoDataTextLayout />,
+        children: [
+          {
+            path: ROUTE_PATH.libraryBookSearch,
+            element: <SearchPage />,
+          },
+        ],
       },
     ],
   },

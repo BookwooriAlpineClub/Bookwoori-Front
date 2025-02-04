@@ -10,7 +10,7 @@ import GlobalDrawer from '@src/components/common/modal/GlobalDrawer';
 import CommunityDrawer from '@src/components/common/modal/CommunityDrawer';
 import {
   NoDataTextLayout as NoDataTextLayoutStyle,
-  BottomButtonLayout as BottomButtonLayoutStyle,
+  DefaultLayout as DefaultLayoutStyle,
 } from '@src/styles/Layout';
 
 export const RootLayout = () => (
@@ -35,8 +35,8 @@ export const NoDataTextLayout = () => (
   </NoDataTextLayoutStyle>
 );
 
-export const BottomButtonLayout = () => (
-  <BottomButtonLayoutStyle>
+export const DefaultLayout = () => (
+  <DefaultLayoutStyle>
     <Outlet />
-  </BottomButtonLayoutStyle>
+  </DefaultLayoutStyle>
 );
