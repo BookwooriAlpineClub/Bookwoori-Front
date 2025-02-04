@@ -7,89 +7,35 @@ import {
   NoDataTextLayout,
   DefaultLayout,
 } from '@src/router/Layout';
-
-/* auth */
-const LoginPage = React.lazy(() => import('@src/pages/login/LoginPage'));
-const RedirectionPage = React.lazy(
-  () => import('@src/pages/login/RedirectionPage'),
-);
-/* library */
-const LibraryHomePage = React.lazy(
-  () => import('@src/pages/library/LibraryHomePage'),
-);
-const SearchPage = React.lazy(() => import('@src/pages/library/SearchPage'));
-const RecordListPage = React.lazy(
-  () => import('@src/pages/library/RecordListPage'),
-);
-const ReviewListPage = React.lazy(
-  () => import('@src/pages/library/ReviewListPage'),
-);
-const BookDetailPage = React.lazy(
-  () => import('@src/pages/library/BookDetailPage'),
-);
-const RecordDetailPage = React.lazy(
-  () => import('@src/pages/library/RecordDetailPage'),
-);
-const RecordEditPage = React.lazy(
-  () => import('@src/pages/library/RecordEditPage'),
-);
-/* notification */
-const NotificationPage = React.lazy(
-  () => import('@src/pages/notification/NotificationPage'),
-);
-/* dm */
-const ChattingListPage = React.lazy(
-  () => import('@src/pages/chatting/ChattingListPage'),
-);
-const ChattingPage = React.lazy(
-  () => import('@src/pages/chatting/ChattingPage'),
-);
-/* settings */
-const SettingsPage = React.lazy(
-  () => import('@src/pages/userSettings/SettingsPage'),
-);
-const EditUserInfoPage = React.lazy(
-  () => import('@src/pages/userSettings/EditUserInfoPage'),
-);
-const ExpHistoryPage = React.lazy(
-  () => import('@src/pages/userSettings/ExpHistoryPage'),
-);
-/* add-server */
-const AddCommunityPage = React.lazy(
-  () => import('@src/pages/addcommunity/AddCommunityPage'),
-);
-const CreateNewCommunityPage = React.lazy(
-  () => import('@src/pages/addcommunity/CreateNewCommunityPage'),
-);
-const CheckInvitedCommunityPage = React.lazy(
-  () => import('@src/pages/addcommunity/CheckInvitedCommunityPage'),
-);
-const EnterInvitationPage = React.lazy(
-  () => import('@src/pages/addcommunity/EnterInvitationPage'),
-);
-/* server */
-const ChannelListPage = React.lazy(
-  () => import('@src/pages/channel/ChannelListPage'),
-);
-const CategoryAddPage = React.lazy(
-  () => import('@src/pages/channel/CategoryAddPage'),
-);
-const ChannelAddPage = React.lazy(
-  () => import('@src/pages/channel/ChannelAddPage'),
-);
-const ChannelEditPage = React.lazy(
-  () => import('@src/pages/channel/ChannelEditPage'),
-);
-const ClimbingEditPage = React.lazy(
-  () => import('@src/pages/climbing/ClimbingEditPage'),
-);
-const ChannelPage = React.lazy(() => import('@src/pages/channel/ChannelPage'));
-const ClimbingPage = React.lazy(
-  () => import('@src/pages/climbing/ClimbingPage'),
-);
-const CommunityInfoSettingPage = React.lazy(
-  () => import('@src/pages/communityinfosetting/CommunityInfoSettingPage'),
-);
+import {
+  LoginPage,
+  LibraryHomePage,
+  RedirectionPage,
+  ChattingPage,
+  ChannelPage,
+  AddCommunityPage,
+  CheckInvitedCommunityPage,
+  CreateNewCommunityPage,
+  EnterInvitationPage,
+  CategoryAddPage,
+  ChannelAddPage,
+  ChannelEditPage,
+  ChannelListPage,
+  ChattingListPage,
+  ClimbingEditPage,
+  ClimbingPage,
+  CommunityInfoSettingPage,
+  BookDetailPage,
+  RecordDetailPage,
+  RecordEditPage,
+  RecordListPage,
+  ReviewListPage,
+  NotificationPage,
+  EditUserInfoPage,
+  ExpHistoryPage,
+  SettingsPage,
+  SearchPage,
+} from '@src/router/lazy';
 
 const router = createBrowserRouter([
   {
@@ -136,7 +82,7 @@ const router = createBrowserRouter([
       {
         element: <DefaultLayout />,
         children: [
-          /* addcommunity */
+          /* add-community */
           {
             path: ROUTE_PATH.addServer,
             element: <AddCommunityPage />,
@@ -192,7 +138,7 @@ const router = createBrowserRouter([
             element: <ClimbingPage />,
             loader: (args) => isParamLoader(args, 'climbingId'),
           },
-          /* communityinfosetting */
+          /* community-info-setting */
           {
             path: ROUTE_PATH.serverSetting,
             element: <CommunityInfoSettingPage />,
@@ -227,7 +173,7 @@ const router = createBrowserRouter([
             path: ROUTE_PATH.notification,
             element: <NotificationPage />,
           },
-          /* user setting */
+          /* user-setting */
           {
             path: ROUTE_PATH.settingProfile,
             element: <EditUserInfoPage />,
