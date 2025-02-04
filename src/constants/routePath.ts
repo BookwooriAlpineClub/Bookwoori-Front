@@ -11,9 +11,9 @@ export const ROUTE_PATH = {
   library: '/library',
   libraryMember: '/library/:memberId',
   libraryBookSearch: '/library/book',
-  libraryBookDetail: '/library/book/:bookId',
+  libraryBookDetail: '/library/book/:isbn13',
   libraryRecord: '/library/record',
-  libraryRecordDetail: '/library/record/:recordId',
+  libraryRecordDetail: '/library/record/:isbn13',
   libraryReview: '/library/review',
   /* notification */
   notification: '/notification',

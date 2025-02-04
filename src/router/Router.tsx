@@ -162,12 +162,12 @@ const router = createBrowserRouter([
       {
         path: ROUTE_PATH.libraryBookDetail,
         element: <RecordDetailPage />,
-        loader: (args) => isParamLoader(args, 'bookId'),
+        loader: (args) => isParamLoader(args, 'isbn13'),
       },
       {
         path: ROUTE_PATH.libraryRecordDetail,
         element: <RecordDetailPage />,
-        loader: (args) => isParamLoader(args, 'recordId'),
+        loader: (args) => isParamLoader(args, 'isbn13'),
       },
       /* notification */
       {
