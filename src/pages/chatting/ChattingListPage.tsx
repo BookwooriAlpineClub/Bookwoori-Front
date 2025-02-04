@@ -1,44 +1,52 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useDm } from '@src/hooks/query/useDm';
-import ChattingListItem from '@src/components/chatting/ChattingListItem';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import { useGetMessageRoomList } from '@src/hooks/query/chat';
+import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
+import { formatChatListItemTime } from '@src/utils/formatters';
+import StatusBadgeListItem from '@src/components/common/StatusBadgeListItem';
 import Header from '@src/components/common/Header';
-import LoadingPage from '@src/components/common/LoadingPage';
 
 const ChattingListPage = () => {
+  const navigate = useEncodedNavigation();
   const { data, isFetchingNextPage, fetchNextPage, isLoading, hasNextPage } =
-    useDm();
-
+    useGetMessageRoomList();
   const { ref, inView } = useInView();
 
-  useEffect(() => {
-    if (inView && !isLoading && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isLoading, hasNextPage, fetchNextPage]);
+  const handleNavigateChattingRoom = (memberId: number) => {
+    navigate(ROUTE_PATH.dmChat, memberId);
+  };
 
-  if(isLoading) {
-    <LoadingPage />
-  }
+  useEffect(() => {
+    if (!inView) return;
+
+    if (hasNextPage) fetchNextPage();
+  }, [inView, hasNextPage]);
 
   return (
     <>
       <Header text='문자' headerType='hamburger' />
-      <SLayout>
-        {data?.pages?.map((page) =>
+      <Main>
+        {data?.map((page) =>
           page.messageRooms.map((it) => (
-            <ChattingListItem
+            <StatusBadgeListItem
               key={it.messageRoomId}
-              memberId={it.memberId}
-              nickname={it.nickname}
+              type='chatting'
+              caption={it.nickname}
               imgUrl={it.profileImg}
-              time={it.recentMessageTime}
-              text={it.recentMessage}
+              time={
+                it.recentMessageTime
+                  ? formatChatListItemTime(it.recentMessageTime)
+                  : '알 수 없음'
+              }
+              message={it.recentMessage}
+              isRead
+              onClick={() => handleNavigateChattingRoom(it.memberId)}
             />
           )),
         )}
-        {!isLoading && data?.pages?.length === 0 && (
+        {!isLoading && data?.length === 0 && (
           <Wrapper>
             <Span>주고 받은 문자가 없습니다.</Span>
           </Wrapper>
@@ -49,17 +57,17 @@ const ChattingListPage = () => {
             <Span>데이터 불러오는 중...</Span>
           </Wrapper>
         )}
-      </SLayout>
+      </Main>
     </>
   );
 };
 
 export default ChattingListPage;
 
-const SLayout = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   height: calc(100% - 4.375rem);
   padding: 0.9375rem;
@@ -72,6 +80,6 @@ const Wrapper = styled.div`
 `;
 const Span = styled.span`
   margin: auto;
-  ${({ theme }) => theme.fonts.body}
-  color: ${({ theme }) => theme.colors.black200};
+
+  color: ${({ theme }) => theme.colors.neutral400};
 `;

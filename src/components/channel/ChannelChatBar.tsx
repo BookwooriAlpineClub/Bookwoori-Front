@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { sendHandler } from '@src/apis/chat';
-import { ReactComponent as Send } from '@src/assets/icons/send.svg';
-import { ReactComponent as SendGreen } from '@src/assets/icons/send_green.svg';
+import { ReactComponent as Send } from '@src/assets/icons/ck_arrow_up.svg';
+import { ReactComponent as SendGreen } from '@src/assets/icons/ck_arrow_right.svg';
+import type { MessageReq } from '@src/types/apis/chat';
 
 interface ChannelChatBarProps {
   channelName: string;
@@ -20,7 +21,7 @@ const ChannelChatBar = ({ channelName, channelId }: ChannelChatBarProps) => {
     e.preventDefault();
     if (!chat.trim()) return;
 
-    const message: MessageRequest = {
+    const message: MessageReq = {
       channelId,
       type: 'text',
       content: chat,
@@ -58,7 +59,7 @@ const SLayout = styled.form`
   width: 100%;
   padding: 0.9375rem;
 
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const SInput = styled.input`
   padding: 0 0.625rem;
@@ -67,7 +68,7 @@ const SInput = styled.input`
   border-radius: 1.875rem;
 
   ${({ theme }) => theme.fonts.body};
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const SButton = styled.button`
   display: flex;

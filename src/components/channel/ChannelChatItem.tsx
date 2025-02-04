@@ -1,13 +1,14 @@
-import styled from 'styled-components';
-import useBottomsheet from '@src/hooks/useBottomsheet';
-import useLongPress from '@src/hooks/useLongPress';
-import ChatMenu from '@src/components/chatting/ChatMenu';
-import Profile from '@src/assets/images/userSettings/background_default.svg';
-import { DM } from '@src/types/domain/messageRoom';
+import type { DM } from '@src/types/messageRoom';
+import type { ChannelMessage } from '@src/types/channel';
 import { SyntheticEvent, useMemo } from 'react';
+import useLongPress from '@src/hooks/useLongPress';
+import useModal from '@src/hooks/useModal';
+import { useGetProfile } from '@src/hooks/query/member';
+import { bottomsheetState } from '@src/states/atoms';
 import { formatChatItemTime } from '@src/utils/formatters';
-import { ChannelMessage } from '@src/types/domain/channel';
-import useMember from '@src/hooks/query/useMember';
+import styled from 'styled-components';
+import ChatMenu from '@src/components/common/emoji/EmojiBottomsheet';
+import Profile from '@src/assets/images/userSettings/background_default.svg';
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;
@@ -17,13 +18,14 @@ interface ChatItemProps {
 
 const ChannelChatItem = ({ chatItem, memberId, createdAt }: ChatItemProps) => {
   // long press bottomsheet
-  const { openBottomsheet } = useBottomsheet();
+  const { openModal: openBottomsheet } = useModal(bottomsheetState);
   const longPressHandler = useLongPress({
-    onLongPress: () => openBottomsheet(<ChatMenu content={chatItem.content} />),
+    onLongPress: () =>
+      openBottomsheet(<ChatMenu id={chatItem.id} content={chatItem.content} />),
   });
 
   // user data (nickname, profileImg)
-  const { profileData: user } = useMember(memberId);
+  const { profileData: user } = useGetProfile(memberId);
   // img error handler
   const handleImgError = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = Profile;
@@ -73,7 +75,7 @@ const SImg = styled.img`
   height: 2.5rem;
 
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.blue300};
+  background-color: ${({ theme }) => theme.colors.blue100};
 `;
 const SContainer = styled.div`
   display: flex;
@@ -93,7 +95,7 @@ const STime = styled.label`
   color: var(--400, #9496a1);
 `;
 const SText = styled.p`
-  ${({ theme }) => theme.colors.black100};
+  ${({ theme }) => theme.colors.neutral950};
   line-height: 1.25rem;
   font-weight: 600;
 
@@ -109,5 +111,5 @@ const SText = styled.p`
 //   height: 1.4375rem;
 
 //   border-radius: 1.875rem;
-//   background-color: ${({ theme }) => theme.colors.blue300};
+//   background-color: ${({ theme }) => theme.colors.blue100};
 // `;

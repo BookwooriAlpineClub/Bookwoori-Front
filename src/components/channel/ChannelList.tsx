@@ -1,30 +1,23 @@
 import styled from 'styled-components';
-import { ClimbingInfo } from '@src/types/domain/climbingTemp';
+import type { ClimbingInfo } from '@src/types/climbing';
+import type { Channel } from '@src/types/channel';
 import Item from '@src/components/channel/ChannelItem';
-import { ChannelItem } from '@src/types/domain/channel';
 
 interface ChannelListProps {
-  color?: string;
-  channels?: ChannelItem[];
+  channels?: Channel[];
   climbs?: ClimbingInfo[];
   categoryId?: number;
 }
 
-const ChannelList = ({
-  color,
-  channels,
-  climbs,
-  categoryId,
-}: ChannelListProps) => {
+const ChannelList = ({ channels, climbs, categoryId }: ChannelListProps) => {
   return (
-    <SLayout>
+    <Layout>
       {channels &&
         channels.map((it) => (
           <Item
             key={it.channelId}
             channelId={it.channelId}
-            categoryId={categoryId ?? -1}
-            color={color}
+            categoryId={categoryId as number}
             type={it.type}
           >
             {it.name}
@@ -32,25 +25,18 @@ const ChannelList = ({
         ))}
       {climbs &&
         climbs.map((it) => (
-          <Item
-            key={it.climbingId}
-            channelId={it.climbingId}
-            color={color}
-            type='CLIMB'
-          >
+          <Item key={it.climbingId} channelId={it.climbingId} type='CLIMB'>
             {it.name}
           </Item>
         ))}
-    </SLayout>
+    </Layout>
   );
 };
 
 export default ChannelList;
 
-const SLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.3125rem;
-
-  ${({ theme }) => theme.fonts.body}
+  gap: ${({ theme }) => theme.gap[6]};
 `;

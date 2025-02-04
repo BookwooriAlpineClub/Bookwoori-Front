@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import {
   Accordion as MuiAccordion,
@@ -71,7 +71,7 @@ const AccordionDetails = styled(MuiAccordionDetails)<{ isOpen: boolean }>`
   top: calc(100% + 0.325rem);
   left: 0;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
   border-radius: 0.9375rem;
   box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.1);
   padding: 1rem;

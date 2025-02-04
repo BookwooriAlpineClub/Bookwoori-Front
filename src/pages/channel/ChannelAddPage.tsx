@@ -1,54 +1,44 @@
-import type { Categories } from '@src/types/domain/channel';
-import type { BookListItem } from '@src/types/apis/book.d';
+import type Book from '@src/types/book';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { formatDate, decodeIdParam } from '@src/utils/formatters';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
-import useBottomsheet from '@src/hooks/useBottomsheet';
-import useCategory from '@src/hooks/query/useCategory';
-import useChannel from '@src/hooks/query/useChannel';
-import useClimbing from '@src/hooks/query/useClimbing';
+import useModal from '@src/hooks/useModal';
+import { useCategory } from '@src/hooks/query/category';
+import { usePostChannel } from '@src/hooks/query/channel';
+import { usePostClimbing } from '@src/hooks/query/climbing';
+import { bottomsheetState } from '@src/states/atoms';
+import { formatDate, decodeIdParam } from '@src/utils/formatters';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
-import InputRadio from '@src/components/common/InputRadio';
-import InputDropdown from '@src/components/common/InputDropdown';
-import InputText from '@src/components/common/InputText';
-import InputDatepicker, {
-  type Period,
-} from '@src/components/common/InputDatepicker';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
+import RadioField from '@src/components/common/input/RadioField';
+import Dropdown from '@src/components/common/input/Dropdown';
+import TextField from '@src/components/common/input/TextField';
+import Datepicker, { type Period } from '@src/components/common/input/Datepicker';
 import SearchBottomsheet from '@src/components/channel/SearchBottomsheet';
-import { ReactComponent as IcnHash } from '@src/assets/icons/hash.svg';
-import { ReactComponent as IcnVoice } from '@src/assets/icons/voice.svg';
-import { ReactComponent as IcnRun } from '@src/assets/icons/run.svg';
-
-type DefaultKind = 'chat' | 'voice' | 'climb' | null;
+import { ReactComponent as IcnHash } from '@src/assets/icons/bi_hash.svg';
+import { ReactComponent as IcnVoice } from '@src/assets/icons/hi_outline_volume_up.svg';
+import { ReactComponent as IcnRun } from '@src/assets/icons/bi_run.svg';
 
 const ChannelAddPage = () => {
-  const navigate = useEncodedNavigate();
-  const { openBottomsheet, closeBottomsheet } = useBottomsheet();
   const { serverId } = useParams<{ serverId: string }>();
   const decodedServerId = decodeIdParam(serverId);
   const location = useLocation();
-  const defaultKind: DefaultKind = new URLSearchParams(location.search).get(
-    'kind',
-  ) as DefaultKind;
+  const defaultKind = new URLSearchParams(location.search).get('kind') || '';
+  const { categoryList } = useCategory();
+  const { createChannel } = usePostChannel();
+  const { createClimbing } = usePostClimbing();
 
-  const { categoryList } = useCategory(Number(decodedServerId));
-  const { createChannel } = useChannel();
-  const { createClimbing } = useClimbing();
-
-  const [kind, setKind] = useState<DefaultKind>(defaultKind);
+  const [kind, setKind] = useState<string>(defaultKind);
   const [category, setCategory] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [book, setBook] = useState<Pick<BookListItem, 'title' | 'isbn13'>>({
-    title: '',
-    isbn13: '',
-  });
+  const [book, setBook] = useState<Pick<Book, 'title' | 'isbn13'>>({ title: '', isbn13: '' });
   const [date, setDate] = useState<Period>({ start: '', end: '' });
   const [description, setDescription] = useState<string>('');
 
+  const navigate = useEncodedNavigate();
+  const { openModal: openBottomsheet, closeModal: closeBottomsheet } = useModal(bottomsheetState);
   const calcTomorrow = (): Date => {
     const day = new Date();
     day.setDate(day.getDate() + 1);
@@ -59,7 +49,6 @@ const ChannelAddPage = () => {
     if (kind === 'climb') return !(kind && name && book && date && description);
     return true;
   };
-
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -81,14 +70,12 @@ const ChannelAddPage = () => {
     } else {
       createClimbing.mutate(
         {
-          body: {
-            serverId: Number(decodedServerId),
-            name,
-            isbn: book.isbn13,
-            description,
-            startDate: date.start,
-            endDate: date.end,
-          },
+          serverId: Number(decodedServerId),
+          name,
+          isbn: book.isbn13,
+          description,
+          startDate: date.start,
+          endDate: date.end,
         },
         {
           onSuccess() {
@@ -103,34 +90,41 @@ const ChannelAddPage = () => {
     <Container>
       <Header text='모임 추가하기' headerType='back' />
       <Main>
-        <Form id='channel-add-form' onSubmit={handleFormSubmit}>
-          <InputRadio
-            title='모임 유형'
-            items={[
-              { value: 'chat', icon: <IcnHash /> },
-              { value: 'voice', icon: <IcnVoice /> },
-              { value: 'climb', icon: <IcnRun /> },
+        <Form
+          id='channel-add-form'
+          className='scroll-area'
+          onSubmit={handleFormSubmit}
+        >
+          <RadioField
+            name='모임 유형'
+            options={[
+              { value: 'chat', Icon: IcnHash, text: '문자' },
+              { value: 'voice', Icon: IcnVoice, text: '전화' },
+              { value: 'climb', Icon: IcnRun, text: '등반' },
             ]}
             defaultValue={defaultKind}
             required
             setValue={setKind}
           />
           {(kind === 'chat' || kind === 'voice') && (
-            <InputDropdown
-              title='모임 분류'
+            <Dropdown
+              name='모임 분류'
               placeholder='분류 선택'
-              items={categoryList as Pick<Categories, 'categoryId' | 'name'>[]}
+              options={categoryList.map((item) => ({
+                id: item.categoryId,
+                text: item.name,
+              }))}
               required
               value={category}
               setValue={setCategory}
             />
           )}
           {!!kind && (
-            <InputText
-              title='모임 이름'
+            <TextField
+              as='input'
+              name='모임 이름'
               placeholder='모임 이름을 입력하세요.'
-              type='short'
-              limit={20}
+              maxLength={20}
               required
               value={name}
               setValue={setName}
@@ -156,19 +150,19 @@ const ChannelAddPage = () => {
                   }}
                 />
               </Fieldset>
-              <InputDatepicker
-                title='등반 기간'
+              <Datepicker
                 type='period'
+                name='등반 기간'
                 min={formatDate(calcTomorrow())}
                 required
                 value={date}
                 setValue={setDate}
               />
-              <InputText
-                title='등반 설명'
+              <TextField
+                as='textarea'
+                name='등반 설명'
                 placeholder='사람들에게 등반에 대해 알려주세요.'
-                type='long'
-                limit={150}
+                maxLength={150}
                 required
                 value={description}
                 setValue={setDescription}
@@ -220,11 +214,11 @@ const InputSearch = styled.input`
   height: 1.25rem;
 
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 
   cursor: pointer;
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.black200};
+    color: ${({ theme }) => theme.colors.neutral400};
   }
 `;

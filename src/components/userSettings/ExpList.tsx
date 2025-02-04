@@ -48,7 +48,7 @@ const SLayout = styled.div`
 `;
 const SLabel = styled.label`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
 `;
 const SContainer = styled.div`
   display: flex;
@@ -57,11 +57,11 @@ const SContainer = styled.div`
 
   padding: 0.9375rem;
   border-radius: 1.25rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const SLine = styled.hr`
   height: 0.0938rem;
-  background: ${({ theme }) => theme.colors.black300};
+  background: ${({ theme }) => theme.colors.neutral50};
 `;
 const SBox = styled.div`
   display: flex;
@@ -74,10 +74,10 @@ const SWrapper = styled.div`
 `;
 const SCaption = styled.label`
   ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const SBody = styled.label<{ $color: boolean | undefined }>`
   ${({ theme }) => theme.fonts.body};
   color: ${({ theme, $color }) =>
-    $color ? theme.colors.blue100 : theme.colors.black100};
+    $color ? theme.colors.blue500 : theme.colors.neutral950};
 `;

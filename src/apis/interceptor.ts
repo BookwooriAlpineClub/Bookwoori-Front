@@ -3,6 +3,8 @@ import {
   AxiosHeaders,
   AxiosResponse,
   InternalAxiosRequestConfig,
+  AxiosRequestConfig,
+  AxiosHeaderValue,
 } from 'axios';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { postRefreshToken } from '@src/apis/auth';
@@ -11,9 +13,34 @@ import {
   isRefreshExpired,
   isTokenExpiredMessage,
   isTokenWrong,
+  isErrorData,
 } from '@src/utils/validators';
+import RequestError from '@src/errors/RequestError';
+import { ERROR_HANDLING } from '@src/constants/constants';
+import { ApiErrorResponse } from '@src/types/apis/apiResponse';
 
-const onRequest = (
+type ConfigWithHeaders = AxiosRequestConfig & {
+  headers?: Record<string, AxiosHeaderValue>;
+};
+
+type WithConfig = {
+  config: ConfigWithHeaders;
+};
+
+type ExtendedAxiosRequestConfig = AxiosRequestConfig & {
+  sent?: boolean;
+};
+
+export type ErrorData = ApiErrorResponse;
+
+type HandleErrorByStatusType = WithConfig & {
+  status: number;
+  data: ErrorData;
+};
+
+type HandleTokenRefreshType = WithConfig;
+
+export const onRequest = (
   config: InternalAxiosRequestConfig,
 ): InternalAxiosRequestConfig => {
   const accessToken = localStorage.getItem('accessToken');
@@ -30,7 +57,7 @@ const onRequest = (
   return newConfig;
 };
 
-const onResponse = (response: AxiosResponse): AxiosResponse => {
+export const onResponse = (response: AxiosResponse): AxiosResponse => {
   const { method, url } = response.config;
   const { status } = response;
 
@@ -38,46 +65,96 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
   return response;
 };
 
-const onError = async (error: AxiosError) => {
+export const onError = async (error: AxiosError): Promise<unknown> => {
   const { config, response } = error;
-  if (!config || !response) return Promise.reject(error);
+  if (!config || !response) throw error;
 
-  if (config.sent) {
-    return Promise.reject(error);
-  }
-  config.sent = true;
+  if ((config as ExtendedAxiosRequestConfig).sent) throw error;
+  (config as ExtendedAxiosRequestConfig).sent = true;
 
   const { status, data } = response;
+  if (!isErrorData(data)) throw error;
 
-  if (status === 401 && isTokenExpiredMessage(data)) {
-    try {
-      await postRefreshToken();
-
-      const accessToken = localStorage.getItem('accessToken');
-      if (accessToken) {
-        authClient.defaults.headers.Authorization = `Bearer ${accessToken}`;
-        config.headers.Authorization = `Bearer ${accessToken}`;
-        return authClient(config);
-      }
-    } catch (e) {
-      localStorage.removeItem('accessToken');
-      sessionStorage.removeItem('refreshToken');
-      window.location.replace(ROUTE_PATH.signIn);
-      return Promise.reject(e);
-    }
-  }
-
-  if (status === 401 && (isTokenWrong(data) || isRefreshExpired(data))) {
-    if (window.location.pathname === '/sign-in') {
-      return Promise.reject(error);
-    }
-    localStorage.removeItem('accessToken');
-    sessionStorage.removeItem('refreshToken');
-    window.location.replace(ROUTE_PATH.signIn);
-    return Promise.reject(error);
-  }
-
-  return Promise.reject(error);
+  return handleErrorByStatus({ status, data, config });
 };
 
-export { onRequest, onResponse, onError };
+const handleErrorByStatus = async ({
+  status,
+  data,
+  config,
+}: HandleErrorByStatusType) => {
+  if (status === 401 && isTokenExpiredMessage(data)) {
+    return handleTokenRefresh({ config });
+  }
+
+  if (
+    status === 401 &&
+    (isTokenWrong(data) ||
+      isRefreshExpired(data) ||
+      data.message === 'Unauthorized')
+  ) {
+    return handleInvalidToken();
+  }
+
+  throw createError(data);
+};
+
+const handleTokenRefresh = async ({
+  config,
+}: HandleTokenRefreshType): Promise<unknown> => {
+  try {
+    await postRefreshToken();
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (accessToken) {
+      authClient.defaults.headers.Authorization = `Bearer ${accessToken}`;
+      const updatedConfig = updateConfig(config, accessToken);
+
+      return authClient(updatedConfig);
+    }
+  } catch {
+    handleAuthFailure();
+  }
+
+  return true;
+};
+
+const updateConfig = (
+  config: ConfigWithHeaders,
+  accessToken: string,
+): ConfigWithHeaders => {
+  return {
+    ...config,
+    headers: {
+      ...config.headers,
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+};
+
+const handleInvalidToken = () => {
+  localStorage.removeItem('accessToken');
+  sessionStorage.removeItem('refreshToken');
+  if (window.location.pathname !== '/sign-in') {
+    window.location.replace(ROUTE_PATH.signIn);
+  }
+};
+
+const handleAuthFailure = () => {
+  localStorage.removeItem('accessToken');
+  sessionStorage.removeItem('refreshToken');
+  window.location.replace(ROUTE_PATH.signIn);
+};
+
+const createError = (data: ErrorData) => {
+  return new RequestError({
+    name: data.code.toString(),
+    timestamp: data.timestamp,
+    status: data.status,
+    code: data.code,
+    message: data.message,
+    path: data.path,
+    stack: data.stack,
+    errorHandlingType: ERROR_HANDLING[data.code] ?? 'errorBoundary',
+  });
+};

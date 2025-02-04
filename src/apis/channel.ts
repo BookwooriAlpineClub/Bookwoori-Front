@@ -1,10 +1,13 @@
 import type { AxiosResponse } from 'axios';
-import type { Channel } from '@src/types/apis/channel.d';
+import type {
+  ChannelPatchReq,
+  ChannelPostReq,
+  ChannelMessagesRes,
+} from '@src/types/apis/channel';
 import { authClient } from '@src/apis/index';
-import { ChannelMessagesRes } from '@src/types/domain/channel';
 
 /** 채널 생성 */
-export const postChannel = async <Res = void, Req = Channel>(
+export const postChannel = async <Res = void, Req = ChannelPostReq>(
   body: Req,
 ): Promise<Res> => {
   const response = await authClient.post<Res, AxiosResponse<Res>, Req>(
@@ -19,10 +22,7 @@ export const postChannel = async <Res = void, Req = Channel>(
  * 채널 편집
  * @ 백엔드에 수정 요청함
  */
-export const patchChannel = async <
-  Res = void,
-  Req = Pick<Channel, 'categoryId' | 'name'>,
->(
+export const patchChannel = async <Res = void, Req = ChannelPatchReq>(
   channelId: number,
   body: Req,
 ): Promise<Res> => {
@@ -45,10 +45,7 @@ export const deleteChannel = async <Res = void>(
   return response.data;
 };
 
-/**
- * 채널 채팅 내역 조회
- * @ 백엔드 구현 미완료
- */
+/* 채널 채팅 내역 조회 */
 export const getChannelMessages = async <Res = ChannelMessagesRes>(
   channelId: number,
   page?: number,

@@ -1,36 +1,39 @@
 import styled from 'styled-components';
-import { SyntheticEvent, useEffect, useRef, useState } from 'react';
-import { ClimbingParticipants } from '@src/types/domain/climbingTemp';
-import { ReactComponent as Flag } from '@src/assets/icons/climbing_flag_done.svg';
-import { ReactComponent as FlagBefore } from '@src/assets/icons/climbing_flag_before.svg';
+import { useEffect, useRef, useState } from 'react';
+import type { ClimbingMember } from '@src/types/climbing';
+import useLoaderData from '@src/hooks/useRoaderData';
+import { useGetClimbing } from '@src/hooks/query/climbing';
+import { handleImgError } from '@src/utils/helpers';
+import { ReactComponent as Flag } from '@src/assets/icons/climbing_flag_color.svg';
+import { ReactComponent as FlagBefore } from '@src/assets/icons/climbing_flag_outline.svg';
 import ProfileImg from '@src/assets/images/userSettings/background_default.svg';
 import Memo from '@src/components/climbing/Memo';
 import ProgressBar from '@src/components/climbing/ProgressBar';
-import useClimbing from '@src/hooks/query/useClimbing';
-import useLoaderData from '@src/hooks/useRoaderData';
+import {
+  ClimbingReadingStatus,
+  ClimbingStatus,
+} from '@src/constants/constants';
 
 interface Props {
-  item: ClimbingParticipants;
+  item: ClimbingMember;
 }
 
 const ClimbingRope = ({ item }: Props) => {
   const { id } = useLoaderData<{ id: number }>();
-  const { climbingInfo, isLoading } = useClimbing(id);
-  // 전역으로 클라이밍 정보를 저장하고 해당 정보를 가져올 예정
-  // const totalPage: number = 500;
-  // 전역으로 클라이밍 상태 가져옴
-  // const status: string = 'PROGRESS';
-  const [height, setHeight] = useState<number>(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [containerHeight, setContainerHeight] = useState<number>(0);
+  const { climbingInfo } = useGetClimbing(id);
 
-  const calculatePercentage = (): number => {
-    return item.currentPage / (climbingInfo?.bookInfo.itemPage ?? 500);
-  };
+  const [height, setHeight] = useState<number>(0);
+  const [containerHeight, setContainerHeight] = useState<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setHeight(calculatePercentage());
-  }, [item, climbingInfo?.bookInfo.itemPage]);
+    if (!climbingInfo) return;
+
+    const newHeight =
+      item.currentPage / (climbingInfo.bookInfo.itemPage as number);
+
+    setHeight(newHeight);
+  }, [item, climbingInfo]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -44,21 +47,17 @@ const ClimbingRope = ({ item }: Props) => {
     });
 
     observer.observe(container);
-    // eslint-disable-next-line consistent-return
-    return () => observer.disconnect();
+    observer.disconnect();
   }, []);
 
-  const handleImgError = (e: SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = ProfileImg;
-  };
-
-  if (isLoading) {
-    return <h3>loading...</h3>;
-  }
   return (
     <Layout>
       <Background>
-        {item.status === 'FINISHED' ? <SFlag /> : <SFlagBefore />}
+        {item.status === ClimbingReadingStatus.FINISHED ? (
+          <Flag width={85} height={100} />
+        ) : (
+          <FlagBefore width={85} height={100} />
+        )}
       </Background>
       <Container ref={containerRef}>
         <Line />
@@ -68,23 +67,20 @@ const ClimbingRope = ({ item }: Props) => {
           isChanged={containerHeight}
         />
         <Profile>
-          {item.profileImg ? (
-            <Img
-              src={item.profileImg}
-              outline={
-                climbingInfo?.status === 'FINISHED' &&
-                item.status === 'FINISHED'
-              }
-              onError={handleImgError}
-            />
-          ) : (
-            <Img src={ProfileImg} alt='img' />
-          )}
+          <Img
+            alt='memberImg'
+            src={item.profileImg ?? ProfileImg}
+            outline={
+              climbingInfo?.status === ClimbingStatus.FINISHED &&
+              item.status === ClimbingReadingStatus.FINISHED
+            }
+            onError={(e) => handleImgError(e, ProfileImg)}
+          />
           <Nickname>{item.nickname}</Nickname>
         </Profile>
         {!(
-          climbingInfo?.status === 'FINISHED' ||
-          climbingInfo?.status === 'FAILED'
+          climbingInfo?.status === ClimbingStatus.FINISHED ||
+          climbingInfo?.status === ClimbingStatus.FAILED
         ) && <Memo isUser={item.isMine} memo={item.memo ? item.memo : ''} />}
       </Container>
     </Layout>
@@ -96,7 +92,7 @@ export default ClimbingRope;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.8125rem;
+  gap: ${({ theme }) => theme.gap[12]};
 
   height: 100%;
   width: 100%;
@@ -106,15 +102,7 @@ const Background = styled.div`
   justify-content: center;
 
   height: 5.5rem;
-  background-color: ${({ theme }) => theme.colors.black300};
-`;
-const SFlag = styled(Flag)`
-  width: 5.3125rem;
-  height: 6.25rem;
-`;
-const SFlagBefore = styled(FlagBefore)`
-  width: 5.3125rem;
-  height: 6.25rem;
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const Container = styled.div`
   display: flex;
@@ -122,32 +110,32 @@ const Container = styled.div`
 
   height: 100%;
   padding-bottom: 0.9375rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const Line = styled.div`
   margin-bottom: 0.0625rem;
 
   width: 100%;
   height: 0.0625rem;
-  background-color: ${({ theme }) => theme.colors.black400};
+  background-color: ${({ theme }) => theme.colors.neutral200};
 `;
 const Profile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4375rem;
+  gap: ${({ theme }) => theme.gap[6]};
 `;
 const Img = styled.img<{ outline?: boolean }>`
   width: 3.25rem;
   height: 3.25rem;
 
   border: ${({ outline, theme }) =>
-    outline && `0.1875rem solid ${theme.colors.blue100}`};
+    outline && `0.1875rem solid ${theme.colors.blue500}`};
   border-radius: 50%;
 
   object-fit: cover;
 `;
 const Nickname = styled.span`
   text-align: center;
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;

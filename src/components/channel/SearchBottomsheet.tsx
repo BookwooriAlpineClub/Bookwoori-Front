@@ -1,15 +1,14 @@
-import type { BookListItem } from '@src/types/apis/book.d';
+import type Book from '@src/types/book';
+import type { GetBookListRes } from '@src/types/apis/book';
 import { useState } from 'react';
-import useBook from '@src/hooks/query/useBook';
+import { useGetBookList } from '@src/hooks/query/book';
 import styled from 'styled-components';
-import { NoDataTextLayout } from '@src/styles/mixins';
-import BookinfoItem from '@src/components/book/BookinfoItem';
+import BookListItem from '@src/components/library/BookListItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 
+type BookReturnData = Pick<Book, 'isbn13' | 'title'>;
 interface Props {
-  setValue: React.Dispatch<
-    React.SetStateAction<Pick<BookListItem, 'title' | 'isbn13'>>
-  >;
+  setValue: React.Dispatch<React.SetStateAction<BookReturnData>>;
   closeBottomsheet: () => void;
 }
 
@@ -17,8 +16,8 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
   const [keyword, setKeyword] = useState<string>('');
 
   // API 요청
-  const { bookList } = useBook({ keyword });
-  const data: BookListItem[] = bookList as BookListItem[];
+  const { data: bookList } = useGetBookList(keyword);
+  const data: GetBookListRes = bookList as GetBookListRes;
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // 새로고침 방지 (기본 기능 비활성화)
@@ -31,49 +30,47 @@ const SearchBottomsheet = ({ setValue, closeBottomsheet }: Props) => {
     // 쿼리 업데이트
     setKeyword(input);
   };
-  const handleItemClick = (
-    item: Pick<BookListItem, 'title' | 'isbn13'>,
-  ): void => {
+  const handleItemClick = (item: BookReturnData): void => {
     setValue?.(item);
     closeBottomsheet?.();
   };
 
   return (
     <Container>
-      <NoDataTextLayout>
-        <Header>
-          <Form onSubmit={handleFormSubmit}>
-            <IcnSearch width={20} height={20} />
-            <Input
-              type='text'
-              name='keyword'
-              placeholder='책 제목, 작가를 검색해 보세요.'
-            />
-          </Form>
-        </Header>
-        {keyword && (
-          <Main>
-            {data.length !== 0 ? (
-              <Ul>
-                {data.map((item) => (
-                  <BookinfoItem
-                    key={item.isbn13}
-                    {...item}
-                    onClick={() =>
-                      handleItemClick({
-                        title: item.title,
-                        isbn13: item.isbn13,
-                      })
-                    }
-                  />
-                ))}
-              </Ul>
-            ) : (
-              <strong>검색 결과가 없어요.</strong>
-            )}
-          </Main>
-        )}
-      </NoDataTextLayout>
+      <Header>
+        <Form onSubmit={handleFormSubmit}>
+          <IcnSearch width={20} height={20} />
+          <Input
+            type='text'
+            name='keyword'
+            placeholder='책 제목, 작가를 검색해 보세요.'
+          />
+        </Form>
+      </Header>
+      {keyword && (
+        <Main>
+          {data.length !== 0 ? (
+            <Ul>
+              {data.map((item) => (
+                <button
+                  key={item.isbn13}
+                  type='button'
+                  onClick={() => {
+                    handleItemClick({
+                      title: item.title,
+                      isbn13: item.isbn13,
+                    });
+                  }}
+                >
+                  <BookListItem {...item} />
+                </button>
+              ))}
+            </Ul>
+          ) : (
+            <strong>검색 결과가 없어요.</strong>
+          )}
+        </Main>
+      )}
     </Container>
   );
 };
@@ -89,10 +86,10 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.875rem;
+  gap: ${({ theme }) => theme.gap[16]};
 
   width: 100%;
-  padding: 0.9375rem;
+  padding: ${({ theme }) => theme.padding[16]};
 `;
 const Main = styled.main`
   overflow-y: scroll;
@@ -100,16 +97,16 @@ const Main = styled.main`
 const Form = styled.form`
   display: flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: ${({ theme }) => theme.gap[6]};
 
   width: 19.375rem;
   height: 2.5rem;
-  padding: 0.75rem;
+  padding: ${({ theme }) => theme.padding[12]};
 
-  border-radius: 1.875rem;
-  background-color: ${({ theme }) => theme.colors.blue300};
+  border-radius: ${({ theme }) => theme.rounded[24]};
+  background-color: ${({ theme }) => theme.colors.blue100};
 
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
 `;
 const Input = styled.input`
   width: 100%;
@@ -117,15 +114,15 @@ const Input = styled.input`
   background-color: transparent;
 
   ${({ theme }) => theme.fonts.body}
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
   text-overflow: ellipsis;
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.blue200};
+    color: ${({ theme }) => theme.colors.blue300};
   }
 `;
 const Ul = styled.ul`
   display: flex;
   flex-flow: column nowrap;
-  gap: 1.25rem;
+  gap: ${({ theme }) => theme.gap[16]};
 `;

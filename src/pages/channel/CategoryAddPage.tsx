@@ -1,5 +1,5 @@
 import { postCategory } from '@src/apis/category';
-import Button from '@src/components/common/Button';
+import Button from '@src/components/common/button/Button';
 import Header from '@src/components/common/Header';
 import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 import { currentServerIdState } from '@src/states/atoms';
@@ -36,8 +36,8 @@ const CategoryAddPage = () => {
   return (
     <SLayout>
       <Header text='분류 추가하기' headerType='back' />
-      <SContainer>
-        <SBox>
+      <Main>
+        <SBox className='scroll-area'>
           <SLabel>분류 이름</SLabel>
           <SWrapper>
             <SInput
@@ -52,7 +52,7 @@ const CategoryAddPage = () => {
         <Button disabled={!(value && length <= 10)} onClick={handleSubmit}>
           추가하기
         </Button>
-      </SContainer>
+      </Main>
     </SLayout>
   );
 };
@@ -64,7 +64,7 @@ const SLayout = styled.div`
   flex-direction: column;
   height: 100svh;
 `;
-const SContainer = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -82,7 +82,7 @@ const SBox = styled.div`
 `;
 const SLabel = styled.label`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 const SWrapper = styled.div`
   display: flex;
@@ -91,7 +91,7 @@ const SWrapper = styled.div`
   padding: 0.875rem 0.625rem;
 
   border-radius: 0.3125rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const SInput = styled.input`
   width: 100%;
@@ -100,5 +100,5 @@ const SInput = styled.input`
 `;
 const SSmallLabel = styled.label`
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;

@@ -1,14 +1,37 @@
-import { Categories } from '@src/types/domain/channel';
-import React, { useState, useCallback } from 'react';
+import type { Category } from '@src/types/category';
+import { useState, useCallback, useEffect } from 'react';
 
-const useDraggable = (
-  channelListData: Pick<Categories, 'categoryId' | 'name'>[],
+const updateList = (
+  prevList: Category[],
+  movedItem: Category,
+  targetIdx: number,
 ) => {
-  const [list, setList] = useState(channelListData);
-  const [draggingIdx, setDraggingIdx] = useState<number | null>(null);
-  // const [startX, setStartX] = useState(0);
-  // const [startY, setStartY] = useState(0);
-  // const [targetIdx, setTargetIdx] = useState<number | null>(null);
+  const updatedList = prevList.filter(
+    (it) => it.categoryId !== movedItem.categoryId,
+  );
+
+  const findIdx = updatedList.findIndex((it) => it.categoryId === targetIdx);
+  return [
+    ...updatedList.slice(0, findIdx + 1),
+    movedItem,
+    ...updatedList.slice(findIdx + 1),
+  ];
+};
+
+const useDraggable = (categoryListData: Category[]) => {
+  const [beforeIdx, setBeforeIdx] = useState<number>(-1);
+  const [list, setList] = useState<Category[]>();
+  const [draggingIdx, setDraggingIdx] = useState<number>(-1);
+  const [touchStartIdx, setTouchStartIdx] = useState<number>(-1);
+
+  useEffect(() => {
+    setList((prevList) => {
+      if (JSON.stringify(prevList) === JSON.stringify(categoryListData)) {
+        return prevList;
+      }
+      return categoryListData;
+    });
+  }, [categoryListData]);
 
   const handleOnDragStart = (e: React.DragEvent, idx: number) => {
     const dragEvent = e as React.DragEvent;
@@ -26,76 +49,92 @@ const useDraggable = (
       if (idx === -1 || draggingIdx === idx || draggingIdx === null) return;
 
       setList((prevList) => {
-        const updatedList = [...prevList];
-        const [movedItem] = updatedList.splice(draggingIdx, 1);
-        updatedList.splice(idx, 0, movedItem);
-        return updatedList;
+        if (!prevList) return prevList;
+
+        const movedItem = prevList.find((it) => it.categoryId === draggingIdx);
+        if (!movedItem) return prevList;
+
+        return updateList(prevList, movedItem, beforeIdx);
       });
 
-      setDraggingIdx(null);
+      setBeforeIdx(idx);
     },
-    [draggingIdx],
+    [draggingIdx, beforeIdx],
   );
 
-  // const handleTouchStart = (e: React.TouchEvent, idx: number) => {
-  //   e.preventDefault();
+  const handleTouchStart = (idx: number) => {
+    setTouchStartIdx(idx);
+  };
 
-  //   setStartX(e.changedTouches[0].pageX);
-  //   setStartY(e.changedTouches[0].pageY);
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      const touch = e.touches[0];
 
-  //   setTargetIdx(idx);
-  // };
+      if (!list) return;
+      const target = list.find((item) => {
+        const element = document.querySelector(
+          `[data-idx="${item.categoryId}"]`,
+        );
+        if (!element) return false;
 
-  // const handleTouchMove = useCallback((e: React.TouchEvent) => {
-  //   e.preventDefault();
+        const rect = element.getBoundingClientRect();
+        return (
+          touch.clientX >= rect.left &&
+          touch.clientX <= rect.right &&
+          touch.clientY >= rect.top &&
+          touch.clientY <= rect.bottom
+        );
+      });
 
-  //   const touch = e.touches[0];
-  //   const target = document.elementFromPoint(touch.clientX, touch.clientY);
-  //   const dropIdx = Number(target?.getAttribute('data-idx'));
+      if (target) {
+        setBeforeIdx(target.categoryId);
+      }
+    },
+    [list],
+  );
 
-  //   if (!Number.isNaN(dropIdx)) {
-  //     setTargetIdx(dropIdx);
-  //   }
-  // }, []);
+  const handleTouchEnd = useCallback(() => {
+    if (
+      touchStartIdx === null ||
+      beforeIdx === -1 ||
+      touchStartIdx === beforeIdx
+    )
+      return;
 
-  // const handleTouchEnd = (e: React.TouchEvent, idx: number) => {
-  //   e.preventDefault();
+    setList((prevList) => {
+      if (!prevList) return prevList;
 
-  //   const distanceX = startX - e.changedTouches[0].pageX;
-  //   const distanceY = startY - e.changedTouches[0].pageY;
-  //   const vector = Math.abs(distanceY / distanceX);
+      const movedItem = prevList.find((it) => it.categoryId === touchStartIdx);
+      if (!movedItem) return prevList;
 
-  //   if (targetIdx === idx || targetIdx === null) return;
-
-  //   if (vector > 2) {
-  //     setList((prevList) => {
-  //       const updatedList = [...prevList];
-  //       const [movedItem] = updatedList.splice(targetIdx, 1);
-  //       updatedList.splice(idx, 0, movedItem);
-  //       return updatedList;
-  //     });
-
-  //     setTargetIdx(null);
-  //   }
-  // };
+      return updateList(prevList, movedItem, beforeIdx);
+    });
+  }, [touchStartIdx, beforeIdx]);
 
   const handleDraggable = (idx: number) => {
-    // if ('ontouchstart' in window) {
-    //   return {
-    //     onTouchStart: handleTouchStart,
-    //     onTouchMove: handleTouchMove,
-    //     onTouchEnd: (e: React.TouchEvent) => handleTouchEnd(e, idx),
-    //   };
-    // }
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      return {
+        onTouchStart: () => handleTouchStart(idx),
+        onTouchMove: handleTouchMove,
+        onTouchEnd: handleTouchEnd,
+      };
+    }
     return {
       draggable: true,
       onDragStart: (e: React.DragEvent) => handleOnDragStart(e, idx),
-      onDrop: () => handleOnDrop(idx),
       onDragOver: handleOnDragOver,
+      onDrop: () => handleOnDrop(idx),
     };
   };
 
-  return { list, setList, handleDraggable };
+  return {
+    categoryId: window.matchMedia('(pointer: coarse)').matches
+      ? touchStartIdx
+      : draggingIdx,
+    beforeIdx,
+    list,
+    handleDraggable,
+  };
 };
 
 export default useDraggable;

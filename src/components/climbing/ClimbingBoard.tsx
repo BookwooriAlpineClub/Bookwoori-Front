@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import ClimbingRope from '@src/components/climbing/ClimbingRope';
-import useClimbing from '@src/hooks/query/useClimbing';
+import type { ClimbingMember } from '@src/types/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
-import { ClimbingParticipants } from '@src/types/domain/climbingTemp';
+import { useGetClimbingMembers } from '@src/hooks/query/climbing';
+import ClimbingRope from '@src/components/climbing/ClimbingRope';
 
 const ClimbingBoard = () => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
-  const { participants } = useClimbing(climbingId);
+  const { participants } = useGetClimbingMembers(climbingId);
 
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
     const container = event.currentTarget;
@@ -20,7 +20,7 @@ const ClimbingBoard = () => {
     <Layout onWheel={handleWheel}>
       {participants
         ?.sort((a, b) => b.currentPage - a.currentPage)
-        .map((it: ClimbingParticipants) => (
+        .map((it: ClimbingMember) => (
           <ClimbingRope key={it.memberId} item={it} />
         ))}
     </Layout>

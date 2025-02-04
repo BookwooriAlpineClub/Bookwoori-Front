@@ -1,3 +1,6 @@
+import { ErrorData } from '@src/apis/interceptor';
+import RequestError, { RequestErrorType } from '@src/errors/RequestError';
+
 /* eslint-disable */
 export const isBase64Encoded = (str: string): boolean => {
   try {
@@ -8,7 +11,7 @@ export const isBase64Encoded = (str: string): boolean => {
 };
 
 // 후에 에러 타입 반영 수정
-export const isTokenExpiredMessage = (data: any): boolean => {
+export const isTokenExpiredMessage = (data: ErrorData): boolean => {
   return data?.message == '만료된 엑세스 토큰입니다.';
 };
 
@@ -21,4 +24,22 @@ export const isTokenWrong = (data: any): boolean => {
 
 export const isRefreshExpired = (data: any): boolean => {
   return data?.message == '만료된 리프레쉬 토큰입니다.';
+};
+
+export const validateMimeTypes = (newFile: File) => {
+  const validMimeTypes = ['image/png', 'image/jpeg'];
+  return validMimeTypes.includes(newFile.type);
+};
+
+export const isRequestedError = (error: Error): error is RequestErrorType => {
+  return error instanceof RequestError;
+};
+
+export const isErrorData = (data: unknown): data is ErrorData => {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'code' in data &&
+    'message' in data
+  );
 };

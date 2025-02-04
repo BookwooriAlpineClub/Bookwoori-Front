@@ -82,21 +82,21 @@ const ExpHistoryPage = () => {
   return (
     <>
       <Header text='지나온 길 보기' headerType='back' />
-      <SLayout>
+      <Main>
         {expList.map((item) => {
           const keys = Object.keys(item);
           return keys.map((key) => (
             <ExpList key={`${item}-${key}`} date={key} list={item[key]} />
           ));
         })}
-      </SLayout>
+      </Main>
     </>
   );
 };
 
 export default ExpHistoryPage;
 
-const SLayout = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;

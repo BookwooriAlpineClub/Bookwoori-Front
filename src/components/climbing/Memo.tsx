@@ -1,9 +1,9 @@
-/* eslint-disable no-nested-ternary */
+import useModal from '@src/hooks/useModal';
+import useLoaderData from '@src/hooks/useRoaderData';
+import { dialogState } from '@src/states/atoms';
 import styled from 'styled-components';
-import useDialog from '@src/hooks/useDialog';
 import MemoDialog from '@src/components/climbing/MemoDialog';
 import { ReactComponent as Plus } from '@src/assets/icons/hi_outline_plus.svg';
-import useLoaderData from '@src/hooks/useRoaderData';
 
 type MemoProps = {
   memo: string;
@@ -12,27 +12,37 @@ type MemoProps = {
 
 const Memo = ({ memo, isUser }: MemoProps) => {
   const { id } = useLoaderData<{ id: number }>();
-  const { openDialog, closeDialog } = useDialog();
+  const { openModal: openDialog, closeModal: closeDialog } = useModal(dialogState);
 
   const handleClickMemo = () => {
-    openDialog(<MemoDialog id={id} memo={memo} closeDialog={closeDialog} />);
+    openDialog(
+      <MemoDialog climbingId={id} memo={memo} closeDialog={closeDialog} />,
+    );
   };
 
   return (
     <Layout type='button' onClick={handleClickMemo} disabled={!isUser}>
-      {isUser ? (
-        <>
-          <Triangle />
-          <TextBox>{memo || <SPlus />}</TextBox>
-        </>
-      ) : memo ? (
-        <>
-          <Triangle />
-          <TextBox>{memo}</TextBox>
-        </>
-      ) : (
-        <Blank />
-      )}
+      {(() => {
+        if (isUser) {
+          return (
+            <>
+              <Triangle />
+              <TextBox>{memo || <Plus width={15} height={15} />}</TextBox>
+            </>
+          );
+        }
+
+        if (memo) {
+          return (
+            <>
+              <Triangle />
+              <TextBox>{memo}</TextBox>
+            </>
+          );
+        }
+
+        return <Blank />;
+      })()}
     </Layout>
   );
 };
@@ -52,7 +62,7 @@ const Layout = styled.button`
 const Triangle = styled.div`
   width: 0rem;
   height: 0rem;
-  border-bottom: 0.625rem solid ${({ theme }) => theme.colors.blue300};
+  border-bottom: 0.625rem solid ${({ theme }) => theme.colors.blue100};
   border-left: 0.375rem solid transparent;
   border-right: 0.375rem solid transparent;
 `;
@@ -66,17 +76,12 @@ const TextBox = styled.div`
   height: 2.125rem;
 
   padding: 0.25rem 0.4375rem;
-  border-radius: 0.375rem;
-  background-color: ${({ theme }) => theme.colors.blue300};
+  border-radius: ${({ theme }) => theme.rounded[6]};
+  background-color: ${({ theme }) => theme.colors.blue100};
 
   ${({ theme }) => theme.fonts.caption};
   text-align: center;
-`;
-const SPlus = styled(Plus)`
-  width: 0.9375rem;
-  height: 0.9375rem;
-
-  fill: ${({ theme }) => theme.colors.blue200};
+  color: ${({ theme }) => theme.colors.blue500};
 `;
 const Blank = styled.div`
   height: 2.725rem;

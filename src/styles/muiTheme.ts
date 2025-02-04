@@ -4,16 +4,16 @@ import { theme as styledTheme } from '@src/styles/theme';
 const muiTheme = createTheme({
   palette: {
     primary: {
-      main: styledTheme.colors.blue100, // styled-components 색상 연결
+      main: styledTheme.colors.blue500, // styled-components 색상 연결
     },
     secondary: {
-      main: styledTheme.colors.neonGreen,
+      main: styledTheme.colors.lime300,
     },
     background: {
-      default: styledTheme.colors.black300,
+      default: styledTheme.colors.neutral50,
     },
     text: {
-      primary: styledTheme.colors.black100,
+      primary: styledTheme.colors.neutral950,
     },
   },
   typography: {

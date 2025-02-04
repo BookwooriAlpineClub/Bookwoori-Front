@@ -20,28 +20,35 @@ const GlobalStyle = createGlobalStyle`
       width: 100vw;
       height: 100vh;
     }
-    background-color: ${({ theme }) => theme.colors.black300};
+    background-color: ${({ theme }) => theme.colors.neutral50};
     ${({ theme }) => theme.fonts.body}
+  }
+  #root, #modal, #toast {
+    width: inherit;
+    height: inherit;
+  }
+  #root {
+    &:has(header) {
+      padding-top: calc(4.375rem + ${({ theme }) => theme.padding[16]});
+    }
+  }
+  #root > main {
+    width: 100%;
+    height: 100%;
+  }
+  #modal {
+    position: fixed;
+    z-index: ${({ theme }) => theme.zIndex.modal};
+  }
+  #toast {
+    position: fixed;
+    z-index: ${({ theme }) => theme.zIndex.toast};
   }
   button {
     ${({ theme }) => theme.fonts.mountain}
   }
-  /* 스크롤바 비표시 */
   ::-webkit-scrollbar {
     display: none;
-  }
-
-  #root, #modal, #toast {
-    width: 100%;
-    height: 100%;
-  }
-  #toast {
-    position: fixed;
-    z-index: 900;
-  }
-  #modal {
-    position: fixed;
-    z-index: 800;
   }
 `;
 

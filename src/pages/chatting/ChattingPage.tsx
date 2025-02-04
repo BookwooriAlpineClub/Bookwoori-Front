@@ -1,168 +1,139 @@
 import styled from 'styled-components';
-import React, { useEffect, useRef, useState } from 'react';
-import { connectHandler, disconnectHandler } from '@src/apis/chat';
-import { DM } from '@src/types/domain/messageRoom';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  editChatIdState,
+  replyChatIdState,
+  replyChatState,
+} from '@src/states/atoms';
+import { useInView } from 'react-intersection-observer';
+import type { DM } from '@src/types/messageRoom';
 import useLoaderData from '@src/hooks/useRoaderData';
-import { ChatEvent } from '@src/types/domain/dm';
-import { useMessage, useRoomInfo } from '@src/hooks/query/useDm';
+import { useGetDMList, usePostMessageRoom } from '@src/hooks/query/chat';
+import useChatHandler from '@src/hooks/useChatHandler';
+import { formatCreatedAt } from '@src/utils/formatters';
 import ChatBar from '@src/components/chatting/ChatBar';
 import ChatItem from '@src/components/chatting/ChatItem';
 import DateLine from '@src/components/chatting/DateLine';
 import Header from '@src/components/common/Header';
-import LoadingPage from '@src/components/common/LoadingPage';
 
 const ChattingPage = () => {
   const { id: memberId } = useLoaderData<{ id: number }>();
-  const { roomInfo } = useRoomInfo(memberId);
-  const [roomId, setRoomId] = useState<number>();
-  const {
-    messages: data,
-    isLoading,
-    fetchNextPage,
-    isFetchingNextPage,
-    hasNextPage,
-  } = useMessage(roomId ?? -1);
+  const setEditChatId = useSetRecoilState(editChatIdState);
+  const [replyChatItem, setReplyChatItem] = useRecoilState(replyChatState);
+  const replyChatId = useRecoilValue(replyChatIdState);
+
+  const { roomInfo } = usePostMessageRoom(memberId);
+  const { data, fetchNextPage, hasNextPage, refetch } = useGetDMList(
+    roomInfo?.messageRoomId ?? -1,
+  );
+
   const [messages, setMessages] = useState<DM[]>([]);
-  const [prevHeight, setPrevHeight] = useState<number>(-1);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const targetRef = useRef<any>(null);
+  const [newMessages, setNewMessages] = useState<DM[]>([]);
+  const allMessages: DM[] = useMemo(() => {
+    return [...newMessages, ...messages];
+  }, [newMessages, messages]);
+  const [isInitial, setIsInitial] = useState<boolean>(true);
+
+  const { ref: targetRef, inView } = useInView();
   const chatRef = useRef<HTMLDivElement>(null);
+  const replyChatRef = useRef<HTMLDivElement | null>(null);
 
-  // 데이터 fetching
+  useChatHandler({ roomInfo, setNewMessages, setMessages });
+
+  const navigate = useNavigate();
+
+  const handleRefresh = async () => {
+    setEditChatId(null);
+    setReplyChatItem(null);
+    refetch();
+    navigate(-1);
+  };
+
   useEffect(() => {
-    if (data) {
-      const uniqueMessages = data.filter(
-        (newMessage) => !messages.some((msg) => msg.id === newMessage.id),
-      );
-
-      // 기존 메시지에 새로운 메시지만 추가
-      if (uniqueMessages.length > 0) {
-        setMessages((prevMessages) => [...prevMessages, ...uniqueMessages]);
-      }
+    if (replyChatRef.current) {
+      replyChatRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
     }
-  }, [data]);
+  }, [replyChatId]);
 
   useEffect(() => {
-    if (roomInfo && roomInfo.messageRoomId !== roomId) {
-      setRoomId(roomInfo.messageRoomId);
-    }
-  }, [roomInfo]);
+    if (!data) return;
 
-  useEffect(() => {
-    // 메시지 핸들러 정의 (새로운 메시지가 도착할 때 호출)
-    const onMessage = (message: ChatEvent) => {
-      if (message.messageRoomId !== roomInfo!.messageRoomId) return;
-      if (message.eventType === 'REACT') {
-        console.log('반응');
-      }
+    if (isInitial) {
+      setMessages(data);
+      setIsInitial(false);
 
-      if (message.eventType === 'NEW_MESSAGE') {
-        const newMessage: DM = {
-          id: message.payload.id,
-          messageRoomId: message.payload.messageRoomId || 0,
-          memberId: message.payload.memberId,
-          content: message.payload.content ?? '',
-          createdAt: message.payload.createdAt,
-          // reactions: {},
-        };
-        setMessages((prevMessages) => {
-          if (prevMessages.some((msg) => msg.id === newMessage.id)) {
-            return prevMessages;
-          }
-          return [newMessage, ...prevMessages];
-        });
-
+      setTimeout(() => {
         if (chatRef.current) {
           chatRef.current.scrollTop = chatRef.current.scrollHeight;
         }
-      }
-    };
+      }, 0);
+    }
+  }, [data]);
 
-    // WebSocket 연결 (구독하고자 하는 url)
-    connectHandler(onMessage, `/topic/direct/${roomInfo?.messageRoomId}`);
-
-    return () => {
-      // 컴포넌트 언마운트 시 WebSocket 연결 해제
-      disconnectHandler();
-    };
-  }, [roomInfo]);
-
-  // 옵저버
+  // 데이터 패칭
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const target = entries[0];
-        if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
-          setPrevHeight(chatRef.current?.scrollHeight || prevHeight);
-          fetchNextPage();
-        }
-      },
-      {
-        root: null,
-        rootMargin: '0px',
-        threshold: 1.0,
-      },
-    );
+    if (!inView) return;
 
-    const targetElement = targetRef.current;
-    if (targetElement) observer.observe(targetElement);
+    if (hasNextPage) fetchNextPage();
+    if (data) setMessages(data);
+  }, [inView, hasNextPage]);
 
-    return () => {
-      if (targetElement) observer.unobserve(targetElement);
-    };
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage, targetRef]);
+  // 새로운 메시지 보냈을 때 스크롤 이동
+  const prevMessageCount = useRef(newMessages.length);
 
   useEffect(() => {
-    // 처음 채팅방 접속시 스크롤 하단 이동
-    if (prevHeight === -1 && chatRef.current) {
+    if (!chatRef.current) return;
+
+    const isNewMessageAdded = newMessages.length > prevMessageCount.current;
+    prevMessageCount.current = newMessages.length;
+
+    if (isNewMessageAdded) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, [messages]);
-
-  if (!data || isLoading) {
-    return <LoadingPage />;
-  }
+  }, [newMessages]);
 
   return (
     <>
-      <SHeader text={roomInfo?.title ?? ''} headerType='back' />
-      <SLayout ref={chatRef}>
-        <div ref={targetRef} />
+      <Header
+        text={roomInfo?.title ?? ''}
+        headerType='back'
+        onClick={handleRefresh}
+      />
+      <Main ref={chatRef} $isExistReply={Boolean(replyChatItem)}>
         <Container>
-          {messages.map((it, idx) => {
+          {allMessages.map((it, idx) => {
             const participant = roomInfo?.participants?.[String(it.memberId)];
-            const imgUrl = participant?.profileImg || undefined;
-            const nickname = participant?.nickname || '';
-            const currentDate = it.createdAt.split('T')[1]
-              ? it.createdAt.split('T')[0]
-              : it.createdAt.split(' ')[0];
-
-            const prevDate = messages[idx - 1]?.createdAt.split('T')[1]
-              ? messages[idx - 1]?.createdAt.split('T')[0]
-              : messages[idx - 1]?.createdAt.split(' ')[0];
-
-            const showDateLine = currentDate !== prevDate;
+            const prevMessage = [...newMessages, ...messages][idx + 1];
+            const { date: prevDate } = prevMessage
+              ? formatCreatedAt(prevMessage.createdAt)
+              : { date: null };
+            const { date: currentDate, time: currentTime } = formatCreatedAt(
+              it.createdAt,
+            );
+            const showDateLine = prevDate !== currentDate;
 
             return (
               <React.Fragment key={it.id}>
                 <ChatItem
+                  ref={it.id === replyChatId ? replyChatRef : null}
                   key={it.id}
                   chatItem={it}
-                  createdAt={
-                    it.createdAt.split('T')[1] || it.createdAt.split(' ')[1]
-                  }
-                  imgUrl={imgUrl}
-                  nickname={nickname}
+                  createdAt={currentTime}
+                  imgUrl={participant?.profileImg ?? undefined}
+                  nickname={participant?.nickname ?? ''}
                 />
-                {showDateLine ||
-                  ((idx === messages.length - 1 || idx === 0) && (
-                    <DateLine date={currentDate ?? ''} />
-                  ))}
+                {showDateLine && <DateLine date={currentDate} />}
               </React.Fragment>
             );
           })}
+          <div ref={targetRef} />
         </Container>
-      </SLayout>
+      </Main>
       <ChatBar nickname={roomInfo?.title ?? ''} />
     </>
   );
@@ -170,18 +141,16 @@ const ChattingPage = () => {
 
 export default ChattingPage;
 
-const SHeader = styled(Header)`
-  position: fixed;
-  z-index: 1;
-`;
-const SLayout = styled.div`
+const Main = styled.main<{ $isExistReply: boolean }>`
   display: flex;
   position: relative;
   flex-direction: column;
 
-  padding-top: 70px;
+  padding-top: 4.375rem;
+  padding-bottom: ${({ $isExistReply }) =>
+    $isExistReply ? '8.0625rem' : '4.4375rem'};
   width: 100%;
-  height: calc(100% - 70px);
+  height: 100%;
 
   overflow: auto;
 `;

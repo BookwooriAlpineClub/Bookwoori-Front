@@ -1,10 +1,10 @@
 import { authClient } from '@src/apis/index';
-import {
+import type {
   DMListRes,
   MessageRoomListRes,
   MessageRoomReq,
   MessageRoomRes,
-} from '@src/types/domain/messageRoom';
+} from '@src/types/apis/messageRoom';
 
 /* 채팅방 목록 조회 */
 export const getMessageRoomList = async <Res = MessageRoomListRes>(

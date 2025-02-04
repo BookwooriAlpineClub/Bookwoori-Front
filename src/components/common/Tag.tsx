@@ -1,24 +1,57 @@
 import styled from 'styled-components';
 
+type TagColor = 'lime' | 'blue' | 'neutral';
 interface Props {
-  children: string;
+  color: TagColor;
+  Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  text: string | number;
+  onClick?: () => void;
+  className?: string;
 }
 
-const Tag = ({ children }: Props) => {
-  return <Container>{children}</Container>;
+const Tag = ({ color, Icon, text, onClick, className }: Props) => {
+  return (
+    <Wrapper className={className} onClick={onClick} $color={color}>
+      {Icon && <Icon width={12} height={12} />}
+      <span>{text}</span>
+    </Wrapper>
+  );
 };
 
 export default Tag;
 
-const Container = styled.mark`
+const Wrapper = styled.mark<{ $color: TagColor }>`
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: ${({ theme }) => theme.gap[2]};
+
   width: fit-content;
   height: fit-content;
-  padding: 0.25rem 0.625rem;
+  padding: ${({ theme }) => `${theme.padding[4]} ${theme.padding[8]}`};
 
-  border-radius: 6.1875rem;
-  border: 1px solid ${({ theme }) => theme.colors.blue100};
-  background-color: ${({ theme }) => theme.colors.blue300};
+  border-radius: 50%;
 
-  ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.blue100};
+  ${({ theme }) => theme.fonts.caption};
+
+  ${({ $color, theme }) => {
+    switch ($color) {
+      case 'lime':
+        return `
+          background-color: ${theme.colors.lime100};
+          color: ${theme.colors.lime300};
+        `;
+      case 'neutral':
+        return `
+          background-color: ${theme.colors.neutral200};
+          color: ${theme.colors.neutral950};
+        `;
+      case 'blue':
+      default:
+        return `
+          background-color: ${theme.colors.blue100};
+          color: ${theme.colors.blue500};
+        `;
+    }
+  }}
 `;

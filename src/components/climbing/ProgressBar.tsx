@@ -1,16 +1,14 @@
 import styled from 'styled-components';
-import { ReactComponent as Climber } from '@src/assets/icons/climber_grey.svg';
+import { ReactComponent as Climber } from '@src/assets/icons/md_directions_walk.svg';
 import { useRef, useState, useEffect } from 'react';
 
-const ProgressBar = ({
-  height,
-  page,
-  isChanged,
-}: {
+type ProgressBarProps = {
   height: number;
   page: number;
   isChanged: number;
-}) => {
+};
+
+const ProgressBar = ({ height, page, isChanged }: ProgressBarProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState<number>(0);
 
@@ -45,8 +43,8 @@ const Bar = styled.div`
   width: 0.75rem;
 
   border-radius: 6.1875rem 6.1875rem 0 0;
-  border: 1px solid ${({ theme }) => theme.colors.black400};
-  background-color: ${({ theme }) => theme.colors.white};
+  border: 1px solid ${({ theme }) => theme.colors.neutral200};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const Progress = styled.div<{ height: number }>`
   position: absolute;
@@ -56,7 +54,7 @@ const Progress = styled.div<{ height: number }>`
   width: 100%;
 
   border-radius: 6.1875rem 6.1875rem 0 0;
-  background-color: ${({ theme }) => theme.colors.black400};
+  background-color: ${({ theme }) => theme.colors.blue100};
 `;
 const SClimber = styled(Climber)`
   position: absolute;
@@ -65,7 +63,7 @@ const SClimber = styled(Climber)`
 
   width: 2.5rem;
   height: 3.75rem;
-  fill: ${({ theme }) => theme.colors.blue200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const Pages = styled.span`
   position: absolute;
@@ -74,5 +72,5 @@ const Pages = styled.span`
 
   min-width: 1.5625rem;
   ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;

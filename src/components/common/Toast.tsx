@@ -1,19 +1,32 @@
 /*
-Toast 컴포넌트 사용법
+컴포넌트 사용법
 
 1. useToast 훅을 불러온다.
 import useToast from '@src/hooks/useToast';
 const addToast = useToast();
 
 2. addToast 함수로 추가한다.
-addToast({ content: '토스트 내용' }); // kind 생략 시 기본값 'default'
-addToast({ content: '토스트 내용', kind: 'error' }); // 디자인에 따라 추후 kind가 삭제될 수 있습니다.
+addToast({ kind: 'error', content: '토스트 내용' });
 */
 
-import styled from 'styled-components';
+import type ToastType from '@src/types/toast';
 import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
 import { toastState } from '@src/states/atoms';
+import styled from 'styled-components';
+import { NoSelect } from '@src/styles/mixins';
+import { ReactComponent as IcnInfo } from '@src/assets/icons/toast_info.svg';
+import { ReactComponent as IcnSuccess } from '@src/assets/icons/toast_success.svg';
+import { ReactComponent as IcnError } from '@src/assets/icons/toast_error.svg';
+
+const IconConfig: Record<
+  ToastType['kind'],
+  React.FC<React.SVGProps<SVGSVGElement>>
+> = {
+  info: IcnInfo,
+  success: IcnSuccess,
+  error: IcnError,
+};
 
 const Toast = () => {
   const toasts = useRecoilValue(toastState);
@@ -21,11 +34,15 @@ const Toast = () => {
   return createPortal(
     <List>
       {toasts &&
-        toasts.map((item) => (
-          <Item key={item.id} role='alert'>
-            {item.content}
-          </Item>
-        ))}
+        toasts.map(({ id, kind, content }) => {
+          const Icon = IconConfig[kind];
+          return (
+            <Item key={id} role='alert'>
+              <Icon width={20} height={20} />
+              {content}
+            </Item>
+          );
+        })}
     </List>,
     document.getElementById('toast') as HTMLElement,
   );
@@ -35,36 +52,55 @@ export default Toast;
 
 const List = styled.ul`
   position: fixed;
-  top: 50%;
+  top: 5%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: ${({ theme }) => theme.gap[12]};
+  align-items: center;
+
+  ${NoSelect}
 `;
-
 const Item = styled.li`
-  min-width: 260px; // 추후 수정: 디자인 작업 중
-  padding: 0.25rem 0.9375rem; // 추후 수정: 디자인 작업 중
+  display: flex;
+  flex-flow: row nowrap;
+  gap: ${({ theme }) => theme.gap[8]};
+  align-items: center;
 
-  border-radius: 0.25rem; // 추후 수정: 디자인 작업 중
-  background-color: ${({ theme }) => theme.colors.blackOverlay}; // 추후 수정: 디자인 작업 중
+  width: fit-content;
+  padding: ${({ theme }) => `${theme.padding[12]} ${theme.padding[16]}`};
 
-  ${({ theme }) => theme.fonts.body} // 추후 수정: 디자인 작업 중
-  color: ${({ theme }) => theme.colors.white}; // 추후 수정: 디자인 작업 중
-  text-align: center;
-  white-space: pre-line; // 개행문자 처리
+  border-radius: ${({ theme }) => theme.rounded[16]};
+  background-color: ${({ theme }) => theme.colors.neutral0};
+  box-shadow: 0px 0px 16px 0px ${({ theme }) => theme.colors.overlay};
 
-  @keyframes fadeOut {
+  ${({ theme }) => theme.fonts.body}
+  color: ${({ theme }) => theme.colors.neutral950};
+  white-space: pre;
+
+  @keyframes in {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes out {
     from {
       opacity: 1;
+      transform: translateY(0);
     }
     to {
       opacity: 0;
+      transform: translateY(-100%);
     }
   }
-  animation: fadeOut 2.5s ease 2s forwards;
-
-  // 드래그 및 선택 방지
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-use-select: none;
-  user-select: none;
+  animation:
+    in 0.3s ease forwards,
+    out 0.3s ease 2.3s forwards;
 `;

@@ -1,34 +1,27 @@
 import styled from 'styled-components';
 
-interface Props extends Pick<InputProps, 'title'> {
+interface Props {
+  as?: 'fieldset' | 'section';
+  title: string;
   children: React.ReactNode;
-  isDisabled?: boolean;
 }
 
-const Fieldset = ({ title, children, isDisabled = false }: Props) => {
+const Fieldset = ({ as = 'fieldset', title, children }: Props) => {
+  const Container = as;
+
   return (
-    <fieldset name={title}>
-      <Legend>{title}</Legend>
-      <Container isDisabled={isDisabled}>{children}</Container>
-    </fieldset>
+    <Container name={as === 'fieldset' ? title : undefined}>
+      <Title as={as === 'fieldset' ? 'legend' : 'h3'}>{title}</Title>
+      {children}
+    </Container>
   );
 };
 
 export default Fieldset;
 
-const Legend = styled.legend`
-  margin-bottom: 0.63rem;
+const Title = styled.legend`
+  margin-bottom: ${({ theme }) => theme.gap[10]};
 
-  color: ${({ theme }) => theme.colors.black100};
   ${({ theme }) => theme.fonts.body};
-`;
-const Container = styled.div<{ isDisabled: boolean }>`
-  position: relative;
-
-  padding: 0.9375rem;
-  width: 100%;
-
-  border-radius: 0.9375rem;
-  background-color: ${({ theme, isDisabled }) =>
-    isDisabled ? theme.colors.black400 : theme.colors.white}};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;

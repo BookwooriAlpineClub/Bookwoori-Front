@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
 import { RecoilState, useRecoilState } from 'recoil';
-import useToast from './useToast';
+import useToast from '@src/hooks/useToast';
+import { validateMimeTypes } from '@src/utils/validators';
 
 const useUploadFile = (
   previewImg: string | undefined,
   fileState: RecoilState<File | null>,
 ) => {
-  const [file, setFile] = useRecoilState<File | null>(fileState);
-  const [preview, setPreview] = useState<string | undefined>(previewImg);
   const addToast = useToast();
 
-  const validateMimeTypes = (newFile: File) => {
-    const validMimeTypes = ['image/png', 'image/jpeg'];
-    return validMimeTypes.includes(newFile.type);
-  };
+  const [file, setFile] = useRecoilState<File | null>(fileState);
+  const [preview, setPreview] = useState<string | undefined>(previewImg);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
@@ -22,7 +19,7 @@ const useUploadFile = (
     const newFile = selectedFiles[0];
 
     if (!validateMimeTypes(newFile)) {
-      addToast({ content: '.png, .jpeg의 파일 형식만 지원합니다.' });
+      addToast('error', '.png, .jpeg의 파일 형식만 지원합니다.');
       e.target.value = '';
       return;
     }
@@ -41,11 +38,12 @@ const useUploadFile = (
   useEffect(() => {
     if (!previewImg) {
       handleFileDelete();
-    } else {
-      setPreview(previewImg);
+      return;
     }
+
+    setPreview(previewImg);
   }, [previewImg]);
-  
+
   return { file, preview, handleFileUpload, handleFileDelete };
 };
 

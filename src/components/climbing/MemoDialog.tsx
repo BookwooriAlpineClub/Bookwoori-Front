@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import useClimbingProgress from '@src/hooks/query/useClimbingProgress';
-import SubButton from '@src/components/common/SubButton';
+import { usePatchMemo } from '@src/hooks/query/climbing';
+import SubButton from '@src/components/common/button/SubButton';
 
 type MemoDialogProps = {
-  id: number;
+  climbingId: number;
   memo: string;
   closeDialog: () => void;
 };
 
-const MemoDialog = ({ memo, closeDialog, id }: MemoDialogProps) => {
+const MemoDialog = ({ memo, closeDialog, climbingId }: MemoDialogProps) => {
   const [value, setValue] = useState<string>(memo);
+  const { editMemo } = usePatchMemo();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > 10) {
@@ -20,10 +21,11 @@ const MemoDialog = ({ memo, closeDialog, id }: MemoDialogProps) => {
     setValue(e.target.value);
   };
 
-  const { editMemo } = useClimbingProgress(id);
-  const handleClickEdit = () => {
+  const handleClickEdit = (content: string) => {
+    if (!climbingId) return;
+
     editMemo.mutate(
-      { memo: value },
+      { climbingId, body: { memo: content } },
       {
         onSuccess: () => {
           window.location.reload();
@@ -32,18 +34,6 @@ const MemoDialog = ({ memo, closeDialog, id }: MemoDialogProps) => {
       },
     );
   };
-
-  const handleClickDelete = () => {
-    editMemo.mutate(
-      { memo: '' },
-      {
-        onSuccess: () => {
-          window.location.reload();
-          closeDialog();
-        },
-      },
-    );
-  }
 
   return (
     <DialogLayout>
@@ -60,8 +50,16 @@ const MemoDialog = ({ memo, closeDialog, id }: MemoDialogProps) => {
         </InputWrapper>
       </InputContainer>
       <ButtonContainer>
-        <SubButton label='삭제하기' width='39vw' onClick={handleClickDelete} />
-        <SubButton label='수정하기' width='39vw' onClick={handleClickEdit} />
+        <SubButton
+          label='삭제하기'
+          width='39vw'
+          onClick={() => handleClickEdit('')}
+        />
+        <SubButton
+          label='수정하기'
+          width='39vw'
+          onClick={() => handleClickEdit(value)}
+        />
       </ButtonContainer>
     </DialogLayout>
   );
@@ -79,10 +77,10 @@ const InputContainer = styled.div`
   padding: 2.5rem 1.5rem;
 
   border-radius: 1.875rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const Span = styled.span`
-  color: ${({ theme }) => theme.colors.black100};
+  color: ${({ theme }) => theme.colors.neutral950};
 `;
 const InputWrapper = styled.div`
   display: flex;
@@ -98,13 +96,13 @@ const Input = styled.input`
   border-radius: 1.875rem;
 
   ${({ theme }) => theme.fonts.body};
-  background-color: ${({ theme }) => theme.colors.black300};
+  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const Counter = styled.span`
   position: absolute;
   right: 0.625rem;
 
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
 `;
 const ButtonContainer = styled.div`
   display: flex;

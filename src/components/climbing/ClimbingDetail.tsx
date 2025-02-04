@@ -1,28 +1,27 @@
 import styled from 'styled-components';
-import BookIcon from '@mui/icons-material/Book';
-import { Climbing } from '@src/types/apis/climbing.d';
+import { ReactComponent as BookIcon } from '@src/assets/icons/md_book.svg';
+import { Climbing } from '@src/types/climbing';
 
 const ClimbingDetail = ({ data }: { data: Climbing }) => {
-  console.log(data);
   return (
-    <Container>
+    <DetailWrapper>
       <Thumbnail>
-        <ThumbnailImg src={data.bookInfo.cover} />
+        <img alt={data.name} src={data.bookInfo.cover} />
       </Thumbnail>
-      <Content>
+      <ClimbingContent>
         <BookInfo>
           <StyledBookIcon />
-          <BookTitle>{`${data.name}, 《${data.bookInfo.title}》, ${data.bookInfo.itemPage}p`}</BookTitle>
+          <p>{`${data.bookInfo.author}, 《${data.bookInfo.title}》, ${data.bookInfo.itemPage}p`}</p>
         </BookInfo>
-        <Memo>{data.description}</Memo>
-      </Content>
-    </Container>
+        <Description>{data.description ?? '클라이밍 설명 없음'}</Description>
+      </ClimbingContent>
+    </DetailWrapper>
   );
 };
 
 export default ClimbingDetail;
 
-const Container = styled.div`
+const DetailWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 0.625rem;
@@ -35,16 +34,15 @@ const Thumbnail = styled.div`
   height: auto;
   border-radius: 0.25rem;
   flex-shrink: 0;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.25rem;
+  }
 `;
 
-const ThumbnailImg = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0.25rem;
-`;
-
-const Content = styled.div`
+const ClimbingContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -54,34 +52,34 @@ const BookInfo = styled.div`
   display: flex;
   align-items: flex-start;
 
-  gap: 0.15rem;
+  gap: ${({ theme }) => theme.gap['2']};
   ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
-`;
+  color: ${({ theme }) => theme.colors.neutral950};
 
-const BookTitle = styled.p`
-  ${({ theme }) => theme.fonts.body};
-  color: ${({ theme }) => theme.colors.black100};
-  text-overflow: ellipsis;
-  text-align: start;
+  p {
+    white-space: normal;
+    text-overflow: ellipsis;
+    text-align: start;
 
-  &::first-line {
-    line-height: 1;
+    &::first-line {
+      line-height: 1.1rem;
+    }
   }
 `;
 
 const StyledBookIcon = styled(BookIcon)`
-  width: 1rem;
-  height: 1rem;
-  color: ${({ theme }) => theme.colors.black200};
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+  color: ${({ theme }) => theme.colors.blue700};
 `;
 
-const Memo = styled.p`
+const Description = styled.p`
   ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
   white-space: normal;
   word-wrap: break-word;
   text-align: justify;
   min-height: 4rem;
-  padding: 0 0 0 0.2rem;
+  padding: 0 0 0 ${({ theme }) => theme.padding['6']};
 `;

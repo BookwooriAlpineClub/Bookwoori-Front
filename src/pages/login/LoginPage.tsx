@@ -1,22 +1,22 @@
 import styled from 'styled-components';
 import { ReactComponent as KakaoButton } from '@src/assets/images/login/kakao_login.svg';
 import { ReactComponent as Logo } from '@src/assets/images/login/bookwoori_logo.svg';
-import { kakaoUrl } from '@src/constants/apiUrl';
+import { kakaoUrl } from '@src/constants/env';
 
 const LoginPage = () => {
   return (
-    <Layout>
+    <Main>
       <SLogo />
       <Button href={kakaoUrl}>
         <KakaoButton />
       </Button>
-    </Layout>
+    </Main>
   );
 };
 
 export default LoginPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,7 +24,7 @@ const Layout = styled.div`
   gap: 3.75rem;
 
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.neonGreen};
+  background-color: ${({ theme }) => theme.colors.lime300};
 `;
 const SLogo = styled(Logo)`
   width: 18.75rem;
@@ -35,5 +35,5 @@ const Button = styled.a`
   align-items: center;
 
   border-radius: 0.625rem;
-  border: 0.125rem solid ${({ theme }) => theme.colors.black100};
+  border: 0.125rem solid ${({ theme }) => theme.colors.neutral950};
 `;

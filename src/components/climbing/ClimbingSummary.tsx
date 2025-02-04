@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import CalendarIcon from '@mui/icons-material/CalendarMonth';
-import GroupIcon from '@mui/icons-material/Group';
+import { ReactComponent as CalendarIcon } from '@src/assets/icons/md_insert_invitation.svg';
+import { ReactComponent as GroupIcon } from '@src/assets/icons/md_group.svg';
+import Tag from '@src/components/common/Tag';
 
 interface ClimbingSummaryProps {
   startDate?: string;
@@ -27,12 +28,12 @@ function calculateDday(endDate: string): string {
 
   // 결과 반환
   if (diffInDays > 0) {
-    return `D - ${diffInDays}`;
+    return `D-${diffInDays}`;
   }
   if (diffInDays === 0) {
-    return 'D - Day';
+    return 'D-Day';
   }
-  return `D + ${Math.abs(diffInDays)}`; // 종료 날짜가 과거인 경우
+  return `D+${Math.abs(diffInDays)}`; // 종료 날짜가 과거인 경우
 }
 
 const ClimbingSummary = ({
@@ -45,13 +46,10 @@ const ClimbingSummary = ({
     <Container>
       <DateInfo>
         <StyledCalendarIcon />
-        <DateText>${`${startDate} - ${endDate}, `}</DateText>
+        <DateText>{`${startDate} ~ ${endDate}, `}</DateText>
         <HighlightText>{`${dDay}`}</HighlightText>
       </DateInfo>
-      <MemberInfo>
-        <StyledGroupIcon />
-        <MemberCount>{memberCount}</MemberCount>
-      </MemberInfo>
+      <Tag Icon={GroupIcon} text={memberCount} color='blue' />
     </Container>
   );
 };
@@ -63,7 +61,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap['10']};
 `;
 
 const DateInfo = styled.div`
@@ -73,36 +71,17 @@ const DateInfo = styled.div`
 `;
 
 const DateText = styled.span`
-  color: ${({ theme }) => theme.colors.black200};
+  color: ${({ theme }) => theme.colors.neutral400};
   ${({ theme }) => theme.fonts.caption}
 `;
 
 const HighlightText = styled.span`
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
   font-weight: 1000;
   font-size: 0.6875rem;
 `;
 
-const MemberInfo = styled.div`
-  display: flex;
-  align-items: center;
-  background-color: ${({ theme }) => theme.colors.blue300};
-  ${({ theme }) => theme.fonts.caption}
-
-  border-radius: 0.725rem;
-  padding: 0.1875rem 0.525rem;
-  justify-content: center;
-  gap: 0.25rem;
-`;
-
-const MemberCount = styled.span``;
-
 const StyledCalendarIcon = styled(CalendarIcon)`
-  color: ${({ theme }) => theme.colors.blue100};
+  color: ${({ theme }) => theme.colors.blue500};
   font-size: 1.0625rem;
-`;
-
-const StyledGroupIcon = styled(GroupIcon)`
-  color: ${({ theme }) => theme.colors.black100};
-  font-size: 0.75rem;
 `;

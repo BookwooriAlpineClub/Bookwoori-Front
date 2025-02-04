@@ -1,12 +1,13 @@
 import Header from '@src/components/common/Header';
 import styled from 'styled-components';
-import TitleAndFieldContainer from '@src/components/common/TitleAndFieldContainer';
-import InputField from '@src/components/common/InputField';
-import Button from '@src/components/common/Button';
-import React, { useEffect, useState } from 'react';
+import Button from '@src/components/common/button/Button';
+import { useEffect, useState } from 'react';
 import IntroSection from '@src/components/addcommunity/IntroSection';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import Fieldset from '@src/components/common/Fieldset';
+import TextField from '@src/components/common/input/TextField';
+import Section from '@src/components/common/Section';
 
 const headerText = '공동체 초대장 입력하기';
 const headerType = 'back';
@@ -23,12 +24,6 @@ const EnterInvitationPage = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const navigate = useNavigate();
 
-  const handleInvitationCodeChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setInvitationCode(e.target.value);
-  };
-
   const handleFindCommunity = () => {
     setIsTransitioning(true);
     setTimeout(() => {
@@ -37,59 +32,64 @@ const EnterInvitationPage = () => {
       );
     }, 300);
   };
-
-  // 유효성 검사 추가
   useEffect(() => {
     const isValidCode = /^[a-z0-9]{10,12}$/.test(invitationCode.trim());
     setIsFormValid(isValidCode);
   }, [invitationCode]);
 
   return (
-    <div
-      style={{
-        transform: isTransitioning ? 'translateX(-100%)' : 'translateX(0)',
-        transition: 'transform 300ms ease-in-out',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-      }}
-    >
+    <Container isTransitioning={isTransitioning}>
       <Header text={headerText} headerType={headerType} />
-      <Container>
-        <IntroSection title={introTitleText} bodyLines={introBodyLines} />
-        <TitleAndFieldContainer title='초대 코드'>
-          <InputField
-            type='text'
-            value={invitationCode}
-            placeholder='초대장을 입력하세요.'
-            onChange={handleInvitationCodeChange}
-          />
-          {!isFormValid && invitationCode.trim() !== '' && (
-            <span style={{ color: '#fa6554', fontSize: '0.7rem' }}>
-              초대 코드는 숫자와 영어 소문자를 혼합한 10-12자리입니다.
-            </span>
-          )}
-        </TitleAndFieldContainer>
-
-        <ButtonWrapper>
-          <Button
-            type='submit'
-            disabled={!isFormValid}
-            onClick={handleFindCommunity}
-          >
-            공동체 찾기
-          </Button>
-        </ButtonWrapper>
-      </Container>
-    </div>
+      <Main>
+        <div className='scroll-area'>
+          <IntroSection title={introTitleText} bodyLines={introBodyLines} />
+          <Fieldset title='초대 코드'>
+            <Section>
+              <TextField
+                as='input'
+                name={invitationCode}
+                placeholder='초대장을 입력하세요.'
+                maxLength={-1}
+                required
+                value={invitationCode}
+                setValue={setInvitationCode}
+              />
+            </Section>
+            {!isFormValid && invitationCode.trim() !== '' && (
+              <span style={{ color: '#fa6554', fontSize: '0.7rem' }}>
+                초대 코드는 숫자와 영어 소문자를 혼합한 10-12자리입니다.
+              </span>
+            )}
+          </Fieldset>
+        </div>
+        <Button
+          type='submit'
+          disabled={!isFormValid}
+          onClick={handleFindCommunity}
+        >
+          공동체 찾기
+        </Button>
+      </Main>
+    </Container>
   );
 };
 
 export default EnterInvitationPage;
 
-const Container = styled.div`
+const Container = styled.div<{ isTransitioning: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  transform: translateX(
+    ${({ isTransitioning }) => (isTransitioning ? '-100%' : 0)}
+  );
+  transition: transform 300ms ease-in-out;
+`;
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -99,14 +99,9 @@ const Container = styled.div`
   width: 100svw;
   min-height: calc(100vh - 4.375rem);
   min-height: calc(100svh - 4.375rem);
-  background-color: ${({ theme }) => theme.colors.black300};
-`;
+  background-color: ${({ theme }) => theme.colors.neutral50};
 
-const ButtonWrapper = styled.div`
-  position: fixed;
-  bottom: calc(1.875rem + 2px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  padding: 0 1.25rem;
+  fieldset {
+    width: 100%;
+  }
 `;
