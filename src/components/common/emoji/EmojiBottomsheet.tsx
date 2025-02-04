@@ -23,7 +23,7 @@ const EmojiBottomsheet = ({
   closeBottomsheet = () => {},
 }: EmojiBottomsheetType) => {
   const emojiList = Object.values(EmojiType).map(({ value }) => value);
-  const { handleCopy } = useCopyToClipboard(content);
+  const { handleCopy } = useCopyToClipboard();
   const [clickedEmoji, setClickedEmoji] = useState<string[]>(emoji);
   const { openModal, closeModal } = useModal(dialogState);
   const setEditChatId = useSetRecoilState(editChatIdState);
@@ -80,7 +80,7 @@ const EmojiBottomsheet = ({
           </Emoji>
         ))}
       </Container>
-      <IconButton type='copyMessage' onClick={handleCopy} />
+      <IconButton type='copyMessage' onClick={() => handleCopy(content)} />
       <IconButton type='editMessage' onClick={handleEdit} />
       <IconButton type='deleteMessage' onClick={handleDelete} />
     </Layout>
