@@ -81,7 +81,6 @@ const useChatHandler = ({
     // WebSocket 연결
     connectHandler(onMessage, `/topic/direct/${roomInfo.messageRoomId}`);
 
-    // eslint-disable-next-line consistent-return
     return () => {
       // 컴포넌트 언마운트 시 WebSocket 연결 해제
       disconnectHandler();

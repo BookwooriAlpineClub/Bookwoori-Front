@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { SyntheticEvent } from 'react';
 
 // ms초 만큼 기다리는 함수
