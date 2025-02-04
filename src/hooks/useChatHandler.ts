@@ -35,7 +35,7 @@ const useChatHandler = ({
                 };
               } else {
                 // count가 0이면 해당 이모지 반응 키를 제거
-                const { [message.payload.emoji]: removed, ...restReactions } =
+                const { [message.payload.emoji]: _removed, ...restReactions } =
                   prevReactions;
                 updatedReactions = restReactions;
               }
