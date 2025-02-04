@@ -2,7 +2,6 @@ import Book from '@src/types/book';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
-import { decodeIdParam } from '@src/utils/formatters';
 import {
   useGetRecordDetail,
   usePostRecord,
