@@ -3,16 +3,14 @@ import { useEffect, useRef, useState } from 'react';
 import type { ClimbingMember } from '@src/types/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useGetClimbing } from '@src/hooks/query/climbing';
-import { handleImgError } from '@src/utils/helpers';
-import { ReactComponent as Flag } from '@src/assets/icons/climbing_flag_color.svg';
-import { ReactComponent as FlagBefore } from '@src/assets/icons/climbing_flag_outline.svg';
-import ProfileImg from '@src/assets/images/userSettings/background_default.svg';
-import Memo from '@src/components/climbing/Memo';
-import ProgressBar from '@src/components/climbing/ProgressBar';
 import {
   ClimbingReadingStatus,
   ClimbingStatus,
 } from '@src/constants/constants';
+import { ReactComponent as Flag } from '@src/assets/icons/flag.svg';
+import Memo from '@src/components/climbing/Memo';
+import ProgressBar from '@src/components/climbing/ProgressBar';
+import UserAvatar from '@src/components/common/UserAvatar';
 
 interface Props {
   item: ClimbingMember;
@@ -47,17 +45,15 @@ const ClimbingRope = ({ item }: Props) => {
     });
 
     observer.observe(container);
-    observer.disconnect();
+    return () => observer.disconnect();
   }, []);
 
   return (
     <Layout>
       <Background>
-        {item.status === ClimbingReadingStatus.FINISHED ? (
-          <Flag width={85} height={100} />
-        ) : (
-          <FlagBefore width={85} height={100} />
-        )}
+        <Wrapper $color={item.status === ClimbingReadingStatus.FINISHED}>
+          <Flag width={50} height={60} />
+        </Wrapper>
       </Background>
       <Container ref={containerRef}>
         <Line />
@@ -65,16 +61,17 @@ const ClimbingRope = ({ item }: Props) => {
           height={height}
           page={item.currentPage}
           isChanged={containerHeight}
+          status={item.status}
         />
         <Profile>
-          <Img
-            alt='memberImg'
-            src={item.profileImg ?? ProfileImg}
-            outline={
-              climbingInfo?.status === ClimbingStatus.FINISHED &&
+          <UserAvatar
+            profileImg={item.profileImg ?? ''}
+            nickname={item.nickname}
+            status={
               item.status === ClimbingReadingStatus.FINISHED
+                ? 'FINISHED'
+                : 'FAILED'
             }
-            onError={(e) => handleImgError(e, ProfileImg)}
           />
           <Nickname>{item.nickname}</Nickname>
         </Profile>
@@ -92,7 +89,6 @@ export default ClimbingRope;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.gap[12]};
 
   height: 100%;
   width: 100%;
@@ -100,9 +96,17 @@ const Layout = styled.div`
 const Background = styled.div`
   display: flex;
   justify-content: center;
+  align-items: end;
 
   height: 5.5rem;
   background-color: ${({ theme }) => theme.colors.neutral50};
+`;
+const Wrapper = styled.div<{ $color: boolean }>`
+  height: 3.75rem;
+  margin-left: 1.5625rem;
+
+  color: ${({ $color, theme }) =>
+    $color ? `${theme.colors.blue500}` : `${theme.colors.neutral200}`};
 `;
 const Container = styled.div`
   display: flex;
@@ -111,6 +115,11 @@ const Container = styled.div`
   height: 100%;
   padding-bottom: 0.9375rem;
   background-color: ${({ theme }) => theme.colors.neutral0};
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-use-select: none;
+  user-select: none;
 `;
 const Line = styled.div`
   margin-bottom: 0.0625rem;
@@ -124,16 +133,6 @@ const Profile = styled.div`
   flex-direction: column;
   align-items: center;
   gap: ${({ theme }) => theme.gap[6]};
-`;
-const Img = styled.img<{ outline?: boolean }>`
-  width: 3.25rem;
-  height: 3.25rem;
-
-  border: ${({ outline, theme }) =>
-    outline && `0.1875rem solid ${theme.colors.blue500}`};
-  border-radius: 50%;
-
-  object-fit: cover;
 `;
 const Nickname = styled.span`
   text-align: center;
