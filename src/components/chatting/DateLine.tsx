@@ -4,36 +4,38 @@ const DateLine = ({ date }: { date: string }) => {
   const [year, month, day] = date.split('-');
 
   return (
-    <SLayout>
-      <SLine />
-      <SLabel>
+    <Layout>
+      <Line />
+      <Label>
         {year}년 {month}월 {day}일
-      </SLabel>
-      <SLine />
-    </SLayout>
+      </Label>
+      <Line />
+    </Layout>
   );
 };
 
 export default DateLine;
 
-const SLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
+  gap: ${({ theme }) => theme.gap[8]};
 
   padding: 0 0.9375rem;
 `;
-const SLine = styled.div`
+const Line = styled.div`
   width: 100%;
   height: 0.0625rem;
   background-color: ${({ theme }) => theme.colors.neutral400};
 `;
-const SLabel = styled.label`
+const Label = styled.label`
   max-width: 5.9375rem;
   width: 100%;
 
   ${({ theme }) => theme.fonts.caption};
   text-align: center;
   color: ${({ theme }) => theme.colors.neutral400};
+
+  cursor: default;
 `;

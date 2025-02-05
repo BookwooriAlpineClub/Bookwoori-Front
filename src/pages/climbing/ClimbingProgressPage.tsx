@@ -25,7 +25,6 @@ const Main = styled.main`
   gap: 0.9375rem;
 
   height: 100%;
-  padding: 0.9375rem 0 0;
 `;
 const Wrapper = styled.div`
   padding: 0 0.625rem;

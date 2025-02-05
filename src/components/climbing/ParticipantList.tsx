@@ -1,25 +1,18 @@
-// import useClimbing from '@src/hooks/query/useClimbing';
+import { useGetClimbingMembers } from '@src/hooks/query/climbing';
 import styled from 'styled-components';
-// import Profile from '@src/assets/images/userSettings/profile_default.svg';
+import Profile from '@src/assets/images/userSettings/profile_default.svg';
 
 const ParticipantList = ({ climbingId }: { climbingId: number }) => {
-  // const { participants } = useClimbing(climbingId);
-  console.log(climbingId);
-  const participants = [
-    {
-      memberId: 1,
-      profileImg: 'https://cdn.pixabay',
-      Profile: 'https://cdn.pixabay',
-      nickname: 'nickname',
-      level: 1,
-      mountain: 'mountain',
-    },
-  ];
+  const { participants } = useGetClimbingMembers(climbingId);
+
   return (
     <Layout>
       {participants?.map((it) => (
         <Container key={it.memberId}>
-          <Img src={it.profileImg} alt='img' />
+          <Img
+            src={it.profileImg === null ? Profile : it.profileImg}
+            alt='img'
+          />
           <Name>{it.nickname}</Name>
           <Level>
             Lv.{it.level} {it.mountain} 마스터
