@@ -75,6 +75,11 @@ const router = createBrowserRouter([
         loader: (args) => isParamLoader(args, 'serverId'),
       },
       {
+        path: ROUTE_PATH.server,
+        element: <ChannelListPage />,
+        loader: (args) => isParamLoader(args, 'serverId'),
+      },
+      {
         path: '*',
         element: <h1>404 Not Found</h1>,
       },
@@ -115,11 +120,6 @@ const router = createBrowserRouter([
           {
             path: ROUTE_PATH.editChannelOne,
             element: <ChannelEditPage />,
-            loader: (args) => isParamLoader(args, 'serverId'),
-          },
-          {
-            path: ROUTE_PATH.server,
-            element: <ChannelListPage />,
             loader: (args) => isParamLoader(args, 'serverId'),
           },
           /* chatting */

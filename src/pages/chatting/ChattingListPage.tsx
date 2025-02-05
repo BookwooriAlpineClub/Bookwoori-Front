@@ -72,7 +72,6 @@ const Main = styled.main`
   gap: ${({ theme }) => theme.gap[10]};
 
   height: calc(100% - 4.375rem);
-  padding: 0.9375rem;
 `;
 const Wrapper = styled.div`
   display: flex;

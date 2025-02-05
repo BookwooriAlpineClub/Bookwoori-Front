@@ -43,9 +43,9 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
     const addToast = useToast();
     const longPressHandler = useLongPress({
       onLongPress: () =>
-        user?.isMine &&
         openBottomsheet(
           <ChatMenu
+            isMine={user?.isMine ?? false}
             id={chatItem.id}
             content={chatItem.content}
             closeBottomsheet={closeBottomsheet}

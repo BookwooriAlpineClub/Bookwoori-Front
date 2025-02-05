@@ -59,8 +59,6 @@ const Main = styled.main`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-  padding: 0 1.25rem 2.5625rem;
 `;
 const Box = styled.div`
   display: flex;

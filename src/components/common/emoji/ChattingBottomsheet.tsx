@@ -1,20 +1,22 @@
 import styled from 'styled-components';
+import { useSetRecoilState } from 'recoil';
 import { dialogState, editChatIdState } from '@src/states/atoms';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
-import { EmojiType } from '@src/constants/constants';
-import { deleteHandler, reactHandler } from '@src/apis/chat';
-import IconButton from '@src/components/common/button/IconButton';
 import useModal from '@src/hooks/useModal';
+import { deleteHandler, reactHandler } from '@src/apis/chat';
+import { EmojiType } from '@src/constants/constants';
+import IconButton from '@src/components/common/button/IconButton';
 import DeleteConfirmDialog from '@src/components/common/modal/DeleteConfirmDialog';
-import { useSetRecoilState } from 'recoil';
 
 type EmojiBottomsheetType = {
+  isMine?: boolean;
   content: string;
   id: string;
   closeBottomsheet?: () => void;
 };
 
 const ChattingBottomsheet = ({
+  isMine,
   content,
   id,
   closeBottomsheet = () => {},
@@ -104,8 +106,8 @@ const ChattingBottomsheet = ({
         ))}
       </Container>
       <IconButton type='copyMessage' onClick={handleCopy} />
-      <IconButton type='editMessage' onClick={handleEdit} />
-      <IconButton type='deleteMessage' onClick={handleDelete} />
+      {isMine && <IconButton type='editMessage' onClick={handleEdit} />}
+      {isMine && <IconButton type='deleteMessage' onClick={handleDelete} />}
     </Layout>
   );
 };

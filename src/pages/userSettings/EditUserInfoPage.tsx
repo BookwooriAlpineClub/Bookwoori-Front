@@ -123,8 +123,6 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  padding: 1.875rem 1.25rem 0;
 `;
 const Container = styled.div`
   display: flex;
