@@ -4,6 +4,4 @@ export default interface Record {
   startDate: string | null;
   endDate: string | null;
   currentPage: number | null;
-  starReview: number | null;
-  contentReview: string | null;
 }
