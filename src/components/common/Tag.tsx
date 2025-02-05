@@ -4,16 +4,18 @@ type TagColor = 'lime' | 'blue' | 'neutral';
 interface Props {
   color: TagColor;
   Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  text: string | number;
+  text?: string | number;
   onClick?: () => void;
   className?: string;
+  children?: React.ReactNode;
 }
 
-const Tag = ({ color, Icon, text, onClick, className }: Props) => {
+const Tag = ({ color, Icon, text, onClick, className, children }: Props) => {
   return (
     <Wrapper className={className} onClick={onClick} $color={color}>
       {Icon && <Icon width={12} height={12} />}
       <span>{text}</span>
+      {children}
     </Wrapper>
   );
 };
