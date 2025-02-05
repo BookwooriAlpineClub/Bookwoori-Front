@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { ProfileRes } from '@src/types/apis/member';
 import {
+  getExp,
   getProfile,
   patchBackgroundImg,
   patchNickname,
@@ -43,4 +44,13 @@ export const usePatchProfile = () => {
   });
 
   return { editNickname, editProfileImg, editBackgroundImg };
+};
+
+export const useGetExp = () => {
+  const { data } = useQuery({
+    queryKey: ['getExp'],
+    queryFn: () => getExp(),
+  });
+
+  return { data: data?.ExpLogList };
 };
