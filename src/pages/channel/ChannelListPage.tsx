@@ -120,7 +120,7 @@ const Main = styled.main`
   flex-direction: column;
   gap: ${({ theme }) => theme.gap[12]};
 
-  padding: 0.9063rem 1.25rem 2.5625rem;
+  padding: 0 ${({ theme }) => theme.padding[16]};
 `;
 
 const ButtonContainer = styled.div`
@@ -133,6 +133,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.gap[12]};
+  padding-bottom: ${({ theme }) => theme.padding[16]};
 `;
 
 const Label = styled.label`

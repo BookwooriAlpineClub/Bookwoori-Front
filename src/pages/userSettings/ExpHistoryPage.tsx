@@ -39,6 +39,4 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-
-  padding: 0 1.25rem 2.5rem;
 `;

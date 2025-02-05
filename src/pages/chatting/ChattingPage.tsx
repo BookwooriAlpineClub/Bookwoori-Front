@@ -155,6 +155,7 @@ const Main = styled.main`
   padding-bottom: 4.5625rem;
   width: 100%;
   height: 100%;
+  margin-top: -0.9rem;
 
   overflow: auto;
 `;

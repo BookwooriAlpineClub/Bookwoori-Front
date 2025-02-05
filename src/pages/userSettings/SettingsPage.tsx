@@ -57,8 +57,6 @@ const Main = styled.main`
   justify-content: center;
   align-items: center;
   gap: 1.875rem;
-
-  padding: 1.875rem 1.25rem 3.0625rem;
 `;
 const Container = styled.div`
   display: flex;
