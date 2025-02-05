@@ -10,33 +10,14 @@ import { ReactComponent as Hiking } from '@src/assets/icons/md_outline_auto_stor
 
 const buttons = {
   hiking: {
-    icon: <Hiking />,
-    label: '등산 보기',
-    width: '40%',
+    icon: <Hiking style={{ width: '1.1rem' }} />,
+    label: '서재 보기',
   },
   message: {
-    icon: <Chatting />,
+    icon: <Chatting style={{ width: '1.1rem' }} />,
     label: '문자 하기',
-    width: '40%',
   },
 };
-
-// type MessageRoom = {
-//   messageRoomId: number;
-//   memberId: number;
-//   nickname: string;
-//   profileImg: string | null;
-//   recentMessage: string | null;
-//   recentMessageTime: string | null;
-// };
-
-// function getMessageRoomIdByMemberId(
-//   messageRooms: MessageRoom[],
-//   memberId: number,
-// ): number | null {
-//   const room = messageRooms.find((room) => room.memberId === memberId);
-//   return room ? room.messageRoomId : null; // 해당 memberId가 없으면 null 반환
-// }
 
 const ProfileModal = ({ memberId }: { memberId: number }) => {
   const navigate = useNavigate();
@@ -60,8 +41,16 @@ const ProfileModal = ({ memberId }: { memberId: number }) => {
     <ModalContainer>
       <UserProfile memberId={memberId} />
       <ButtonContainer>
-        <SubButton {...buttons.hiking} onClick={handleClickHiking} />
-        <SubButton {...buttons.message} onClick={handleclickMessage} />
+        <SubButton
+          {...buttons.hiking}
+          onClick={handleClickHiking}
+          width='40%'
+        />
+        <SubButton
+          {...buttons.message}
+          onClick={handleclickMessage}
+          width='40%'
+        />
       </ButtonContainer>
     </ModalContainer>
   );

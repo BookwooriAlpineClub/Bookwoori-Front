@@ -10,7 +10,12 @@ import {
   getServerOne,
   postServer,
   postServerJoinByCode,
-  getServers
+  getServers,
+  getServerMembers,
+  postServerInvitationCode,
+  deleteServerMember,
+  patchServerMemberOwner,
+  deleteServer,
 } from '@src/apis/server';
 
 export const useGetServerList = () => {
@@ -21,6 +26,7 @@ export const useGetServerList = () => {
     initialData: { servers: [] },
   });
 };
+
 /* 초대 코드로 서버 확인 */
 export const useGetServerByCode = (inviteCode: string) => {
   return useQuery({
@@ -28,6 +34,7 @@ export const useGetServerByCode = (inviteCode: string) => {
     queryFn: () => getServerByCode(inviteCode),
   });
 };
+
 /* 서버 정보 조회 */
 export const useGetServerOne = (serverId: number) => {
   return useQuery({
@@ -35,6 +42,7 @@ export const useGetServerOne = (serverId: number) => {
     queryFn: () => getServerOne(serverId),
   });
 };
+
 /* 서버 생성 */
 export const usePostServer = (resetFields: () => void) => {
   const navigate = useNavigate();
@@ -51,6 +59,8 @@ export const usePostServer = (resetFields: () => void) => {
   });
   return mutation;
 };
+
+/* 초대 코드로 서버 가입 */
 export const usePostServerJoin = (inviteCode: string) => {
   const navigate = useNavigate();
   const addToast = useToast();
@@ -65,6 +75,48 @@ export const usePostServerJoin = (inviteCode: string) => {
       );
       navigate(path);
     },
+  });
+  return mutation;
+};
+
+/* 서버 멤버 목록 조회 */
+export const useGetServerMembers = (serverId: number) => {
+  return useQuery({
+    queryKey: ['getServerMembers', serverId],
+    queryFn: () => getServerMembers(serverId),
+    select: (rawData) => rawData.members,
+  });
+};
+
+/* 서버 초대코드 복사 */
+export const usePostServerInviteCode = (serverId: number) => {
+  const mutation = useMutation({
+    mutationFn: () => postServerInvitationCode(serverId),
+  });
+  return mutation;
+};
+
+/* 서버 나가기 */
+export const useDeleteServerMember = (serverId: number) => {
+  const mutation = useMutation({
+    mutationFn: () => deleteServerMember(serverId),
+  });
+  return mutation;
+};
+
+/* 서버 권한 위임 */
+export const usePatchServerMemberOwner = (serverId: number) => {
+  const mutation = useMutation({
+    mutationFn: (memberId: number) =>
+      patchServerMemberOwner(serverId, { memberId }),
+  });
+  return mutation;
+};
+
+/* 서버 삭제 */
+export const useDeleteServer = (serverId: number) => {
+  const mutation = useMutation({
+    mutationFn: () => deleteServer(serverId),
   });
   return mutation;
 };

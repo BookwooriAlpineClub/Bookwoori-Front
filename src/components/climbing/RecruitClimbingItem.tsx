@@ -27,7 +27,7 @@ const RecruitClimbingItem = ({
   const navigate = useEncodedNavigation();
   const serverId = useRecoilValue(currentServerIdState);
   const { participateClimbing } = usePutParticipate(item.climbingId);
-  const { anchorEl, isOpen, openPopover, closePopover } = usePopover();
+  const { isOpen, togglePopover, popoverRef } = usePopover();
 
   const handleClickEdit = () => {
     closeBottomSheet();
@@ -50,12 +50,16 @@ const RecruitClimbingItem = ({
           </Caption>
         </Wrapper>
         <Wrapper>
-          <GroupButton onClick={openPopover}>
+          <GroupButton onClick={togglePopover}>
             <Group /> {item.memberCount}
           </GroupButton>
-          <Popover anchorEl={anchorEl} isOpen={isOpen} onClose={closePopover}>
-            <ParticipantList climbingId={item.climbingId} />
-          </Popover>
+          {isOpen && (
+            <div ref={popoverRef}>
+              <Popover>
+                <ParticipantList climbingId={item.climbingId} />
+              </Popover>
+            </div>
+          )}
         </Wrapper>
       </Container>
       <Content>

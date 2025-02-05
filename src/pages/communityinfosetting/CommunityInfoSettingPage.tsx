@@ -4,6 +4,7 @@ import Header from '@src/components/common/Header';
 import CommunitySettingSection from '@src/components/community/CommunitySettingSection';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useGetServerOne } from '@src/hooks/query/server';
+import Spinner from '@src/components/common/Spinner';
 
 export interface CommunityInfoType {
   name: string;
@@ -19,8 +20,9 @@ const CommunityInfoSettingPage = () => {
   const headerText = '공동체 정보 및 설정 보기';
   const { id: serverId } = useLoaderData<{ id: number }>();
   const { data: server, isLoading } = useGetServerOne(serverId);
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (!server) {
     return <div>Not Found</div>;

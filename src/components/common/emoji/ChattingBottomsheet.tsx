@@ -21,7 +21,7 @@ const ChattingBottomsheet = ({
   id,
   closeBottomsheet = () => {},
 }: EmojiBottomsheetType) => {
-  const { handleCopy } = useCopyToClipboard(content);
+  const { handleCopy } = useCopyToClipboard();
   const { openModal, closeModal } = useModal(dialogState);
   const setEditChatId = useSetRecoilState(editChatIdState);
 
@@ -105,7 +105,7 @@ const ChattingBottomsheet = ({
           </Emoji>
         ))}
       </Container>
-      <IconButton type='copyMessage' onClick={handleCopy} />
+      <IconButton type='copyMessage' onClick={() => handleCopy(content)} />
       {isMine && <IconButton type='editMessage' onClick={handleEdit} />}
       {isMine && <IconButton type='deleteMessage' onClick={handleDelete} />}
     </Layout>
