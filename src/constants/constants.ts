@@ -57,6 +57,16 @@ export const EmojiType = {
 
 export type EmojiTypeType = (typeof EmojiType)[keyof typeof EmojiType];
 
+/* Exp 유형 */
+export const ExpType = {
+  READ_PAGE: '읽은 쪽수를 기록했어요.',
+  ADD_STAR: '별점을 작성했어요.',
+  WRITE_REVIEW: '감상평을 작성했어요.',
+  FINISHED_CLIMBING: '등반을 성공했어요.',
+};
+
+export type ExpTypeType = keyof typeof ExpType;
+
 /* 서버 역할 */
 export const RoleType = {
   OWNER: 'OWNER',
