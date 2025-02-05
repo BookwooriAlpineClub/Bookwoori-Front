@@ -46,20 +46,20 @@ export const deleteChannel = async <Res = void>(
 };
 
 /* 채널 채팅 내역 조회 */
-export const getChannelMessages = async <Res = ChannelMessagesRes>(
+export const getChannelMessages = async (
   channelId: number,
   page?: number,
   size?: number,
-): Promise<Res> => {
+): Promise<ChannelMessagesRes> => {
   const queryParams = new URLSearchParams({
     channelId: String(channelId),
   });
 
-  if (page !== undefined) {
+  if (page) {
     queryParams.append('page', String(page));
   }
 
-  if (size !== undefined) {
+  if (size) {
     queryParams.append('size', String(size));
   }
 
