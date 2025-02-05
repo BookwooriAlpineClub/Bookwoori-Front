@@ -1,83 +1,60 @@
 import styled from 'styled-components';
-
-type ExpItemType = {
-  name: string;
-  reason: string;
-  amount: number;
-  exp: number;
-  type: string;
-  createdAt: string;
-};
+import { Exp } from '@src/types/user';
+import { ExpType } from '@src/constants/constants';
+import ExpandableList from '@src/components/common/ExpandableList';
 
 type ExpListProps = {
   date: string;
-  list: ExpItemType[];
+  list: Exp[];
 };
 
 const ExpList = ({ date, list }: ExpListProps) => {
   return (
-    <SLayout>
-      <SLabel>{date}</SLabel>
-      <SContainer>
-        {list.map((it, idx) => (
-          <>
-            {idx !== 0 && <SLine />}
-            <SBox key={it.createdAt}>
-              <SWrapper>
-                <SCaption>{it.name}</SCaption>
-                <SCaption>{it.exp}</SCaption>
-              </SWrapper>
-              <SWrapper>
-                <SBody $color={false}>{it.reason}</SBody>
-                <SBody $color>{it.amount}m</SBody>
-              </SWrapper>
-            </SBox>
-          </>
-        ))}
-      </SContainer>
-    </SLayout>
+    <Layout>
+      <Label>{date}</Label>
+      <ExpandableList
+        items={list}
+        renderItem={(it) => (
+          <Box key={it.expLogId}>
+            <Wrapper>
+              <Caption>{it.title}</Caption>
+              <Caption>{it.height}</Caption>
+            </Wrapper>
+            <Wrapper>
+              <Body $color={false}>{ExpType[it.expType]}</Body>
+              <Body $color>{it.amount}m</Body>
+            </Wrapper>
+          </Box>
+        )}
+      />
+    </Layout>
   );
 };
 
 export default ExpList;
 
-const SLayout = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 7px;
 `;
-const SLabel = styled.label`
-  ${({ theme }) => theme.fonts.body};
+const Label = styled.label`
   color: ${({ theme }) => theme.colors.blue500};
 `;
-const SContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.9375rem;
-
-  padding: 0.9375rem;
-  border-radius: 1.25rem;
-  background-color: ${({ theme }) => theme.colors.neutral0};
-`;
-const SLine = styled.hr`
-  height: 0.0938rem;
-  background: ${({ theme }) => theme.colors.neutral50};
-`;
-const SBox = styled.div`
+const Box = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
 `;
-const SWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const SCaption = styled.label`
+const Caption = styled.label`
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.neutral400};
 `;
-const SBody = styled.label<{ $color: boolean | undefined }>`
-  ${({ theme }) => theme.fonts.body};
+const Body = styled.label<{ $color: boolean | undefined }>`
   color: ${({ theme, $color }) =>
     $color ? theme.colors.blue500 : theme.colors.neutral950};
 `;

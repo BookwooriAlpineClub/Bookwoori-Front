@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { currentServerIdState } from '@src/states/atoms';
 import type { CategoryMoveReq, CategoryRes } from '@src/types/apis/category';
 import type { Category } from '@src/types/category';
-import { patchCategoryMove } from '@src/apis/category';
+import { patchCategoryMove, postCategory } from '@src/apis/category';
 import { getServerChannels } from '@src/apis/server';
 
 export const useCategory = () => {
@@ -69,4 +69,14 @@ export const usePatchCategoryLocation = () => {
   });
 
   return { editLocation };
+};
+
+export const usePostCategory = () => {
+  const serverId = useRecoilValue(currentServerIdState);
+
+  const createCategory = useMutation({
+    mutationFn: (name: string) => postCategory({ serverId, name }),
+  });
+
+  return { createCategory };
 };
