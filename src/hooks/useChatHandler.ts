@@ -112,6 +112,7 @@ const useChatHandler = ({
         'messageRoomId' in message.payload
       ) {
         const newMessage: DM = {
+          parentMemberId: message.payload.parentMemberId,
           parentId: message.payload.parentId,
           parentContent: message.payload.parentContent,
           id: message.payload.id,
