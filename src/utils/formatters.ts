@@ -1,3 +1,4 @@
+import { Exp } from '@src/types/user';
 import { isBase64Encoded } from '@src/utils/validators'; // at decodedIdParam
 
 /**
@@ -112,4 +113,28 @@ export const formatCreatedAt = (createdAt: string) => {
 
 export const formatDateWithHyphen = (date: string) => {
   return date.split('-').join('.').concat('.');
+};
+
+type ExpListType = {
+  [key: string]: Exp[];
+};
+
+export const groupExpByDate = (data: Exp[]) => {
+  return data
+    .sort((a, b) => b.expLogId - a.expLogId)
+    .reduce((acc: ExpListType[], item) => {
+      const dateKey = new Date(item.createdAt).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+
+      const existingEntry = acc.find((entry) => entry[dateKey]);
+      if (existingEntry) {
+        existingEntry[dateKey].push(item);
+      } else {
+        acc.push({ [dateKey]: [item] });
+      }
+      return acc;
+    }, []);
 };
