@@ -1,4 +1,5 @@
 import type { AxiosError } from 'axios';
+import type Book from '@src/types/book';
 import type Record from '@src/types/record';
 import type {
   GetRecordListRes,
@@ -22,10 +23,28 @@ const useGetRecordList = (status: Record['status']) => {
     initialData: [],
   });
 };
-const useGetRecordDetail = (recordId: Record['recordId']) => {
+const useGetRecordDetail = (isbn13: Book['isbn13']) => {
   return useQuery<GetRecordDetailRes, AxiosError>({
-    queryKey: ['getRecordDetail', recordId],
-    queryFn: () => getRecordDetail(recordId),
+    queryKey: ['getRecordDetail', isbn13],
+    queryFn: () => getRecordDetail(Number(isbn13)),
+    initialData: {
+      isbn13: '',
+      title: '',
+      author: '',
+      cover: '',
+      publisher: '',
+      pubDate: '',
+      description: '',
+      itemPage: -1,
+      record: {
+        recordId: -1,
+        status: 'UNREAD',
+        startDate: null,
+        endDate: null,
+        currentPage: null,
+      },
+      reviewList: [],
+    },
   });
 };
 const usePostRecord = () => {
