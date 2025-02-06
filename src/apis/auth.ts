@@ -7,15 +7,10 @@ export const postLogout = async <Res = void>(): Promise<Res> => {
 };
 
 export const postRefreshToken = async <Res = void>(): Promise<Res> => {
-  const refreshToken = sessionStorage.getItem('refreshToken');
-  const res = await client.post(
-    'auth/token',
-    {
-      refreshToken,
-    },
-    { withCredentials: true },
-  );
-  localStorage.setItem('accessToken', res.data.accessToken);
+  const res = await client.post('auth/token', { withCredentials: true });
+  if (res.data) {
+    localStorage.setItem('accessToken', res.data.accessToken);
+  }
 
   return res.data;
 };
