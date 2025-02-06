@@ -159,7 +159,6 @@ const Form = styled.form`
   gap: 1.25rem;
 
   width: 100%;
-  padding: 1.875rem 1.25rem;
 `;
 const Container = styled.div`
   display: flex;

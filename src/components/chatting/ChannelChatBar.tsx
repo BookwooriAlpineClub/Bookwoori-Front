@@ -2,20 +2,22 @@ import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { replyChatState } from '@src/states/atoms';
-import useLoaderData from '@src/hooks/useRoaderData';
-import { usePostMessageRoom } from '@src/hooks/query/chat';
 import { sendHandler } from '@src/apis/chat';
 import type { MessageReq, ReplyReq } from '@src/types/apis/chat';
 import { adjustHeight } from '@src/utils/helpers';
 import { ReactComponent as Send } from '@src/assets/icons/ck_arrow_up.svg';
 import { ReactComponent as SendGreen } from '@src/assets/icons/ck_arrow_right.svg';
 import { ReactComponent as Delete } from '@src/assets/icons/multiply.svg';
+import { useParams } from 'react-router-dom';
 
 const MIN_HEIGHT = 41;
 
 const ChatBar = ({ nickname }: { nickname: string }) => {
-  const { id: memberId } = useLoaderData<{ id: number }>();
-  const { roomInfo } = usePostMessageRoom(memberId);
+  const { channelId: channelIdParam } = useParams<{ channelId?: string }>();
+  const channelId: number | undefined = channelIdParam
+    ? Number(channelIdParam)
+    : undefined;
+
   const [replyChatItem, setReplyChatItem] = useRecoilState(replyChatState);
   const [chat, setChat] = useState<string>('');
   const [paddingHeight, setPaddingHeight] = useState<number | null>(null);
@@ -56,7 +58,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      
+
       if (replyChatItem) {
         handleSendReply();
         return;
@@ -70,15 +72,15 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
     if (!chat.trim()) return;
 
     const message: MessageReq = {
-      messageRoomId: roomInfo?.messageRoomId,
+      channelId,
       type: 'text',
       content: chat,
     };
 
     try {
-      await sendHandler(message, '/pub/direct/send');
-      console.log('Message sent successfully');
+      await sendHandler(message, '/pub/channel/send');
       setChat('');
+      console.log(message);
     } catch (error) {
       console.error('Failed to send message:', error);
     }
@@ -90,13 +92,13 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
 
     const message: ReplyReq = {
       parentId: replyChatItem.id,
-      messageRoomId: roomInfo?.messageRoomId,
+      channelId,
       type: 'text',
       content: chat,
     };
 
     try {
-      await sendHandler(message, '/pub/direct/reply');
+      await sendHandler(message, '/pub/channel/reply');
       console.log('Reply sent successfully');
       setChat('');
       setReplyChatItem(null);

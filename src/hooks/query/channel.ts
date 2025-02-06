@@ -1,11 +1,16 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRecoilValue } from 'recoil';
 import { currentServerIdState } from '@src/states/atoms';
 import type { ChannelPostReq } from '@src/types/apis/channel';
 import type { CategoryRes } from '@src/types/apis/category';
 import type { ClimbingList } from '@src/types/climbing';
-import { deleteChannel, patchChannel, postChannel } from '@src/apis/channel';
+import {
+  deleteChannel,
+  getChannelMessages,
+  patchChannel,
+  postChannel,
+} from '@src/apis/channel';
 import { getServerChannels, getServerClimbing } from '@src/apis/server';
 
 export const useGetServerChannel = () => {
@@ -60,4 +65,32 @@ export const useDeleteChannel = () => {
   });
 
   return { delChannel };
+};
+
+const MESSAGE_PER_PAGE = 10;
+
+export const useGetChannelMessages = (channelId: number) => {
+  const { data, fetchNextPage, hasNextPage, refetch } = useInfiniteQuery({
+    queryKey: ['getChannelMessages', channelId],
+    queryFn: ({ pageParam = 0 }) =>
+      getChannelMessages(channelId, pageParam, MESSAGE_PER_PAGE),
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length;
+      return lastPage?.messages.length < MESSAGE_PER_PAGE
+        ? undefined
+        : nextPage;
+    },
+    retry: 0,
+    refetchOnMount: true,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    initialPageParam: 0,
+  });
+
+  return {
+    data: data?.pages.flatMap((page) => page.messages),
+    fetchNextPage,
+    hasNextPage,
+    refetch,
+  };
 };

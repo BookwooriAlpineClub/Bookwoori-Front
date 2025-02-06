@@ -1,45 +1,31 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { dialogState, editChatIdState } from '@src/states/atoms';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
-import { EmojiType } from '@src/constants/constants';
-import { deleteHandler } from '@src/apis/chat';
-import IconButton from '@src/components/common/button/IconButton';
 import useModal from '@src/hooks/useModal';
+import { deleteHandler, reactHandler } from '@src/apis/chat';
+import { EmojiType } from '@src/constants/constants';
+import IconButton from '@src/components/common/button/IconButton';
 import DeleteConfirmDialog from '@src/components/common/modal/DeleteConfirmDialog';
-import { useSetRecoilState } from 'recoil';
 
 type EmojiBottomsheetType = {
-  emoji?: string[];
+  isMine?: boolean;
   content: string;
   id: string;
   closeBottomsheet?: () => void;
 };
 
-const EmojiBottomsheet = ({
-  emoji = [],
+const ChattingBottomsheet = ({
+  isMine,
   content,
   id,
   closeBottomsheet = () => {},
 }: EmojiBottomsheetType) => {
-  const emojiList = Object.values(EmojiType).map(({ value }) => value);
-  const { handleCopy } = useCopyToClipboard(content);
-  const [clickedEmoji, setClickedEmoji] = useState<string[]>(emoji);
+  const { handleCopy } = useCopyToClipboard();
   const { openModal, closeModal } = useModal(dialogState);
   const setEditChatId = useSetRecoilState(editChatIdState);
 
-  const handleClickEmoji = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    const clicked = e.currentTarget.textContent;
-    if (!clicked) return;
-    if (clickedEmoji?.includes(clicked)) {
-      setClickedEmoji((prev) => [...prev].filter((it) => it !== clicked));
-      return;
-    }
-
-    setClickedEmoji((prev) => [...prev, clicked]);
-  };
+  const emojiList = Object.keys(EmojiType) as Array<keyof typeof EmojiType>;
 
   const handleDeleteMessage = async () => {
     try {
@@ -67,27 +53,66 @@ const EmojiBottomsheet = ({
     closeBottomsheet();
   };
 
+  type EmojiKey = keyof typeof EmojiType;
+
+  const handleEmojiClick = (key: EmojiKey) => {
+    const emojiMapping: Record<EmojiKey, string> = {
+      GOOD: 'thumps_up',
+      HEART: 'heart_hands',
+      SMILE: 'smiling_face',
+      CRY: 'crying_face',
+      THINK: 'thinking_face',
+    };
+    handleReaction({
+      emoji: emojiMapping[key].toUpperCase(),
+      action: 'add',
+    });
+  };
+
+  const handleReaction = async ({
+    emoji,
+    action,
+  }: {
+    emoji: string;
+    action: string;
+  }) => {
+    try {
+      await reactHandler(
+        {
+          id,
+          emoji,
+          action,
+        },
+        '/pub/direct/react',
+      );
+      console.log('Reaction added successfully');
+      closeBottomsheet();
+    } catch (error) {
+      console.error('Failed to add reaction:', error);
+    }
+  };
+
   return (
     <Layout>
       <Container>
-        {emojiList.map((it) => (
+        {emojiList.map((key) => (
           <Emoji
-            key={it}
-            $isClicked={clickedEmoji.includes(it)}
-            onClick={handleClickEmoji}
+            key={key}
+            $isClicked={false}
+            onClick={() => handleEmojiClick(key)}
           >
-            {it}
+            {EmojiType[key].value}
           </Emoji>
         ))}
       </Container>
-      <IconButton type='copyMessage' onClick={handleCopy} />
-      <IconButton type='editMessage' onClick={handleEdit} />
-      <IconButton type='deleteMessage' onClick={handleDelete} />
+      <IconButton type='copyMessage' onClick={() => handleCopy(content)} />
+      {isMine && <IconButton type='editMessage' onClick={handleEdit} />}
+      {isMine && <IconButton type='deleteMessage' onClick={handleDelete} />}
     </Layout>
   );
 };
 
-export default EmojiBottomsheet;
+export default ChattingBottomsheet;
 
 const Layout = styled.div`
   display: flex;

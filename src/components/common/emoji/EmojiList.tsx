@@ -4,6 +4,10 @@ import { ReactComponent as AddIcon } from '@src/assets/icons/hi_face_smile.svg';
 import { EmojiType } from '@src/constants/constants';
 import { usePutEmojiOnReview } from '@src/hooks/query/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
+import useModal from '@src/hooks/useModal';
+import { bottomsheetState } from '@src/states/atoms';
+import EmojiMemberListBottomSheet from '@src/components/climbing/EmojiMemberListBottomSheet';
+import { getClimbingReviewEmojiRes } from '@src/types/apis/climbing';
 
 interface EmojiListProps {
   reviewId: number;
@@ -11,30 +15,41 @@ interface EmojiListProps {
     emoji: keyof typeof EmojiType;
     emojiCount: number;
   }[];
+  emojiMembers?: getClimbingReviewEmojiRes;
   onAddClick?: () => void;
 }
 
-const EmojiList = ({ reviewId, emojis, onAddClick }: EmojiListProps) => {
+const EmojiList = ({
+  reviewId,
+  emojis,
+  emojiMembers,
+  onAddClick,
+}: EmojiListProps) => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
   const { putEmoji } = usePutEmojiOnReview(climbingId, reviewId);
-
+  const { openModal } = useModal(bottomsheetState);
   const handleEmojiClick = (emoji: keyof typeof EmojiType) => {
     putEmoji.mutate(emoji);
   };
-  const handleEmojiLongPress = () => {
-    alert('open 참여자 리스트');
+  const handleEmojiLongPress = (emoji: string) => {
+    openModal(
+      <EmojiMemberListBottomSheet
+        clickedEmoji={emoji}
+        emojiMembersData={emojiMembers}
+      />,
+    );
   };
 
   return (
     <ListContainer>
-      {emojis.map((item, index) => (
+      {emojis.map((item) => (
         <EmojiItem
-          key={index}
+          key={item.emoji}
           emoji={item.emoji}
           // initialIsSelected={item.initialIsSelected}
           count={item.emojiCount}
           onClick={() => handleEmojiClick(item.emoji)}
-          onLongPress={handleEmojiLongPress}
+          onLongPress={() => handleEmojiLongPress(item.emoji)}
         />
       ))}
       {onAddClick && (

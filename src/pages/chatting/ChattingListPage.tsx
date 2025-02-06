@@ -29,22 +29,24 @@ const ChattingListPage = () => {
       <Header text='문자' headerType='hamburger' />
       <Main>
         {data?.map((page) =>
-          page.messageRooms.map((it) => (
-            <StatusBadgeListItem
-              key={it.messageRoomId}
-              type='chatting'
-              caption={it.nickname}
-              imgUrl={it.profileImg}
-              time={
-                it.recentMessageTime
-                  ? formatChatListItemTime(it.recentMessageTime)
-                  : '알 수 없음'
-              }
-              message={it.recentMessage}
-              isRead
-              onClick={() => handleNavigateChattingRoom(it.memberId)}
-            />
-          )),
+          page.messageRooms
+            .filter((it) => it.recentMessage)
+            .map((it) => (
+              <StatusBadgeListItem
+                key={it.messageRoomId}
+                type='chatting'
+                caption={it.nickname}
+                imgUrl={it.profileImg}
+                time={
+                  it.recentMessageTime
+                    ? formatChatListItemTime(it.recentMessageTime)
+                    : '알 수 없음'
+                }
+                message={it.recentMessage}
+                isRead
+                onClick={() => handleNavigateChattingRoom(it.memberId)}
+              />
+            )),
         )}
         {!isLoading && data?.length === 0 && (
           <Wrapper>
@@ -70,7 +72,6 @@ const Main = styled.main`
   gap: ${({ theme }) => theme.gap[10]};
 
   height: calc(100% - 4.375rem);
-  padding: 0.9375rem;
 `;
 const Wrapper = styled.div`
   display: flex;

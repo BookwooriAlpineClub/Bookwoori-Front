@@ -70,6 +70,13 @@
       "error",
       { "namedComponents": ["arrow-function", "function-declaration"] }
     ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
     "no-use-before-define": "off",
@@ -78,6 +85,8 @@
     "import/prefer-default-export": "off",
     "react/jsx-no-useless-fragment": "off",
     "no-nested-ternary": "off",
+    "no-param-reassign": "off",
+    "consistent-return": "off",
     "react/no-array-index-key": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-empty-object-type": "off",

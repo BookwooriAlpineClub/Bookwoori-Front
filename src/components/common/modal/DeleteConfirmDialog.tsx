@@ -5,12 +5,14 @@ const NOTI_TEXT = `삭제한 정보는 복구할 수 없습니다.\n정말 삭�
 
 interface DeleteConfirmDialogProps {
   text?: string;
+  deleteLabel?: string;
   closeDialog: () => void;
   onClickDelete: () => void;
 }
 
 const DeleteConfirmDialog = ({
   text,
+  deleteLabel = '삭제하기',
   closeDialog,
   onClickDelete,
 }: DeleteConfirmDialogProps) => {
@@ -18,7 +20,7 @@ const DeleteConfirmDialog = ({
     <DialogLayout>
       <TextContainer>{text ?? NOTI_TEXT}</TextContainer>
       <ButtonContainer>
-        <SubButton label='삭제하기' onClick={onClickDelete} width='39vw' />
+        <SubButton label={deleteLabel} onClick={onClickDelete} width='39vw' />
         <SubButton label='돌아가기' width='39vw' onClick={closeDialog} />
       </ButtonContainer>
     </DialogLayout>

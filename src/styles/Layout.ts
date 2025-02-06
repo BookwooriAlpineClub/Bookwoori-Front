@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 
-export const PaddingLayout = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: ${({ theme }) => theme.padding[16]};
-
-  &:has(header) {
-    padding-top: 0;
-  }
-`;
 /**
  * @example
  * <NoDataTextLayout>
@@ -24,7 +15,9 @@ export const PaddingLayout = styled.div`
  */
 export const NoDataTextLayout = styled.div`
   display: flex;
+  width: 100%;
   height: 100%;
+  padding: 0 ${({ theme }) => theme.padding[16]};
 
   main:has(strong) {
     display: flex;
@@ -42,18 +35,20 @@ export const NoDataTextLayout = styled.div`
 `;
 /**
  * @example
- * <BottomButtonLayout>
+ * <DefaultLayout>
  *   <main>
  *     <태그 className='scroll-area'>
  *       // 스크롤 영역
  *     </태그>
  *     <Button>메인 버튼</Button>
  *   </main>
- * </BottomButtonLayout>
+ * </DefaultLayout>
  */
-export const BottomButtonLayout = styled.div`
+export const DefaultLayout = styled.div`
   display: flex;
+  width: 100%;
   height: 100%;
+  padding: 0 ${({ theme }) => theme.padding[16]};
 
   main {
     display: flex;
@@ -72,5 +67,6 @@ export const BottomButtonLayout = styled.div`
     flex-grow: 1;
 
     overflow-y: scroll;
+    width: 100%;
   }
 `;

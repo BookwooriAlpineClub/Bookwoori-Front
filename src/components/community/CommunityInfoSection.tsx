@@ -17,7 +17,7 @@ const CommunityInfoSection = ({
   serverImg = '',
 }: CommunityInfoProps) => {
   return (
-    <Fieldset title='공동체 정보'>
+    <Fieldset title='공동체 정보' as='section'>
       <CommunityInfoCard
         name={name}
         memberInfo={memberInfo}

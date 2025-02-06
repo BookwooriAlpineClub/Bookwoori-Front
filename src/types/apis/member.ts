@@ -8,4 +8,6 @@ export interface ProfilePatchReq {
 
 export type ProfileRes = User;
 
-export type ExpRes = Exp;
+export type ExpRes = {
+  ExpLogList: Exp[];
+};

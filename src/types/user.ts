@@ -1,3 +1,5 @@
+import { ExpTypeType } from '@src/constants/constants';
+
 export interface User {
   isMine: boolean;
   nickname: string;
@@ -10,9 +12,10 @@ export interface User {
 }
 
 export interface Exp {
-  reason: string;
+  expLogId: number;
+  height: number;
+  title: string;
   amount: number;
-  exp: number;
-  type: string;
+  expType: ExpTypeType;
   createdAt: string;
 }

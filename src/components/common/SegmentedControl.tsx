@@ -68,6 +68,7 @@ export default SegmentedControl;
 const ButtonsContainer = styled.div<{ length: number }>`
   position: relative;
   display: flex;
+  flex-shrink: 0;
   border: solid 0.1rem ${({ theme }) => theme.colors.blue300};
   border-radius: ${({ theme }) => theme.rounded['24']};
   background-color: ${({ theme }) => theme.colors.neutral0};

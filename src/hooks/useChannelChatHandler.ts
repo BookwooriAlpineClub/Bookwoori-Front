@@ -1,23 +1,22 @@
 import { useEffect, useCallback } from 'react';
 import { connectHandler, disconnectHandler } from '@src/apis/chat';
-import type { DM } from '@src/types/messageRoom';
 import type { ChatEventRes } from '@src/types/apis/chat';
-import { MessageRoomRes } from '@src/types/apis/messageRoom';
+import { ChannelMessage } from '@src/types/channel';
 
 interface UseChatHandlerProps {
-  roomInfo: MessageRoomRes | undefined;
-  setNewMessages: React.Dispatch<React.SetStateAction<DM[]>>;
-  setMessages?: React.Dispatch<React.SetStateAction<DM[]>>;
+  channelId: number;
+  setNewMessages: React.Dispatch<React.SetStateAction<ChannelMessage[]>>;
+  setMessages?: React.Dispatch<React.SetStateAction<ChannelMessage[]>>;
 }
 
 const useChatHandler = ({
-  roomInfo,
+  channelId,
   setNewMessages,
   setMessages,
 }: UseChatHandlerProps) => {
   const onMessage = useCallback(
     (message: ChatEventRes) => {
-      if (message.messageRoomId !== roomInfo!.messageRoomId) return;
+      if (message.channelId !== channelId) return;
 
       if (message.eventType === 'REACT') {
         setNewMessages((prevMessages) =>
@@ -109,36 +108,33 @@ const useChatHandler = ({
       if (
         (message.eventType === 'NEW_MESSAGE' ||
           message.eventType === 'REPLY') &&
-        'messageRoomId' in message.payload
+        'channelId' in message.payload
       ) {
-        const newMessage: DM = {
-          parentMemberId: message.payload.parentMemberId,
+        const newMessage: ChannelMessage = {
           parentId: message.payload.parentId,
           parentContent: message.payload.parentContent,
           id: message.payload.id,
-          messageRoomId: message.payload.messageRoomId,
+          channelId: message.payload.channelId,
           memberId: message.payload.memberId,
           content: message.payload.content,
           createdAt: message.payload.createdAt,
         };
-
+        console.log(newMessage);
         setNewMessages((prev) => [newMessage, ...prev]);
       }
     },
-    [roomInfo, setNewMessages, setMessages],
+    [channelId, setNewMessages, setMessages],
   );
 
   useEffect(() => {
-    if (!roomInfo) return;
-
     // WebSocket 연결
-    connectHandler(onMessage, `/topic/direct/${roomInfo.messageRoomId}`);
-
+    connectHandler(onMessage, `/topic/channel/${channelId}`);
+    console.log('connectHandler', channelId);
     return () => {
       // 컴포넌트 언마운트 시 WebSocket 연결 해제
       disconnectHandler();
     };
-  }, [roomInfo, onMessage]);
+  }, [channelId, onMessage]);
 
   return { onMessage };
 };

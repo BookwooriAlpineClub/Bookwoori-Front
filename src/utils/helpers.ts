@@ -14,3 +14,16 @@ export const handleImgError = (
 ) => {
   e.currentTarget.src = altImg;
 };
+
+export const adjustHeight = (
+  inputRef: React.MutableRefObject<HTMLTextAreaElement | null>,
+  MIN_HEIGHT: number,
+) => {
+  if (inputRef.current) {
+    inputRef.current.style.height = `${MIN_HEIGHT}px`;
+
+    if (inputRef.current.scrollHeight > MIN_HEIGHT) {
+      inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+    }
+  }
+};
