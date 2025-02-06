@@ -42,7 +42,7 @@ export const postServerJoinByCode = async (
   inviteCode: string,
 ): Promise<{ serverId: number }> => {
   const response = await authClient.post<{ serverId: number }>(
-    buildServerUrl(`/code/${inviteCode}`),
+    buildServerUrl(`/join/${inviteCode}`),
   );
   return response.data;
 };

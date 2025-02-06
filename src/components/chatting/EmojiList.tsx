@@ -6,7 +6,7 @@ import { reactHandler } from '@src/apis/chat';
 
 const EmojiList = ({ reactions, id }: { reactions: Reactions; id: string }) => {
   const emojiMapping: Record<string, keyof typeof EmojiType> = {
-    thumps_up: 'GOOD',
+    thumbs_up: 'GOOD',
     heart_hands: 'HEART',
     smiling_face: 'SMILE',
     crying_face: 'CRY',

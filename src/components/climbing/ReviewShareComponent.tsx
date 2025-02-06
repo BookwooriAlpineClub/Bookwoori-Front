@@ -24,12 +24,14 @@ const ReviewShareComponent = ({
 
   const navigate = useNavigate();
   const handleNavigate = () => {
-    const path = ROUTE_PATH.libraryBookDetail.replace(
-      ':bookId',
+    const path = ROUTE_PATH.libraryRecordDetail.replace(
+      ':isbn13',
       bookInfo.isbn13,
     );
     navigate(path);
   };
+
+  console.log(bookInfo, isShareable);
 
   return (
     <>
@@ -39,10 +41,7 @@ const ReviewShareComponent = ({
           <SubText>나의 감상평을 공유하고 멤버들과 감상을 나눠보세요.</SubText>
         </TextContainer>
         <ItemWrapper>
-          {isShareable && (
-            // <ReviewListItem />
-            <div>book에서 가져올 리뷰 아이템</div>
-          )}
+          {isShareable && <div>book에서 가져올 리뷰 아이템</div>}
           {!isShareable && (
             <Wrapper>
               <div>아직 감상평을 작성하지 않았어요.</div>
