@@ -2,23 +2,11 @@ import Book from '@src/types/book';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetBookDetail } from '@src/hooks/query/book';
-import {
-  useGetRecordDetail,
-  usePostRecord,
-  usePatchRecord,
-  useDeleteRecord,
-} from '@src/hooks/query/record';
-import {
-  usePostReview,
-  usePatchReview,
-  useDeleteReview,
-} from '@src/hooks/query/review';
+import { useGetRecordDetail } from '@src/hooks/query/record';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import BookDetail from '@src/components/library/BookDetail';
 import ReviewDetail from '@src/components/library/ReviewDetail';
-import PageField from '@src/components/library/PageField';
-import ReviewField from '@src/components/library/ReviewField';
 import { ReactComponent as HiOutlinePlus } from '@src/assets/icons/hi_outline_plus.svg';
 
 const RecordDetailPage = () => {
@@ -34,8 +22,8 @@ const RecordDetailPage = () => {
   const handleScroll = () => {
     setIsTop(window.scrollY < 70);
   };
-  const handleReviewEdit = () => {};
-  const handleReviewDelete = () => {};
+  const openRecordBottomsheet = () => {};
+  const openReviewBottomsheet = () => {};
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -54,6 +42,7 @@ const RecordDetailPage = () => {
           pubDate={pubDate}
           itemPage={itemPage}
           record={record}
+          openBottomsheet={openRecordBottomsheet}
         />
         <ReviewCreateButton>
           <HiOutlinePlus />
@@ -62,12 +51,12 @@ const RecordDetailPage = () => {
           ({ reviewId, star, content, createdAt, modifiedAt }) => (
             <ReviewDetail
               key={reviewId}
+              reviewId={reviewId}
               star={star}
               content={content}
               createdAt={createdAt}
               modifiedAt={modifiedAt}
-              editFunc={handleReviewEdit}
-              deleteFunc={handleReviewDelete}
+              openBottomsheet={openReviewBottomsheet}
             />
           ),
         )}
