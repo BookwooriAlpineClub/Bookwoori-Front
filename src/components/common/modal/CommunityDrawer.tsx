@@ -31,7 +31,7 @@ const CommunityDrawer = () => {
   const { closeModal: closeCommunityDrawer } = useModal(communityDrawerState);
   const { openModal: openDialog } = useModal(dialogState);
   const serverId = useRecoilValue(currentServerIdState);
-  const { data: memberList } = useGetServerMembers(serverId);
+  const { data: memberList } = useGetServerMembers(serverId, isOpen);
   const { data: serverInfo } = useGetServerOne(serverId);
   const { mutate: generateInviteCode } = usePostServerInviteCode(serverId);
   const { handleCopy } = useCopyToClipboard();
