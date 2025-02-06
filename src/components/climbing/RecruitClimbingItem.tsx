@@ -76,8 +76,8 @@ const RecruitClimbingItem = ({
           <Body>{item.description}</Body>
         </ContentWrapper>
       </Content>
-      {item.isOWner ? (
-        <SButton $color={item.isOWner} onClick={handleClickEdit}>
+      {item.isOwner ? (
+        <SButton $color={item.isOwner} onClick={handleClickEdit}>
           <Edit width={12} height={12} />
           편집하기
         </SButton>
