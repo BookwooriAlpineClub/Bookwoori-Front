@@ -25,9 +25,7 @@ import {
   ClimbingEditPage,
   ClimbingPage,
   CommunityInfoSettingPage,
-  BookDetailPage,
   RecordDetailPage,
-  RecordEditPage,
   RecordListPage,
   ReviewListPage,
   NotificationPage,
@@ -147,18 +145,13 @@ const router = createBrowserRouter([
           /* library */
           {
             path: ROUTE_PATH.libraryBookDetail,
-            element: <BookDetailPage />,
-            loader: (args) => isParamLoader(args, 'bookId'),
+            element: <RecordDetailPage />,
+            loader: (args) => isParamLoader(args, 'isbn13'),
           },
           {
             path: ROUTE_PATH.libraryRecordDetail,
             element: <RecordDetailPage />,
-            loader: (args) => isParamLoader(args, 'recordId'),
-          },
-          {
-            path: ROUTE_PATH.libraryEditRecordOne,
-            element: <RecordEditPage />,
-            loader: (args) => isParamLoader(args, 'recordId'),
+            loader: (args) => isParamLoader(args, 'isbn13'),
           },
           {
             path: ROUTE_PATH.libraryRecord,

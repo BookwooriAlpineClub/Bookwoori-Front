@@ -58,7 +58,7 @@ const LibraryHomePage = () => {
         />
         <MountainMenu seasonalColor={seasonalColors[season][0]}>
           <ButtonContainer>
-            {!memberId && (
+            {memberId && (
               <>
                 <IconButton
                   onClick={() => handleButton(ROUTE_PATH.libraryBookSearch)}

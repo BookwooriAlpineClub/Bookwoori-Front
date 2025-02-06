@@ -35,7 +35,7 @@ const GlobalDrawer = () => {
   const location = useLocation();
   const { serverId: params } = useParams<{ serverId: string }>();
   const { isOpen, transition } = useRecoilValue(globalDrawerState);
-  const { data: serverList } = useGetServerList();
+  const { data: serverList } = useGetServerList(isOpen);
   const isNotiRead = true; // 나중에 수정
   const isChatRead = true; // 나중에 수정
   const buttonConfigs: {

@@ -2,7 +2,6 @@ import type { AxiosResponse } from 'axios';
 import type Record from '@src/types/record';
 import type {
   GetRecordListRes,
-  GetReviewListRes,
   GetRecordDetailRes,
   PostRecordReq,
   PatchRecordReq,
@@ -16,13 +15,6 @@ export const getRecordList = async <Res = GetRecordListRes>(
   status: Record['status'],
 ): Promise<Res> => {
   const response = await authClient.get<Res>(`/records?status=${status}`);
-  return response.data;
-};
-/**
- * 책 평가 목록 조회
- */
-export const getReviewList = async <Res = GetReviewListRes>(): Promise<Res> => {
-  const response = await authClient.get<Res>(`/records/reviews`);
   return response.data;
 };
 /**

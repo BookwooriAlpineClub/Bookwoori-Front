@@ -18,12 +18,13 @@ import {
   deleteServer,
 } from '@src/apis/server';
 
-export const useGetServerList = () => {
+export const useGetServerList = (isOpen: boolean) => {
   return useQuery<GetServersRes, AxiosError, GetServersRes['servers']>({
     queryKey: ['getServers'],
     queryFn: () => getServers(),
     select: (rawData) => rawData?.servers,
     initialData: { servers: [] },
+    enabled: isOpen,
   });
 };
 
@@ -81,12 +82,12 @@ export const usePostServerJoin = (inviteCode: string) => {
 };
 
 /* 서버 멤버 목록 조회 */
-export const useGetServerMembers = (serverId: number) => {
+export const useGetServerMembers = (serverId: number, isOpen: boolean) => {
   return useQuery({
     queryKey: ['getServerMembers', serverId],
     queryFn: () => getServerMembers(serverId),
     select: (rawData) => rawData.members,
-    enabled: serverId !== -1,
+    enabled: isOpen,
   });
 };
 

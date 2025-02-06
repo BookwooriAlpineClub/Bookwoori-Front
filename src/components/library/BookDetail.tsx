@@ -1,32 +1,79 @@
-import type Book from '@src/types/book';
+import type BookType from '@src/types/book';
+import type RecordType from '@src/types/record';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
+import Tag from '@src/components/common/Tag';
+import { ReactComponent as HiOutlinePlus } from '@src/assets/icons/hi_outline_plus.svg';
+import { ReactComponent as MdBook } from '@src/assets/icons/md_book.svg';
+import { ReactComponent as MdAutoStories } from '@src/assets/icons/md_auto_stories.svg';
+import { ReactComponent as Done } from '@src/assets/icons/done.svg';
 
-type Props = Pick<
-  Book,
-  'title' | 'author' | 'cover' | 'publisher' | 'pubYear' | 'itemPage'
->;
+interface Props extends Omit<BookType, 'isbn13' | 'description'> {
+  record: RecordType;
+  openBottomsheet: () => void;
+}
 
 const BookDetail = ({
   title,
   author,
   cover,
   publisher,
-  pubYear,
+  pubDate,
   itemPage,
+  record,
+  openBottomsheet,
 }: Props) => {
+  const TagConfigs: Record<RecordType['status'], React.ReactElement> = {
+    UNREAD: <Tag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />,
+    WISH: (
+      <Tag
+        color='blue'
+        Icon={MdBook}
+        text='읽고 싶어요'
+        onClick={openBottomsheet}
+      />
+    ),
+    READING: (
+      <Tag
+        color='blue'
+        Icon={MdAutoStories}
+        text='읽고 있어요'
+        onClick={openBottomsheet}
+      >
+        <Blue900Span>{record.startDate}</Blue900Span>
+        <Blue900Span>{`${record.currentPage}쪽/${itemPage}쪽`}</Blue900Span>
+      </Tag>
+    ),
+    FINISHED: (
+      <Tag
+        color='blue'
+        Icon={Done}
+        text='다 읽었어요'
+        onClick={openBottomsheet}
+      >
+        <Blue900Span>{`${record.startDate}-${record.endDate}`}</Blue900Span>
+      </Tag>
+    ),
+  };
+
   return (
     <Container>
       <Img src={cover} alt='책 표지' />
       <InfoWrapper>
         <Title $line={2}>{title}</Title>
         <CaptionEllipsis $line={1}>{author}</CaptionEllipsis>
-        <PubWrapper>
+        <ThirdWrapper>
           <CaptionEllipsis $line={1}>{publisher}</CaptionEllipsis>
           <Caption>·</Caption>
-          <Caption>{pubYear}</Caption>
-        </PubWrapper>
-        <CaptionEllipsis $line={1}>{itemPage}쪽</CaptionEllipsis>
+          <CaptionEllipsis $line={1}>{pubDate}</CaptionEllipsis>
+          <Caption>·</Caption>
+          <CaptionEllipsis $line={1}>{itemPage}쪽</CaptionEllipsis>
+        </ThirdWrapper>
+        {record ? (
+          TagConfigs[record.status]
+        ) : (
+          <Tag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />
+        )}
       </InfoWrapper>
     </Container>
   );
@@ -44,12 +91,8 @@ const InfoWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   gap: ${({ theme }) => theme.gap[8]};
-
-  mark {
-    margin-bottom: 0.44rem;
-  }
 `;
-const PubWrapper = styled.div`
+const ThirdWrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
   gap: ${({ theme }) => theme.gap[4]};
@@ -70,4 +113,7 @@ const CaptionEllipsis = styled.span<{ $line: number }>`
 `;
 const Caption = styled.span`
   ${({ theme }) => theme.fonts.caption}
+`;
+const Blue900Span = styled.span`
+  color: ${({ theme }) => theme.colors.blue900};
 `;

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
-import Fieldset from '@src/components/library/Fieldset';
 
 interface Props {
   name: string;
+  required?: boolean;
   readOnly?: boolean;
   value?: number;
   setValue?: React.Dispatch<React.SetStateAction<number>>;
@@ -12,8 +12,9 @@ interface Props {
 }
 
 const PageField = ({
-  name = '독서 현황',
-  readOnly = false,
+  name,
+  required,
+  readOnly,
   value,
   setValue,
   currentPage,
@@ -40,22 +41,20 @@ const PageField = ({
   };
 
   return (
-    <Fieldset title={name}>
-      <Container>
-        <Input
-          type='tel'
-          name={name}
-          placeholder={`${currentPage}쪽`}
-          required
-          readOnly={readOnly}
-          value={`${value}쪽`}
-          onKeyDown={handleKeydown}
-          onInput={handleInput}
-        />
-        <Body>/</Body>
-        <ItemPage>{itemPage}쪽</ItemPage>
-      </Container>
-    </Fieldset>
+    <Container>
+      <Input
+        type='tel'
+        name={name}
+        placeholder={`${currentPage}쪽`}
+        required={required}
+        readOnly={readOnly}
+        value={`${value}쪽`}
+        onKeyDown={handleKeydown}
+        onInput={handleInput}
+      />
+      <Body>/</Body>
+      <ItemPage>{itemPage}쪽</ItemPage>
+    </Container>
   );
 };
 
@@ -65,15 +64,6 @@ const Container = styled.div`
   display: flex;
   flex-flow: row nowrap;
   gap: ${({ theme }) => theme.gap[10]};
-
-  padding: ${({ theme }) => `${theme.padding[12]} ${theme.padding[16]}`};
-
-  border-radius: ${({ theme }) => theme.rounded[16]};
-  background-color: ${({ theme }) => theme.colors.neutral0};
-
-  &:has(input:read-only) {
-    background-color: transparent;
-  }
 `;
 const Input = styled.input`
   text-align: center;

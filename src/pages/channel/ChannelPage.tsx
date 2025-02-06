@@ -1,50 +1,39 @@
 import useLoaderData from '@src/hooks/useRoaderData';
 import Header from '@src/components/common/Header';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import type { CategoryRes } from '@src/types/apis/category';
-import type { ChatEventRes } from '@src/types/apis/chat';
 import type { ChannelMessage } from '@src/types/channel';
 import { AxiosError } from 'axios';
 import { getServerChannels } from '@src/apis/server';
 import styled from 'styled-components';
-import useChattingLog from '@src/hooks/query/useChattingLog';
 import { useInView } from 'react-intersection-observer';
-import { useEffect, useRef, useState } from 'react';
-import ChannelChatBar from '@src/components/channel/ChannelChatBar';
-import { connectHandler, disconnectHandler } from '@src/apis/chat';
-import ChannelChatItem from '@src/components/channel/ChannelChatItem';
-
-function preprocess(data: ChannelMessage[]) {
-  const result: {
-    [date in string]: ChannelMessage[];
-  } = {};
-
-  const seenIds = new Set<string>();
-  const parseDate = (dateTimeString: string) => dateTimeString.slice(0, 11);
-
-  data.forEach((chat) => {
-    const dateKey = parseDate(chat.createdAt);
-
-    if (seenIds.has(chat.id)) {
-      return;
-    }
-    seenIds.add(chat.id);
-
-    result[dateKey] ??= [];
-    result[dateKey].push(chat);
-  });
-
-  return result;
-}
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useGetChannelMessages } from '@src/hooks/query/channel';
+import { formatCreatedAt } from '@src/utils/formatters';
+import ChatItem from '@src/components/chatting/ChatItem';
+import DateLine from '@src/components/chatting/DateLine';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  editChatIdState,
+  replyChatIdState,
+  replyChatState,
+} from '@src/states/atoms';
+import ChannelChatBar from '@src/components/chatting/ChannelChatBar';
+import useChannelChatHandler from '@src/hooks/useChannelChatHandler';
+import Spinner from '@src/components/common/Spinner';
 
 const ChannelPage = () => {
-  // params 받아오기
+  // params 받아오기 (serverId, channelId)
   const { id: serverId } = useLoaderData<{ id: number }>();
   const { channelId: stringChannel } = useParams<{ channelId: string }>();
   const channelId = Number(stringChannel);
 
-  // channelName 받아오기
+  const setEditChatId = useSetRecoilState(editChatIdState);
+  const setReplyChatItem = useSetRecoilState(replyChatState);
+  const replyChatId = useRecoilValue(replyChatIdState);
+
+  // channelName 받아오기 (수정 필요)
   const {
     data: channelName,
     isLoading,
@@ -64,121 +53,124 @@ const ChannelPage = () => {
   });
 
   // chatting data 받아오기
-  const { data, fetchNextPage, hasNextPage } = useChattingLog(channelId);
+  const { data, fetchNextPage, hasNextPage, refetch } =
+    useGetChannelMessages(channelId);
 
-  // mount 관리
-  const [mounted, setMounted] = useState(false);
+  const [messages, setMessages] = useState<ChannelMessage[]>([]);
+  const [newMessages, setNewMessages] = useState<ChannelMessage[]>([]);
+  const allMessages: ChannelMessage[] = useMemo(() => {
+    return [...newMessages, ...messages];
+  }, [newMessages, messages]);
+  const [isInitial, setIsInitial] = useState(true);
 
-  const { ref } = useInView({
-    onChange: (inView) => {
-      if (!mounted || totalMessageCount <= 8) {
-        return;
-      }
-      if (!hasNextPage) {
-        return;
-      }
-      if (!inView) {
-        return;
-      }
-      fetchNextPage();
-    },
-  });
+  const { ref: targetRef, inView } = useInView();
+  const chatRef = useRef<HTMLDivElement>(null);
+  const replyChatRef = useRef<HTMLDivElement | null>(null);
 
-  const [chattings, setChattings] = useState<{
-    [date: string]: ChannelMessage[];
-  }>({});
+  useChannelChatHandler({ channelId, setNewMessages, setMessages });
+
+  const navigate = useNavigate();
+
+  const handleRefresh = async () => {
+    setEditChatId(null);
+    setReplyChatItem(null);
+    refetch();
+    navigate(-1);
+  };
+
   useEffect(() => {
-    if (data) {
-      setChattings(
-        preprocess(data.pages.flatMap((page) => page.messages) || []),
-      );
+    if (replyChatRef.current) {
+      replyChatRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
     }
-  }, [data]);
-
-  const totalMessageCount = Object.values(chattings).reduce(
-    (count, group) => count + group.length,
-    0,
-  );
-
-  const containerRef = useRef<HTMLDivElement>(null);
+  }, [replyChatId]);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-    const container = containerRef.current;
-
-    container.scrollTop = container.scrollHeight;
-  }, [chattings]);
-
-  useEffect(() => {
-    const onMessage = (message: ChatEventRes) => {
-      if (
-        message.eventType === 'NEW_MESSAGE' &&
-        'channelId' in message.payload
-      ) {
-        const newMessage: ChannelMessage = {
-          id: message.payload.id,
-          channelId: message.payload.channelId || 0,
-          memberId: message.payload.memberId,
-          content: message.payload.content,
-          createdAt: message.payload.createdAt,
-        };
-
-        setChattings((prevChattings) => {
-          const dateKey = newMessage.createdAt.slice(0, 11);
-          const updatedChattings = { ...prevChattings };
-
-          if (!updatedChattings[dateKey]) {
-            updatedChattings[dateKey] = [];
-          }
-
-          if (
-            !updatedChattings[dateKey].some((msg) => msg.id === newMessage.id)
-          ) {
-            updatedChattings[dateKey].push(newMessage);
-          }
-
-          return updatedChattings;
-        });
-      }
-    };
-    connectHandler(onMessage, `/topic/channel/${channelId}`);
-    return () => {
-      disconnectHandler();
-    };
-  }, [channelId]);
-
-  useEffect(() => {
+    if (!isInitial) return;
+    if (!data) return;
+    setMessages(data);
+    setIsInitial(false);
     setTimeout(() => {
-      setMounted(true);
-    }, 1000);
-  }, []);
+      if (chatRef.current) {
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      }
+    }, 0);
+  }, [isInitial, data]);
 
-  if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    console.log('inview', inView);
+    console.log('next', hasNextPage);
+    if (!inView) return;
+    if (!hasNextPage) return;
+
+    const prevHeight = chatRef.current?.scrollHeight ?? 0;
+    fetchNextPage().then(() => {
+      if (!data) return;
+      setMessages(data);
+
+      setTimeout(() => {
+        if (chatRef.current) {
+          chatRef.current.scrollTop = chatRef.current.scrollHeight - prevHeight;
+        }
+      }, 0);
+    });
+  }, [inView, hasNextPage]);
+
+  console.log('allMessages', allMessages);
+
+  const prevMessageCount = useRef(newMessages.length);
+
+  useEffect(() => {
+    if (!chatRef.current) return;
+
+    const isNewMessageAdded = newMessages.length > prevMessageCount.current;
+    prevMessageCount.current = newMessages.length;
+
+    if (isNewMessageAdded) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [newMessages]);
+
+  if (isLoading) return <Spinner />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <>
-      <Header text={channelName ?? ''} headerType='back' />
-      <Main ref={containerRef}>
-        {totalMessageCount > 8 && <div ref={ref} style={{ height: '20px' }} />}
-        {Object.entries(chattings)
-          .sort((a, b) => (a[0] < b[0] ? 1 : -1))
-          .map((date) => (
-            <>
-              {date[1]
-                .sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
-                .map((it) => (
-                  <ChannelChatItem
-                    key={it.id}
-                    chatItem={it}
-                    createdAt={it.createdAt.split('T')[1]}
-                    memberId={it.memberId}
-                  />
-                ))}
-            </>
-          ))}
+      <Header
+        text={channelName ?? ''}
+        headerType='back'
+        onClick={handleRefresh}
+      />
+      <Main ref={chatRef}>
+        <Container>
+          {allMessages.map((msg, idx) => {
+            const prevMessage = allMessages[idx + 1];
+            const { date: prevDate } = prevMessage
+              ? formatCreatedAt(prevMessage.createdAt)
+              : { date: null };
+            const { date: currentDate, time: currentTime } = formatCreatedAt(
+              msg.createdAt,
+            );
+            const showDateLine = hasNextPage ? false : prevDate !== currentDate;
+
+            return (
+              <React.Fragment key={msg.id}>
+                <ChatItem
+                  ref={msg.id === replyChatId ? replyChatRef : null}
+                  key={msg.id}
+                  chatItem={msg}
+                  createdAt={currentTime}
+                />
+                {showDateLine && <DateLine date={currentDate} />}
+              </React.Fragment>
+            );
+          })}
+          <div ref={targetRef} />
+        </Container>
       </Main>
-      <ChannelChatBar channelName={channelName ?? ''} channelId={channelId} />
+      <ChannelChatBar nickname={channelName ?? ''} />
     </>
   );
 };
@@ -186,16 +178,23 @@ const ChannelPage = () => {
 export default ChannelPage;
 
 const Main = styled.main`
+  display: flex;
   position: relative;
   flex-direction: column;
+
   width: 100%;
-  height: calc(100% - 70px);
+  height: 100%;
 
-  overflow: auto;
-
-  // scroll
+  overflow-y: auto;
+  padding-bottom: 4.5625rem;
 
   &::-webkit-scrollbar {
     width: 10px;
   }
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+  margin-top: auto;
 `;

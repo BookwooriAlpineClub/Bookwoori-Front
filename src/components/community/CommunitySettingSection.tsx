@@ -23,7 +23,7 @@ const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
   const { mutate: transferAuthority } = usePatchServerMemberOwner(serverId);
   const { mutate: deleteCommunity } = useDeleteServer(serverId);
 
-  const { data: memberList } = useGetServerMembers(serverId);
+  const { data: memberList } = useGetServerMembers(serverId, true);
 
   const { isOpen, togglePopover, popoverRef, closePopover } = usePopover();
   const { openModal, closeModal } = useModal(dialogState);
