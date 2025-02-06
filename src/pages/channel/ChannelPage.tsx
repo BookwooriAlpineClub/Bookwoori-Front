@@ -67,6 +67,8 @@ const ChannelPage = () => {
   const chatRef = useRef<HTMLDivElement>(null);
   const replyChatRef = useRef<HTMLDivElement | null>(null);
 
+  useChannelChatHandler({ channelId, setNewMessages, setMessages });
+
   const navigate = useNavigate();
 
   const handleRefresh = async () => {
@@ -75,6 +77,15 @@ const ChannelPage = () => {
     refetch();
     navigate(-1);
   };
+
+  useEffect(() => {
+    if (replyChatRef.current) {
+      replyChatRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [replyChatId]);
 
   useEffect(() => {
     if (!isInitial) return;
@@ -89,6 +100,8 @@ const ChannelPage = () => {
   }, [isInitial, data]);
 
   useEffect(() => {
+    console.log('inview', inView);
+    console.log('next', hasNextPage);
     if (!inView) return;
     if (!hasNextPage) return;
 
@@ -105,6 +118,8 @@ const ChannelPage = () => {
     });
   }, [inView, hasNextPage]);
 
+  console.log('allMessages', allMessages);
+
   const prevMessageCount = useRef(newMessages.length);
 
   useEffect(() => {
@@ -117,8 +132,6 @@ const ChannelPage = () => {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [newMessages]);
-
-  useChannelChatHandler({ channelId, setNewMessages, setMessages });
 
   if (isLoading) return <Spinner />;
   if (error) return <div>Error: {error.message}</div>;
@@ -134,13 +147,13 @@ const ChannelPage = () => {
         <Container>
           {allMessages.map((msg, idx) => {
             const prevMessage = allMessages[idx + 1];
-            const { date: prevData } = prevMessage
+            const { date: prevDate } = prevMessage
               ? formatCreatedAt(prevMessage.createdAt)
               : { date: null };
             const { date: currentDate, time: currentTime } = formatCreatedAt(
               msg.createdAt,
             );
-            const showDateLine = hasNextPage ? false : prevData !== currentDate;
+            const showDateLine = hasNextPage ? false : prevDate !== currentDate;
 
             return (
               <React.Fragment key={msg.id}>

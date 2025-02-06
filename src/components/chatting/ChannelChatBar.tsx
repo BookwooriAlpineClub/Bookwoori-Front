@@ -78,7 +78,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
     };
 
     try {
-      await sendHandler(message, 'pub/channel/send');
+      await sendHandler(message, '/pub/channel/send');
       setChat('');
       console.log(message);
     } catch (error) {

@@ -119,7 +119,7 @@ const useChatHandler = ({
           content: message.payload.content,
           createdAt: message.payload.createdAt,
         };
-
+        console.log(newMessage);
         setNewMessages((prev) => [newMessage, ...prev]);
       }
     },
@@ -129,7 +129,7 @@ const useChatHandler = ({
   useEffect(() => {
     // WebSocket 연결
     connectHandler(onMessage, `/topic/channel/${channelId}`);
-
+    console.log('connectHandler', channelId);
     return () => {
       // 컴포넌트 언마운트 시 WebSocket 연결 해제
       disconnectHandler();
