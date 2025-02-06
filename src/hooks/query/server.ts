@@ -40,6 +40,7 @@ export const useGetServerOne = (serverId: number) => {
   return useQuery({
     queryKey: ['getServerOne', serverId],
     queryFn: () => getServerOne(serverId),
+    enabled: serverId !== -1,
   });
 };
 
@@ -85,6 +86,7 @@ export const useGetServerMembers = (serverId: number) => {
     queryKey: ['getServerMembers', serverId],
     queryFn: () => getServerMembers(serverId),
     select: (rawData) => rawData.members,
+    enabled: serverId !== -1,
   });
 };
 
