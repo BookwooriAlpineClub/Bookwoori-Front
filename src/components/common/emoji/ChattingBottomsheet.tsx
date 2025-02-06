@@ -57,7 +57,7 @@ const ChattingBottomsheet = ({
 
   const handleEmojiClick = (key: EmojiKey) => {
     const emojiMapping: Record<EmojiKey, string> = {
-      GOOD: 'thumps_up',
+      GOOD: 'thumbs_up',
       HEART: 'heart_hands',
       SMILE: 'smiling_face',
       CRY: 'crying_face',
