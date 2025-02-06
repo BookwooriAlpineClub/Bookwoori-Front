@@ -73,7 +73,7 @@ const CreateNewCommunityPage = () => {
               previewImg={
                 communityImage ? URL.createObjectURL(communityImage) : ''
               }
-              // onFileChange={handleFileUpload}
+              onFileChange={handleFileUpload}
             />
           </Fieldset>
           <Fieldset title='공동체 소개'>
