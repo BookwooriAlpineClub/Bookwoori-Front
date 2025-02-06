@@ -10,6 +10,7 @@ import { ReactComponent as Done } from '@src/assets/icons/done.svg';
 
 interface Props extends Omit<BookType, 'isbn13' | 'description'> {
   record: RecordType;
+  openBottomsheet: () => void;
 }
 
 const BookDetail = ({
@@ -20,17 +21,16 @@ const BookDetail = ({
   pubDate,
   itemPage,
   record,
+  openBottomsheet,
 }: Props) => {
-  const handleTagClick = () => {};
-
   const TagConfigs: Record<RecordType['status'], React.ReactElement> = {
-    UNREAD: <Tag color='blue' Icon={HiOutlinePlus} onClick={handleTagClick} />,
+    UNREAD: <Tag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />,
     WISH: (
       <Tag
         color='blue'
         Icon={MdBook}
         text='읽고 싶어요'
-        onClick={handleTagClick}
+        onClick={openBottomsheet}
       />
     ),
     READING: (
@@ -38,14 +38,19 @@ const BookDetail = ({
         color='blue'
         Icon={MdAutoStories}
         text='읽고 있어요'
-        onClick={handleTagClick}
+        onClick={openBottomsheet}
       >
         <Blue900Span>{record.startDate}</Blue900Span>
         <Blue900Span>{`${record.currentPage}쪽/${itemPage}쪽`}</Blue900Span>
       </Tag>
     ),
     FINISHED: (
-      <Tag color='blue' Icon={Done} text='다 읽었어요' onClick={handleTagClick}>
+      <Tag
+        color='blue'
+        Icon={Done}
+        text='다 읽었어요'
+        onClick={openBottomsheet}
+      >
         <Blue900Span>{`${record.startDate}-${record.endDate}`}</Blue900Span>
       </Tag>
     ),
@@ -67,7 +72,7 @@ const BookDetail = ({
         {record ? (
           TagConfigs[record.status]
         ) : (
-          <Tag color='blue' Icon={HiOutlinePlus} />
+          <Tag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />
         )}
       </InfoWrapper>
     </Container>

@@ -5,9 +5,8 @@ import StarReview from '@src/components/library/StarReview';
 import { ReactComponent as HiOutlinePencil } from '@src/assets/icons/hi_outline_pencil.svg';
 import { ReactComponent as FiTrash2 } from '@src/assets/icons/fi_trash_2.svg';
 
-interface Props extends Omit<Review, 'reviewId'> {
-  editFunc: () => void;
-  deleteFunc: () => void;
+interface Props extends Review {
+  openBottomsheet: () => void;
 }
 
 const ReviewDetail = ({
@@ -15,8 +14,7 @@ const ReviewDetail = ({
   content,
   createdAt,
   modifiedAt,
-  editFunc,
-  deleteFunc,
+  openBottomsheet,
 }: Props) => {
   return (
     <Section>
@@ -24,10 +22,10 @@ const ReviewDetail = ({
         <TopWrapper>
           <StarReview starReview={star} />
           <ButtonWrapper>
-            <button type='button' onClick={editFunc}>
+            <button type='button' onClick={openBottomsheet}>
               <HiOutlinePencil />
             </button>
-            <button type='button' onClick={deleteFunc}>
+            <button type='button' onClick={openBottomsheet}>
               <FiTrash2 />
             </button>
           </ButtonWrapper>
