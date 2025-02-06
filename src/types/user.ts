@@ -7,7 +7,7 @@ export interface User {
   backgroundImg: string | null;
   level: number;
   mountain: string;
-  height: number;
+  totalHeight: number;
   totalPage: number;
 }
 

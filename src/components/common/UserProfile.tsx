@@ -18,7 +18,7 @@ const UserProfile = ({ memberId }: { memberId: number | 'me' }) => {
         </Mountain>
         <Box>
           <Wrapper>
-            <NicknameBlue>{profileData?.height ?? 0}</NicknameBlue>
+            <NicknameBlue>{profileData?.totalHeight ?? 0}</NicknameBlue>
             <Caption>지나온 길(m)</Caption>
           </Wrapper>
           <Line />
