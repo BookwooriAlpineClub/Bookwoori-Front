@@ -1,4 +1,4 @@
-import type { GetReviewListRes } from '@src/types/apis/record';
+import type { GetReviewListRes } from '@src/types/apis/review';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
@@ -15,7 +15,7 @@ const ReviewListItem = ({
   cover,
   publisher,
   pubDate,
-  records,
+  reviewList,
 }: Props) => {
   const navigate = useEncodedNavigate();
   const handleItemClick = () => {
@@ -31,20 +31,18 @@ const ReviewListItem = ({
         publisher={publisher}
         pubDate={pubDate}
       />
-      {records.map(
-        ({ recordId, startDate, endDate, starReview, contentReview }) => (
-          <>
-            <Hr />
-            <Li key={recordId}>
-              <ReviewInfoWrapper>
-                <Period>{`${startDate} - ${endDate}`}</Period>
-                <StarReview starReview={starReview} />
-              </ReviewInfoWrapper>
-              <ReviewContent $line={3}>{contentReview}</ReviewContent>
-            </Li>
-          </>
-        ),
-      )}
+      {reviewList.map(({ reviewId, star, content, createdAt, modifiedAt }) => (
+        <>
+          <Hr />
+          <Li key={reviewId}>
+            <ReviewInfoWrapper>
+              <StarReview starReview={star} />
+              <Period>{`${createdAt} 작성 (${modifiedAt} 수정)`}</Period>
+            </ReviewInfoWrapper>
+            <ReviewContent $line={3}>{content}</ReviewContent>
+          </Li>
+        </>
+      ))}
     </Container>
   );
 };

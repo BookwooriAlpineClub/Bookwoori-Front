@@ -1,4 +1,4 @@
-import { useGetReviewList } from '@src/hooks/query/record';
+import { useGetReviewList } from '@src/hooks/query/review';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import ReviewListItem from '@src/components/library/ReviewListItem';
