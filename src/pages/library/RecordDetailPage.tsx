@@ -1,31 +1,41 @@
 import Book from '@src/types/book';
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ROUTE_PATH } from '@src/constants/routePath';
+import { useParams } from 'react-router-dom';
+import { useGetBookDetail } from '@src/hooks/query/book';
 import {
   useGetRecordDetail,
   usePostRecord,
   usePatchRecord,
   useDeleteRecord,
 } from '@src/hooks/query/record';
-import { useGetBookDetail } from '@src/hooks/query/book';
+import {
+  usePostReview,
+  usePatchReview,
+  useDeleteReview,
+} from '@src/hooks/query/review';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import BookDetail from '@src/components/library/BookDetail';
+import ReviewDetail from '@src/components/library/ReviewDetail';
 import PageField from '@src/components/library/PageField';
 import ReviewField from '@src/components/library/ReviewField';
+import { ReactComponent as HiOutlinePlus } from '@src/assets/icons/hi_outline_plus.svg';
 
 const RecordDetailPage = () => {
   const { bookId: isbn13 = '' } = useParams<{ bookId: string }>();
   const {
     data: { title, author, cover, publisher, pubDate, description, itemPage },
   } = useGetBookDetail(isbn13);
+  const {
+    data: { record, reviewList },
+  } = useGetRecordDetail(isbn13);
   const [isTop, setIsTop] = useState<boolean>(true);
 
-  const navigate = useNavigate();
   const handleScroll = () => {
     setIsTop(window.scrollY < 70);
   };
+  const handleReviewEdit = () => {};
+  const handleReviewDelete = () => {};
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -43,7 +53,24 @@ const RecordDetailPage = () => {
           publisher={publisher}
           pubDate={pubDate}
           itemPage={itemPage}
+          record={record}
         />
+        <ReviewCreateButton>
+          <HiOutlinePlus />
+        </ReviewCreateButton>
+        {reviewList.map(
+          ({ reviewId, star, content, createdAt, modifiedAt }) => (
+            <ReviewDetail
+              key={reviewId}
+              star={star}
+              content={content}
+              createdAt={createdAt}
+              modifiedAt={modifiedAt}
+              editFunc={handleReviewEdit}
+              deleteFunc={handleReviewDelete}
+            />
+          ),
+        )}
         <Description>{description}</Description>
       </Main>
     </>
@@ -86,6 +113,15 @@ const Main = styled.main<{ $cover: Book['cover'] }>`
 const SHeader = styled(Header)<{ $isTop: boolean }>`
   background-color: ${({ $isTop, theme }) =>
     $isTop ? 'transparent' : theme.colors.neutral0};
+`;
+const ReviewCreateButton = styled.button`
+  display: flex;
+  align-items: center;
+
+  padding: ${({ theme }) => theme.padding[16]};
+
+  border-radius: ${({ theme }) => theme.rounded[12]};
+  background-color: ${({ theme }) => theme.colors.neutral0};
 `;
 const Description = styled.p`
   ${({ theme }) => theme.fonts.body}
