@@ -55,17 +55,11 @@ export const CommunityInfoSettingPage = React.lazy(
 );
 
 /* library */
-export const BookDetailPage = React.lazy(
-  () => import('@src/pages/library/BookDetailPage'),
-);
 export const LibraryHomePage = React.lazy(
   () => import('@src/pages/library/LibraryHomePage'),
 );
 export const RecordDetailPage = React.lazy(
   () => import('@src/pages/library/RecordDetailPage'),
-);
-export const RecordEditPage = React.lazy(
-  () => import('@src/pages/library/RecordEditPage'),
 );
 export const RecordListPage = React.lazy(
   () => import('@src/pages/library/RecordListPage'),
