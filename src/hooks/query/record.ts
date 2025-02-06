@@ -2,7 +2,6 @@ import type { AxiosError } from 'axios';
 import type Record from '@src/types/record';
 import type {
   GetRecordListRes,
-  GetReviewListRes,
   GetRecordDetailRes,
   PostRecordReq,
   PatchRecordReq,
@@ -10,7 +9,6 @@ import type {
 import { useQuery, useMutation } from '@tanstack/react-query';
 import {
   getRecordList,
-  getReviewList,
   getRecordDetail,
   postRecord,
   patchRecord,
@@ -21,13 +19,6 @@ const useGetRecordList = (status: Record['status']) => {
   return useQuery<GetRecordListRes, AxiosError>({
     queryKey: ['getRecordList', status],
     queryFn: () => getRecordList(status),
-    initialData: [],
-  });
-};
-const useGetReviewList = () => {
-  return useQuery<GetReviewListRes, AxiosError>({
-    queryKey: ['getReviewList'],
-    queryFn: () => getReviewList(),
     initialData: [],
   });
 };
@@ -44,7 +35,8 @@ const usePostRecord = () => {
 };
 const usePatchRecord = (recordId: Record['recordId']) => {
   return useMutation({
-    mutationFn: ({ body }: { body: PatchRecordReq }) => patchRecord(recordId, body),
+    mutationFn: ({ body }: { body: PatchRecordReq }) =>
+      patchRecord(recordId, body),
   });
 };
 const useDeleteRecord = (recordId: Record['recordId']) => {
@@ -55,7 +47,6 @@ const useDeleteRecord = (recordId: Record['recordId']) => {
 
 export {
   useGetRecordList,
-  useGetReviewList,
   useGetRecordDetail,
   usePostRecord,
   usePatchRecord,
