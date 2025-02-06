@@ -25,12 +25,12 @@ const LibraryHomePage = () => {
 
   const season = 'spring';
   const exp = [
-    { text: '지나온 길(m)', value: profileData?.height },
+    { text: '지나온 길(m)', value: profileData?.totalHeight },
     { text: '읽어낸 책(p)', value: profileData?.totalPage },
   ];
   const mountainData = {
     mountainHeight: 300,
-    height: profileData?.height,
+    height: profileData?.totalHeight,
     profileImg: profileData?.profileImg,
     profileName: profileData?.nickname,
   };

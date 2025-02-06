@@ -53,14 +53,14 @@ const RecruitClimbingItem = ({
           <GroupButton onClick={togglePopover}>
             <Group /> {item.memberCount}
           </GroupButton>
-          {isOpen && (
-            <div ref={popoverRef}>
-              <Popover>
-                <ParticipantList climbingId={item.climbingId} />
-              </Popover>
-            </div>
-          )}
         </Wrapper>
+        {isOpen && (
+          <PopoverWrapper ref={popoverRef}>
+            <Popover>
+              <ParticipantList climbingId={item.climbingId} />
+            </Popover>
+          </PopoverWrapper>
+        )}
       </Container>
       <Content>
         <Title>{item.name}</Title>
@@ -76,8 +76,8 @@ const RecruitClimbingItem = ({
           <Body>{item.description}</Body>
         </ContentWrapper>
       </Content>
-      {item.isOWner ? (
-        <SButton $color={item.isOWner} onClick={handleClickEdit}>
+      {item.isOwner ? (
+        <SButton $color={item.isOwner} onClick={handleClickEdit}>
           <Edit width={12} height={12} />
           편집하기
         </SButton>
@@ -105,6 +105,7 @@ const Layout = styled.div`
 `;
 const Container = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: space-between;
 
@@ -117,6 +118,10 @@ const Wrapper = styled.div`
   gap: ${({ theme }) => theme.gap[6]};
 
   color: ${({ theme }) => theme.colors.blue500};
+`;
+const PopoverWrapper = styled.div`
+  position: absolute;
+  right: 12.5rem;
 `;
 const Caption = styled.span`
   width: 100%;

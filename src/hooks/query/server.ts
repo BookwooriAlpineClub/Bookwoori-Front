@@ -41,6 +41,7 @@ export const useGetServerOne = (serverId: number) => {
   return useQuery({
     queryKey: ['getServerOne', serverId],
     queryFn: () => getServerOne(serverId),
+    enabled: serverId !== -1,
   });
 };
 

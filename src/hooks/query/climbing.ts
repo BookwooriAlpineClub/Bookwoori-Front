@@ -62,6 +62,7 @@ export const useGetClimbingRecruitList = () => {
         { 'Content-Type': 'application/json' },
         '/ready',
       ),
+    enabled: serverId !== -1,
   });
 
   return { data: data?.readyClimbingList };
