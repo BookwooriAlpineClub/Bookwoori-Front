@@ -53,14 +53,14 @@ const RecruitClimbingItem = ({
           <GroupButton onClick={togglePopover}>
             <Group /> {item.memberCount}
           </GroupButton>
-          {isOpen && (
-            <div ref={popoverRef}>
-              <Popover>
-                <ParticipantList climbingId={item.climbingId} />
-              </Popover>
-            </div>
-          )}
         </Wrapper>
+        {isOpen && (
+          <PopoverWrapper ref={popoverRef}>
+            <Popover>
+              <ParticipantList climbingId={item.climbingId} />
+            </Popover>
+          </PopoverWrapper>
+        )}
       </Container>
       <Content>
         <Title>{item.name}</Title>
@@ -105,6 +105,7 @@ const Layout = styled.div`
 `;
 const Container = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: space-between;
 
@@ -117,6 +118,10 @@ const Wrapper = styled.div`
   gap: ${({ theme }) => theme.gap[6]};
 
   color: ${({ theme }) => theme.colors.blue500};
+`;
+const PopoverWrapper = styled.div`
+  position: absolute;
+  right: 12.5rem;
 `;
 const Caption = styled.span`
   width: 100%;
