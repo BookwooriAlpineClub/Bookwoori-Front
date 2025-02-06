@@ -15,26 +15,18 @@ const RecordListItem = ({
   author,
   cover,
   itemPage,
-  records,
+  record,
+  ReviewStarAve,
 }: Props) => {
+  console.log(itemPage, record, ReviewStarAve);
+
   const navigate = useEncodedNavigate();
   const tagConfig: { [key: string]: React.ReactElement | null } = {
     WISH: null,
-    READING: (
-      <STag
-        color='blue'
-        Icon={IcnBook}
-        text={`${Math.round(((records[0].currentPage as number) / (itemPage as number)) * 100)}%`}
-      />
-    ),
-    FINISHED: (
-      <STag
-        color='blue'
-        Icon={IcnStar}
-        text={records[0].starReview as number}
-      />
-    ), // 추후 평균값으로 수정
+    READING: <STag color='blue' Icon={IcnBook} text='' />,
+    FINISHED: <STag color='blue' Icon={IcnStar} text='' />, // 추후 평균값으로 수정
   };
+  console.log(tagConfig);
 
   const handleItemClick = () => {
     navigate(ROUTE_PATH.libraryRecord, Number(isbn13));
@@ -45,7 +37,7 @@ const RecordListItem = ({
       <Img src={cover} alt='책 표지' />
       <Title $line={1}>{title}</Title>
       <Author $line={1}>{author}</Author>
-      {tagConfig[records[0].status]}
+      {/* {tagConfig[records[0].status]} */}
     </Container>
   );
 };

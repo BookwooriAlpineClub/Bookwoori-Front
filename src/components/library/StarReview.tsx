@@ -1,9 +1,9 @@
-import type Record from '@src/types/record';
+import type Review from '@src/types/review';
 import styled from 'styled-components';
 import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 
 interface Props {
-  starReview: NonNullable<Record['starReview']>;
+  starReview: NonNullable<Review['star']>;
 }
 
 const StarReview = ({ starReview }: Props) => {
