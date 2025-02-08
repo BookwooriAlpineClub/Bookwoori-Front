@@ -45,7 +45,7 @@ const RecordDetailPage = () => {
           openBottomsheet={openRecordBottomsheet}
         />
         <ReviewCreateButton>
-          <HiOutlinePlus />
+          <HiOutlinePlus width={20} height={20} />
         </ReviewCreateButton>
         {reviewList.map(
           ({ reviewId, star, content, createdAt, modifiedAt }) => (
@@ -105,12 +105,14 @@ const SHeader = styled(Header)<{ $isTop: boolean }>`
 `;
 const ReviewCreateButton = styled.button`
   display: flex;
-  align-items: center;
+  justify-content: center;
 
   padding: ${({ theme }) => theme.padding[16]};
 
   border-radius: ${({ theme }) => theme.rounded[12]};
   background-color: ${({ theme }) => theme.colors.neutral0};
+
+  color: ${({ theme }) => theme.colors.blue500};
 `;
 const Description = styled.p`
   ${({ theme }) => theme.fonts.body}
