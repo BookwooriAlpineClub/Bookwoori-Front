@@ -77,9 +77,16 @@ const Main = styled.main<{ $cover: Book['cover'] }>`
     content: '';
 
     position: absolute;
+    top: 0;
+    left: 0;
     z-index: -2;
 
     opacity: 60%;
+
+    width: 23.4375rem;
+    height: 7.8125rem;
+    flex-shrink: 0;
+
     background: url(${({ $cover }) => $cover}) center / cover no-repeat;
     filter: blur(12px);
   }
