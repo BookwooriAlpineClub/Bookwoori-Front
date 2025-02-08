@@ -32,7 +32,7 @@ const Wrapper = styled.mark<{ $color: TagColor }>`
   height: fit-content;
   padding: ${({ theme }) => `${theme.padding[4]} ${theme.padding[8]}`};
 
-  border-radius: 50%;
+  border-radius: 6.1875rem;
 
   ${({ theme }) => theme.fonts.caption};
 
