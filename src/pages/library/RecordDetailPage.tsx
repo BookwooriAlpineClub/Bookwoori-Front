@@ -32,7 +32,7 @@ const RecordDetailPage = () => {
 
   return (
     <>
-      <SHeader text='' headerType='back' $isTop={isTop} />
+      <SHeader text={isTop ? '' : title} headerType='back' $isTop={isTop} />
       <Main $cover={cover}>
         <BookDetail
           title={title}
