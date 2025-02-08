@@ -24,9 +24,11 @@ const BookDetail = ({
   openBottomsheet,
 }: Props) => {
   const TagConfigs: Record<RecordType['status'], React.ReactElement> = {
-    UNREAD: <Tag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />,
+    UNREAD: (
+      <STag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />
+    ),
     WISH: (
-      <Tag
+      <STag
         color='blue'
         Icon={MdBook}
         text='읽고 싶어요'
@@ -34,7 +36,7 @@ const BookDetail = ({
       />
     ),
     READING: (
-      <Tag
+      <STag
         color='blue'
         Icon={MdAutoStories}
         text='읽고 있어요'
@@ -42,17 +44,17 @@ const BookDetail = ({
       >
         <Blue900Span>{record.startDate}</Blue900Span>
         <Blue900Span>{`${record.currentPage}쪽/${itemPage}쪽`}</Blue900Span>
-      </Tag>
+      </STag>
     ),
     FINISHED: (
-      <Tag
+      <STag
         color='blue'
         Icon={Done}
         text='다 읽었어요'
         onClick={openBottomsheet}
       >
         <Blue900Span>{`${record.startDate}-${record.endDate}`}</Blue900Span>
-      </Tag>
+      </STag>
     ),
   };
 
@@ -72,7 +74,7 @@ const BookDetail = ({
         {record ? (
           TagConfigs[record.status]
         ) : (
-          <Tag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />
+          <STag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />
         )}
       </InfoWrapper>
     </Container>
@@ -116,4 +118,9 @@ const Caption = styled.span`
 `;
 const Blue900Span = styled.span`
   color: ${({ theme }) => theme.colors.blue900};
+`;
+const STag = styled(Tag)`
+  justify-content: center;
+
+  width: 100%;
 `;
