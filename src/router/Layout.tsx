@@ -9,11 +9,12 @@ import Dialog from '@src/components/common/modal/Dialog';
 import GlobalDrawer from '@src/components/common/modal/GlobalDrawer';
 import CommunityDrawer from '@src/components/common/modal/CommunityDrawer';
 import {
+  PaddingLayout as PaddingLayoutStyle,
+  BottomButtonLayout as BottomButtonLayoutStyle,
   NoDataTextLayout as NoDataTextLayoutStyle,
-  DefaultLayout as DefaultLayoutStyle,
 } from '@src/styles/Layout';
 
-export const RootLayout = () => (
+const RootLayout = () => (
   <QueryClientBoundary>
     <RootErrorBoundary>
       <ErrorCatcher>
@@ -28,15 +29,20 @@ export const RootLayout = () => (
     </RootErrorBoundary>
   </QueryClientBoundary>
 );
-
-export const NoDataTextLayout = () => (
+const PaddingLayout = () => (
+  <PaddingLayoutStyle>
+    <Outlet />
+  </PaddingLayoutStyle>
+);
+const BottomButtonLayout = () => (
+  <BottomButtonLayoutStyle>
+    <Outlet />
+  </BottomButtonLayoutStyle>
+);
+const NoDataTextLayout = () => (
   <NoDataTextLayoutStyle>
     <Outlet />
   </NoDataTextLayoutStyle>
 );
 
-export const DefaultLayout = () => (
-  <DefaultLayoutStyle>
-    <Outlet />
-  </DefaultLayoutStyle>
-);
+export { RootLayout, PaddingLayout, BottomButtonLayout, NoDataTextLayout };
