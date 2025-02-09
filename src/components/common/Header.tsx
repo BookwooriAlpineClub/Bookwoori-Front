@@ -69,6 +69,7 @@ const Label = styled.label`
   ${({ theme }) => theme.fonts.title}
   color: ${({ theme }) => theme.colors.neutral950};
   text-align: center;
+  word-break: keep-all;
 `;
 
 const Button = styled.button`
