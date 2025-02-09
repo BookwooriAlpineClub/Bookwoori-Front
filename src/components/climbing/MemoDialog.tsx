@@ -53,12 +53,12 @@ const MemoDialog = ({ memo, closeDialog, climbingId }: MemoDialogProps) => {
         <SubButton
           label='삭제하기'
           width='39vw'
-          onClick={() => handleClickEdit('')}
+          onClick={() => value && handleClickEdit('')}
         />
         <SubButton
           label='수정하기'
           width='39vw'
-          onClick={() => handleClickEdit(value)}
+          onClick={() => value && handleClickEdit(value)}
         />
       </ButtonContainer>
     </DialogLayout>
