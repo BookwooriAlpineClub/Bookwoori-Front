@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { ClimbingMember } from '@src/types/climbing';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useGetClimbing } from '@src/hooks/query/climbing';
+import { dialogState } from '@src/states/atoms';
 import {
   ClimbingReadingStatus,
   ClimbingStatus,
@@ -11,6 +12,8 @@ import { ReactComponent as Flag } from '@src/assets/icons/flag.svg';
 import Memo from '@src/components/climbing/Memo';
 import ProgressBar from '@src/components/climbing/ProgressBar';
 import UserAvatar from '@src/components/common/UserAvatar';
+import useModal from '@src/hooks/useModal';
+import ProfileModal from '@src/components/community/ProfileModal';
 
 interface Props {
   item: ClimbingMember;
@@ -23,6 +26,12 @@ const ClimbingRope = ({ item }: Props) => {
   const [height, setHeight] = useState<number>(0);
   const [containerHeight, setContainerHeight] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { openModal: openDialog } = useModal(dialogState);
+
+  const openProfileModal = (memberId: number) => {
+    const ProfileModalComponent = <ProfileModal memberId={memberId} />;
+    openDialog(ProfileModalComponent);
+  };
 
   useEffect(() => {
     if (!climbingInfo) return;
@@ -63,7 +72,7 @@ const ClimbingRope = ({ item }: Props) => {
           isChanged={containerHeight}
           status={item.status}
         />
-        <Profile>
+        <Profile onClick={() => openProfileModal(item.memberId)}>
           <UserAvatar
             profileImg={item.profileImg ?? ''}
             nickname={item.nickname}
@@ -128,11 +137,13 @@ const Line = styled.div`
   height: 0.0625rem;
   background-color: ${({ theme }) => theme.colors.neutral200};
 `;
-const Profile = styled.div`
+const Profile = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: ${({ theme }) => theme.gap[6]};
+
+  ${({ theme }) => theme.fonts.body};
 `;
 const Nickname = styled.span`
   text-align: center;
