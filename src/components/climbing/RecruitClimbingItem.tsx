@@ -164,6 +164,8 @@ const Body = styled.label`
 
   ${({ theme }) => theme.fonts.body};
   color: ${({ theme }) => theme.colors.neutral400};
+
+  word-break: break-all;
 `;
 const SButton = styled(Button)<{ $color: boolean }>`
   gap: ${({ theme }) => theme.gap[4]};
