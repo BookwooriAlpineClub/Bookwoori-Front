@@ -66,6 +66,7 @@ export const usePatchCategoryLocation = () => {
         queryKey: ['getServerChannels', serverId],
       });
     },
+    retry: 0,
   });
 
   return { editLocation };

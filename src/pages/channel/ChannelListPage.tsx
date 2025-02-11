@@ -28,7 +28,7 @@ const ChannelListPage = () => {
   const { climbingList } = useGetServerClimbing();
   const { editLocation } = usePatchCategoryLocation();
 
-  const { list, handleDraggable, beforeIdx, categoryId } =
+  const { list, setList, handleDraggable, beforeIdx, categoryId } =
     useDraggable(channels);
   const ref = useRef(channels);
 
@@ -44,6 +44,7 @@ const ChannelListPage = () => {
         {
           onSuccess: () => {
             if (list) ref.current = list;
+            setList(undefined);
           },
         },
       );
