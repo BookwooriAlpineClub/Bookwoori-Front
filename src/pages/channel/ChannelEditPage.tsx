@@ -31,7 +31,8 @@ const findItemByKey = <T, K extends keyof T>(
 };
 
 const ChannelEditPage = () => {
-  const { openModal: openDialog, closeModal: closeDialog } = useModal(dialogState);
+  const { openModal: openDialog, closeModal: closeDialog } =
+    useModal(dialogState);
   const addToast = useToast();
 
   const { id: serverId } = useLoaderData<{ id: string }>();
@@ -101,11 +102,11 @@ const ChannelEditPage = () => {
               <Dropdown
                 name='모임 분류'
                 placeholder='모임 분류를 선택해주세요.'
-                options={categoryList.map((it) =>
-                  it.name === 'DEFAULT'
-                    ? { id: Number(it.categoryId), text: '기본' }
-                    : { id: Number(it.categoryId), text: it.name },
-                )}
+                options={categoryList
+                  .filter((it) => it.name !== 'DEFAULT')
+                  .map((it) => {
+                    return { id: Number(it.categoryId), text: it.name };
+                  })}
                 value={category}
                 setValue={setCategory}
                 required
