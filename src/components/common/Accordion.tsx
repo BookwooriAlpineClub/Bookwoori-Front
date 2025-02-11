@@ -77,7 +77,6 @@ const Layout = styled.div`
   border-radius: 0.9375rem;
   background-color: ${({ theme }) => theme.colors.neutral0};
 
-  cursor: pointer;
   touch-action: none;
 `;
 const Container = styled.div`

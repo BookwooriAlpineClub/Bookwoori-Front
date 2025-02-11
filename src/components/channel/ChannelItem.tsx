@@ -44,7 +44,12 @@ const ChannelItem = ({ type, channelId, categoryId, children }: Props) => {
         {children}
       </Wrapper>
       {type !== 'CLIMB' && (
-        <Edit width={20} height={20} onClick={handleClickEdit} />
+        <Edit
+          style={{ cursor: 'pointer' }}
+          width={20}
+          height={20}
+          onClick={handleClickEdit}
+        />
       )}
     </Item>
   );
