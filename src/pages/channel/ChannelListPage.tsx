@@ -8,6 +8,7 @@ import {
   useGetServerChannel,
   useGetServerClimbing,
 } from '@src/hooks/query/channel';
+import { useGetServerOne } from '@src/hooks/query/server';
 import { usePatchCategoryLocation } from '@src/hooks/query/category';
 import { encodeId } from '@src/utils/formatters';
 import SubButton from '@src/components/common/button/SubButton';
@@ -17,7 +18,6 @@ import Carousel from '@src/components/channel/Carousel';
 import ChannelList from '@src/components/channel/ChannelList';
 import { ReactComponent as CategoryAdd } from '@src/assets/icons/bi_book_add.svg';
 import { ReactComponent as ChannelAdd } from '@src/assets/icons/md_outline_playlist_add.svg';
-import { useGetServerOne } from '@src/hooks/query/server';
 
 const ChannelListPage = () => {
   const navigate = useNavigate();
@@ -71,10 +71,10 @@ const ChannelListPage = () => {
           />
         </ButtonContainer>
         <Container>
-          <Accordion key='나의 등반' title={<Label>나의 등반</Label>}>
+          <Accordion key='나의 등반' title={<span>나의 등반</span>}>
             <Carousel type='next' list={climbingList?.myClimbings ?? []} />
           </Accordion>
-          <Accordion key='모집 중인 등반' title={<Label>모집 중인 등반</Label>}>
+          <Accordion key='모집 중인 등반' title={<span>모집 중인 등반</span>}>
             <Carousel type='more' list={climbingList?.readyClimbings ?? []} />
           </Accordion>
           {list?.map((data) => (
@@ -83,9 +83,9 @@ const ChannelListPage = () => {
               key={data.categoryId}
               title={
                 data.name === 'DEFAULT' ? (
-                  <Label>기본</Label>
+                  <span>기본</span>
                 ) : (
-                  <Label>{data.name}</Label>
+                  <span>🗨️ {data.name}</span>
                 )
               }
               {...handleDraggable(data.categoryId)}
@@ -98,12 +98,12 @@ const ChannelListPage = () => {
               )}
             </Accordion>
           ))}
-          <Accordion key='진행 중인 등반' title={<Label>진행 중인 등반</Label>}>
+          <Accordion key='진행 중인 등반' title={<span>진행 중인 등반</span>}>
             {climbingList && climbingList?.runningClimbings.length > 0 && (
               <ChannelList climbs={climbingList?.runningClimbings} />
             )}
           </Accordion>
-          <Accordion key='종료된 등반' title={<Label>종료된 등반</Label>}>
+          <Accordion key='종료된 등반' title={<span>종료된 등반</span>}>
             {climbingList && climbingList?.endClimbingings.length > 0 && (
               <ChannelList climbs={climbingList?.endClimbingings} />
             )}
@@ -135,8 +135,4 @@ const Container = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.gap[12]};
   padding-bottom: ${({ theme }) => theme.padding[16]};
-`;
-
-const Label = styled.label`
-  color: ${({ theme }) => theme.colors.neutral950};
 `;
