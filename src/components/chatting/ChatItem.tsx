@@ -76,6 +76,12 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
         return;
       }
 
+      if (editContent.length > 2000) {
+        addToast('info', '최대 2000자까지 전송가능합니다.');
+        setEditContent(editContent.slice(0, 2000));
+        return;
+      }
+
       try {
         await editHandler(
           { id: chatItem.id, content: editContent },

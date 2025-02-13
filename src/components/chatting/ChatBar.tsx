@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import { replyChatState } from '@src/states/atoms';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { usePostMessageRoom } from '@src/hooks/query/chat';
+import useToast from '@src/hooks/useToast';
 import { sendHandler } from '@src/apis/chat';
 import type { MessageReq, ReplyReq } from '@src/types/apis/chat';
 import { adjustHeight } from '@src/utils/helpers';
@@ -19,6 +20,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
   const [replyChatItem, setReplyChatItem] = useRecoilState(replyChatState);
   const [chat, setChat] = useState<string>('');
   const [paddingHeight, setPaddingHeight] = useState<number | null>(null);
+  const addToast = useToast();
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const replyRef = useRef<HTMLDivElement>(null);
 
@@ -56,7 +58,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      
+
       if (replyChatItem) {
         handleSendReply();
         return;
@@ -68,6 +70,11 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
 
   const handleSendMessage = async () => {
     if (!chat.trim()) return;
+    if (chat.length > 2000) {
+      addToast('info', '최대 2000자까지 전송가능합니다.');
+      setChat(chat.slice(0, 2000));
+      return;
+    }
 
     const message: MessageReq = {
       messageRoomId: roomInfo?.messageRoomId,
@@ -87,6 +94,11 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
   const handleSendReply = async () => {
     if (!chat.trim()) return;
     if (!replyChatItem?.id) return;
+    if (chat.length > 2000) {
+      addToast('info', '최대 2000자까지 전송가능합니다.');
+      setChat(chat.slice(0, 2000));
+      return;
+    }
 
     const message: ReplyReq = {
       parentId: replyChatItem.id,
@@ -203,6 +215,7 @@ const Container = styled.div`
 const Textarea = styled.textarea`
   padding: 0.625rem;
   width: 100%;
+  max-height: 9.375rem;
 
   border-radius: 1.875rem;
 
@@ -210,7 +223,7 @@ const Textarea = styled.textarea`
   background-color: ${({ theme }) => theme.colors.neutral50};
 
   resize: none;
-  overflow-y: hidden;
+  overflow-y: scroll;
 `;
 const Button = styled.button`
   display: flex;
