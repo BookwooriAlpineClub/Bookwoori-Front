@@ -91,6 +91,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
         setEditChatId(null);
       } catch (error) {
         console.error('Failed to edit message:', error);
+        addToast('error', '수정에 실패했습니다. 다시 시도해주세요.');
       }
     };
 
