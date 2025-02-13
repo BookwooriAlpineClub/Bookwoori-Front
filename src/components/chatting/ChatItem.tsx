@@ -210,6 +210,7 @@ const LineWrapper = styled.div`
   margin-bottom: -0.6875rem;
 `;
 const ReplySpan = styled.span`
+  max-width: 25rem;
   padding: ${({ theme }) => `${theme.padding[2]} ${theme.padding[8]}`};
   border-radius: ${({ theme }) => theme.rounded[8]};
 
@@ -220,6 +221,7 @@ const ReplySpan = styled.span`
   font-size: 0.75rem;
   cursor: pointer;
   white-space: pre-wrap;
+  word-break: break-all;
 `;
 const ReplyNickname = styled.span`
   color: ${({ theme }) => theme.colors.neutral950};
@@ -296,13 +298,15 @@ const Text = styled.p`
   line-height: 1.25rem;
   font-weight: 600;
 
+  max-width: 25rem;
   cursor: default;
   white-space: pre-wrap;
+  word-break: break-all;
 `;
 const ReplyMenu = styled.button`
   display: flex;
   position: absolute;
-  top: 15%;
+  top: -0.3125rem;
   right: 0;
 
   transform: translateY(-50%);
