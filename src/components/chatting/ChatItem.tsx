@@ -135,8 +135,11 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
               <ReplyLine width={30} height={20} />
             </LineWrapper>
             <ReplySpan onClick={() => setReplyChatId(chatItem.parentId)}>
-              <ReplyNickname>{other?.nickname}에게 답장</ReplyNickname>
-              {'\n'}
+              {other && (
+                <ReplyNickname>
+                  {other.nickname}에게 답장{'\n'}
+                </ReplyNickname>
+              )}
               {chatItem.parentContent && chatItem.parentContent?.length > 100
                 ? `${chatItem.parentContent?.slice(0, 100)}...`
                 : chatItem.parentContent}

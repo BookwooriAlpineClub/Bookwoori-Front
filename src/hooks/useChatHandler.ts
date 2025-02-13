@@ -82,6 +82,13 @@ const useChatHandler = ({
               : msg,
           ),
         );
+        setNewMessages((prevMessages) =>
+          prevMessages.map((msg) =>
+            msg.parentId === message.payload.id
+              ? { ...msg, parentContent: message.payload.content }
+              : msg,
+          ),
+        );
 
         if (!setMessages) return;
 
@@ -92,17 +99,48 @@ const useChatHandler = ({
               : msg,
           ),
         );
+        setMessages((prevMessages) =>
+          prevMessages.map((msg) =>
+            msg.parentId === message.payload.id
+              ? { ...msg, parentContent: message.payload.content }
+              : msg,
+          ),
+        );
       }
 
       if (message.eventType === 'DELETE') {
         setNewMessages((prevMessages) =>
           prevMessages.filter((msg) => msg.id !== message.payload),
         );
+        setNewMessages((prevMessages) =>
+          prevMessages.map((msg) => {
+            if (msg.parentId === message.payload) {
+              return {
+                ...msg,
+                parentMemberId: -1,
+                parentContent: '삭제된 메시지입니다.',
+              };
+            }
+            return msg;
+          }),
+        );
 
         if (!setMessages) return;
 
         setMessages((prevMessages) =>
           prevMessages.filter((msg) => msg.id !== message.payload),
+        );
+        setMessages((prevMessages) =>
+          prevMessages.map((msg) => {
+            if (msg.parentId === message.payload) {
+              return {
+                ...msg,
+                parentMemberId: -1,
+                parentContent: '삭제된 메시지입니다.',
+              };
+            }
+            return msg;
+          }),
         );
       }
 
