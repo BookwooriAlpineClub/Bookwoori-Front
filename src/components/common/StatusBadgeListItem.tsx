@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import UserAvatar from '@src/components/common/UserAvatar';
 
 type BadgeListItemType = {
   imgUrl: string;
@@ -6,6 +7,7 @@ type BadgeListItemType = {
   time: string;
   message: string;
   isRead: boolean;
+  nickname?: string;
 };
 interface Props extends BadgeListItemType {
   type: 'notice' | 'chatting';
@@ -19,11 +21,12 @@ const StatusBadgeListItem = ({
   time,
   message,
   isRead,
+  nickname,
   onClick,
 }: Props) => {
   return (
     <Layout onClick={onClick}>
-      <Img src={imgUrl} />
+      <UserAvatar size='2.5rem' profileImg={imgUrl} nickname={nickname} />
       <Container>
         <Wrapper>
           <Caption className={type} $isRead={isRead}>
@@ -54,13 +57,6 @@ const Layout = styled.li`
   background-color: ${({ theme }) => theme.colors.neutral0};
 
   cursor: pointer;
-`;
-const Img = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
-
-  background-color: ${({ theme }) => theme.colors.blue100};
-  border-radius: 50%;
 `;
 const Container = styled.div`
   display: flex;
