@@ -62,12 +62,9 @@ const CheckInvitedCommunityPage = () => {
 export default CheckInvitedCommunityPage;
 
 const Main = styled.main`
-  min-height: calc(100% - 4.375rem);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 0 1.25rem;
-  padding-top: 1.875rem;
   background-color: ${({ theme }) => theme.colors.neutral50};
+
+  .scroll-area {
+    gap: ${({ theme }) => theme.gap['16']};
+  }
 `;

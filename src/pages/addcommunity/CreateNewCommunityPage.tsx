@@ -42,7 +42,6 @@ const CreateNewCommunityPage = () => {
     );
   }, [communityName, communityDescription]);
 
-  // eslint-disable-next-line
   const handleFileUpload = (file: File | null) => {
     setCommunityImage(file);
   };
@@ -122,17 +121,12 @@ const CreateNewCommunityPage = () => {
 export default CreateNewCommunityPage;
 
 const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 1.875rem 1.25rem 0;
-  width: 100%;
-  height: calc(100svh - 4.375rem);
   background-color: ${({ theme }) => theme.colors.neutral50};
 
-  fieldset {
-    width: 100%;
+  .scroll-area {
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.gap['6']};
   }
 
   textarea {

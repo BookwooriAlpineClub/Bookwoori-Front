@@ -21,11 +21,9 @@ const EnterInvitationPage = () => {
   const [invitationCode, setInvitationCode] = useState<string>('');
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const navigate = useNavigate();
 
   const handleFindCommunity = () => {
-    setIsTransitioning(true);
     setTimeout(() => {
       navigate(
         ROUTE_PATH.invitationServer.replace(':invitationCode', invitationCode),
@@ -38,7 +36,7 @@ const EnterInvitationPage = () => {
   }, [invitationCode]);
 
   return (
-    <Container isTransitioning={isTransitioning}>
+    <>
       <Header text={headerText} headerType={headerType} />
       <Main>
         <div className='scroll-area'>
@@ -70,38 +68,12 @@ const EnterInvitationPage = () => {
           공동체 찾기
         </Button>
       </Main>
-    </Container>
+    </>
   );
 };
 
 export default EnterInvitationPage;
 
-const Container = styled.div<{ isTransitioning: boolean }>`
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  transform: translateX(
-    ${({ isTransitioning }) => (isTransitioning ? '-100%' : 0)}
-  );
-  transition: transform 300ms ease-in-out;
-`;
 const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.98rem;
-  padding: 1.87rem 1.25rem;
-  width: 100vw;
-  width: 100svw;
-  min-height: calc(100vh - 4.375rem);
-  min-height: calc(100svh - 4.375rem);
   background-color: ${({ theme }) => theme.colors.neutral50};
-
-  fieldset {
-    width: 100%;
-  }
 `;
