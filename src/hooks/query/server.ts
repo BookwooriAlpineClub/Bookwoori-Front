@@ -46,26 +46,17 @@ export const useGetServerOne = (serverId: number) => {
 };
 
 /* 서버 생성 */
-export const usePostServer = (resetFields: () => void) => {
-  const navigate = useNavigate();
-  const addToast = useToast();
-
-  const mutation = useMutation({
+export const usePostServer = () => {
+  return useMutation({
     mutationFn: (data: PostServerReq) => postServer(data),
-    onSuccess: (res) => {
-      addToast('success', '공동체가 생성되었습니다.');
-      resetFields();
-      const encodedId = encodeId(res.serverId);
-      navigate(ROUTE_PATH.server.replace(':serverId', encodedId));
-    },
   });
-  return mutation;
 };
 
 /* 초대 코드로 서버 가입 */
 export const usePostServerJoin = (inviteCode: string) => {
   const navigate = useNavigate();
   const addToast = useToast();
+
   const mutation = useMutation({
     mutationFn: () => postServerJoinByCode(inviteCode),
     onSuccess: (res) => {

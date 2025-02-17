@@ -7,6 +7,10 @@ import Fieldset from '@src/components/common/Fieldset';
 import TextField from '@src/components/common/input/TextField';
 import Section from '@src/components/common/Section';
 import { usePostServer } from '@src/hooks/query/server';
+import { encodeId } from '@src/utils/formatters';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import useToast from '@src/hooks/useToast';
+import { useNavigate } from 'react-router-dom';
 
 const headerText = '새로운 공동체 생성하기';
 const headerType = 'back';
@@ -27,7 +31,10 @@ const CreateNewCommunityPage = () => {
     setCommunityDescription('');
   }, []);
 
-  const { mutate: createServer } = usePostServer(resetFields);
+  const addToast = useToast();
+  const navigate = useNavigate();
+
+  const { mutate: createServerMutate } = usePostServer();
 
   useEffect(() => {
     setIsFormValid(
@@ -43,11 +50,21 @@ const CreateNewCommunityPage = () => {
   const handleCreateCommunity = () => {
     const imageToSave = communityImage as File;
     if (isFormValid) {
-      createServer({
-        name: communityName,
-        description: communityDescription,
-        serverImg: imageToSave,
-      });
+      createServerMutate(
+        {
+          name: communityName,
+          description: communityDescription,
+          serverImg: imageToSave,
+        },
+        {
+          onSuccess: (res) => {
+            addToast('success', '공동체가 생성되었습니다.');
+            resetFields();
+            const encodedId = encodeId(res.serverId);
+            navigate(ROUTE_PATH.server.replace(':serverId', encodedId));
+          },
+        },
+      );
     }
   };
   return (
