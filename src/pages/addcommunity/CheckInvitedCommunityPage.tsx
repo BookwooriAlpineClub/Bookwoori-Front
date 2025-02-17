@@ -27,6 +27,7 @@ const CheckInvitedCommunityPage = () => {
     return null;
   }
 
+  const addToast = useToast();
   const { data: server, isLoading } = useGetServerByCode(invitationCode);
   const { mutate: joinServerMutate } = usePostServerJoin();
 
@@ -37,8 +38,6 @@ const CheckInvitedCommunityPage = () => {
     navigate(ROUTE_PATH.invitationCode);
     return null;
   }
-
-  const addToast = useToast();
 
   const handleJoinServer = () => {
     joinServerMutate(invitationCode, {
@@ -64,7 +63,7 @@ const CheckInvitedCommunityPage = () => {
             memberInfo={memberInfo}
             creationDate={server.createdAt}
             description={server.description}
-            imageUrl={server.serverImg || ' '}
+            imageUrl={server.serverImg}
           />
         </div>
         <Button type='submit' onClick={() => handleJoinServer()}>

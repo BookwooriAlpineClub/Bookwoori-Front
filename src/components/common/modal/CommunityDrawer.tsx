@@ -75,7 +75,10 @@ const CommunityDrawer = () => {
         onClick={(e) => e.stopPropagation()}
       >
         <CommunityTitleContainer>
-          <img src={serverInfo?.serverImg ?? ''} alt='server profile' />
+          <UserAvatar
+            profileImg={serverInfo?.serverImg ?? null}
+            nickname={serverInfo?.name}
+          />
           <span>{serverInfo?.name}</span>
         </CommunityTitleContainer>
         <Fieldset as='section' title='공동체 기능'>

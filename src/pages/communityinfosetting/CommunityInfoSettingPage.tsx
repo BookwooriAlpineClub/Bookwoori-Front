@@ -33,7 +33,7 @@ const CommunityInfoSettingPage = () => {
     memberInfo: `방장 ${server.ownerNickname} · 멤버 ${server.memberCount}명`,
     creationDate: server.createdAt,
     description: server.description,
-    serverImg: server.serverImg || '',
+    serverImg: server.serverImg || null,
   };
 
   return (
