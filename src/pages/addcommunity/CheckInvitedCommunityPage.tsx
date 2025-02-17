@@ -3,9 +3,12 @@ import styled from 'styled-components';
 import Button from '@src/components/common/button/Button';
 import IntroSection from '@src/components/addcommunity/IntroSection';
 import CommunityInfoCard from '@src/components/community/CommunityInfoCard';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '@src/components/common/Spinner';
 import { useGetServerByCode, usePostServerJoin } from '@src/hooks/query/server';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import { encodeId } from '@src/utils/formatters';
+import useToast from '@src/hooks/useToast';
 
 const headerText = '공동체 정보 확인하기';
 const headerType = 'back';
@@ -16,24 +19,37 @@ const introBodyLines = [
 ];
 
 const CheckInvitedCommunityPage = () => {
-  const { invitationCode } = useParams<{ invitationCode: string }>();
+  const navigate = useNavigate();
 
+  const { invitationCode } = useParams<{ invitationCode: string }>();
   if (!invitationCode) {
-    return <div>Fallback ui...</div>;
+    navigate(ROUTE_PATH.invitationCode);
+    return null;
   }
-  const {
-    data: server,
-    isLoading,
-    isError,
-  } = useGetServerByCode(invitationCode);
-  const { mutate: joinServer } = usePostServerJoin(invitationCode);
+
+  const { data: server, isLoading } = useGetServerByCode(invitationCode);
+  const { mutate: joinServerMutate } = usePostServerJoin();
 
   if (isLoading) {
     return <Spinner />;
   }
-  if (isError || !server) {
-    return <div>Error...</div>;
+  if (!server) {
+    navigate(ROUTE_PATH.invitationCode);
+    return null;
   }
+
+  const addToast = useToast();
+
+  const handleJoinServer = () => {
+    joinServerMutate(invitationCode, {
+      onSuccess: (res) => {
+        addToast('success', '가입 완료');
+        const { serverId } = res;
+        const path = ROUTE_PATH.server.replace(':serverId', encodeId(serverId));
+        navigate(path);
+      },
+    });
+  };
 
   const memberInfo = `방장 ${server.ownerNickname} ・ 멤버 ${server.memberCount}명`;
 
@@ -51,7 +67,7 @@ const CheckInvitedCommunityPage = () => {
             imageUrl={server.serverImg || ' '}
           />
         </div>
-        <Button type='submit' onClick={() => joinServer()}>
+        <Button type='submit' onClick={() => handleJoinServer()}>
           참여하기
         </Button>
       </Main>
