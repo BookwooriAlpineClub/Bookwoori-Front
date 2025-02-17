@@ -51,6 +51,7 @@ const ProfileContainer = styled.div<{
     object-fit: cover;
   }
   span {
+    ${({ theme }) => theme.fonts.body}
     color: ${({ theme }) => theme.colors.blue900};
   }
 `;
