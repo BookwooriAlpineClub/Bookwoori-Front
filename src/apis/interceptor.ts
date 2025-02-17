@@ -75,7 +75,13 @@ export const onError = async (error: AxiosError): Promise<unknown> => {
   const { status, data } = response;
   if (!isErrorData(data)) throw error;
 
-  return handleErrorByStatus({ status, data, config });
+  const result = await handleErrorByStatus({ status, data, config });
+
+  if (result === null) {
+    return new Promise(() => {});
+  }
+
+  return result;
 };
 
 const handleErrorByStatus = async ({
@@ -116,7 +122,7 @@ const handleTokenRefresh = async ({
     handleAuthFailure();
   }
 
-  return true;
+  return null;
 };
 
 const updateConfig = (
@@ -138,12 +144,16 @@ const handleInvalidToken = () => {
   if (window.location.pathname !== '/sign-in') {
     window.location.replace(ROUTE_PATH.signIn);
   }
+
+  return null;
 };
 
 const handleAuthFailure = () => {
   localStorage.removeItem('accessToken');
   sessionStorage.removeItem('refreshToken');
   window.location.replace(ROUTE_PATH.signIn);
+
+  return null;
 };
 
 const createError = (data: ErrorData) => {
