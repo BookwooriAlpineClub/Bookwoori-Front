@@ -25,16 +25,15 @@ const ProfileModal = ({ memberId }: { memberId: number }) => {
   const { closeModal: closeCommunityDrawer } = useModal(communityDrawerState);
 
   const handleClickHiking = () => {
-    navigate(`${ROUTE_PATH.library}/${memberId}`);
-    closeDialog();
     closeCommunityDrawer();
+    closeDialog();
+    navigate(`${ROUTE_PATH.library}/${memberId}`);
   };
 
   const handleclickMessage = () => {
-    // const roomId = getMessageRoomIdByMemberId(data.messageRooms, memberId);
-    navigate(`${ROUTE_PATH.dmChat}/${memberId}`);
-    closeDialog();
     closeCommunityDrawer();
+    closeDialog();
+    navigate(`${ROUTE_PATH.dmChat}/${memberId}`);
   };
 
   return (

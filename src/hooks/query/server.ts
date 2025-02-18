@@ -78,7 +78,7 @@ export const useGetServerMembers = (serverId: number, isOpen: boolean) => {
     queryKey: ['getServerMembers', serverId],
     queryFn: () => getServerMembers(serverId),
     select: (rawData) => rawData.members,
-    enabled: isOpen,
+    enabled: isOpen && serverId > 0,
   });
 };
 

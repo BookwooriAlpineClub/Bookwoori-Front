@@ -48,6 +48,7 @@ const CommunityDrawer = () => {
       ':serverId',
       encodeId(serverId),
     );
+    closeCommunityDrawer();
     navigate(`${serverSetting}`);
   };
 
