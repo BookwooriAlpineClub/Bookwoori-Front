@@ -54,7 +54,7 @@ const SearchPage = () => {
       </Header>
       {keyword && (
         <main>
-          {data.length !== 0 ? (
+          {data.length > 0 ? (
             <Ul>
               {data.map((item) => (
                 <Link
