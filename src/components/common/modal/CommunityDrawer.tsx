@@ -49,7 +49,6 @@ const CommunityDrawer = () => {
       encodeId(serverId),
     );
     navigate(`${serverSetting}`);
-    closeCommunityDrawer();
   };
 
   const handleClickCopyButton = async () => {
@@ -79,7 +78,7 @@ const CommunityDrawer = () => {
             profileImg={serverInfo?.serverImg ?? null}
             nickname={serverInfo?.name}
           />
-          <span>{serverInfo?.name}</span>
+          <p>{serverInfo?.name}</p>
         </CommunityTitleContainer>
         <Fieldset as='section' title='공동체 기능'>
           <div
@@ -172,14 +171,7 @@ const CommunityTitleContainer = styled.div`
   gap: ${({ theme }) => theme.gap['10']};
   width: 100%;
 
-  img {
-    width: 1.875rem;
-    height: 1.875rem;
-    border-radius: ${({ theme }) => theme.rounded['8']};
-    object-fit: cover;
-  }
-
-  span {
+  p {
     ${({ theme }) => theme.fonts.title}
     color: ${({ theme }) => theme.colors.neutral950};
   }
@@ -191,8 +183,7 @@ const MemberItem = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: ${({ theme }) => theme.gap['8']};
-  ]padding: 0.9375rem 0;
-  width: 100%;
+  cursor: pointer;
 `;
 
 const Nickname = styled.p`
