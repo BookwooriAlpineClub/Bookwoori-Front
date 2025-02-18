@@ -1,12 +1,17 @@
-import Book from '@src/types/book';
+import type Book from '@src/types/book';
+import type Review from '@src/types/review';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import useModal from '@src/hooks/useModal';
 import { useGetBookDetail } from '@src/hooks/query/book';
 import { useGetRecordDetail } from '@src/hooks/query/record';
+import { bottomsheetState } from '@src/states/atoms';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import BookDetail from '@src/components/library/BookDetail';
 import ReviewDetail from '@src/components/library/ReviewDetail';
+import RecordBottomsheet from '@src/components/library/RecordBottomsheet';
+import ReviewBottomsheet from '@src/components/library/ReviewBottomsheet';
 import { ReactComponent as HiOutlinePlus } from '@src/assets/icons/hi_outline_plus.svg';
 
 const RecordDetailPage = () => {
@@ -19,11 +24,29 @@ const RecordDetailPage = () => {
   } = useGetRecordDetail(isbn13);
   const [isTop, setIsTop] = useState<boolean>(true);
 
+  const { openModal: openBottomsheet } = useModal(bottomsheetState);
   const handleScroll = () => {
     setIsTop(window.scrollY < 70);
   };
-  const openRecordBottomsheet = () => {};
-  const openReviewBottomsheet = () => {};
+  const openRecordBottomsheet = () => {
+    openBottomsheet(
+      <RecordBottomsheet isbn13={isbn13} {...record} itemPage={itemPage} />,
+    );
+  };
+  const openReviewBottomsheet = (
+    reviewId: Review['reviewId'],
+    star: Review['star'],
+    content: Review['content'],
+  ) => {
+    openBottomsheet(
+      <ReviewBottomsheet
+        recordId={record.recordId}
+        reviewId={reviewId}
+        star={star}
+        content={content}
+      />,
+    );
+  };
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -56,7 +79,9 @@ const RecordDetailPage = () => {
               content={content}
               createdAt={createdAt}
               modifiedAt={modifiedAt}
-              openBottomsheet={openReviewBottomsheet}
+              openBottomsheet={() => {
+                openReviewBottomsheet(reviewId, star, content);
+              }}
             />
           ),
         )}
