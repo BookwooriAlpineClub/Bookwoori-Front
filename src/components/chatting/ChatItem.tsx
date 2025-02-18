@@ -18,9 +18,9 @@ import { formatChatItemTime } from '@src/utils/formatters';
 import { adjustHeight } from '@src/utils/helpers';
 import ChatMenu from '@src/components/common/emoji/ChattingBottomsheet';
 import UserAvatar from '@src/components/common/UserAvatar';
+import EmojiList from '@src/components/chatting/EmojiList';
 import { ReactComponent as Response } from '@src/assets/icons/response.svg';
 import { ReactComponent as ReplyLine } from '@src/assets/images/chat/reply_line.svg';
-import EmojiList from '@src/components/chatting/EmojiList';
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;
@@ -38,6 +38,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
     const setReplyChat = useSetRecoilState(replyChatState);
     const [editContent, setEditContent] = useState(chatItem.content);
     const [isSelected, setIsSelected] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const { openModal: openBottomsheet, closeModal: closeBottomsheet } =
       useModal(bottomsheetState);
     const addToast = useToast();
@@ -76,6 +77,12 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
         return;
       }
 
+      if (editContent.length > 2000) {
+        addToast('info', '최대 2000자까지 전송가능합니다.');
+        setEditContent(editContent.slice(0, 2000));
+        return;
+      }
+
       try {
         await editHandler(
           { id: chatItem.id, content: editContent },
@@ -85,6 +92,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
         setEditChatId(null);
       } catch (error) {
         console.error('Failed to edit message:', error);
+        addToast('error', '수정에 실패했습니다. 다시 시도해주세요.');
       }
     };
 
@@ -110,15 +118,15 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
 
     // 답장 부모 메시지 이동 시 배경색 변화
     useEffect(() => {
-      if (replyChatId === chatItem.id) {
+      if (replyChatId.id === chatItem.id) {
         setIsSelected(true);
 
         setTimeout(() => {
           setIsSelected(false);
-          setReplyChatId(undefined);
-        }, 1500);
+          setReplyChatId((prev) => ({ ...prev, id: undefined, updatedAt: 0 }));
+        }, 1000);
       }
-    }, [replyChatId, chatItem.id]);
+    }, [replyChatId.updatedAt]);
 
     return (
       <WithReplayLayout ref={ref} $selected={isSelected}>
@@ -127,10 +135,23 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
             <LineWrapper>
               <ReplyLine width={30} height={20} />
             </LineWrapper>
-            <ReplySpan onClick={() => setReplyChatId(chatItem.parentId)}>
-              <ReplyNickname>{other?.nickname}에게 답장</ReplyNickname>
-              {'\n'}
-              {chatItem.parentContent}
+            <ReplySpan
+              $hasReply={!!other}
+              onClick={() =>
+                setReplyChatId((prev) => ({
+                  ...prev,
+                  id: chatItem.parentId,
+                }))
+              }
+            >
+              {other && (
+                <ReplyNickname>
+                  {other.nickname}에게 답장{'\n'}
+                </ReplyNickname>
+              )}
+              {chatItem.parentContent && chatItem.parentContent?.length > 100
+                ? `${chatItem.parentContent?.slice(0, 100)}...`
+                : chatItem.parentContent}
             </ReplySpan>
           </ReplyContainer>
         )}
@@ -161,7 +182,30 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
               </Form>
             ) : (
               <>
-                <Text>{chatItem.content}</Text>
+                {chatItem.content.length > 500 ? (
+                  !isOpen ? (
+                    <TextWrapper>
+                      <Text>{chatItem.content.slice(0, 500)}</Text>
+                      <TextButton type='button' onClick={() => setIsOpen(true)}>
+                        전체보기
+                      </TextButton>
+                    </TextWrapper>
+                  ) : (
+                    <TextWrapper>
+                      <Text>{chatItem.content}</Text>
+                      <TextButton
+                        type='button'
+                        onClick={() => setIsOpen(false)}
+                      >
+                        내용 줄이기
+                      </TextButton>
+                    </TextWrapper>
+                  )
+                ) : (
+                  <TextWrapper>
+                    <Text>{chatItem.content}</Text>
+                  </TextWrapper>
+                )}
                 {chatItem.reactions &&
                   Object.keys(chatItem.reactions).length > 0 && (
                     <EmojiList
@@ -198,6 +242,11 @@ const WithReplayLayout = styled.div<{ $selected: boolean }>`
   background-color: ${({ theme, $selected }) =>
     $selected && theme.colors.blue100};
   opacity: ${({ $selected }) => $selected && 0.7};
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-use-select: none;
+  user-select: none;
 `;
 const ReplyContainer = styled.div`
   display: flex;
@@ -209,7 +258,8 @@ const ReplyContainer = styled.div`
 const LineWrapper = styled.div`
   margin-bottom: -0.6875rem;
 `;
-const ReplySpan = styled.span`
+const ReplySpan = styled.span<{ $hasReply: boolean }>`
+  max-width: 25rem;
   padding: ${({ theme }) => `${theme.padding[2]} ${theme.padding[8]}`};
   border-radius: ${({ theme }) => theme.rounded[8]};
 
@@ -218,8 +268,9 @@ const ReplySpan = styled.span`
   color: ${({ theme }) => theme.colors.neutral600};
   ${({ theme }) => theme.fonts.body}
   font-size: 0.75rem;
-  cursor: pointer;
+  cursor: ${({ $hasReply }) => $hasReply && 'pointer'};
   white-space: pre-wrap;
+  word-break: break-all;
 `;
 const ReplyNickname = styled.span`
   color: ${({ theme }) => theme.colors.neutral950};
@@ -238,11 +289,6 @@ const Layout = styled.div`
     opacity: 1;
     transform: translateY(0);
   }
-
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-use-select: none;
-  user-select: none;
 `;
 const Container = styled.div`
   display: flex;
@@ -298,11 +344,21 @@ const Text = styled.p`
 
   cursor: default;
   white-space: pre-wrap;
+  word-break: break-all;
+`;
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const TextButton = styled.button`
+  ${({ theme }) => theme.fonts.caption};
+  text-align: right;
 `;
 const ReplyMenu = styled.button`
   display: flex;
   position: absolute;
-  top: 15%;
+  top: -0.3125rem;
   right: 0;
 
   transform: translateY(-50%);

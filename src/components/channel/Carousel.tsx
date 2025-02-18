@@ -20,7 +20,8 @@ const Carousel = ({
   const [width, setWidth] = useState<number>(0);
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
-  const { openModal: openBottomsheet, closeModal: closeBottomsheet } = useModal(bottomsheetState);
+  const { openModal: openBottomsheet, closeModal: closeBottomsheet } =
+    useModal(bottomsheetState);
 
   useEffect(() => {
     const updateWidth = () => {
@@ -115,12 +116,7 @@ const Carousel = ({
             {list.map(({ name, cover, climbingId }) => (
               <Item
                 key={climbingId}
-                onClick={
-                  type === 'next'
-                    ? () => handleClickNavigate(climbingId)
-                    : () => {}
-                }
-                disabled={type === 'more'}
+                onClick={() => handleClickNavigate(climbingId)}
               >
                 <Img src={cover} />
                 <Layer>
@@ -186,10 +182,6 @@ const Item = styled.button`
   display: flex;
   justify-content: center;
   position: relative;
-
-  &:disabled {
-    cursor: default;
-  }
 `;
 const Img = styled.img`
   width: 4.6875rem;

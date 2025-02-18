@@ -43,6 +43,7 @@ const ChattingListPage = () => {
                     : '알 수 없음'
                 }
                 message={it.recentMessage}
+                nickname={it.nickname}
                 isRead
                 onClick={() => handleNavigateChattingRoom(it.memberId)}
               />

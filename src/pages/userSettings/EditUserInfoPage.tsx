@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { bgFileState, profileState } from '@src/states/atoms';
+import { ROUTE_PATH } from '@src/constants/routePath';
 import { useGetProfile, usePatchProfile } from '@src/hooks/query/member';
 import UserProfileImg from '@src/components/userSettings/UserProfileImg';
 import Button from '@src/components/common/button/Button';
@@ -44,6 +46,7 @@ const addImagePromise = (
 };
 
 const EditUserInfoPage = () => {
+  const navigate = useNavigate();
   const { profileData } = useGetProfile('me');
   const { editNickname, editProfileImg, editBackgroundImg } = usePatchProfile();
   const [profileFile, setProfileFile] = useRecoilState(profileState);
@@ -67,6 +70,7 @@ const EditUserInfoPage = () => {
     );
 
     await Promise.all(promises);
+    navigate(ROUTE_PATH.setting);
   };
 
   useEffect(() => {

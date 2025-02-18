@@ -4,6 +4,7 @@ import useLoaderData from '@src/hooks/useRoaderData';
 import { useQuery } from '@tanstack/react-query';
 import { getClimbing } from '@src/apis/climbing';
 import LoadingPage from '@src/pages/fallback/LoadingPage';
+import ClimbingPreparePage from '@src/pages/climbing/ClimbingPreparePage';
 
 const ClimbingPage = () => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
@@ -22,7 +23,7 @@ const ClimbingPage = () => {
 
   return (
     <>
-      {data.status === 'READY' && <h1>준비중</h1>}
+      {data.status === 'READY' && <ClimbingPreparePage name={data.name} />}
       {data.status === 'RUNNING' && <ClimbingProgressPage name={data.name} />}
       {(data.status === 'FINISHED' || data.status === 'FAILED') && (
         <ClimbingTerminatePage name={data.name} />

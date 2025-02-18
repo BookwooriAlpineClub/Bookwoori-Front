@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import { replyChatState } from '@src/states/atoms';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { usePostMessageRoom } from '@src/hooks/query/chat';
+import useToast from '@src/hooks/useToast';
 import { sendHandler } from '@src/apis/chat';
 import type { MessageReq, ReplyReq } from '@src/types/apis/chat';
 import { adjustHeight } from '@src/utils/helpers';
@@ -12,6 +13,7 @@ import { ReactComponent as SendGreen } from '@src/assets/icons/ck_arrow_right.sv
 import { ReactComponent as Delete } from '@src/assets/icons/multiply.svg';
 
 const MIN_HEIGHT = 41;
+const MAX_INPUT_HEIGHT = 150;
 
 const ChatBar = ({ nickname }: { nickname: string }) => {
   const { id: memberId } = useLoaderData<{ id: number }>();
@@ -19,6 +21,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
   const [replyChatItem, setReplyChatItem] = useRecoilState(replyChatState);
   const [chat, setChat] = useState<string>('');
   const [paddingHeight, setPaddingHeight] = useState<number | null>(null);
+  const addToast = useToast();
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const replyRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +43,8 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
     const inputHeight = inputRef.current?.scrollHeight ?? 0;
     const replyHeight = replyRef.current?.offsetHeight ?? 0;
 
-    const totalHeight = inputHeight + replyHeight;
+    const totalHeight =
+      Math.min(inputHeight, MAX_INPUT_HEIGHT) - 26 + replyHeight;
     setPaddingHeight(totalHeight > MIN_HEIGHT ? totalHeight : null);
   };
 
@@ -56,7 +60,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      
+
       if (replyChatItem) {
         handleSendReply();
         return;
@@ -68,6 +72,11 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
 
   const handleSendMessage = async () => {
     if (!chat.trim()) return;
+    if (chat.length > 2000) {
+      addToast('info', '최대 2000자까지 전송가능합니다.');
+      setChat(chat.slice(0, 2000));
+      return;
+    }
 
     const message: MessageReq = {
       messageRoomId: roomInfo?.messageRoomId,
@@ -81,12 +90,18 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
       setChat('');
     } catch (error) {
       console.error('Failed to send message:', error);
+      addToast('error', '전송에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
   const handleSendReply = async () => {
     if (!chat.trim()) return;
     if (!replyChatItem?.id) return;
+    if (chat.length > 2000) {
+      addToast('info', '최대 2000자까지 전송가능합니다.');
+      setChat(chat.slice(0, 2000));
+      return;
+    }
 
     const message: ReplyReq = {
       parentId: replyChatItem.id,
@@ -102,6 +117,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
       setReplyChatItem(null);
     } catch (error) {
       console.error('Failed to send message:', error);
+      addToast('error', '전송에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -150,7 +166,8 @@ export default ChatBar;
 
 const Padding = styled.div<{ $height: number | null }>`
   width: 100%;
-  height: ${({ $height }) => ($height ? `${$height - 40}px` : '0')};
+  height: ${({ $height }) => ($height ? `${$height}px` : '0')};
+  max-height: 11.375rem;
 `;
 const Layout = styled.div`
   display: flex;
@@ -190,7 +207,7 @@ const ReplyContent = styled.p`
   white-space: pre-wrap;
 `;
 const Line = styled.line`
-  height: 0.0625rem;
+  height: 0.0313rem;
   width: 95%;
 
   background-color: ${({ theme }) => theme.colors.neutral200};
@@ -203,6 +220,7 @@ const Container = styled.div`
 const Textarea = styled.textarea`
   padding: 0.625rem;
   width: 100%;
+  max-height: 9.375rem;
 
   border-radius: 1.875rem;
 
@@ -210,7 +228,7 @@ const Textarea = styled.textarea`
   background-color: ${({ theme }) => theme.colors.neutral50};
 
   resize: none;
-  overflow-y: hidden;
+  overflow-y: scroll;
 `;
 const Button = styled.button`
   display: flex;

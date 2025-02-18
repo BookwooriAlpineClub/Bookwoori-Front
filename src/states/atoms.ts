@@ -72,7 +72,10 @@ export const replyChatState = atom<
   key: 'replyChatState',
   default: null,
 });
-export const replyChatIdState = atom<string | undefined>({
+export const replyChatIdState = atom<{
+  id: string | undefined;
+  updatedAt: number;
+}>({
   key: 'replyChatIdState',
-  default: undefined,
+  default: { id: undefined, updatedAt: 0 },
 });

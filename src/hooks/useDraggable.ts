@@ -133,6 +133,7 @@ const useDraggable = (categoryListData: Category[]) => {
       : draggingIdx,
     beforeIdx,
     list,
+    setList,
     handleDraggable,
   };
 };

@@ -3,6 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { dialogState, editChatIdState } from '@src/states/atoms';
 import useCopyToClipboard from '@src/hooks/useCopyToClipboard';
 import useModal from '@src/hooks/useModal';
+import useToast from '@src/hooks/useToast';
 import { deleteHandler, reactHandler } from '@src/apis/chat';
 import { EmojiType } from '@src/constants/constants';
 import IconButton from '@src/components/common/button/IconButton';
@@ -24,6 +25,7 @@ const ChattingBottomsheet = ({
   const { handleCopy } = useCopyToClipboard();
   const { openModal, closeModal } = useModal(dialogState);
   const setEditChatId = useSetRecoilState(editChatIdState);
+  const addToast = useToast();
 
   const emojiList = Object.keys(EmojiType) as Array<keyof typeof EmojiType>;
 
@@ -35,6 +37,7 @@ const ChattingBottomsheet = ({
       closeBottomsheet();
     } catch (error) {
       console.error('Failed to delete message:', error);
+      addToast('error', '삭제에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
