@@ -38,6 +38,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
     const setReplyChat = useSetRecoilState(replyChatState);
     const [editContent, setEditContent] = useState(chatItem.content);
     const [isSelected, setIsSelected] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const { openModal: openBottomsheet, closeModal: closeBottomsheet } =
       useModal(bottomsheetState);
     const addToast = useToast();
@@ -181,7 +182,30 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
               </Form>
             ) : (
               <>
-                <Text>{chatItem.content}</Text>
+                {chatItem.content.length > 500 ? (
+                  !isOpen ? (
+                    <TextWrapper>
+                      <Text>{chatItem.content.slice(0, 500)}</Text>
+                      <TextButton type='button' onClick={() => setIsOpen(true)}>
+                        전체보기
+                      </TextButton>
+                    </TextWrapper>
+                  ) : (
+                    <TextWrapper>
+                      <Text>{chatItem.content}</Text>
+                      <TextButton
+                        type='button'
+                        onClick={() => setIsOpen(false)}
+                      >
+                        내용 줄이기
+                      </TextButton>
+                    </TextWrapper>
+                  )
+                ) : (
+                  <TextWrapper>
+                    <Text>{chatItem.content}</Text>
+                  </TextWrapper>
+                )}
                 {chatItem.reactions &&
                   Object.keys(chatItem.reactions).length > 0 && (
                     <EmojiList
@@ -318,10 +342,18 @@ const Text = styled.p`
   line-height: 1.25rem;
   font-weight: 600;
 
-  max-width: 25rem;
   cursor: default;
   white-space: pre-wrap;
   word-break: break-all;
+`;
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const TextButton = styled.button`
+  ${({ theme }) => theme.fonts.caption};
+  text-align: right;
 `;
 const ReplyMenu = styled.button`
   display: flex;
