@@ -54,6 +54,6 @@ export const getProfile = async (
 
 /* 경험치 내역 조회 */
 export const getExp = async (): Promise<ExpRes> => {
-  const res = await authClient.get(`explog`);
+  const res = await authClient.get(`expLog`);
   return res.data;
 };
