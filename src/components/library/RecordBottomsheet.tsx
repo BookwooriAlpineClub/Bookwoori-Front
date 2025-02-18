@@ -20,15 +20,14 @@ import DeleteConfirmDialog from '@src/components/common/modal/DeleteConfirmDialo
 import StatusField from '@src/components/library/StatusField';
 import PageField from '@src/components/library/PageField';
 
-type Props = Omit<Record, 'recordId'> &
+type Props = Partial<Record> &
   Pick<Book, 'itemPage'> &
-  Partial<Pick<Record, 'recordId'>> &
   Partial<Pick<Book, 'isbn13'>>;
 
 const RecordBottomsheet = ({
   isbn13,
   recordId,
-  status: defaultStatus,
+  status: defaultStatus = 'UNREAD',
   startDate: defaultStartDate,
   endDate: defaultEndDate,
   currentPage: defaultCurrentPage,

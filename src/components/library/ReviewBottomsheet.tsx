@@ -12,7 +12,7 @@ import TextField from '@src/components/common/input/TextField';
 import RatingField from '@src/components/library/RatingField';
 
 type Props = Pick<Record, 'recordId'> &
-  Pick<Review, 'reviewId' | 'star' | 'content'>;
+  Partial<Pick<Review, 'reviewId' | 'star' | 'content'>>;
 
 const ReviewBottomsheet = ({
   recordId,
@@ -20,8 +20,10 @@ const ReviewBottomsheet = ({
   star: defaultStar,
   content: defaultContent,
 }: Props) => {
-  const [star, setStar] = useState<Review['star']>(defaultStar);
-  const [content, setContent] = useState<Review['content']>(defaultContent);
+  const [star, setStar] = useState<Review['star']>(defaultStar ?? 0);
+  const [content, setContent] = useState<Review['content']>(
+    defaultContent ?? '',
+  );
 
   const { closeModal: closeBottomsheet } = useModal(bottomsheetState);
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {

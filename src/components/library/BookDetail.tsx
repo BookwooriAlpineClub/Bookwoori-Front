@@ -9,7 +9,7 @@ import { ReactComponent as MdAutoStories } from '@src/assets/icons/md_auto_stori
 import { ReactComponent as Done } from '@src/assets/icons/done.svg';
 
 interface Props extends Omit<BookType, 'isbn13' | 'description'> {
-  record: RecordType;
+  record?: RecordType;
   openBottomsheet: () => void;
 }
 
@@ -42,8 +42,8 @@ const BookDetail = ({
         text='읽고 있어요'
         onClick={openBottomsheet}
       >
-        <Blue900Span>{record.startDate}</Blue900Span>
-        <Blue900Span>{`${record.currentPage}쪽/${itemPage}쪽`}</Blue900Span>
+        <Blue900Span>{record?.startDate}</Blue900Span>
+        <Blue900Span>{`${record?.currentPage}쪽/${itemPage}쪽`}</Blue900Span>
       </STag>
     ),
     FINISHED: (
@@ -53,7 +53,7 @@ const BookDetail = ({
         text='다 읽었어요'
         onClick={openBottomsheet}
       >
-        <Blue900Span>{`${record.startDate}-${record.endDate}`}</Blue900Span>
+        <Blue900Span>{`${record?.startDate}-${record?.endDate}`}</Blue900Span>
       </STag>
     ),
   };
