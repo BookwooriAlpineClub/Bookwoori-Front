@@ -10,6 +10,7 @@ const UserProfile = ({ memberId }: { memberId: number | 'me' }) => {
       <UserProfileImg
         profileImg={profileData?.profileImg ?? undefined}
         backgroundImg={profileData?.backgroundImg ?? undefined}
+        nickname={profileData?.nickname}
       />
       <Container>
         <Nickname>{profileData?.nickname}</Nickname>

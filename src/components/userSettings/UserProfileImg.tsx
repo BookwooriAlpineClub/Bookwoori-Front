@@ -3,13 +3,14 @@ import useUploadFile from '@src/hooks/useUploadFile';
 import { bgFileState, profileState } from '@src/states/atoms';
 import { handleImgError } from '@src/utils/helpers';
 import Background from '@src/assets/images/userSettings/background_default.svg';
-import Profile from '@src/assets/images/userSettings/profile_default.svg';
 import { ReactComponent as Camera } from '@src/assets/icons/md_camera_enhance.svg';
+import UserAvatar from '@src/components/common/UserAvatar';
 
 interface UserProfileImgProps {
   edit?: boolean;
   profileImg?: string;
   backgroundImg?: string;
+  nickname?: string;
 }
 
 const useProfileImages = (
@@ -24,6 +25,7 @@ const UserProfileImg = ({
   edit,
   profileImg,
   backgroundImg,
+  nickname,
 }: UserProfileImgProps) => {
   const { background, profile } = useProfileImages(backgroundImg, profileImg);
 
@@ -46,9 +48,10 @@ const UserProfileImg = ({
         )}
       </Container>
       <ProfileContainer>
-        <ProfileImg
-          src={profile.preview ?? Profile}
-          onError={(e) => handleImgError(e, Profile)}
+        <UserAvatar
+          profileImg={profile.preview ?? ''}
+          nickname={nickname}
+          size='100%'
         />
         {edit && (
           <ProfileLabel htmlFor='profileFile'>
@@ -117,15 +120,6 @@ const ProfileContainer = styled.div`
   margin-top: -3.125rem;
   width: 6.25rem;
   height: 6.25rem;
-`;
-const ProfileImg = styled.img`
-  width: 100%;
-  height: 100%;
-
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.neutral0};
-
-  object-fit: cover;
 `;
 const ProfileLabel = styled(Label)`
   border-radius: 50%;
