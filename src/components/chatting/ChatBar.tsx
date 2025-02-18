@@ -13,6 +13,7 @@ import { ReactComponent as SendGreen } from '@src/assets/icons/ck_arrow_right.sv
 import { ReactComponent as Delete } from '@src/assets/icons/multiply.svg';
 
 const MIN_HEIGHT = 41;
+const MAX_INPUT_HEIGHT = 150;
 
 const ChatBar = ({ nickname }: { nickname: string }) => {
   const { id: memberId } = useLoaderData<{ id: number }>();
@@ -42,7 +43,8 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
     const inputHeight = inputRef.current?.scrollHeight ?? 0;
     const replyHeight = replyRef.current?.offsetHeight ?? 0;
 
-    const totalHeight = inputHeight + replyHeight;
+    const totalHeight =
+      Math.min(inputHeight, MAX_INPUT_HEIGHT) - 26 + replyHeight;
     setPaddingHeight(totalHeight > MIN_HEIGHT ? totalHeight : null);
   };
 
@@ -164,7 +166,8 @@ export default ChatBar;
 
 const Padding = styled.div<{ $height: number | null }>`
   width: 100%;
-  height: ${({ $height }) => ($height ? `${$height - 40}px` : '0')};
+  height: ${({ $height }) => ($height ? `${$height}px` : '0')};
+  max-height: 11.375rem;
 `;
 const Layout = styled.div`
   display: flex;
@@ -204,7 +207,7 @@ const ReplyContent = styled.p`
   white-space: pre-wrap;
 `;
 const Line = styled.line`
-  height: 0.0625rem;
+  height: 0.0313rem;
   width: 95%;
 
   background-color: ${({ theme }) => theme.colors.neutral200};

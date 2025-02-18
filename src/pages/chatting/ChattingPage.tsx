@@ -74,8 +74,7 @@ const ChattingPage = () => {
     }, 0);
   }, [data, isInitial]);
 
-  // 페이지 패칭
-  useEffect(() => {
+  const handleFetchNextPage = () => {
     if (!inView) return;
     if (!hasNextPage) return;
 
@@ -90,6 +89,11 @@ const ChattingPage = () => {
         }
       }, 0);
     });
+  };
+
+  // 페이지 패칭
+  useEffect(() => {
+    handleFetchNextPage();
   }, [inView, hasNextPage]);
 
   // 새로운 메시지 보냈을 때 스크롤 이동
@@ -152,9 +156,9 @@ const Main = styled.main`
   position: relative;
   flex-direction: column;
 
-  padding-bottom: 4.5625rem;
   width: 100%;
   height: 100%;
+  padding-bottom: 3.6625rem;
   margin-top: -0.9rem;
 
   overflow: auto;
