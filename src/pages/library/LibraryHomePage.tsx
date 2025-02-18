@@ -64,7 +64,7 @@ const LibraryHomePage = () => {
         />
         <MountainMenu seasonalColor={seasonalColors[season][0]}>
           <ButtonContainer>
-            {memberId && (
+            {profileData.isMine && (
               <>
                 <IconButton
                   data-tooltip-id='my-tooltip'
