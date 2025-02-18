@@ -1,6 +1,8 @@
+import type Record from '@src/types/record';
 import type Review from '@src/types/review';
 import { useState } from 'react';
 import useModal from '@src/hooks/useModal';
+import { usePostReview, usePatchReview } from '@src/hooks/query/review';
 import { bottomsheetState } from '@src/states/atoms';
 import styled from 'styled-components';
 import Fieldset from '@src/components/common/Fieldset';
@@ -9,9 +11,11 @@ import Button from '@src/components/common/button/Button';
 import TextField from '@src/components/common/input/TextField';
 import RatingField from '@src/components/library/RatingField';
 
-type Props = Review;
+type Props = Pick<Record, 'recordId'> &
+  Pick<Review, 'reviewId' | 'star' | 'content'>;
 
 const ReviewBottomsheet = ({
+  recordId,
   reviewId,
   star: defaultStar,
   content: defaultContent,
@@ -22,6 +26,14 @@ const ReviewBottomsheet = ({
   const { closeModal: closeBottomsheet } = useModal(bottomsheetState);
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (reviewId) {
+      const { mutate: updateReview } = usePatchReview(reviewId);
+      updateReview({ body: { recordId, star, content } });
+    } else {
+      const { mutate: createReview } = usePostReview();
+      createReview({ body: { recordId, star, content } });
+    }
 
     closeBottomsheet();
   };
