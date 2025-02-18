@@ -159,15 +159,6 @@ export const useDeleteClimbing = () => {
   return { delClimbing };
 };
 
-export const usePatchShareReview = () => {
-  const shareReview = useMutation({
-    mutationKey: ['patchShareClimbingReview'],
-    mutationFn: (climbingId: number) => patchShareClimbingReview(climbingId),
-  });
-
-  return { shareReview };
-};
-
 export const useGetClimbingReview = (climbingId: number) => {
   const { data: getReviews, isLoading } = useQuery<
     getClimbingReviewRes,
@@ -195,14 +186,8 @@ export const useGetReviewEmojis = ({
 
 export const useGetPatchShareClimbingReview = (climbingId: number) => {
   const shareReview = useMutation({
-    mutationFn: () => patchShareClimbingReview(climbingId),
-    onSuccess: () => {
-      console.log('Review shared successfully!');
-      window.location.reload();
-    },
-    onError: (error) => {
-      console.error('Error sharing review:', error);
-    },
+    mutationFn: (reviewId: number) =>
+      patchShareClimbingReview(climbingId, reviewId),
   });
   return { shareReview };
 };
