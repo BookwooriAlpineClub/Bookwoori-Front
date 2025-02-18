@@ -34,18 +34,20 @@ const RecordDetailPage = () => {
     );
   };
   const openReviewBottomsheet = (
-    reviewId: Review['reviewId'],
-    star: Review['star'],
-    content: Review['content'],
+    reviewId?: Review['reviewId'],
+    star?: Review['star'],
+    content?: Review['content'],
   ) => {
-    openBottomsheet(
-      <ReviewBottomsheet
-        recordId={record.recordId}
-        reviewId={reviewId}
-        star={star}
-        content={content}
-      />,
-    );
+    if (record) {
+      openBottomsheet(
+        <ReviewBottomsheet
+          recordId={record.recordId}
+          reviewId={reviewId}
+          star={star}
+          content={content}
+        />,
+      );
+    }
   };
 
   useEffect(() => {
@@ -67,9 +69,11 @@ const RecordDetailPage = () => {
           record={record}
           openBottomsheet={openRecordBottomsheet}
         />
-        <ReviewCreateButton>
-          <HiOutlinePlus width={20} height={20} />
-        </ReviewCreateButton>
+        {record && (
+          <ReviewCreateButton onClick={() => openReviewBottomsheet()}>
+            <HiOutlinePlus width={20} height={20} />
+          </ReviewCreateButton>
+        )}
         {reviewList.map(
           ({ reviewId, star, content, createdAt, modifiedAt }) => (
             <ReviewDetail
