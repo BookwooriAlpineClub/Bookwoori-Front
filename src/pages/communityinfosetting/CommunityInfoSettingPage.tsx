@@ -4,7 +4,8 @@ import Header from '@src/components/common/Header';
 import CommunitySettingSection from '@src/components/community/CommunitySettingSection';
 import useLoaderData from '@src/hooks/useRoaderData';
 import { useGetServerOne } from '@src/hooks/query/server';
-import Spinner from '@src/components/common/Spinner';
+import { useState } from 'react';
+import LoadingPage from '@src/pages/fallback/LoadingPage';
 
 export interface CommunityInfoType {
   name: string;
@@ -21,8 +22,10 @@ const CommunityInfoSettingPage = () => {
   const { id: serverId } = useLoaderData<{ id: number }>();
   const { data: server, isLoading } = useGetServerOne(serverId);
 
-  if (isLoading) {
-    return <Spinner />;
+  const [isSpinning, setIsSpinning] = useState(false);
+
+  if (isLoading || isSpinning) {
+    return <LoadingPage />;
   }
   if (!server) {
     return <div>Not Found</div>;
@@ -41,7 +44,10 @@ const CommunityInfoSettingPage = () => {
       <Header text={headerText} headerType='back' />
       <Main>
         <CommunityInfoSection {...communityInfo} />
-        <CommunitySettingSection isOwner={server.isOwner} />
+        <CommunitySettingSection
+          isOwner={server.isOwner}
+          setIsSpinning={setIsSpinning}
+        />
       </Main>
     </>
   );

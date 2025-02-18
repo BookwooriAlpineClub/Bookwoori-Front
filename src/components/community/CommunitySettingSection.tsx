@@ -19,13 +19,19 @@ import UserAvatar from '@src/components/common/UserAvatar';
 import useToast from '@src/hooks/useToast';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { useNavigate } from 'react-router-dom';
+import { delay } from '@src/utils/helpers';
 
-const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
+const CommunitySettingSection = ({
+  isOwner,
+  setIsSpinning,
+}: {
+  isOwner?: boolean;
+  setIsSpinning: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { id: serverId } = useLoaderData<{ id: number }>();
   const { mutate: leaveCommunity } = useDeleteServerMember(serverId);
   const { mutate: transferAuthority } = usePatchServerMemberOwner(serverId);
   const { mutate: deleteCommunity } = useDeleteServer(serverId);
-
   const { data: memberList } = useGetServerMembers(serverId, true);
 
   const { isOpen, togglePopover, popoverRef, closePopover } = usePopover();
@@ -44,7 +50,6 @@ const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
         onClickDelete={() =>
           transferAuthority(memberId, {
             onSuccess: () => {
-              closeModal();
               addToast('success', '권한이 위임되었습니다.');
               window.location.reload();
             },
@@ -65,8 +70,11 @@ const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
         closeDialog={closeModal}
         onClickDelete={() =>
           fn(undefined, {
-            onSuccess: () => {
+            onSuccess: async () => {
               closeModal();
+              setIsSpinning(true);
+              await delay(500);
+              setIsSpinning(false);
               addToast(
                 'success',
                 leave ? '공동체에서 나가셨습니다.' : '공동체가 삭제되었습니다.',
