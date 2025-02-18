@@ -17,7 +17,7 @@ const CommunityInfoCard = ({
 }: CommunityInfoCardProps) => {
   return (
     <CardContainer>
-      <ImageWrapper>
+      <ImageWrapper $isText={!imageUrl}>
         {imageUrl ? (
           <img src={imageUrl} alt={`${name}`} />
         ) : (
@@ -48,7 +48,7 @@ const CardContainer = styled.section`
   padding: 2.19rem 1.88rem;
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled.div<{ $isText: boolean }>`
   width: 9.375rem;
   height: 9.375rem;
   display: flex;
@@ -59,12 +59,13 @@ const ImageWrapper = styled.div`
   flex-shrink: 0;
   border-radius: 0.625rem;
 
-  background-color: ${({ theme }) => theme.colors.blue100};
+  background-color: ${({ theme, $isText }) =>
+    $isText ? theme.colors.blue100 : theme.colors.neutral0};
 
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     font-family: ${({ theme }) => theme.fonts.caption};
     color: ${({ theme }) => theme.colors.neutral50};
   }

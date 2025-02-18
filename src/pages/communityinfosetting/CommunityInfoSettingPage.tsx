@@ -50,10 +50,5 @@ const CommunityInfoSettingPage = () => {
 export default CommunityInfoSettingPage;
 
 const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  gap: 0.94rem;
-  padding: 0.91rem 1.25rem;
-  width: 100vw;
   background-color: ${({ theme }) => theme.colors.neutral50};
 `;
