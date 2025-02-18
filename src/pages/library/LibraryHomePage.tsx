@@ -8,6 +8,8 @@ import { ReactComponent as StarIcon } from '@src/assets/icons/md_star.svg';
 import { useGetProfile } from '@src/hooks/query/member';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorPage from '@src/pages/fallback/ErrorPage';
 
 const seasonalColors = {
   december: ['#228B22', '#E8F1F8', '#FFF'],
@@ -23,18 +25,22 @@ const LibraryHomePage = () => {
   const { profileData } = useGetProfile(memberId);
   const navigate = useNavigate();
 
+  if (!profileData) return <ErrorBoundary fallback={<ErrorPage />} />;
+
   const season = 'spring';
   const exp = [
-    { text: '지나온 길(m)', value: profileData?.totalHeight },
-    { text: '읽어낸 책(p)', value: profileData?.totalPage },
+    { text: '지나온 길(m)', value: profileData.totalHeight },
+    { text: '읽어낸 책(p)', value: profileData.totalPage },
   ];
+
   const mountainData = {
-    mountainHeight: 300,
-    height: profileData?.totalHeight,
-    profileImg: profileData?.profileImg,
-    profileName: profileData?.nickname,
+    mountainLevel: profileData.level,
+    myHeight: profileData.totalHeight,
+    profileImg: profileData.profileImg,
+    profileName: profileData.nickname,
   };
-  const tier = `⛰️ Lv ${profileData?.level} • ${profileData?.mountain} ${mountainData.mountainHeight}m`;
+
+  const tier = `⛰️ ${profileData.level}번째, ${profileData.mountain} ${`0`}m`;
 
   const handleButton = (text: string) => {
     navigate(text);
@@ -42,16 +48,16 @@ const LibraryHomePage = () => {
 
   return (
     <>
-      <Header text='서재' headerType='hamburger' />
+      <Header text={`${profileData.nickname}의 서재`} headerType='hamburger' />
       <Main>
         <TierContainer>{tier}</TierContainer>
         <MountainImage
           mountainData={
             mountainData as {
-              mountainHeight: number;
-              height?: number;
+              mountainLevel: number;
+              myHeight: number;
               profileImg?: string;
-              profileName?: string;
+              profileName: string;
             }
           }
           seasonalColor={seasonalColors[season]}
@@ -61,6 +67,8 @@ const LibraryHomePage = () => {
             {memberId && (
               <>
                 <IconButton
+                  data-tooltip-id='my-tooltip'
+                  data-tooltip-content='Hello world!'
                   onClick={() => handleButton(ROUTE_PATH.libraryBookSearch)}
                   Icon={SearchIcon}
                   text='책 검색'
