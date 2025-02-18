@@ -15,7 +15,7 @@ import ReviewBottomsheet from '@src/components/library/ReviewBottomsheet';
 import { ReactComponent as HiOutlinePlus } from '@src/assets/icons/hi_outline_plus.svg';
 
 const RecordDetailPage = () => {
-  const { bookId: isbn13 = '' } = useParams<{ bookId: string }>();
+  const { isbn13 = '' } = useParams<{ isbn13: string }>();
   const {
     data: { title, author, cover, publisher, pubDate, description, itemPage },
   } = useGetBookDetail(isbn13);
