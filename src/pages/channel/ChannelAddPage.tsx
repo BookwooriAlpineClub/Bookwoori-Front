@@ -153,7 +153,7 @@ const ChannelAddPage = () => {
               <Datepicker
                 type='period'
                 name='등반 기간'
-                min={formatDate(calcTomorrow())}
+                min={formatDate(calcTomorrow(), '$1-$2-$3')}
                 required
                 value={date}
                 setValue={setDate}

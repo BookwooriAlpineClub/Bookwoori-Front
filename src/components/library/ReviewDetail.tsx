@@ -1,4 +1,5 @@
 import type Review from '@src/types/review';
+import { formatDate } from '@src/utils/formatters';
 import styled from 'styled-components';
 import Section from '@src/components/common/Section';
 import StarReview from '@src/components/library/StarReview';
@@ -31,7 +32,7 @@ const ReviewDetail = ({
           </ButtonWrapper>
         </TopWrapper>
         <Body>{content}</Body>
-        <Caption>{`${createdAt} 작성 (${modifiedAt} 수정)`}</Caption>
+        <Caption>{`${formatDate(new Date(createdAt), '$1.$2.$3')} 작성 (${formatDate(new Date(modifiedAt), '$1.$2.$3.')} 수정)`}</Caption>
       </Container>
     </Section>
   );

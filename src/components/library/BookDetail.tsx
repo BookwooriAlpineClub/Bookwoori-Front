@@ -1,5 +1,6 @@
 import type BookType from '@src/types/book';
 import type RecordType from '@src/types/record';
+import { formatDate } from '@src/utils/formatters';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Tag from '@src/components/common/Tag';
@@ -53,7 +54,7 @@ const BookDetail = ({
         text='다 읽었어요'
         onClick={openBottomsheet}
       >
-        <Blue900Span>{`${record?.startDate}-${record?.endDate}`}</Blue900Span>
+        <Blue900Span>{`${formatDate(new Date(record?.startDate ?? ''), '$1.$2.$3.')}-${formatDate(new Date(record?.endDate ?? ''), '$1.$2.$3.')}`}</Blue900Span>
       </STag>
     ),
   };
