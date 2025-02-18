@@ -82,10 +82,11 @@ const HiddenInput = styled.input`
 const DeleteButton = styled.button`
   width: fit-content;
   background-color: ${({ theme }) => theme.colors.neutral0};
+  border: solid 0.1rem ${({ theme }) => theme.colors.neutral200};
   font-family: ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.neutral950};
-  padding: 0.3rem;
-  border-radius: 0.2rem;
+  padding: ${({ theme }) => theme.padding['4']}
+    ${({ theme }) => theme.padding['6']};
+  border-radius: ${({ theme }) => theme.rounded['6']};
   margin-top: 0.5rem;
-  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.05);
 `;

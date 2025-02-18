@@ -4,7 +4,6 @@ import { useGetClimbingReview } from '@src/hooks/query/climbing';
 import styled from 'styled-components';
 import Spinner from '@src/components/common/Spinner';
 import ReviewItem from '@src/components/climbing/ReviewItem';
-import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 
 const ReviewBoard = () => {
   const { id: climbingId } = useLoaderData<{ id: number }>();
@@ -13,18 +12,19 @@ const ReviewBoard = () => {
   if (isLoading) return <Spinner />;
   if (!data) return null;
 
+  console.log(data);
+
   return (
-    <Container>
-      <ClimbingDescription />
-      <ReviewListContainer>
-        {data.hasShared ? (
-          data.ClimbingMemberReviewList.map((review, idx) => (
+    <Container className='scroll-area'>
+      {data.hasShared ? (
+        <ReviewListContainer>
+          {data.ClimbingMemberReviewList.map((review, idx) => (
             <ReviewItem key={idx} climbingId={climbingId} review={review} />
-          ))
-        ) : (
-          <ReviewShareComponent {...data} />
-        )}
-      </ReviewListContainer>
+          ))}
+        </ReviewListContainer>
+      ) : (
+        <ReviewShareComponent {...data} />
+      )}
     </Container>
   );
 };
@@ -32,19 +32,10 @@ const ReviewBoard = () => {
 export default ReviewBoard;
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: ${({ theme }) => theme.gap['10']};
+  gap: ${({ theme }) => theme.gap['4']};
+  justify-content: space-between;
 `;
 
 const ReviewListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: ${({ theme }) => theme.rounded['16']};
-  background-color: ${({ theme }) => theme.colors.neutral0};
-  overflow-y: scroll;
-  padding: ${({ theme }) => theme.padding['16']};
+  gap: ${({ theme }) => theme.gap['4']};
 `;

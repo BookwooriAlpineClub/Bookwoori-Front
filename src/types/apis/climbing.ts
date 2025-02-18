@@ -31,7 +31,8 @@ export type patchClimbingMemoReq = {
 
 export type getClimbingReviewRes =
   | getClimbingReviewRes1
-  | getClimbingReviewRes2;
+  | getClimbingReviewRes2
+  | getClimbingReviewRes3;
 
 type getClimbingReviewRes1 = {
   hasShared: true;
@@ -49,8 +50,21 @@ type getClimbingReviewRes1 = {
 
 type getClimbingReviewRes2 = {
   hasShared: false;
-  isShareable: boolean;
+  isShareable: false;
   bookInfo: Book;
+};
+
+type getClimbingReviewRes3 = {
+  hasShared: false;
+  isShareable: true;
+  bookInfo: Book;
+  reviewList: {
+    content: string;
+    createdAt: string;
+    modifiedAt: string;
+    reviewId: number;
+    star: number;
+  }[];
 };
 
 export type getClimbingReviewEmojiRes = {

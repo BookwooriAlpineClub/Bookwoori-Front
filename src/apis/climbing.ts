@@ -56,9 +56,10 @@ export const getClimbing = async (
 /* 클라이밍 감상평 공유 */
 export const patchShareClimbingReview = async (
   climbingId: number,
+  reviewId: number,
 ): Promise<void> => {
   const response = await authClient.patch<void, AxiosResponse<void>>(
-    buildClimbUrl(`/${climbingId}/reviews`),
+    buildClimbUrl(`/${climbingId}/reviews/${reviewId}`),
   );
   return response.data;
 };
