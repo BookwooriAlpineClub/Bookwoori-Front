@@ -93,29 +93,33 @@ const RecordBottomsheet = ({
         required
         setValue={setStatus}
       />
-      <Fieldset as='fieldset' title='독서 기간'>
-        <Section>
-          <Datepicker
-            type={status === 'READING' ? 'date' : 'period'}
-            name='date'
-            required
-            value={date}
-            setValue={setDate}
-          />
-        </Section>
-      </Fieldset>
-      <Fieldset as='fieldset' title='독서 현황'>
-        <Section>
-          <PageField
-            name='currentPage'
-            required
-            value={currentPage}
-            setValue={setCurrentPage}
-            defaultValue={defaultCurrentPage ?? 0}
-            itemPage={itemPage}
-          />
-        </Section>
-      </Fieldset>
+      {(status === 'READING' || status === 'FINISHED') && (
+        <Fieldset as='fieldset' title='독서 기간'>
+          <Section>
+            <Datepicker
+              type={status === 'READING' ? 'date' : 'period'}
+              name='date'
+              required
+              value={date}
+              setValue={setDate}
+            />
+          </Section>
+        </Fieldset>
+      )}
+      {status === 'READING' && (
+        <Fieldset as='fieldset' title='독서 현황'>
+          <Section>
+            <PageField
+              name='currentPage'
+              required
+              value={currentPage}
+              setValue={setCurrentPage}
+              defaultValue={defaultCurrentPage ?? 0}
+              itemPage={itemPage}
+            />
+          </Section>
+        </Fieldset>
+      )}
       <Button type='submit'>저장하기</Button>
       {recordId && (
         <UnderlineButton text='삭제하기' onClick={handleDeleteClick} />
