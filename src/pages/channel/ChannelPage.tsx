@@ -158,7 +158,7 @@ const ChannelPage = () => {
             return (
               <React.Fragment key={msg.id}>
                 <ChatItem
-                  ref={msg.id === replyChatId ? replyChatRef : null}
+                  ref={msg.id === replyChatId.id ? replyChatRef : null}
                   key={msg.id}
                   chatItem={msg}
                   createdAt={currentTime}
