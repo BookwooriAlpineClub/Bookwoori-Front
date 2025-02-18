@@ -22,12 +22,12 @@ const ReviewDetail = ({
         <TopWrapper>
           <StarReview starReview={star} />
           <ButtonWrapper>
-            <button type='button' onClick={openBottomsheet}>
-              <HiOutlinePencil />
-            </button>
-            <button type='button' onClick={openBottomsheet}>
-              <FiTrash2 />
-            </button>
+            <Button type='button' onClick={openBottomsheet}>
+              <HiOutlinePencil width={20} height={20} />
+            </Button>
+            <Button type='button' onClick={openBottomsheet}>
+              <FiTrash2 width={20} height={20} />
+            </Button>
           </ButtonWrapper>
         </TopWrapper>
         <Body>{content}</Body>
@@ -53,6 +53,11 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
   gap: ${({ theme }) => theme.gap[16]};
+`;
+const Button = styled.button`
+  display: flex;
+
+  color: ${({ theme }) => theme.colors.blue500};
 `;
 const Body = styled.p`
   ${({ theme }) => theme.fonts.body}
