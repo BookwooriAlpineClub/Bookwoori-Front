@@ -11,24 +11,28 @@ const RecordListItem = ({
   title,
   author,
   cover,
-  itemPage,
+  itemPage = -1,
   record,
   reviewStarAve,
 }: Props) => {
   const tagConfig: { [key: string]: React.ReactElement | null } = {
     WISH: null,
-    READING: <STag color='blue' Icon={IcnBook} text='' />,
-    FINISHED: <STag color='blue' Icon={IcnStar} text='' />, // 추후 평균값으로 수정
+    READING: (
+      <STag
+        color='blue'
+        Icon={IcnBook}
+        text={`${((record.currentPage ?? 0) / itemPage) * 100}%`}
+      />
+    ),
+    FINISHED: <STag color='blue' Icon={IcnStar} text={reviewStarAve} />,
   };
-  console.log(tagConfig);
-
 
   return (
     <Container>
       <Img src={cover} alt='책 표지' />
       <Title $line={1}>{title}</Title>
       <Author $line={1}>{author}</Author>
-      {/* {tagConfig[records[0].status]} */}
+      {tagConfig[record.status]}
     </Container>
   );
 };
