@@ -16,6 +16,9 @@ import Popover from '@src/components/common/Popover';
 import styled from 'styled-components';
 import ExpandableList from '@src/components/common/ExpandableList';
 import UserAvatar from '@src/components/common/UserAvatar';
+import useToast from '@src/hooks/useToast';
+import { ROUTE_PATH } from '@src/constants/routePath';
+import { useNavigate } from 'react-router-dom';
 
 const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
   const { id: serverId } = useLoaderData<{ id: number }>();
@@ -28,6 +31,9 @@ const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
   const { isOpen, togglePopover, popoverRef, closePopover } = usePopover();
   const { openModal, closeModal } = useModal(dialogState);
 
+  const addToast = useToast();
+  const navigate = useNavigate();
+
   const ClickTransferAuthority = (memberId: number, memberNickname: string) => {
     closePopover();
     openModal(
@@ -35,7 +41,15 @@ const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
         text={`위임한 권한은 복구할 수 없습니다.\n "${memberNickname}" 에게 위임하시겠습니까?`}
         deleteLabel='위임하기'
         closeDialog={closeModal}
-        onClickDelete={() => transferAuthority(memberId)}
+        onClickDelete={() =>
+          transferAuthority(memberId, {
+            onSuccess: () => {
+              closeModal();
+              addToast('success', '권한이 위임되었습니다.');
+              window.location.reload();
+            },
+          })
+        }
       />,
     );
   };
@@ -46,14 +60,21 @@ const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
   ) => {
     openModal(
       <DeleteConfirmDialog
-        text={
-          leave
-            ? `한 번 나가면 다시 들어올 수 없습니다.\n정말 나가시겠습니까?`
-            : undefined
-        }
+        text={leave ? `정말 나가시겠습니까?` : undefined}
         deleteLabel={leave ? '나가기' : undefined}
         closeDialog={closeModal}
-        onClickDelete={() => fn()}
+        onClickDelete={() =>
+          fn(undefined, {
+            onSuccess: () => {
+              closeModal();
+              addToast(
+                'success',
+                leave ? '공동체에서 나가셨습니다.' : '공동체가 삭제되었습니다.',
+              );
+              navigate(ROUTE_PATH.library);
+            },
+          })
+        }
       />,
     );
   };
@@ -64,11 +85,13 @@ const CommunitySettingSection = ({ isOwner }: { isOwner?: boolean }) => {
         {isOwner && (
           <>
             <RelativeContainer>
-              <CommunityButton
-                type='transferAuthority'
-                testId='transfer-authority-button'
-                onClick={togglePopover}
-              />
+              {memberList?.length !== 1 && (
+                <CommunityButton
+                  type='transferAuthority'
+                  testId='transfer-authority-button'
+                  onClick={togglePopover}
+                />
+              )}
               {isOpen && (
                 <div ref={popoverRef}>
                   <Popover placement='top' className='member-picker'>

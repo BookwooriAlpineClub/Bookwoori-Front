@@ -1,10 +1,6 @@
 import type { AxiosError } from 'axios';
 import type { PostServerReq, GetServersRes } from '@src/types/apis/server';
-import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import useToast from '@src/hooks/useToast';
-import { encodeId } from '@src/utils/formatters';
-import { ROUTE_PATH } from '@src/constants/routePath';
 import {
   getServerByCode,
   getServerOne,
@@ -53,23 +49,10 @@ export const usePostServer = () => {
 };
 
 /* 초대 코드로 서버 가입 */
-export const usePostServerJoin = (inviteCode: string) => {
-  const navigate = useNavigate();
-  const addToast = useToast();
-
-  const mutation = useMutation({
-    mutationFn: () => postServerJoinByCode(inviteCode),
-    onSuccess: (res) => {
-      addToast('success', '가입 완료');
-      const { serverId } = res;
-      const path = ROUTE_PATH.server.replace(
-        ':serverId',
-        encodeId(serverId || -1),
-      );
-      navigate(path);
-    },
+export const usePostServerJoin = () => {
+  return useMutation({
+    mutationFn: (inviteCode: string) => postServerJoinByCode(inviteCode),
   });
-  return mutation;
 };
 
 /* 서버 멤버 목록 조회 */
