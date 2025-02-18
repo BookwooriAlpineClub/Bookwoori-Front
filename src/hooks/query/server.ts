@@ -83,17 +83,15 @@ export const useDeleteServerMember = (serverId: number) => {
 
 /* 서버 권한 위임 */
 export const usePatchServerMemberOwner = (serverId: number) => {
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: (memberId: number) =>
       patchServerMemberOwner(serverId, { memberId }),
   });
-  return mutation;
 };
 
 /* 서버 삭제 */
 export const useDeleteServer = (serverId: number) => {
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: () => deleteServer(serverId),
   });
-  return mutation;
 };
