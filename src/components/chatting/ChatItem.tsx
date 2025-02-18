@@ -117,15 +117,15 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
 
     // 답장 부모 메시지 이동 시 배경색 변화
     useEffect(() => {
-      if (replyChatId === chatItem.id) {
+      if (replyChatId.id === chatItem.id) {
         setIsSelected(true);
 
         setTimeout(() => {
           setIsSelected(false);
-          setReplyChatId(undefined);
-        }, 1500);
+          setReplyChatId((prev) => ({ ...prev, id: undefined, updatedAt: 0 }));
+        }, 1000);
       }
-    }, [replyChatId, chatItem.id]);
+    }, [replyChatId.updatedAt]);
 
     return (
       <WithReplayLayout ref={ref} $selected={isSelected}>
@@ -136,7 +136,12 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
             </LineWrapper>
             <ReplySpan
               $hasReply={!!other}
-              onClick={() => setReplyChatId(chatItem.parentId)}
+              onClick={() =>
+                setReplyChatId((prev) => ({
+                  ...prev,
+                  id: chatItem.parentId,
+                }))
+              }
             >
               {other && (
                 <ReplyNickname>

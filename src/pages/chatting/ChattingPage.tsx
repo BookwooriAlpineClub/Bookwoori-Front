@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   editChatIdState,
   replyChatIdState,
@@ -22,7 +22,7 @@ const ChattingPage = () => {
   const { id: memberId } = useLoaderData<{ id: number }>();
   const setEditChatId = useSetRecoilState(editChatIdState);
   const setReplyChatItem = useSetRecoilState(replyChatState);
-  const replyChatId = useRecoilValue(replyChatIdState);
+  const [replyChatId, setReplyChatId] = useRecoilState(replyChatIdState);
 
   const { roomInfo } = usePostMessageRoom(memberId);
   const { data, refetch, hasNextPage, fetchNextPage } = useGetDMList(
@@ -47,18 +47,32 @@ const ChattingPage = () => {
   const handleRefresh = async () => {
     setEditChatId(null);
     setReplyChatItem(null);
+    setReplyChatId({ id: undefined, updatedAt: 0 });
     refetch();
     navigate(-1);
   };
 
+  // 원 메시지 이동
   useEffect(() => {
-    if (replyChatRef.current) {
+    if (!replyChatId.id) return;
+
+    const targetChat = allMessages?.find((it) => it.id === replyChatId.id);
+    if (!targetChat) {
+      handleFetchNextPage();
+      return;
+    }
+
+    if (targetChat && replyChatRef.current) {
       replyChatRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'center',
       });
+
+      if (replyChatId.updatedAt === 0) {
+        const { id } = replyChatId;
+        setReplyChatId({ id, updatedAt: Date.now() });
+      }
     }
-  }, [replyChatId]);
+  }, [replyChatId.id, data]);
 
   // 최초 데이터 저장
   useEffect(() => {
@@ -72,10 +86,10 @@ const ChattingPage = () => {
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
       }
     }, 0);
+    handleFetchNextPage();
   }, [data, isInitial]);
 
   const handleFetchNextPage = () => {
-    if (!inView) return;
     if (!hasNextPage) return;
 
     const prevHeight = chatRef.current?.scrollHeight ?? 0;
@@ -93,6 +107,7 @@ const ChattingPage = () => {
 
   // 페이지 패칭
   useEffect(() => {
+    if (!inView) return;
     handleFetchNextPage();
   }, [inView, hasNextPage]);
 
@@ -132,7 +147,7 @@ const ChattingPage = () => {
             return (
               <React.Fragment key={it.id}>
                 <ChatItem
-                  ref={it.id === replyChatId ? replyChatRef : null}
+                  ref={it.id === replyChatId.id ? replyChatRef : null}
                   key={it.id}
                   chatItem={it}
                   createdAt={currentTime}
