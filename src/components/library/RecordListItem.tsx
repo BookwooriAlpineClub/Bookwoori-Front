@@ -16,7 +16,7 @@ const RecordListItem = ({
   cover,
   itemPage,
   record,
-  ReviewStarAve,
+  reviewStarAve,
 }: Props) => {
   console.log(itemPage, record, ReviewStarAve);
 

@@ -11,7 +11,7 @@ export type GetRecordListRes = (Pick<
 > &
   Partial<Pick<Book, 'itemPage'>> & {
     record: Record;
-    ReviewStarAve?: number;
+    reviewStarAve?: number;
   })[];
 /**
  * 책 기록 상세 조회
