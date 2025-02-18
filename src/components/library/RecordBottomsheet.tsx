@@ -2,12 +2,12 @@ import type Book from '@src/types/book';
 import type Record from '@src/types/record';
 import { useState } from 'react';
 import useModal from '@src/hooks/useModal';
-import { bottomsheetState, dialogState } from '@src/states/atoms';
 import {
   usePostRecord,
   usePatchRecord,
   useDeleteRecord,
 } from '@src/hooks/query/record';
+import { bottomsheetState, dialogState } from '@src/states/atoms';
 import styled from 'styled-components';
 import Fieldset from '@src/components/common/Fieldset';
 import Section from '@src/components/common/Section';
