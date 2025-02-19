@@ -54,8 +54,15 @@ export default TextField;
 
 const Container = styled.div`
   display: flex;
-  flex-flow: column nowrap;
+  flex-wrap: nowrap;
   gap: ${({ theme }) => theme.gap[4]};
+
+  &:has(input) {
+    flex-direction: row;
+  }
+  &:has(textarea) {
+    flex-direction: column;
+  }
 `;
 const Input = styled.input<{ as: string }>`
   width: 100%;
