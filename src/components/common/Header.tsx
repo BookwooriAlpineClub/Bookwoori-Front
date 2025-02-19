@@ -50,10 +50,11 @@ const Layout = styled.header`
   justify-content: space-between;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
   z-index: ${({ theme }) => theme.zIndex.header};
+  transform: translateX(-50%);
 
-  width: 100%;
+  width: inherit;
   height: 4.375rem;
   padding: 1.4375rem;
 

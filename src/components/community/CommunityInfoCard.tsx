@@ -71,7 +71,7 @@ const ImageWrapper = styled.div<{ $isText: boolean }>`
   }
 
   span {
-    font-size: 16vw;
+    font-size: 3rem;
     color: ${({ theme }) => theme.colors.blue900};
   }
 `;
