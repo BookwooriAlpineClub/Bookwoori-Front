@@ -26,7 +26,12 @@ export const PaddingLayout = styled.div`
  */
 export const BottomButtonLayout = styled.div`
   display: flex;
-  height: 100%;
+  @supports (height: 100svh) {
+    height: calc(100svh - 4.375rem - 2rem);
+  }
+  @supports not (height: 100svh) {
+    height: calc(100vh - 4.375rem - 2rem);
+  }
 
   main {
     display: flex;
@@ -34,7 +39,6 @@ export const BottomButtonLayout = styled.div`
     gap: ${({ theme }) => theme.gap[16]};
 
     flex-grow: 1;
-    margin-bottom: 1.5rem;
 
     overflow-y: auto;
   }
