@@ -3,10 +3,14 @@ import { NoSelect } from '@src/styles/mixins';
 
 export const PaddingLayout = styled.div`
   width: 100%;
+  min-height: 100%;
   padding: ${({ theme }) => theme.padding[16]};
 
   &:has(header) {
     padding-top: 0;
+  }
+  &:has(strong) {
+    height: 100%;
   }
 `;
 /**
