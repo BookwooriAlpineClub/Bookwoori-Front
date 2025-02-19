@@ -193,7 +193,8 @@ export const ERROR_MESSAGES = {
   [ErrorCode.RESOURCE.MEMBER_NOT_FOUND]: '사용자를 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.MEMBER_INACTIVE]: '이미 계정을 삭제한 멤버입니다.',
   [ErrorCode.RESOURCE.SERVER_NOT_FOUND]: '서버를 찾을 수 없습니다.',
-  [ErrorCode.RESOURCE.ALREADY_JOINED_SERVER]: '이미 참여하고 있는 서버입니다.',
+  [ErrorCode.RESOURCE.ALREADY_JOINED_SERVER]:
+    '이미 참여하고 있는 공동체입니다.',
   [ErrorCode.RESOURCE.DELEGATION_REQUIRED]:
     '서버에 나가기 위해서는 \n서버장 권한을 위임해야 합니다.',
   [ErrorCode.RESOURCE.SERVER_MEMBER_NOT_FOUND]:
