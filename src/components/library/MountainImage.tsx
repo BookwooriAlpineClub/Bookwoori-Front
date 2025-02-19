@@ -126,6 +126,9 @@ const MountainImage = ({
               height={profileCircleSize}
             >
               <div
+                {...({ xmlns: 'http://www.w3.org/1999/xhtml' } as {
+                  xmlns: string;
+                })}
                 style={{
                   width: 'fit-content',
                   height: '100%',
