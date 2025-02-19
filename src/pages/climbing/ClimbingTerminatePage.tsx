@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import ReviewBoard from '@src/components/climbing/ReviewBoard';
 import SegmentedControl from '@src/components/common/SegmentedControl';
 import CompleteCard from '@src/components/climbing/CompleteCard';
+import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 
 export type ViewType = 'climbing' | 'review';
 
@@ -33,7 +34,12 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
             <ClimbingBoard />
           </>
         )}
-        {selectedView === 'review' && <ReviewBoard />}
+        {selectedView === 'review' && (
+          <>
+            <ClimbingDescription />
+            <ReviewBoard />
+          </>
+        )}
       </Main>
     </>
   );
@@ -42,13 +48,5 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
 export default ClimbingTerminatePage;
 
 const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem 1.875rem;
-  gap: 1.25rem;
   background-color: ${({ theme }) => theme.colors.neutral50};
-  min-height: calc(100% - 4.375rem);
-  position: relative;
-  height: calc(100% - 4.375rem);
-  margin-top: 100px;
 `;

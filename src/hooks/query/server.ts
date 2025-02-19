@@ -1,10 +1,6 @@
 import type { AxiosError } from 'axios';
 import type { PostServerReq, GetServersRes } from '@src/types/apis/server';
-import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import useToast from '@src/hooks/useToast';
-import { encodeId } from '@src/utils/formatters';
-import { ROUTE_PATH } from '@src/constants/routePath';
 import {
   getServerByCode,
   getServerOne,
@@ -46,39 +42,17 @@ export const useGetServerOne = (serverId: number) => {
 };
 
 /* 서버 생성 */
-export const usePostServer = (resetFields: () => void) => {
-  const navigate = useNavigate();
-  const addToast = useToast();
-
-  const mutation = useMutation({
+export const usePostServer = () => {
+  return useMutation({
     mutationFn: (data: PostServerReq) => postServer(data),
-    onSuccess: (res) => {
-      addToast('success', '공동체가 생성되었습니다.');
-      resetFields();
-      const encodedId = encodeId(res.serverId);
-      navigate(ROUTE_PATH.server.replace(':serverId', encodedId));
-    },
   });
-  return mutation;
 };
 
 /* 초대 코드로 서버 가입 */
-export const usePostServerJoin = (inviteCode: string) => {
-  const navigate = useNavigate();
-  const addToast = useToast();
-  const mutation = useMutation({
-    mutationFn: () => postServerJoinByCode(inviteCode),
-    onSuccess: (res) => {
-      addToast('success', '가입 완료');
-      const { serverId } = res;
-      const path = ROUTE_PATH.server.replace(
-        ':serverId',
-        encodeId(serverId || -1),
-      );
-      navigate(path);
-    },
+export const usePostServerJoin = () => {
+  return useMutation({
+    mutationFn: (inviteCode: string) => postServerJoinByCode(inviteCode),
   });
-  return mutation;
 };
 
 /* 서버 멤버 목록 조회 */
@@ -87,7 +61,7 @@ export const useGetServerMembers = (serverId: number, isOpen: boolean) => {
     queryKey: ['getServerMembers', serverId],
     queryFn: () => getServerMembers(serverId),
     select: (rawData) => rawData.members,
-    enabled: isOpen,
+    enabled: isOpen && serverId > 0,
   });
 };
 
@@ -109,17 +83,15 @@ export const useDeleteServerMember = (serverId: number) => {
 
 /* 서버 권한 위임 */
 export const usePatchServerMemberOwner = (serverId: number) => {
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: (memberId: number) =>
       patchServerMemberOwner(serverId, { memberId }),
   });
-  return mutation;
 };
 
 /* 서버 삭제 */
 export const useDeleteServer = (serverId: number) => {
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: () => deleteServer(serverId),
   });
-  return mutation;
 };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import failedPictogram from '@src/assets/images/climbing/fail_pictogram.svg';
-import finishedPictogram from '@src/assets/images/climbing/finish_pictogram.svg';
+import failedPictogram from '@src/assets/images/climbing/fail_pictogram.png';
+import finishedPictogram from '@src/assets/images/climbing/finish_pictogram.png';
 
 const CompleteCard = ({ isFinished = true }: { isFinished?: boolean }) => {
   return (
@@ -56,4 +56,9 @@ const TextContent = styled.div`
   }
 `;
 
-const Pictogram = styled.div``;
+const Pictogram = styled.div`
+  img {
+    width: 10rem;
+    object-fit: contain;
+  }
+`;

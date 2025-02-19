@@ -6,7 +6,7 @@ export interface CommunityInfoProps {
   memberInfo?: string;
   creationDate?: string;
   description?: string;
-  serverImg?: string;
+  serverImg?: string | null;
 }
 
 const CommunityInfoSection = ({
@@ -14,7 +14,7 @@ const CommunityInfoSection = ({
   memberInfo = '',
   creationDate = '',
   description = '',
-  serverImg = '',
+  serverImg,
 }: CommunityInfoProps) => {
   return (
     <Fieldset title='공동체 정보' as='section'>
@@ -23,7 +23,7 @@ const CommunityInfoSection = ({
         memberInfo={memberInfo}
         creationDate={creationDate}
         description={description}
-        imageUrl={serverImg}
+        imageUrl={serverImg ?? null}
       />
     </Fieldset>
   );

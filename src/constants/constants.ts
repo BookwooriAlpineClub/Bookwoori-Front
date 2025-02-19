@@ -57,7 +57,6 @@ export const EmojiType = {
 
 export type EmojiTypeType = (typeof EmojiType)[keyof typeof EmojiType];
 
-
 /* Exp 유형 */
 export const ExpType = {
   READ_PAGE: '읽은 쪽수를 기록했어요.',
@@ -75,6 +74,27 @@ export const RoleType = {
 } as const;
 
 export type RoleTypeType = (typeof RoleType)[keyof typeof RoleType];
+
+/* 티어 정보 */
+export const Mountains: {
+  [key: number]: {
+    level: number;
+    mountainName: string;
+    mountainHeight: number;
+  };
+} = {
+  '10': { level: 10, mountainName: '백두산', mountainHeight: 2744 },
+  '9': { level: 9, mountainName: '한라산', mountainHeight: 1950 },
+  '8': { level: 8, mountainName: '지리산', mountainHeight: 1915 },
+  '7': { level: 7, mountainName: '설악산', mountainHeight: 1708 },
+  '6': { level: 6, mountainName: '금강산', mountainHeight: 1638 },
+  '5': { level: 5, mountainName: '소백산', mountainHeight: 1439 },
+  '4': { level: 4, mountainName: '무등산', mountainHeight: 997 },
+  '3': { level: 3, mountainName: '북한산', mountainHeight: 727 },
+  '2': { level: 2, mountainName: '아차산', mountainHeight: 296 },
+  '1': { level: 1, mountainName: '동산', mountainHeight: 100 },
+  '0': { level: 0, mountainName: '평지', mountainHeight: 0 },
+};
 
 /* 커스텀 에러 코드 */
 export const ErrorCode = {
@@ -175,11 +195,12 @@ export const ERROR_MESSAGES = {
   [ErrorCode.RESOURCE.SERVER_NOT_FOUND]: '서버를 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.ALREADY_JOINED_SERVER]: '이미 참여하고 있는 서버입니다.',
   [ErrorCode.RESOURCE.DELEGATION_REQUIRED]:
-    '해당 요청 처리를 위해서는 서버장 권한을 위임해야 합니다.',
+    '서버에 나가기 위해서는 \n서버장 권한을 위임해야 합니다.',
   [ErrorCode.RESOURCE.SERVER_MEMBER_NOT_FOUND]:
     '해당 서버에 사용자가 존재하지 않습니다.',
   [ErrorCode.RESOURCE.SERVER_OWNER_NOT_FOUND]: '서버 주인을 찾을 수 없습니다.',
-  [ErrorCode.RESOURCE.INVALID_INVITE_CODE]: '유효하지 않은 초대코드입니다.',
+  [ErrorCode.RESOURCE.INVALID_INVITE_CODE]:
+    '유효하지 않은 초대코드입니다.\n다시 입력해주세요.',
   [ErrorCode.RESOURCE.CATEGORY_NOT_FOUND]: '카테고리를 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.CATEGORY_LOCATE_EXCEPTION]:
     '카테고리 위치를 변경할 수 없습니다.',

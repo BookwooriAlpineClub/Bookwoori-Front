@@ -34,10 +34,10 @@ const Header = ({ text, headerType, onClick, className }: HeaderProps) => {
       {headerType === 'back' &&
         renderButton('back', onClick ?? handleClick, Back)}
       {(headerType === 'hamburger' || headerType === 'server') &&
-        renderButton('hamburger', openGlobalDrawer, Hamburger)}
+        renderButton('hamburger', () => openGlobalDrawer(), Hamburger)}
       <Label>{text}</Label>
       {headerType === 'server' &&
-        renderButton('server', openCommunityDrawer, Users)}
+        renderButton('server', () => openCommunityDrawer(), Users)}
     </Layout>
   );
 };

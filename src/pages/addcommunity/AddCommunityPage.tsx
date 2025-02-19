@@ -52,20 +52,11 @@ const AddCommunityPage = () => {
 export default AddCommunityPage;
 
 const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.94rem;
-  padding: 1.87rem 1.25rem;
-  width: 100%;
-  min-height: calc(100vh - 4.375em);
-  min-height: calc(100svh - 4.375rem);
-
+  margin-top: 2rem;
   background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const AddOptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  width: 100%;
 `;

@@ -5,7 +5,7 @@ interface CommunityInfoCardProps {
   memberInfo: string;
   creationDate: string;
   description: string;
-  imageUrl: string;
+  imageUrl: string | null;
 }
 
 const CommunityInfoCard = ({
@@ -17,8 +17,12 @@ const CommunityInfoCard = ({
 }: CommunityInfoCardProps) => {
   return (
     <CardContainer>
-      <ImageWrapper>
-        <img src={imageUrl} alt={`${name} profile`} />
+      <ImageWrapper $isText={!imageUrl}>
+        {imageUrl ? (
+          <img src={imageUrl} alt={`${name}`} />
+        ) : (
+          <span>{name.substring(0, 2)}</span>
+        )}
       </ImageWrapper>
       <ContentWrapper>
         <Name>{name}</Name>
@@ -44,20 +48,31 @@ const CardContainer = styled.section`
   padding: 2.19rem 1.88rem;
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled.div<{ $isText: boolean }>`
   width: 9.375rem;
   height: 9.375rem;
-  justify-content: space-between;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  text-align: center;
   overflow: hidden;
+  flex-shrink: 0;
   border-radius: 0.625rem;
+
+  background-color: ${({ theme, $isText }) =>
+    $isText ? theme.colors.blue100 : theme.colors.neutral0};
 
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     font-family: ${({ theme }) => theme.fonts.caption};
     color: ${({ theme }) => theme.colors.neutral50};
+  }
+
+  span {
+    font-size: 16vw;
+    color: ${({ theme }) => theme.colors.blue900};
   }
 `;
 

@@ -44,13 +44,15 @@ const ProfileContainer = styled.div<{
     status === 'FINISHED' ? `0.1rem solid ${theme.colors.blue500}` : 'null'};
 
   background-color: ${({ theme }) => theme.colors.blue100};
+  ${({ theme }) => theme.fonts.body}
 
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
   span {
+    ${({ theme }) => theme.fonts.body}
     color: ${({ theme }) => theme.colors.blue900};
   }
 `;
