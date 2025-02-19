@@ -60,9 +60,13 @@ export const BottomButtonLayout = styled.div`
  * </NoDataTextLayout>
  */
 export const NoDataTextLayout = styled.div`
-  display: flex;
-  height: 100%;
-
+  &:has(strong) {
+    display: flex;
+    height: 100%;
+  }
+  main {
+    width: 100%;
+  }
   main:has(strong) {
     display: flex;
 
