@@ -46,6 +46,12 @@ const useDraggable = (categoryListData: Category[]) => {
   const handleOnDrop = useCallback(
     (idx: number) => {
       if (idx === -1 || draggingIdx === idx || draggingIdx === null) return;
+      
+      let defaultCategoryId;
+      list?.forEach((it) => {
+        if (it.name === 'DEFAULT') defaultCategoryId = it.categoryId;
+      });
+      if (defaultCategoryId === idx) return;
 
       setList((prevList) => {
         if (!prevList) return prevList;
