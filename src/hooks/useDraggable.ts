@@ -22,7 +22,6 @@ const useDraggable = (categoryListData: Category[]) => {
   const [beforeIdx, setBeforeIdx] = useState<number>(-1);
   const [list, setList] = useState<Category[]>();
   const [draggingIdx, setDraggingIdx] = useState<number>(-1);
-  const [touchStartIdx, setTouchStartIdx] = useState<number>(-1);
 
   useEffect(() => {
     setList((prevList) => {
@@ -62,63 +61,7 @@ const useDraggable = (categoryListData: Category[]) => {
     [draggingIdx, beforeIdx],
   );
 
-  const handleTouchStart = (idx: number) => {
-    setTouchStartIdx(idx);
-  };
-
-  const handleTouchMove = useCallback(
-    (e: React.TouchEvent) => {
-      const touch = e.touches[0];
-
-      if (!list) return;
-      const target = list.find((item) => {
-        const element = document.querySelector(
-          `[data-idx="${item.categoryId}"]`,
-        );
-        if (!element) return false;
-
-        const rect = element.getBoundingClientRect();
-        return (
-          touch.clientX >= rect.left &&
-          touch.clientX <= rect.right &&
-          touch.clientY >= rect.top &&
-          touch.clientY <= rect.bottom
-        );
-      });
-
-      if (target) {
-        setBeforeIdx(target.categoryId);
-      }
-    },
-    [list],
-  );
-
-  const handleTouchEnd = useCallback(() => {
-    if (
-      touchStartIdx === null ||
-      beforeIdx === -1 ||
-      touchStartIdx === beforeIdx
-    )
-      return;
-
-    setList((prevList) => {
-      if (!prevList) return prevList;
-
-      const movedItem = prevList.find((it) => it.categoryId === touchStartIdx);
-      if (!movedItem) return prevList;
-
-      return updateList(prevList, movedItem, beforeIdx);
-    });
-  }, [touchStartIdx, beforeIdx]);
-
   const handleDraggable = (idx: number) => {
-    if (window.matchMedia('(pointer: coarse)').matches) {
-      return {
-        onTouchStart: () => handleTouchStart(idx),
-        onTouchMove: handleTouchMove,
-        onTouchEnd: handleTouchEnd,
-      };
-    }
     return {
       draggable: true,
       onDragStart: (e: React.DragEvent) => handleOnDragStart(e, idx),
@@ -128,9 +71,7 @@ const useDraggable = (categoryListData: Category[]) => {
   };
 
   return {
-    categoryId: window.matchMedia('(pointer: coarse)').matches
-      ? touchStartIdx
-      : draggingIdx,
+    categoryId: draggingIdx,
     beforeIdx,
     list,
     setList,
