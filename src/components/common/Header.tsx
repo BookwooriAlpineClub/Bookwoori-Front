@@ -1,8 +1,7 @@
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import useSideBar from '@src/hooks/useSideBar';
-import useServerbar from '@src/hooks/useServerbar';
-import Serverbar from '@src/components/common/Serverbar';
+import useModal from '@src/hooks/useModal';
+import { globalDrawerState, communityDrawerState } from '@src/states/atoms';
+import styled from 'styled-components';
 import { ReactComponent as Hamburger } from '@src/assets/icons/fi_menu.svg';
 import { ReactComponent as Back } from '@src/assets/icons/fi_arrow_left.svg';
 import { ReactComponent as Users } from '@src/assets/icons/fi_users.svg';
@@ -10,28 +9,35 @@ import { ReactComponent as Users } from '@src/assets/icons/fi_users.svg';
 interface HeaderProps {
   text: string;
   headerType: 'hamburger' | 'back' | 'server';
+  onClick?: () => void;
+  className?: string;
 }
 
-const renderButton = (type: string, onClick: () => void, Icon: React.FC) => (
+const renderButton = (
+  type: string,
+  onClick: () => void,
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>,
+) => (
   <Button type='button' onClick={onClick} aria-label={type}>
-    <Icon />
+    <Icon width={24} height={24} />
   </Button>
 );
 
-const Header = ({ text, headerType }: HeaderProps) => {
+const Header = ({ text, headerType, onClick, className }: HeaderProps) => {
   const navigate = useNavigate();
   const handleClick = () => navigate(-1);
-  const { openServerbar } = useServerbar();
-  const { openSideBar } = useSideBar();
+  const { openModal: openGlobalDrawer } = useModal(globalDrawerState);
+  const { openModal: openCommunityDrawer } = useModal(communityDrawerState);
 
   return (
-    <Layout>
-      {headerType === 'back' && renderButton('back', handleClick, Back)}
+    <Layout className={className}>
+      {headerType === 'back' &&
+        renderButton('back', onClick ?? handleClick, Back)}
       {(headerType === 'hamburger' || headerType === 'server') &&
-        renderButton('hamburger', openServerbar, Hamburger)}
-      <Serverbar />
+        renderButton('hamburger', () => openGlobalDrawer(), Hamburger)}
       <Label>{text}</Label>
-      {headerType === 'server' && renderButton('server', openSideBar, Users)}
+      {headerType === 'server' &&
+        renderButton('server', () => openCommunityDrawer(), Users)}
     </Layout>
   );
 };
@@ -44,7 +50,8 @@ const Layout = styled.header`
   justify-content: space-between;
   position: fixed;
   top: 0;
-  z-index: ${({theme}) => theme.zIndex.header};
+  left: 0;
+  z-index: ${({ theme }) => theme.zIndex.header};
 
   width: 100%;
   height: 4.375rem;
@@ -62,6 +69,7 @@ const Label = styled.label`
   ${({ theme }) => theme.fonts.title}
   color: ${({ theme }) => theme.colors.neutral950};
   text-align: center;
+  word-break: keep-all;
 `;
 
 const Button = styled.button`

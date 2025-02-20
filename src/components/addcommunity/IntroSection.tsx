@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 interface IntroSectionProps {
   title: string;
-  bodyLines: { id: string; text: string }[];
+  bodyLines: { text: string }[];
 }
 
 const IntroSection = ({ title, bodyLines }: IntroSectionProps) => {
@@ -10,8 +10,8 @@ const IntroSection = ({ title, bodyLines }: IntroSectionProps) => {
     <IntroContainer>
       <IntroTitle>{title}</IntroTitle>
       <IntroBody>
-        {bodyLines.map((line) => (
-          <span key={line.id}>{line.text}</span>
+        {bodyLines.map((line, idx) => (
+          <span key={idx}>{line.text}</span>
         ))}
       </IntroBody>
     </IntroContainer>
@@ -20,7 +20,7 @@ const IntroSection = ({ title, bodyLines }: IntroSectionProps) => {
 
 export default IntroSection;
 
-const IntroContainer = styled.div`
+const IntroContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;

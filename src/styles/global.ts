@@ -23,25 +23,32 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.colors.neutral50};
     ${({ theme }) => theme.fonts.body}
   }
-  button {
-    ${({ theme }) => theme.fonts.mountain}
-  }
-  /* 스크롤바 비표시 */
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
   #root, #modal, #toast {
+    width: inherit;
+    height: inherit;
+  }
+  #root {
+    &:has(header) {
+      padding-top: calc(4.375rem + ${({ theme }) => theme.padding[16]});
+    }
+  }
+  #root > main {
     width: 100%;
     height: 100%;
+  }
+  #modal {
+    position: fixed;
+    z-index: ${({ theme }) => theme.zIndex.modal};
   }
   #toast {
     position: fixed;
     z-index: ${({ theme }) => theme.zIndex.toast};
   }
-  #modal {
-    position: fixed;
-    z-index: ${({ theme }) => theme.zIndex.modal};
+  button {
+    ${({ theme }) => theme.fonts.mountain}
+  }
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;
 

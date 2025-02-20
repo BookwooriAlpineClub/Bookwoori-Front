@@ -1,3 +1,5 @@
+import { ExpTypeType } from '@src/constants/constants';
+
 export interface User {
   isMine: boolean;
   nickname: string;
@@ -5,14 +7,15 @@ export interface User {
   backgroundImg: string | null;
   level: number;
   mountain: string;
-  height: number;
+  totalHeight: number;
   totalPage: number;
 }
 
 export interface Exp {
-  reason: string;
+  expLogId: number;
+  height: number;
+  title: string;
   amount: number;
-  exp: number;
-  type: string;
+  expType: ExpTypeType;
   createdAt: string;
 }

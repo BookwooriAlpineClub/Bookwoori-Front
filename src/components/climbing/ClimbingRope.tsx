@@ -1,36 +1,46 @@
 import styled from 'styled-components';
-import { SyntheticEvent, useEffect, useRef, useState } from 'react';
-import { ClimbingParticipants } from '@src/types/domain/climbingTemp';
-import { ReactComponent as Flag } from '@src/assets/icons/climbing_flag_color.svg';
-import { ReactComponent as FlagBefore } from '@src/assets/icons/climbing_flag_outline.svg';
-import ProfileImg from '@src/assets/images/userSettings/background_default.svg';
+import { useEffect, useRef, useState } from 'react';
+import type { ClimbingMember } from '@src/types/climbing';
+import useLoaderData from '@src/hooks/useRoaderData';
+import { useGetClimbing } from '@src/hooks/query/climbing';
+import { dialogState } from '@src/states/atoms';
+import {
+  ClimbingReadingStatus,
+  ClimbingStatus,
+} from '@src/constants/constants';
+import { ReactComponent as Flag } from '@src/assets/icons/flag.svg';
 import Memo from '@src/components/climbing/Memo';
 import ProgressBar from '@src/components/climbing/ProgressBar';
-import useClimbing from '@src/hooks/query/useClimbing';
-import useLoaderData from '@src/hooks/useRoaderData';
+import UserAvatar from '@src/components/common/UserAvatar';
+import useModal from '@src/hooks/useModal';
+import ProfileModal from '@src/components/community/ProfileModal';
 
 interface Props {
-  item: ClimbingParticipants;
+  item: ClimbingMember;
 }
 
 const ClimbingRope = ({ item }: Props) => {
   const { id } = useLoaderData<{ id: number }>();
-  const { climbingInfo, isLoading } = useClimbing(id);
-  // 전역으로 클라이밍 정보를 저장하고 해당 정보를 가져올 예정
-  // const totalPage: number = 500;
-  // 전역으로 클라이밍 상태 가져옴
-  // const status: string = 'PROGRESS';
-  const [height, setHeight] = useState<number>(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [containerHeight, setContainerHeight] = useState<number>(0);
+  const { climbingInfo } = useGetClimbing(id);
 
-  const calculatePercentage = (): number => {
-    return item.currentPage / (climbingInfo?.bookInfo.itemPage ?? 500);
+  const [height, setHeight] = useState<number>(0);
+  const [containerHeight, setContainerHeight] = useState<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { openModal: openDialog } = useModal(dialogState);
+
+  const openProfileModal = (memberId: number) => {
+    const ProfileModalComponent = <ProfileModal memberId={memberId} />;
+    openDialog(ProfileModalComponent);
   };
 
   useEffect(() => {
-    setHeight(calculatePercentage());
-  }, [item, climbingInfo?.bookInfo.itemPage]);
+    if (!climbingInfo) return;
+
+    const newHeight =
+      item.currentPage / (climbingInfo.bookInfo.itemPage as number);
+
+    setHeight(newHeight);
+  }, [item, climbingInfo]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -44,21 +54,15 @@ const ClimbingRope = ({ item }: Props) => {
     });
 
     observer.observe(container);
-    // eslint-disable-next-line consistent-return
     return () => observer.disconnect();
   }, []);
 
-  const handleImgError = (e: SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = ProfileImg;
-  };
-
-  if (isLoading) {
-    return <h3>loading...</h3>;
-  }
   return (
     <Layout>
       <Background>
-        {item.status === 'FINISHED' ? <SFlag /> : <SFlagBefore />}
+        <Wrapper $color={item.status === ClimbingReadingStatus.FINISHED}>
+          <Flag width={50} height={60} />
+        </Wrapper>
       </Background>
       <Container ref={containerRef}>
         <Line />
@@ -66,25 +70,23 @@ const ClimbingRope = ({ item }: Props) => {
           height={height}
           page={item.currentPage}
           isChanged={containerHeight}
+          status={item.status}
         />
-        <Profile>
-          {item.profileImg ? (
-            <Img
-              src={item.profileImg}
-              outline={
-                climbingInfo?.status === 'FINISHED' &&
-                item.status === 'FINISHED'
-              }
-              onError={handleImgError}
-            />
-          ) : (
-            <Img src={ProfileImg} alt='img' />
-          )}
+        <Profile onClick={() => openProfileModal(item.memberId)}>
+          <UserAvatar
+            profileImg={item.profileImg ?? ''}
+            nickname={item.nickname}
+            status={
+              item.status === ClimbingReadingStatus.FINISHED
+                ? 'FINISHED'
+                : 'FAILED'
+            }
+          />
           <Nickname>{item.nickname}</Nickname>
         </Profile>
         {!(
-          climbingInfo?.status === 'FINISHED' ||
-          climbingInfo?.status === 'FAILED'
+          climbingInfo?.status === ClimbingStatus.FINISHED ||
+          climbingInfo?.status === ClimbingStatus.FAILED
         ) && <Memo isUser={item.isMine} memo={item.memo ? item.memo : ''} />}
       </Container>
     </Layout>
@@ -96,7 +98,6 @@ export default ClimbingRope;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.8125rem;
 
   height: 100%;
   width: 100%;
@@ -104,17 +105,17 @@ const Layout = styled.div`
 const Background = styled.div`
   display: flex;
   justify-content: center;
+  align-items: end;
 
   height: 5.5rem;
   background-color: ${({ theme }) => theme.colors.neutral50};
 `;
-const SFlag = styled(Flag)`
-  width: 5.3125rem;
-  height: 6.25rem;
-`;
-const SFlagBefore = styled(FlagBefore)`
-  width: 5.3125rem;
-  height: 6.25rem;
+const Wrapper = styled.div<{ $color: boolean }>`
+  height: 3.75rem;
+  margin-left: 1.5625rem;
+
+  color: ${({ $color, theme }) =>
+    $color ? `${theme.colors.blue500}` : `${theme.colors.neutral200}`};
 `;
 const Container = styled.div`
   display: flex;
@@ -123,6 +124,11 @@ const Container = styled.div`
   height: 100%;
   padding-bottom: 0.9375rem;
   background-color: ${({ theme }) => theme.colors.neutral0};
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-use-select: none;
+  user-select: none;
 `;
 const Line = styled.div`
   margin-bottom: 0.0625rem;
@@ -131,21 +137,13 @@ const Line = styled.div`
   height: 0.0625rem;
   background-color: ${({ theme }) => theme.colors.neutral200};
 `;
-const Profile = styled.div`
+const Profile = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4375rem;
-`;
-const Img = styled.img<{ outline?: boolean }>`
-  width: 3.25rem;
-  height: 3.25rem;
+  gap: ${({ theme }) => theme.gap[6]};
 
-  border: ${({ outline, theme }) =>
-    outline && `0.1875rem solid ${theme.colors.blue500}`};
-  border-radius: 50%;
-
-  object-fit: cover;
+  ${({ theme }) => theme.fonts.body};
 `;
 const Nickname = styled.span`
   text-align: center;

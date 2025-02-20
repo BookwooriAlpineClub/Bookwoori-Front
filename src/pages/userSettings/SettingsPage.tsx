@@ -1,29 +1,31 @@
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { ROUTE_PATH } from '@src/constants/routePath';
+import useModal from '@src/hooks/useModal';
 import usePermission from '@src/hooks/usePermission';
-import useDialog from '@src/hooks/useDialog';
 import {
   useGetDevice,
   usePostDevice,
   useDeleteDevice,
 } from '@src/hooks/query/useNotification';
-import useMember from '@src/hooks/query/useMember';
+import { useDeleteAccount } from '@src/hooks/query/auth';
+import { dialogState } from '@src/states/atoms';
+import styled from 'styled-components';
 import Header from '@src/components/common/Header';
-import IconButton from '@src/components/common/IconButton';
 import UserProfile from '@src/components/common/UserProfile';
-import DeleteConfirmModal from '@src/components/common/DeleteConfirmModal';
-import { useQueryClient } from '@tanstack/react-query';
+import IconButton from '@src/components/common/button/IconButton';
+import DeleteConfirmDialog from '@src/components/common/modal/DeleteConfirmDialog';
 
 const SettingsPage = () => {
-  const navigate = useNavigate();
-  const requestNotification = usePermission();
-  const { openDialog, closeDialog } = useDialog();
   const queryClient = useQueryClient();
   const device = useGetDevice();
+  
+  const navigate = useNavigate();
+  const requestNotification = usePermission();
   const createDevice = usePostDevice();
   const deleteDevice = useDeleteDevice();
-  const { delAccount } = useMember();
+  const { delAccount } = useDeleteAccount();
+  const { openModal: openDialog, closeModal: closeDialog } = useModal(dialogState);
 
   const handleNotificationOn = async () => {
     const currentToken = await requestNotification();
@@ -55,8 +57,8 @@ const SettingsPage = () => {
   return (
     <>
       <Header text='설정' headerType='hamburger' />
-      <Layout>
-        <UserProfile />
+      <Main>
+        <UserProfile memberId='me' />
         <Container>
           <IconButton
             type='editUserInfo'
@@ -81,7 +83,7 @@ const SettingsPage = () => {
             type='deleteAccount'
             onClick={() =>
               openDialog(
-                <DeleteConfirmModal
+                <DeleteConfirmDialog
                   closeDialog={closeDialog}
                   onClickDelete={handleAccountDelete}
                 />,
@@ -89,26 +91,24 @@ const SettingsPage = () => {
             }
           />
         </Container>
-      </Layout>
+      </Main>
     </>
   );
 };
 
 export default SettingsPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1.875rem;
-
-  padding: 1.875rem 1.25rem 3.0625rem;
 `;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   width: 100%;
 `;

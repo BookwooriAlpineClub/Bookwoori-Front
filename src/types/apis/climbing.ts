@@ -1,64 +1,78 @@
-import type { BookInfo } from '@src/types/apis/book.d';
-import { ClimbingStatus } from '@src/constants/constants';
+import { Climbing, ClimbingMember } from '@src/types/climbing';
+import { EmojiType, EmojiTypeType } from '@src/constants/constants';
+import Book from '@src/types/book';
 
-export type book = {
-  author: string;
-  cover: string;
-  description: string;
-  isbn13: string;
-  itemPage: string;
-  pubDate: string;
-  publisher: string;
-  title: string;
+export type postClimbingChannelReq = Pick<
+  Climbing,
+  'name' | 'description' | 'startDate' | 'endDate'
+> & {
+  serverId: number;
+  isbn: string;
 };
 
-export type Climbing = {
-  climbingId: number;
-  status: ClimbingStatus;
-  name: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-  memberCount: number;
-  isJoined: boolean;
-  isOwner: boolean;
-  bookInfo: book;
+export type patchClimbingChannelReq = Pick<
+  Climbing,
+  'name' | 'description' | 'startDate' | 'endDate'
+> & {};
+
+export interface getClimbingRes extends Climbing {}
+
+export interface ClimbingRecruitListRes {
+  readyClimbingList: Climbing[];
+}
+
+export type getClimbingChannelMembersRes = {
+  climbingMemberList: ClimbingMember[];
 };
 
-// member에서 가져올 것
-type EmojiMember = {
-  memberId: number;
-  nickname: string;
-  profileImg: string | null;
-  level: number;
-  mountain: string;
+export type patchClimbingMemoReq = {
+  memo: string | null;
 };
 
-export type ReviewEmoji = {
-  emoji: string;
-  reviewEmojiMemberList: EmojiMember[];
+export type getClimbingReviewRes =
+  | getClimbingReviewRes1
+  | getClimbingReviewRes2
+  | getClimbingReviewRes3;
+
+type getClimbingReviewRes1 = {
+  hasShared: true;
+  isShareable: true;
+  ClimbingMemberReviewList: {
+    memberId: number;
+    profileImg: string | null;
+    nickname: string;
+    star: number;
+    content: string;
+    reviewId: number;
+    reviewEmojiList: { emoji: keyof typeof EmojiType; emojiCount: number }[];
+  }[];
 };
 
-export type ReviewEmojiResponse = {
-  reviewEmojiList: ReviewEmoji[];
+type getClimbingReviewRes2 = {
+  hasShared: false;
+  isShareable: false;
+  bookInfo: Book;
 };
 
-type ClimbingMemberReview = {
-  memberId: number;
-  profileImg: string;
-  nickname: string;
-  star: number;
-  reviewId: number;
-  content: string;
-  reviewEmojiList: { emoji: string; emojiCount: number }[];
+type getClimbingReviewRes3 = {
+  hasShared: false;
+  isShareable: true;
+  bookInfo: Book;
+  reviewList: {
+    content: string;
+    createdAt: string;
+    modifiedAt: string;
+    reviewId: number;
+    star: number;
+  }[];
 };
 
-export type ClimbingResponse = {
-  hasShared: boolean;
-  isShareable: boolean;
-  bookInfo: BookInfo;
-  content?: string;
-  reviewId?: number;
-  star?: number;
-  ClimbingMemberReviewList?: ClimbingMemberReview[];
+export type getClimbingReviewEmojiRes = {
+  reviewEmojiList: {
+    emoji: string;
+    reviewEmojiMemberList: Pick<
+      ClimbingMember,
+      'memberId' | 'nickname' | 'profileImg' | 'level' | 'mountain'
+    >[];
+  }[];
 };

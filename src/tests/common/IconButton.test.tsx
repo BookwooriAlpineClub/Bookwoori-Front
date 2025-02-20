@@ -2,7 +2,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import renderWithProviders from '@src/tests/utils/renderWithProvider.setup';
 import CommunityButton, {
   IconButtonType,
-} from '@src/components/common/IconButton';
+} from '@src/components/common/button/IconButton';
 
 describe('CommunityButton', () => {
   const buttonTypes: {
@@ -38,7 +38,9 @@ describe('CommunityButton', () => {
   ];
   buttonTypes.forEach(({ type, name, iconAltText }) => {
     test(`${name} 버튼을 렌더링한다.`, () => {
-      renderWithProviders(<CommunityButton type={type} testId={type} />);
+      renderWithProviders(
+        <CommunityButton type={type} onClick={() => {}} testId={type} />,
+      );
       expect(screen.getByText(name)).toBeInTheDocument();
       expect(screen.getByAltText(iconAltText)).toBeInTheDocument();
       expect(screen.getByTestId(type)).toBeInTheDocument();

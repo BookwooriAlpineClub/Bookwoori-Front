@@ -31,7 +31,7 @@ const useChatScroll = (messages: ChannelMessage[]) => {
     const ref = scrollRef.current;
     if (!ref) return;
     ref.addEventListener('scroll', handleScroll);
-    // eslint-disable-next-line consistent-return
+    
     return () => {
       ref.removeEventListener('scroll', handleScroll);
     };

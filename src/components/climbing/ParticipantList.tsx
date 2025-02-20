@@ -1,9 +1,9 @@
-import useClimbing from '@src/hooks/query/useClimbing';
+import { useGetClimbingMembers } from '@src/hooks/query/climbing';
 import styled from 'styled-components';
 import Profile from '@src/assets/images/userSettings/profile_default.svg';
 
 const ParticipantList = ({ climbingId }: { climbingId: number }) => {
-  const { participants } = useClimbing(climbingId);
+  const { participants } = useGetClimbingMembers(climbingId);
 
   return (
     <Layout>

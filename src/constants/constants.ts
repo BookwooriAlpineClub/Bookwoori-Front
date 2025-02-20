@@ -19,6 +19,16 @@ export const ClimbingStatus = {
 export type ClimbingStatusType =
   (typeof ClimbingStatus)[keyof typeof ClimbingStatus];
 
+/* 클라이밍 참여자 독서 상태 */
+export const ClimbingReadingStatus = {
+  UNREAD: 'UNREAD',
+  READING: 'READING',
+  FINISHED: 'FINISHED',
+} as const;
+
+export type ClimbingReadingStatusType =
+  (typeof ClimbingReadingStatus)[keyof typeof ClimbingReadingStatus];
+
 /* 채널 유형 */
 export const ChannelType = {
   CHAT: 'CHAT',
@@ -38,14 +48,24 @@ export type NotificationTypeType =
 
 /* 이모지 유형 */
 export const EmojiType = {
-  GOOD: '👍',
-  HEART: '❤️',
-  SMILE: '😊',
-  CRY: '😢',
-  THINK: '🤔',
+  GOOD: { key: 'GOOD', value: '👍' },
+  HEART: { key: 'HEART', value: '❤️' },
+  SMILE: { key: 'SMILE', value: '😊' },
+  CRY: { key: 'CRY', value: '😢' },
+  THINK: { key: 'THINK', value: '🤔' },
 } as const;
 
 export type EmojiTypeType = (typeof EmojiType)[keyof typeof EmojiType];
+
+/* Exp 유형 */
+export const ExpType = {
+  READ_PAGE: '읽은 쪽수를 기록했어요.',
+  ADD_STAR: '별점을 작성했어요.',
+  WRITE_REVIEW: '감상평을 작성했어요.',
+  FINISHED_CLIMBING: '등반을 성공했어요.',
+};
+
+export type ExpTypeType = keyof typeof ExpType;
 
 /* 서버 역할 */
 export const RoleType = {
@@ -54,6 +74,27 @@ export const RoleType = {
 } as const;
 
 export type RoleTypeType = (typeof RoleType)[keyof typeof RoleType];
+
+/* 티어 정보 */
+export const Mountains: {
+  [key: number]: {
+    level: number;
+    mountainName: string;
+    mountainHeight: number;
+  };
+} = {
+  '10': { level: 10, mountainName: '백두산', mountainHeight: 2744 },
+  '9': { level: 9, mountainName: '한라산', mountainHeight: 1950 },
+  '8': { level: 8, mountainName: '지리산', mountainHeight: 1915 },
+  '7': { level: 7, mountainName: '설악산', mountainHeight: 1708 },
+  '6': { level: 6, mountainName: '금강산', mountainHeight: 1638 },
+  '5': { level: 5, mountainName: '소백산', mountainHeight: 1439 },
+  '4': { level: 4, mountainName: '무등산', mountainHeight: 997 },
+  '3': { level: 3, mountainName: '북한산', mountainHeight: 727 },
+  '2': { level: 2, mountainName: '아차산', mountainHeight: 296 },
+  '1': { level: 1, mountainName: '동산', mountainHeight: 100 },
+  '0': { level: 0, mountainName: '평지', mountainHeight: 0 },
+};
 
 /* 커스텀 에러 코드 */
 export const ErrorCode = {
@@ -154,11 +195,12 @@ export const ERROR_MESSAGES = {
   [ErrorCode.RESOURCE.SERVER_NOT_FOUND]: '서버를 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.ALREADY_JOINED_SERVER]: '이미 참여하고 있는 서버입니다.',
   [ErrorCode.RESOURCE.DELEGATION_REQUIRED]:
-    '해당 요청 처리를 위해서는 서버장 권한을 위임해야 합니다.',
+    '서버에 나가기 위해서는 \n서버장 권한을 위임해야 합니다.',
   [ErrorCode.RESOURCE.SERVER_MEMBER_NOT_FOUND]:
     '해당 서버에 사용자가 존재하지 않습니다.',
   [ErrorCode.RESOURCE.SERVER_OWNER_NOT_FOUND]: '서버 주인을 찾을 수 없습니다.',
-  [ErrorCode.RESOURCE.INVALID_INVITE_CODE]: '유효하지 않은 초대코드입니다.',
+  [ErrorCode.RESOURCE.INVALID_INVITE_CODE]:
+    '유효하지 않은 초대코드입니다.\n다시 입력해주세요.',
   [ErrorCode.RESOURCE.CATEGORY_NOT_FOUND]: '카테고리를 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.CATEGORY_LOCATE_EXCEPTION]:
     '카테고리 위치를 변경할 수 없습니다.',
@@ -194,3 +236,58 @@ export const ERROR_MESSAGES = {
   [ErrorCode.CHATTING.CHANNEL_MESSAGE_NOT_FOUND]:
     '해당 채널 메시지를 찾을 수 없습니다.',
 } as const;
+
+type ErrorHandlingType = {
+  [K in ErrorCodeType]: 'toast' | 'errorBoundary';
+};
+
+export const ERROR_HANDLING: ErrorHandlingType = {
+  [ErrorCode.CLIENT.BAD_REQUEST]: 'toast',
+  [ErrorCode.CLIENT.MISSING_PARAMETER]: 'toast',
+  [ErrorCode.CLIENT.INVALID_ENUM_VALUE]: 'toast',
+
+  [ErrorCode.FILE.INVALID_FILE_FORMAT]: 'toast',
+  [ErrorCode.FILE.UNSUPPORTED_FILE_FORMAT]: 'toast',
+  [ErrorCode.FILE.FILE_UPLOAD_FAIL]: 'toast',
+  [ErrorCode.FILE.FILE_COMPARISON_FAIL]: 'toast',
+
+  [ErrorCode.AUTH.UNAUTHORIZED]: 'toast',
+  [ErrorCode.AUTH.ACCESS_DENIED]: 'toast',
+  [ErrorCode.AUTH.INVALID_JWT_SIGNATURE]: 'toast',
+  [ErrorCode.AUTH.INVALID_TOKEN]: 'toast',
+  [ErrorCode.AUTH.NO_COOKIE]: 'toast',
+  [ErrorCode.AUTH.EXPIRED_ACCESS_TOKEN]: 'toast',
+  [ErrorCode.AUTH.EXPIRED_REFRESH_TOKEN]: 'toast',
+
+  [ErrorCode.RESOURCE.MEMBER_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.MEMBER_INACTIVE]: 'toast',
+  [ErrorCode.RESOURCE.SERVER_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.ALREADY_JOINED_SERVER]: 'toast',
+  [ErrorCode.RESOURCE.DELEGATION_REQUIRED]: 'toast',
+  [ErrorCode.RESOURCE.SERVER_MEMBER_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.SERVER_OWNER_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.INVALID_INVITE_CODE]: 'toast',
+  [ErrorCode.RESOURCE.CATEGORY_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.CATEGORY_LOCATE_EXCEPTION]: 'toast',
+  [ErrorCode.RESOURCE.DEFAULT_CATEGORY_EXCEPTION]: 'toast',
+  [ErrorCode.RESOURCE.CHANNEL_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.CLIMBING_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.ALREADY_JOINED_CLIMBING]: 'toast',
+  [ErrorCode.RESOURCE.CLIMBING_NOT_READY]: 'toast',
+  [ErrorCode.RESOURCE.OWNER_CANNOT_LEAVE]: 'toast',
+  [ErrorCode.RESOURCE.CLIMBING_MEMBER_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.CLIMBING_NOT_RUNNING]: 'toast',
+  [ErrorCode.RESOURCE.BOOK_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.ALADIN_API_EXCEPTION]: 'toast',
+  [ErrorCode.RESOURCE.RECORD_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.RECORD_NOT_FINISHED]: 'toast',
+  [ErrorCode.RESOURCE.ALREADY_EXIST_RECORD]: 'toast',
+  [ErrorCode.RESOURCE.REVIEW_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.REVIEW_ALREADY_SHARED]: 'toast',
+  [ErrorCode.RESOURCE.REVIEW_EMOJI_NOT_FOUND]: 'toast',
+  [ErrorCode.RESOURCE.ALREADY_EXIST_REVIEW]: 'toast',
+  [ErrorCode.RESOURCE.MESSAGE_ROOM_NOT_FOUND]: 'toast',
+
+  [ErrorCode.CHATTING.DIRECT_MESSAGE_NOT_FOUND]: 'toast',
+  [ErrorCode.CHATTING.CHANNEL_MESSAGE_NOT_FOUND]: 'toast',
+};

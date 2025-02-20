@@ -5,18 +5,18 @@ import { kakaoUrl } from '@src/constants/env';
 
 const LoginPage = () => {
   return (
-    <Layout>
+    <Main>
       <SLogo />
       <Button href={kakaoUrl}>
         <KakaoButton />
       </Button>
-    </Layout>
+    </Main>
   );
 };
 
 export default LoginPage;
 
-const Layout = styled.div`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;

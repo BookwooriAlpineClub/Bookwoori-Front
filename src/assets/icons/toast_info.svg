@@ -1,0 +1,32 @@
+<svg
+  width="current"
+  height="current"
+  viewBox="0 0 20 20"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect
+    fill="#3B82F6"
+    width="20"
+    height="20"
+    rx="10"
+  />
+  <path
+    fill="white"
+    d="M9.5 6.5V5.5H10.5V6.5H9.5Z"
+  />
+  <path
+    fill="white"
+    d="M9.5 14.5V8.5H10.5V14.5H9.5Z"
+  />
+  <path
+    stroke="white"
+    stroke-width="0.5"
+    d="M9.5 6.5V5.5H10.5V6.5H9.5Z"
+  />
+  <path
+    stroke="white"
+    stroke-width="0.5"
+    d="M9.5 14.5V8.5H10.5V14.5H9.5Z"
+  />
+</svg>

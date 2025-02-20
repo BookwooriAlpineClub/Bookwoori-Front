@@ -1,7 +1,7 @@
 import { Channel } from "@src/types/channel";
 
 export interface Category {
-  categoryId: string;
+  categoryId: number;
   name: string;
   channels: Channel[];
 };

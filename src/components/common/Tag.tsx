@@ -2,24 +2,27 @@ import styled from 'styled-components';
 
 type TagColor = 'lime' | 'blue' | 'neutral';
 interface Props {
-  Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  text: string | number;
   color: TagColor;
+  Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  text?: string | number;
+  onClick?: () => void;
   className?: string;
+  children?: React.ReactNode;
 }
 
-const Tag = ({ Icon, text, color, className }: Props) => {
+const Tag = ({ color, Icon, text, onClick, className, children }: Props) => {
   return (
-    <Wrapper className={className} color={color}>
+    <Wrapper className={className} onClick={onClick} $color={color}>
       {Icon && <Icon width={12} height={12} />}
       <span>{text}</span>
+      {children}
     </Wrapper>
   );
 };
 
 export default Tag;
 
-const Wrapper = styled.mark<{ color: TagColor }>`
+const Wrapper = styled.mark<{ $color: TagColor }>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -29,12 +32,12 @@ const Wrapper = styled.mark<{ color: TagColor }>`
   height: fit-content;
   padding: ${({ theme }) => `${theme.padding[4]} ${theme.padding[8]}`};
 
-  border-radius: ${({ theme }) => theme.rounded[24]};
+  border-radius: 50%;
 
   ${({ theme }) => theme.fonts.caption};
 
-  ${({ color, theme }) => {
-    switch (color) {
+  ${({ $color, theme }) => {
+    switch ($color) {
       case 'lime':
         return `
           background-color: ${theme.colors.lime100};

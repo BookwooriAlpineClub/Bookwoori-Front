@@ -1,3 +1,4 @@
+import { Exp } from '@src/types/user';
 import { isBase64Encoded } from '@src/utils/validators'; // at decodedIdParam
 
 /**
@@ -64,24 +65,22 @@ export const decodeIdParam = (id: string | undefined): number => {
   }
 };
 
-/* url 형식의 이미지를 File로 변환하는 함수 */
-export const convertURLToFile = async (url: string): Promise<File> => {
-  const response = await fetch(url);
-  const data = await response.blob();
-  const ext = url.split('.').pop();
-  const filename = url.split('/').pop();
-  const metadata = { type: `image/${ext}` };
-
-  return new File([data], filename!, metadata);
-};
-
 export const formatChatItemTime = (date: string) => {
   const [hourStr, minute] = date.split(':');
   const hour = Number(hourStr);
 
   const period = hour < 12 ? '오전' : '오후';
-  // eslint-disable-next-line no-nested-ternary
-  const formattedHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+
+  let formattedHour;
+
+  if (hour === 0) {
+    formattedHour = 12;
+  } else if (hour > 12) {
+    formattedHour = hour - 12;
+  } else {
+    formattedHour = hour;
+  }
+
   return `${period} ${formattedHour}:${minute}`;
 };
 
@@ -90,23 +89,52 @@ export const formatChatListItemTime = (date: string) => {
 
   const today = new Date();
   const targetDate = new Date(datePart);
-  if (
-    targetDate.getFullYear() === today.getFullYear() &&
-    targetDate.getMonth() === today.getMonth() &&
-    targetDate.getDate() === today.getDate()
-  ) {
+
+  if (targetDate.toDateString() === today.toDateString()) {
     return formatChatItemTime(timePart);
   }
 
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
-  if (
-    targetDate.getFullYear() === yesterday.getFullYear() &&
-    targetDate.getMonth() === yesterday.getMonth() &&
-    targetDate.getDate() === yesterday.getDate()
-  ) {
+  if (targetDate.toDateString() === yesterday.toDateString()) {
     return '어제';
   }
 
   return datePart;
+};
+
+export const formatCreatedAt = (createdAt: string) => {
+  const [datePart, timePart] = createdAt.split('T')[1]
+    ? createdAt.split('T')
+    : createdAt.split(' ');
+
+  return { date: datePart, time: timePart };
+};
+
+export const formatDateWithHyphen = (date: string) => {
+  return date.split('-').join('.').concat('.');
+};
+
+type ExpListType = {
+  [key: string]: Exp[];
+};
+
+export const groupExpByDate = (data: Exp[]) => {
+  return data
+    .sort((a, b) => b.expLogId - a.expLogId)
+    .reduce((acc: ExpListType[], item) => {
+      const dateKey = new Date(item.createdAt).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+
+      const existingEntry = acc.find((entry) => entry[dateKey]);
+      if (existingEntry) {
+        existingEntry[dateKey].push(item);
+      } else {
+        acc.push({ [dateKey]: [item] });
+      }
+      return acc;
+    }, []);
 };

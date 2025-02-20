@@ -4,7 +4,7 @@ export default interface Book {
   readonly author: string;
   readonly cover: string;
   readonly publisher: string;
-  readonly pubYear: string;
+  readonly pubDate: string;
   readonly description: string;
   readonly itemPage: number;
 }

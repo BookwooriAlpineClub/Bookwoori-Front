@@ -1,0 +1,18 @@
+<svg
+  width="current"
+  height="current"
+  viewBox="0 0 20 20"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect
+    fill="#84CC16"
+    width="20"
+    height="20"
+    rx="10"
+  />
+  <path
+    stroke="white"
+    d="M5.75 9.75L8.75 13.25L14.25 6.75"
+  />
+</svg>

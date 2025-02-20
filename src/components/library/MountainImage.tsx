@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import ProfileCircle from '@src/components/common/ProfileCircle';
-import { Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
+import UserAvatar from '@src/components/common/UserAvatar';
+import { Mountains } from '@src/constants/constants';
+import 'react-tooltip/dist/react-tooltip.css';
+import { Tooltip } from 'react-tooltip';
 
 const remToPx = (rem: number): number =>
   rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -11,10 +13,10 @@ const MountainImage = ({
   seasonalColor,
 }: {
   mountainData: {
-    mountainHeight: number;
-    height?: number;
+    mountainLevel: number;
+    myHeight: number;
     profileImg?: string;
-    profileName?: string;
+    profileName: string;
   };
   seasonalColor: string[];
 }) => {
@@ -25,6 +27,21 @@ const MountainImage = ({
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
 
   const profileCircleSize = remToPx(2.5);
+  // const formattedMountainLength =
+  //   mountainData.mountainLevel === 10
+  //     ? Mountains[mountainData.mountainLevel].mountainHeight
+  //     : Mountains[mountainData.mountainLevel + 1].mountainHeight -
+  //       Mountains[mountainData.mountainLevel].mountainHeight;
+  const formattedMountainLength = 100;
+
+  const formattedMyHeight =
+    mountainData.mountainLevel === 10
+      ? mountainData.myHeight
+      : mountainData.myHeight -
+        Mountains[mountainData.mountainLevel - 1].mountainHeight;
+  const expRatio = (formattedMyHeight / formattedMountainLength) * 100;
+  console.log(mountainData);
+  console.log(formattedMountainLength, formattedMyHeight, expRatio);
 
   useEffect(() => {
     setProgress(0);
@@ -50,7 +67,7 @@ const MountainImage = ({
           setCirclePosition({ x: point.x, y: point.y });
         }
 
-        if (progressValue < 35) {
+        if (progressValue < expRatio) {
           requestAnimationFrame(animate);
         } else {
           setIsAnimationComplete(true);
@@ -60,6 +77,7 @@ const MountainImage = ({
       requestAnimationFrame(animate);
     }
   }, [pathLength]);
+
   return (
     <MountainContainer seasonalColor={seasonalColor}>
       {/* 산 */}
@@ -107,40 +125,25 @@ const MountainImage = ({
               width={profileCircleSize}
               height={profileCircleSize}
             >
-              {isAnimationComplete ? (
-                <StyledTooltip
-                  title={`현재 ${mountainData?.height}m`}
-                  arrow
-                  placement='top'
-                  open={isAnimationComplete}
-                >
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      transform: 'scale(0.3)',
-                    }}
-                  >
-                    <ProfileCircle
-                      profileImg={mountainData.profileImg ?? ''}
-                      nickname={mountainData.profileName}
-                    />
-                  </div>
-                </StyledTooltip>
-              ) : (
-                <div
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    transform: 'scale(0.3)',
-                  }}
-                >
-                  <ProfileCircle
-                    profileImg={mountainData.profileImg ?? ''}
-                    nickname={mountainData.profileName ?? ''}
-                  />
-                </div>
-              )}
+              <div
+                style={{
+                  width: 'fit-content',
+                  height: '100%',
+                  transform: 'scale(0.3)',
+                }}
+                data-tooltip-id='avatar-tooltip'
+                data-tooltip-content={`현재 ${mountainData.myHeight}m`}
+              >
+                <Tooltip
+                  id='avatar-tooltip'
+                  isOpen={isAnimationComplete}
+                  className='tooltip-style'
+                />
+                <UserAvatar
+                  profileImg={mountainData.profileImg ?? ''}
+                  nickname={mountainData.profileName}
+                />
+              </div>
             </foreignObject>
           </svg>
         </Path>
@@ -162,6 +165,16 @@ const MountainContainer = styled.div<{ seasonalColor: string[] }>`
     ${({ seasonalColor }) => seasonalColor[1]}
   );
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+
+  .tooltip-style {
+    background-color: ${({ theme }) => theme.colors.lime100};
+    color: ${({ theme }) => theme.colors.neutral950};
+    padding: ${({ theme }) => theme.padding['2']}
+      ${({ theme }) => theme.padding['6']};
+    font-size: 70%;
+    opacity: 100%;
+    border-radius: ${({ theme }) => theme.rounded['8']};
+  }
 `;
 
 const Mountain = styled.div`
@@ -175,23 +188,4 @@ const Mountain = styled.div`
 
 const Path = styled.div`
   height: 100%;
-`;
-
-const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))`
-  & .${tooltipClasses.tooltip} {
-    background-color: #fff;
-    color: #000;
-    font-size: 0.725rem;
-    border-radius: 1rem;
-    padding: 0.5rem 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  }
-
-  & .${tooltipClasses.arrow} {
-    color: #fff;
-  }
-
-  z-index: 1;
 `;

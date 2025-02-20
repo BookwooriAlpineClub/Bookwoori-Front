@@ -1,13 +1,14 @@
-import styled from 'styled-components';
-import useBottomsheet from '@src/hooks/useBottomsheet';
-import useLongPress from '@src/hooks/useLongPress';
-import ChatMenu from '@src/components/common/EmojiBottomsheet';
-import Profile from '@src/assets/images/userSettings/background_default.svg';
 import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
 import { SyntheticEvent, useMemo } from 'react';
+import useLongPress from '@src/hooks/useLongPress';
+import useModal from '@src/hooks/useModal';
+import { useGetProfile } from '@src/hooks/query/member';
+import { bottomsheetState } from '@src/states/atoms';
 import { formatChatItemTime } from '@src/utils/formatters';
-import useMember from '@src/hooks/query/useMember';
+import styled from 'styled-components';
+import ChatMenu from '@src/components/common/emoji/ChattingBottomsheet';
+import Profile from '@src/assets/images/userSettings/background_default.svg';
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;
@@ -17,13 +18,14 @@ interface ChatItemProps {
 
 const ChannelChatItem = ({ chatItem, memberId, createdAt }: ChatItemProps) => {
   // long press bottomsheet
-  const { openBottomsheet } = useBottomsheet();
+  const { openModal: openBottomsheet } = useModal(bottomsheetState);
   const longPressHandler = useLongPress({
-    onLongPress: () => openBottomsheet(<ChatMenu content={chatItem.content} />),
+    onLongPress: () =>
+      openBottomsheet(<ChatMenu id={chatItem.id} content={chatItem.content} />),
   });
 
   // user data (nickname, profileImg)
-  const { profileData: user } = useMember(memberId);
+  const { profileData: user } = useGetProfile(memberId);
   // img error handler
   const handleImgError = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = Profile;

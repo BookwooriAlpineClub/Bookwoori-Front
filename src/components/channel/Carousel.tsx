@@ -1,11 +1,12 @@
+import type { ClimbingInfo } from '@src/types/climbing';
+import { useEffect, useRef, useState } from 'react';
+import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
+import useModal from '@src/hooks/useModal';
+import { bottomsheetState } from '@src/states/atoms';
 import styled from 'styled-components';
+import RecruitClimbingBottomSheet from '@src/components/climbing/RecruitClimbingBottomSheet';
 import { ReactComponent as Next } from '@src/assets/images/channel/carousel_btn.svg';
 import { ReactComponent as More } from '@src/assets/images/channel/carousel_more_btn.svg';
-import { useEffect, useRef, useState } from 'react';
-import useBottomsheet from '@src/hooks/useBottomsheet';
-import RecruitClimbingBottomSheet from '@src/components/climbing/RecruitClimbingBottomSheet';
-import type { ClimbingInfo } from '@src/types/domain/climbingTemp';
-import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 
 const Carousel = ({
   type,
@@ -19,7 +20,8 @@ const Carousel = ({
   const [width, setWidth] = useState<number>(0);
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
-  const { openBottomsheet, closeBottomsheet } = useBottomsheet();
+  const { openModal: openBottomsheet, closeModal: closeBottomsheet } =
+    useModal(bottomsheetState);
 
   useEffect(() => {
     const updateWidth = () => {
@@ -99,12 +101,12 @@ const Carousel = ({
   const layoutRef = useRef<HTMLDivElement>(null);
 
   return (
-    <SLayout ref={layoutRef}>
+    <Layout ref={layoutRef}>
       {list.length === 0 ? (
         <Span>아직 등반이 없습니다.</Span>
       ) : (
         <>
-          <SContainer
+          <Container
             ref={ref}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
@@ -112,22 +114,17 @@ const Carousel = ({
             onMouseUp={handleClickEnd}
           >
             {list.map(({ name, cover, climbingId }) => (
-              <SItem
+              <Item
                 key={climbingId}
-                onClick={
-                  type === 'next'
-                    ? () => handleClickNavigate(climbingId)
-                    : () => {}
-                }
-                disabled={type === 'more'}
+                onClick={() => handleClickNavigate(climbingId)}
               >
-                <SImg src={cover} />
-                <SLayer>
-                  <SLabel>{name}</SLabel>
-                </SLayer>
-              </SItem>
+                <Img src={cover} />
+                <Layer>
+                  <Label>{name}</Label>
+                </Layer>
+              </Item>
             ))}
-          </SContainer>
+          </Container>
           {type === 'next' ? (
             layoutRef.current &&
             layoutRef.current.offsetWidth <
@@ -143,21 +140,21 @@ const Carousel = ({
           )}
         </>
       )}
-    </SLayout>
+    </Layout>
   );
 };
 
 export default Carousel;
 
-const SLayout = styled.div`
+const Layout = styled.div`
   display: flex;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
   align-items: center;
 
   padding: 0.625rem;
 
   min-height: 6.25rem;
-  border-radius: 0.9375rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background-color: ${({ theme }) => theme.colors.blue100};
 `;
 const Span = styled.span`
@@ -168,9 +165,9 @@ const Span = styled.span`
   ${({ theme }) => theme.fonts.caption};
   color: ${({ theme }) => theme.colors.neutral400};
 `;
-const SContainer = styled.div`
+const Container = styled.div`
   display: flex;
-  gap: 0.625rem;
+  gap: ${({ theme }) => theme.gap[10]};
 
   width: 100%;
   padding: 0 0.1563rem 0 0;
@@ -181,22 +178,18 @@ const SContainer = styled.div`
   -ms-use-select: none;
   user-select: none;
 `;
-const SItem = styled.button`
+const Item = styled.button`
   display: flex;
   justify-content: center;
   position: relative;
-
-  &:disabled {
-    cursor: default;
-  }
 `;
-const SImg = styled.img`
+const Img = styled.img`
   width: 4.6875rem;
   height: 6.25rem;
 
-  border-radius: 0.9375rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
 `;
-const SLayer = styled.div`
+const Layer = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -206,14 +199,14 @@ const SLayer = styled.div`
   height: 100%;
   padding: 0.625rem 0.3125rem;
 
-  border-radius: 0.9375rem;
+  border-radius: ${({ theme }) => theme.rounded[16]};
   background: linear-gradient(
     0deg,
     rgba(15, 16, 21, 0.4) 0%,
     rgba(15, 16, 21, 0.4) 100%
   );
 `;
-const SLabel = styled.label`
+const Label = styled.label`
   width: 100%;
 
   text-align: center;
