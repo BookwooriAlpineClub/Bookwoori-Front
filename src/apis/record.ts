@@ -1,4 +1,5 @@
 import type { AxiosResponse } from 'axios';
+import type Book from '@src/types/book';
 import type Record from '@src/types/record';
 import type {
   GetRecordListRes,
@@ -21,9 +22,9 @@ export const getRecordList = async <Res = GetRecordListRes>(
  * 책 기록 상세 조회
  */
 export const getRecordDetail = async <Res = GetRecordDetailRes>(
-  recordId: Record['recordId'],
+  isbn13: Book['isbn13'],
 ): Promise<Res> => {
-  const response = await authClient.get<Res>(`/records/${recordId}`);
+  const response = await authClient.get<Res>(`/records/${isbn13}`);
   return response.data;
 };
 /**
