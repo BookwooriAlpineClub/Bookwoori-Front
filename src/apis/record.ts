@@ -1,4 +1,5 @@
 import type { AxiosResponse } from 'axios';
+import RequestError from '@src/errors/RequestError';
 import type Book from '@src/types/book';
 import type Record from '@src/types/record';
 import type {
@@ -8,6 +9,7 @@ import type {
   PatchRecordReq,
 } from '@src/types/apis/record';
 import { authClient } from '@src/apis/index';
+import { getBookDetail } from '@src/apis/book';
 
 /**
  * 책 기록 목록 조회
@@ -24,8 +26,20 @@ export const getRecordList = async <Res = GetRecordListRes>(
 export const getRecordDetail = async <Res = GetRecordDetailRes>(
   isbn13: Book['isbn13'],
 ): Promise<Res> => {
-  const response = await authClient.get<Res>(`/records/${isbn13}`);
-  return response.data;
+  try {
+    const response = await authClient.get<Res>(`/records/${isbn13}`);
+    return response.data;
+  } catch (error) {
+    if (error instanceof RequestError && error.code === 3600) {
+      const bookDetail = await getBookDetail(isbn13);
+      return {
+        ...bookDetail,
+        record: null,
+        reviewList: null,
+      } as Res;
+    }
+    throw error;
+  }
 };
 /**
  * 책 기록 추가

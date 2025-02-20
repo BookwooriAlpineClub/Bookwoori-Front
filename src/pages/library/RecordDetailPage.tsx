@@ -3,7 +3,6 @@ import type Review from '@src/types/review';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import useModal from '@src/hooks/useModal';
-import { useGetBookDetail } from '@src/hooks/query/book';
 import { useGetRecordDetail } from '@src/hooks/query/record';
 import { bottomsheetState } from '@src/states/atoms';
 import styled from 'styled-components';
@@ -17,10 +16,17 @@ import { ReactComponent as HiOutlinePlus } from '@src/assets/icons/hi_outline_pl
 const RecordDetailPage = () => {
   const { isbn13 = '' } = useParams<{ isbn13: string }>();
   const {
-    data: { title, author, cover, publisher, pubDate, description, itemPage },
-  } = useGetBookDetail(isbn13);
-  const {
-    data: { record, reviewList },
+    data: {
+      title,
+      author,
+      cover,
+      publisher,
+      pubDate,
+      description,
+      itemPage,
+      record,
+      reviewList,
+    },
   } = useGetRecordDetail(isbn13);
   const [isTop, setIsTop] = useState<boolean>(true);
 
@@ -74,7 +80,7 @@ const RecordDetailPage = () => {
             <HiOutlinePlus width={20} height={20} />
           </ReviewCreateButton>
         )}
-        {reviewList.map(
+        {reviewList?.map(
           ({ reviewId, star, content, createdAt, modifiedAt }) => (
             <ReviewDetail
               key={reviewId}

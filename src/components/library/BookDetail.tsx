@@ -10,7 +10,7 @@ import { ReactComponent as MdAutoStories } from '@src/assets/icons/md_auto_stori
 import { ReactComponent as Done } from '@src/assets/icons/done.svg';
 
 interface Props extends Omit<BookType, 'isbn13' | 'description'> {
-  record?: RecordType;
+  record: RecordType | null;
   openBottomsheet: () => void;
 }
 
