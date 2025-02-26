@@ -1,11 +1,11 @@
-import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { checkAuthLoader, isParamLoader } from '@src/router/loader';
 import {
   RootLayout,
+  PaddingLayout,
+  BottomButtonLayout,
   NoDataTextLayout,
-  DefaultLayout,
 } from '@src/router/Layout';
 import {
   LoginPage,
@@ -42,11 +42,19 @@ const router = createBrowserRouter([
     children: [
       /* No layout */
       {
-        path: ROUTE_PATH.library,
+        path: ROUTE_PATH.root,
         element: <LibraryHomePage />,
       },
       {
-        path: ROUTE_PATH.root,
+        path: ROUTE_PATH.signIn,
+        element: <LoginPage />,
+      },
+      {
+        path: ROUTE_PATH.redirection,
+        element: <RedirectionPage />,
+      },
+      {
+        path: ROUTE_PATH.library,
         element: <LibraryHomePage />,
       },
       {
@@ -55,22 +63,9 @@ const router = createBrowserRouter([
         loader: (args) => isParamLoader(args, 'memberId'),
       },
       {
-        path: ROUTE_PATH.redirection,
-        element: <RedirectionPage />,
-      },
-      {
-        path: ROUTE_PATH.signIn,
-        element: <LoginPage />,
-      },
-      {
         path: ROUTE_PATH.dmChatMember,
         element: <ChattingPage />,
         loader: (args) => isParamLoader(args, 'memberId'),
-      },
-      {
-        path: ROUTE_PATH.serverChannel,
-        element: <ChannelPage />,
-        loader: (args) => isParamLoader(args, 'serverId'),
       },
       {
         path: ROUTE_PATH.server,
@@ -78,52 +73,38 @@ const router = createBrowserRouter([
         loader: (args) => isParamLoader(args, 'serverId'),
       },
       {
-        path: '*',
-        element: <h1>404 Not Found</h1>,
+        path: ROUTE_PATH.serverChannel,
+        element: <ChannelPage />,
+        loader: (args) => isParamLoader(args, 'serverId'),
       },
-      /* 기본 Layout */
+      /* PaddingLayout */
       {
-        element: <DefaultLayout />,
+        element: <PaddingLayout />,
         children: [
+          /* library */
+          {
+            path: ROUTE_PATH.libraryBookDetail,
+            element: <RecordDetailPage />,
+            loader: (args) => isParamLoader(args, 'isbn13'),
+          },
+          {
+            path: ROUTE_PATH.libraryRecordDetail,
+            element: <RecordDetailPage />,
+            loader: (args) => isParamLoader(args, 'isbn13'),
+          },
+          /* user-setting */
+          {
+            path: ROUTE_PATH.setting,
+            element: <SettingsPage />,
+          },
+          {
+            path: ROUTE_PATH.settingExp,
+            element: <ExpHistoryPage />,
+          },
           /* add-community */
           {
             path: ROUTE_PATH.addServer,
             element: <AddCommunityPage />,
-          },
-          {
-            path: ROUTE_PATH.invitationServer,
-            element: <CheckInvitedCommunityPage />,
-          },
-          {
-            path: ROUTE_PATH.createServer,
-            element: <CreateNewCommunityPage />,
-          },
-          {
-            path: ROUTE_PATH.invitationCode,
-            element: <EnterInvitationPage />,
-          },
-          {
-            path: ROUTE_PATH.joinServer,
-            element: <EnterInvitationPage />,
-          },
-          /* channel */
-          {
-            path: ROUTE_PATH.addCategory,
-            element: <CategoryAddPage />,
-          },
-          {
-            path: ROUTE_PATH.addChannel,
-            element: <ChannelAddPage />,
-          },
-          {
-            path: ROUTE_PATH.editChannelOne,
-            element: <ChannelEditPage />,
-            loader: (args) => isParamLoader(args, 'serverId'),
-          },
-          /* chatting */
-          {
-            path: ROUTE_PATH.dm,
-            element: <ChattingListPage />,
           },
           /* climbing */
           {
@@ -142,52 +123,80 @@ const router = createBrowserRouter([
             element: <CommunityInfoSettingPage />,
             loader: (args) => isParamLoader(args, 'serverId'),
           },
-          /* library */
+          /* BottomButtonLayout */
           {
-            path: ROUTE_PATH.libraryBookDetail,
-            element: <RecordDetailPage />,
-            loader: (args) => isParamLoader(args, 'isbn13'),
+            element: <BottomButtonLayout />,
+            children: [
+              /* user-setting */
+              {
+                path: ROUTE_PATH.settingProfile,
+                element: <EditUserInfoPage />,
+              },
+              /* add-community */
+              {
+                path: ROUTE_PATH.createServer,
+                element: <CreateNewCommunityPage />,
+              },
+              {
+                path: ROUTE_PATH.invitationServer,
+                element: <CheckInvitedCommunityPage />,
+              },
+              {
+                path: ROUTE_PATH.invitationCode,
+                element: <EnterInvitationPage />,
+              },
+              {
+                path: ROUTE_PATH.joinServer,
+                element: <EnterInvitationPage />,
+              },
+              /* channel */
+              {
+                path: ROUTE_PATH.addCategory,
+                element: <CategoryAddPage />,
+              },
+              {
+                path: ROUTE_PATH.addChannel,
+                element: <ChannelAddPage />,
+              },
+              {
+                path: ROUTE_PATH.editChannelOne,
+                element: <ChannelEditPage />,
+                loader: (args) => isParamLoader(args, 'serverId'),
+              },
+            ],
+          },
+          /* NoDataTextLayout */
+          {
+            element: <NoDataTextLayout />,
+            children: [
+              /* library */
+              {
+                path: ROUTE_PATH.libraryBookSearch,
+                element: <SearchPage />,
+              },
+              {
+                path: ROUTE_PATH.libraryRecord,
+                element: <RecordListPage />,
+              },
+              {
+                path: ROUTE_PATH.libraryReview,
+                element: <ReviewListPage />,
+              },
+              /* notification */
+              {
+                path: ROUTE_PATH.notification,
+                element: <NotificationPage />,
+              },
+              /* chatting */
+              {
+                path: ROUTE_PATH.dm,
+                element: <ChattingListPage />,
+              },
+            ],
           },
           {
-            path: ROUTE_PATH.libraryRecordDetail,
-            element: <RecordDetailPage />,
-            loader: (args) => isParamLoader(args, 'isbn13'),
-          },
-          {
-            path: ROUTE_PATH.libraryRecord,
-            element: <RecordListPage />,
-          },
-          {
-            path: ROUTE_PATH.libraryReview,
-            element: <ReviewListPage />,
-          },
-          /* notification */
-          {
-            path: ROUTE_PATH.notification,
-            element: <NotificationPage />,
-          },
-          /* user-setting */
-          {
-            path: ROUTE_PATH.settingProfile,
-            element: <EditUserInfoPage />,
-          },
-          {
-            path: ROUTE_PATH.settingExp,
-            element: <ExpHistoryPage />,
-          },
-          {
-            path: ROUTE_PATH.setting,
-            element: <SettingsPage />,
-          },
-        ],
-      },
-      /* 데이터가 없는 경우 Layout */
-      {
-        element: <NoDataTextLayout />,
-        children: [
-          {
-            path: ROUTE_PATH.libraryBookSearch,
-            element: <SearchPage />,
+            path: '*',
+            element: <h1>404 Not Found</h1>,
           },
         ],
       },
