@@ -12,13 +12,15 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    @supports (width: 100svw) {
-      width: 100svw;
-      height: 100svh;
+    @supports (height: 100svh) { height: 100svh; }
+    @supports not (height: 100svh) { height: 100vh; }
+    @media (max-width: 375px) {
+      @supports (width: 100svw) { width: 100svw; }
+      @supports not (width: 100svw) { width: 100vw; }
     }
-    @supports not (width: 100svw) {
-      width: 100vw;
-      height: 100vh;
+    @media (min-width: 375px) {
+      width: 375px;
+      margin: 0 auto;
     }
     background-color: ${({ theme }) => theme.colors.neutral50};
     ${({ theme }) => theme.fonts.body}

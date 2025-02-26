@@ -144,8 +144,15 @@ const CommunityDrawerContainer = styled.div<{
   position: fixed;
   top: 0;
   right: 0;
+
+  @media (max-width: 375px) {
+    width: 80%;
+  }
+  @media (min-width: 375px) {
+    width: calc(375px * 0.8);
+  }
   height: 100%;
-  width: 80%;
+
   background-color: ${({ theme }) => theme.colors.neutral50};
   box-shadow: -0.1rem 0 0.3rem rgba(0, 0, 0, 0.2);
   transform: ${({ transition }) =>

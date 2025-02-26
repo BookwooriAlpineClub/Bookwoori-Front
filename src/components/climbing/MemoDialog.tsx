@@ -52,12 +52,10 @@ const MemoDialog = ({ memo, closeDialog, climbingId }: MemoDialogProps) => {
       <ButtonContainer>
         <SubButton
           label='삭제하기'
-          width='39vw'
           onClick={() => value && handleClickEdit('')}
         />
         <SubButton
           label='수정하기'
-          width='39vw'
           onClick={() => value && handleClickEdit(value)}
         />
       </ButtonContainer>
@@ -68,7 +66,16 @@ const MemoDialog = ({ memo, closeDialog, climbingId }: MemoDialogProps) => {
 export default MemoDialog;
 
 const DialogLayout = styled.div`
-  width: 80vw;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: ${({ theme }) => theme.gap[16]};
+
+  @media (max-width: 375px) {
+    width: 80%;
+  }
+  @media (min-width: 375px) {
+    width: calc(375px * 0.8);
+  }
 `;
 const InputContainer = styled.div`
   display: flex;
@@ -106,7 +113,6 @@ const Counter = styled.span`
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-
-  margin-top: 0.9375rem;
+  flex-flow: row nowrap;
+  gap: ${({ theme }) => theme.gap[16]};
 `;
