@@ -1,8 +1,7 @@
-import type { AxiosResponse } from 'axios';
+import type Device from '@src/types/device';
 import type {
   GetDeviceRes,
   PostDeviceRes,
-  PostDeviceReq,
   DeleteDeviceRes,
 } from '@src/types/apis/device';
 import { authClient } from '@src/apis/index';
@@ -17,13 +16,12 @@ export const getDevice = async <Res = GetDeviceRes>(): Promise<Res> => {
 /**
  * 기기 등록 추가
  */
-export const postDevice = async <Res = PostDeviceRes, Req = PostDeviceReq>(
-  body: Req,
+export const postDevice = async <Res = PostDeviceRes>(
+  token: Device['token'],
 ): Promise<Res> => {
-  const response = await authClient.post<Res, AxiosResponse<Res>, Req>(
-    `/notification/devices`,
-    body,
-    { headers: { 'Content-Type': 'application/json' } },
+  const platform: Device['platform'] = 'WEB';
+  const response = await authClient.post<Res>(
+    `/notification/devices/${platform}?token=${token}`,
   );
   return response.data;
 };

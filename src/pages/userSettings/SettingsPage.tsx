@@ -7,7 +7,7 @@ import {
   useGetDevice,
   usePostDevice,
   useDeleteDevice,
-} from '@src/hooks/query/useNotification';
+} from '@src/hooks/query/device';
 import { useDeleteAccount } from '@src/hooks/query/auth';
 import { dialogState } from '@src/states/atoms';
 import styled from 'styled-components';
