@@ -77,7 +77,7 @@ const ReviewInfoWrapper = styled.div`
   justify-content: space-between;
 `;
 const Period = styled.p`
-  ${({ theme }) => theme.fonts.mountain};
+  ${({ theme }) => theme.fonts.caption};
 `;
 const ReviewContent = styled.p<{ $line: number }>`
   ${({ theme }) => theme.fonts.body};
