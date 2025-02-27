@@ -54,7 +54,8 @@ const Layout = styled.header`
   z-index: ${({ theme }) => theme.zIndex.header};
   transform: translateX(-50%);
 
-  width: inherit;
+  width: 100%;
+  max-width: 23.4375rem;
   height: 4.375rem;
   padding: 1.4375rem;
 
