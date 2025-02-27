@@ -56,7 +56,7 @@ const RecruitClimbingItem = ({
         </Wrapper>
         {isOpen && (
           <PopoverWrapper ref={popoverRef}>
-            <Popover>
+            <Popover offset={16}>
               <ParticipantList climbingId={item.climbingId} />
             </Popover>
           </PopoverWrapper>
@@ -121,7 +121,7 @@ const Wrapper = styled.div`
 `;
 const PopoverWrapper = styled.div`
   position: absolute;
-  right: 12.5rem;
+  right: 8rem;
 `;
 const Caption = styled.span`
   width: 100%;

@@ -1,5 +1,9 @@
 import { Climbing, ClimbingMember } from '@src/types/climbing';
-import { EmojiType, EmojiTypeType } from '@src/constants/constants';
+import {
+  ClimbingReadingStatusType,
+  EmojiType,
+  EmojiTypeType,
+} from '@src/constants/constants';
 import Book from '@src/types/book';
 
 export type postClimbingChannelReq = Pick<
@@ -44,7 +48,12 @@ type getClimbingReviewRes1 = {
     star: number;
     content: string;
     reviewId: number;
-    reviewEmojiList: { emoji: keyof typeof EmojiType; emojiCount: number }[];
+    readingStatus: ClimbingReadingStatusType;
+    reviewEmojiList: {
+      emoji: keyof typeof EmojiType;
+      emojiCount: number;
+      isClicked: boolean;
+    }[];
   }[];
 };
 

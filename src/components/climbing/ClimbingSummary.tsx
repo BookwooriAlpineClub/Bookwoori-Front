@@ -2,11 +2,15 @@ import styled from 'styled-components';
 import { ReactComponent as CalendarIcon } from '@src/assets/icons/md_insert_invitation.svg';
 import { ReactComponent as GroupIcon } from '@src/assets/icons/md_group.svg';
 import Tag from '@src/components/common/Tag';
+import Popover from '@src/components/common/Popover';
+import usePopover from '@src/hooks/usePopover';
+import ParticipantList from '@src/components/climbing/ParticipantList';
 
 interface ClimbingSummaryProps {
   startDate?: string;
   endDate?: string;
   memberCount?: number;
+  climbingId: number;
 }
 
 function calculateDday(endDate: string): string {
@@ -33,15 +37,19 @@ function calculateDday(endDate: string): string {
   if (diffInDays === 0) {
     return 'D-Day';
   }
-  return `D+${Math.abs(diffInDays)}`; // 종료 날짜가 과거인 경우
+  return `D+${Math.abs(diffInDays)}`;
 }
 
 const ClimbingSummary = ({
   startDate = '2024-00-00',
   endDate = '2025-00-00',
   memberCount = 6,
+  climbingId,
 }: ClimbingSummaryProps) => {
   const dDay = calculateDday(endDate);
+
+  const { isOpen, togglePopover, popoverRef } = usePopover();
+
   return (
     <Container>
       <DateInfo>
@@ -49,7 +57,22 @@ const ClimbingSummary = ({
         <DateText>{`${startDate} ~ ${endDate}, `}</DateText>
         <HighlightText>{`${dDay}`}</HighlightText>
       </DateInfo>
-      <StyledTag Icon={GroupIcon} text={memberCount} color='blue' />
+
+      <div ref={popoverRef}>
+        <StyledTag
+          onClick={togglePopover}
+          Icon={GroupIcon}
+          text={memberCount}
+          color='blue'
+        />
+        {isOpen && (
+          <PopoverWrapper ref={popoverRef}>
+            <Popover offset={4}>
+              <ParticipantList climbingId={climbingId} />
+            </Popover>
+          </PopoverWrapper>
+        )}
+      </div>
     </Container>
   );
 };
@@ -89,4 +112,14 @@ const StyledCalendarIcon = styled(CalendarIcon)`
 const StyledTag = styled(Tag)`
   color: ${({ theme }) => theme.colors.neutral600};
   border-radius: ${({ theme }) => theme.rounded['12']};
+  padding: ${({ theme }) => theme.padding['4']}
+    ${({ theme }) => theme.padding['12']};
+  gap: ${({ theme }) => theme.gap['4']};
+  cursor: pointer;
+`;
+
+const PopoverWrapper = styled.div`
+  position: absolute;
+  border: solid 1px red;
+  right: 9rem;
 `;

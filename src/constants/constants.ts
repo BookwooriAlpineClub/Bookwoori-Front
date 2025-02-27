@@ -48,11 +48,11 @@ export type NotificationTypeType =
 
 /* 이모지 유형 */
 export const EmojiType = {
-  GOOD: { key: 'GOOD', value: '👍' },
-  HEART: { key: 'HEART', value: '❤️' },
-  SMILE: { key: 'SMILE', value: '😊' },
-  CRY: { key: 'CRY', value: '😢' },
-  THINK: { key: 'THINK', value: '🤔' },
+  THUMBS_UP: { key: 'THUMBS_UP', value: '👍' },
+  HEART_HANDS: { key: 'HEART_HANDS', value: '❤️' },
+  SMILING_FACE: { key: 'SMILING_FACE', value: '😊' },
+  CRYING_FACE: { key: 'CRYING_FACE', value: '😢' },
+  THINKING_FACE: { key: 'THINKING_FACE', value: '🤔' },
 } as const;
 
 export type EmojiTypeType = (typeof EmojiType)[keyof typeof EmojiType];
@@ -193,7 +193,8 @@ export const ERROR_MESSAGES = {
   [ErrorCode.RESOURCE.MEMBER_NOT_FOUND]: '사용자를 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.MEMBER_INACTIVE]: '이미 계정을 삭제한 멤버입니다.',
   [ErrorCode.RESOURCE.SERVER_NOT_FOUND]: '서버를 찾을 수 없습니다.',
-  [ErrorCode.RESOURCE.ALREADY_JOINED_SERVER]: '이미 참여하고 있는 서버입니다.',
+  [ErrorCode.RESOURCE.ALREADY_JOINED_SERVER]:
+    '이미 참여하고 있는 공동체입니다.',
   [ErrorCode.RESOURCE.DELEGATION_REQUIRED]:
     '서버에 나가기 위해서는 \n서버장 권한을 위임해야 합니다.',
   [ErrorCode.RESOURCE.SERVER_MEMBER_NOT_FOUND]:
