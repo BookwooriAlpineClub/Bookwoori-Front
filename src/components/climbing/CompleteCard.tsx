@@ -39,7 +39,7 @@ const CardWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  border-radius: ${({ theme }) => theme.rounded['8']};
+  border-radius: ${({ theme }) => theme.rounded[24]};
   padding: ${({ theme }) => theme.padding['16']};
   background-color: ${({ theme }) => theme.colors.neutral0};
 `;
