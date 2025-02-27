@@ -77,6 +77,10 @@ const SearchPage = () => {
 export default SearchPage;
 
 const Header = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+
   display: flex;
   justify-content: center;
   align-items: center;
