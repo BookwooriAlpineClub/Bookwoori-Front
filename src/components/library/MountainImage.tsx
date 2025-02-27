@@ -172,8 +172,7 @@ const MountainContainer = styled.div<{ $seasonalColor: string[] }>`
   .tooltip-style {
     background-color: ${({ theme }) => theme.colors.lime100};
     color: ${({ theme }) => theme.colors.neutral950};
-    padding: ${({ theme }) => theme.padding['2']}
-      ${({ theme }) => theme.padding['6']};
+    padding: ${({ theme }) => `${theme.padding['2']}  ${theme.padding['4']}`};
     font-size: 70%;
     opacity: 100%;
     border-radius: ${({ theme }) => theme.rounded['8']};
