@@ -1,8 +1,15 @@
 import styled from 'styled-components';
 import failedPictogram from '@src/assets/images/climbing/fail_pictogram.png';
 import finishedPictogram from '@src/assets/images/climbing/finish_pictogram.png';
+import useLoaderData from '@src/hooks/useRoaderData';
+import { useGetClimbing } from '@src/hooks/query/climbing';
 
-const CompleteCard = ({ isFinished = true }: { isFinished?: boolean }) => {
+const CompleteCard = () => {
+  const { id: climbingId } = useLoaderData<{ id: number }>();
+  const { climbingInfo } = useGetClimbing(climbingId);
+  if (!climbingInfo) return null;
+  const isFinished = climbingInfo.status === 'FINISHED';
+
   return (
     <CardWrapper>
       <TextContent>
@@ -16,7 +23,7 @@ const CompleteCard = ({ isFinished = true }: { isFinished?: boolean }) => {
           ) : (
             <>
               <p>모든 멤버가 완등하지 못했어요.</p>
-              <p>다음엔 더 잘할 수 있을거예요!</p>
+              <p>다음에 도전해봐요!</p>
             </>
           )}
         </div>
