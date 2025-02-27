@@ -14,9 +14,6 @@ const ParticipantList = ({ climbingId }: { climbingId: number }) => {
             alt='img'
           />
           <Name>{it.nickname}</Name>
-          <Level>
-            Lv.{it.level} {it.mountain} 마스터
-          </Level>
         </Container>
       ))}
     </Layout>
@@ -29,7 +26,7 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 12.5rem;
+  width: 8rem;
   padding: 0.25rem;
 `;
 const Container = styled.div`
