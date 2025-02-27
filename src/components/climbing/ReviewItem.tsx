@@ -3,35 +3,39 @@ import Tag from '@src/components/common/Tag';
 import styled from 'styled-components';
 import UserAvatar from '@src/components/common/UserAvatar';
 import EmojiList from '@src/components/climbing/EmojiList';
-import { EmojiType } from '@src/constants/constants';
+import { ClimbingReadingStatusType, EmojiType } from '@src/constants/constants';
 import { bottomsheetState } from '@src/states/atoms';
 import useModal from '@src/hooks/useModal';
 import EmojiBottomSheet from '@src/components/climbing/EmojiBottomSheet';
-import { useGetReviewEmojis } from '@src/hooks/query/climbing';
 
 interface ReviewItemProps {
   climbingId: number;
   review: {
     reviewId: number;
+    readingStatus: ClimbingReadingStatusType;
     memberId: number;
     nickname: string;
     star: number;
     profileImg: string | null;
     content: string;
-    reviewEmojiList: { emoji: keyof typeof EmojiType; emojiCount: number }[];
+    reviewEmojiList: {
+      emoji: keyof typeof EmojiType;
+      emojiCount: number;
+      isClicked: boolean;
+    }[];
   };
 }
 
 const ReviewItem = ({ climbingId, review }: ReviewItemProps) => {
   const { openModal } = useModal(bottomsheetState);
-  const { getEmojis } = useGetReviewEmojis({
-    climbingId,
-    reviewId: review.reviewId,
-  });
 
   const handleOpenBottomSheet = () => {
     openModal(
-      <EmojiBottomSheet climbingId={climbingId} reviewId={review.reviewId} />,
+      <EmojiBottomSheet
+        climbingId={climbingId}
+        reviewId={review.reviewId}
+        emojis={review.reviewEmojiList}
+      />,
     );
   };
 
@@ -40,7 +44,7 @@ const ReviewItem = ({ climbingId, review }: ReviewItemProps) => {
       <UserAvatar
         profileImg={review.profileImg}
         nickname={review.nickname}
-        status='FINISHED' // 임시 상태
+        status={review.readingStatus === 'FINISHED' ? 'FINISHED' : 'FAILED'}
       />
       <ReviewContent>
         <UserInfo>
@@ -51,7 +55,6 @@ const ReviewItem = ({ climbingId, review }: ReviewItemProps) => {
         <EmojiList
           reviewId={review.reviewId}
           emojis={review.reviewEmojiList}
-          emojiMembers={getEmojis.data}
           onAddClick={handleOpenBottomSheet}
         />
       </ReviewContent>
@@ -69,8 +72,18 @@ const ReviewItemWrapper = styled.div`
 const ReviewContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.gap['8']};
+  gap: ${({ theme }) => theme.gap['4']};
   color: ${({ theme }) => theme.colors.neutral950};
+  width: 100%;
+
+  span {
+    word-break: break-all;
+    overflow-wrap: break-word;
+    text-align: start;
+    text-overflow: ellipsis;
+
+    position: relative;
+  }
 `;
 
 const UserInfo = styled.div`
@@ -78,5 +91,5 @@ const UserInfo = styled.div`
   align-items: center;
   justify-content: space-between;
   ${({ theme }) => theme.fonts.header};
-  color: ${({ theme }) => theme.colors.neutral950};
+  color: ${({ theme }) => theme.colors.neutral600};
 `;

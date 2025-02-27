@@ -1,47 +1,58 @@
 import styled from 'styled-components';
 import { EmojiType } from '@src/constants/constants';
-import {
-  useGetReviewEmojis,
-  usePutEmojiOnReview,
-} from '@src/hooks/query/climbing';
-import { useState } from 'react';
+import { usePutEmojiOnReview } from '@src/hooks/query/climbing';
+import { useEffect, useState } from 'react';
 
 const EmojiBottomSheet = ({
   climbingId,
   reviewId,
+  emojis,
 }: {
   climbingId: number;
   reviewId: number;
+  emojis: {
+    emoji: keyof typeof EmojiType;
+    emojiCount: number;
+    isClicked: boolean;
+  }[];
 }) => {
-  const emojiKeys = Object.keys(EmojiType) as Array<keyof typeof EmojiType>;
-  const { getEmojis } = useGetReviewEmojis({ climbingId, reviewId });
-  const emojiStatus = getEmojis.data;
-  console.log(emojiStatus);
+  const emojiList = Object.keys(EmojiType) as Array<keyof typeof EmojiType>;
 
   type EmojiKey = keyof typeof EmojiType;
   const initialClickedState: Record<EmojiKey, boolean> = {
-    GOOD: false,
-    HEART: false,
-    SMILE: false,
-    CRY: false,
-    THINK: false,
+    THUMBS_UP: false,
+    THINKING_FACE: false,
+    CRYING_FACE: false,
+    HEART_HANDS: false,
+    SMILING_FACE: false,
   };
   const [clickedEmojis, setClickedEmojis] =
     useState<Record<EmojiKey, boolean>>(initialClickedState);
   const { putEmoji } = usePutEmojiOnReview(climbingId, reviewId);
 
+  useEffect(() => {
+    const updatedClickedEmojis = { ...initialClickedState };
+
+    emojis.forEach((item) => {
+      if (item.isClicked && item.emoji in updatedClickedEmojis) {
+        updatedClickedEmojis[item.emoji as EmojiKey] = true;
+      }
+    });
+    setClickedEmojis(updatedClickedEmojis);
+  }, []);
+
   const handleEmojiClick = (emoji: EmojiKey) => {
     putEmoji.mutate(emoji);
     setClickedEmojis((prev) => ({
       ...prev,
-      [emoji]: true,
+      [emoji]: !prev[emoji],
     }));
   };
 
   return (
     <Layout>
       <Container>
-        {emojiKeys.map((key) => (
+        {emojiList.map((key) => (
           <Emoji
             key={key}
             isClicked={clickedEmojis[key]}
@@ -57,7 +68,6 @@ const EmojiBottomSheet = ({
 export default EmojiBottomSheet;
 
 // Styled Components
-
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
@@ -81,6 +91,10 @@ const Emoji = styled.button<{ isClicked: boolean }>`
   border-radius: 50%;
   background-color: ${({ theme, isClicked }) =>
     isClicked ? theme.colors.blue100 : theme.colors.neutral0};
+  border: ${({ theme, isClicked }) =>
+    isClicked
+      ? `0.05rem solid ${theme.colors.blue500}`
+      : `0.05rem solid transparent`};
 
   font-size: 1.5rem;
 `;

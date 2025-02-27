@@ -1,20 +1,27 @@
 import { EmojiType } from '@src/constants/constants';
 import styled from 'styled-components';
-import { getClimbingReviewEmojiRes } from '@src/types/apis/climbing';
 import { useState } from 'react';
 import UserAvatar from '@src/components/common/UserAvatar';
+import { useGetReviewEmojis } from '@src/hooks/query/climbing';
 
 const EmojiMemberListBottomSheet = ({
-  clickedEmoji = 'GOOD',
-  emojiMembersData,
+  clickedEmoji,
+  reviewId,
+  climbingId,
 }: {
   clickedEmoji?: string;
-  emojiMembersData?: getClimbingReviewEmojiRes;
+  reviewId: number;
+  climbingId: number;
 }) => {
   const [selectedEmoji, setSelectedEmoji] = useState(clickedEmoji);
+
+  const { getEmojis } = useGetReviewEmojis({
+    climbingId,
+    reviewId,
+  });
   const emojiKeys = Object.keys(EmojiType) as Array<keyof typeof EmojiType>;
-  if (emojiMembersData === undefined) return null;
-  const emojiData = emojiMembersData.reviewEmojiList.find(
+  if (getEmojis.data === undefined) return null;
+  const emojiData = getEmojis.data.reviewEmojiList.find(
     (item) => item.emoji === selectedEmoji,
   );
   return (
@@ -37,6 +44,7 @@ const EmojiMemberListBottomSheet = ({
               <UserAvatar
                 profileImg={item.profileImg}
                 nickname={item.nickname}
+                size='2.5rem'
               />
               <p>{item.nickname}</p>
             </MemberItemWrapper>
@@ -90,7 +98,7 @@ const MemberListWrapper = styled.div`
 
   min-height: 16rem;
   padding: ${({ theme }) => theme.padding['8']};
-  gap: ${({ theme }) => theme.gap['4']};
+  gap: ${({ theme }) => theme.gap['12']};
 
   background-color: ${({ theme }) => theme.colors.neutral0};
   border-radius: ${({ theme }) => theme.rounded['12']};
@@ -101,9 +109,4 @@ const MemberItemWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: ${({ theme }) => theme.gap['8']};
-  img {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-  }
 `;
