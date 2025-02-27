@@ -120,7 +120,7 @@ const ClimbingEditPage = () => {
               <Datepicker
                 name='등반 시기'
                 type='period'
-                min={formatDate(new Date())}
+                min={formatDate(new Date(), '$1-$2-$3')}
                 required
                 disabled='start'
                 value={date}

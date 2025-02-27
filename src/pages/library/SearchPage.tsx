@@ -1,4 +1,3 @@
-import type { GetBookListRes } from '@src/types/apis/book';
 import {
   Link,
   useNavigate,
@@ -18,8 +17,7 @@ const SearchPage = () => {
   const keyword: string = new URLSearchParams(location.search).get('keyword') ?? '';
 
   // API 요청
-  const { data: bookList } = useGetBookList(keyword);
-  const data: GetBookListRes = bookList ?? [];
+  const { data } = useGetBookList(keyword);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // 새로고침 방지 (기본 기능 비활성화)
@@ -56,7 +54,7 @@ const SearchPage = () => {
       </Header>
       {keyword && (
         <main>
-          {data.length !== 0 ? (
+          {data.length > 0 ? (
             <Ul>
               {data.map((item) => (
                 <Link

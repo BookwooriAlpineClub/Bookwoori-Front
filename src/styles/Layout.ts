@@ -1,6 +1,56 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
 
+export const PaddingLayout = styled.div`
+  width: 100%;
+  min-height: 100%;
+  padding: ${({ theme }) => theme.padding[16]};
+
+  &:has(header) {
+    padding-top: 0;
+  }
+  &:has(strong) {
+    height: 100%;
+  }
+`;
+/**
+ * @example
+ * <BottomButtonLayout>
+ *   <main>
+ *     <태그 className='scroll-area'>
+ *       // 스크롤 영역
+ *     </태그>
+ *     <Button>메인 버튼</Button>
+ *   </main>
+ * </BottomButtonLayout>
+ */
+export const BottomButtonLayout = styled.div`
+  display: flex;
+  @supports (height: 100svh) {
+    height: calc(100svh - 4.375rem - 2rem);
+  }
+  @supports not (height: 100svh) {
+    height: calc(100vh - 4.375rem - 2rem);
+  }
+
+  main {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: ${({ theme }) => theme.gap[16]};
+
+    flex-grow: 1;
+
+    overflow-y: auto;
+  }
+  .scroll-area {
+    display: flex;
+    flex-flow: column nowrap;
+
+    flex-grow: 1;
+
+    overflow-y: scroll;
+  }
+`;
 /**
  * @example
  * <NoDataTextLayout>
@@ -14,11 +64,13 @@ import { NoSelect } from '@src/styles/mixins';
  * </NoDataTextLayout>
  */
 export const NoDataTextLayout = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  padding: 0 ${({ theme }) => theme.padding[16]};
-
+  &:has(strong) {
+    display: flex;
+    height: 100%;
+  }
+  main {
+    width: 100%;
+  }
   main:has(strong) {
     display: flex;
 
@@ -31,42 +83,5 @@ export const NoDataTextLayout = styled.div`
     color: ${({ theme }) => theme.colors.neutral400};
 
     ${NoSelect}
-  }
-`;
-/**
- * @example
- * <DefaultLayout>
- *   <main>
- *     <태그 className='scroll-area'>
- *       // 스크롤 영역
- *     </태그>
- *     <Button>메인 버튼</Button>
- *   </main>
- * </DefaultLayout>
- */
-export const DefaultLayout = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  padding: 0 ${({ theme }) => theme.padding[16]};
-
-  main {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: ${({ theme }) => theme.gap[16]};
-
-    flex-grow: 1;
-    margin-bottom: 1.5rem;
-
-    overflow-y: auto;
-  }
-  .scroll-area {
-    display: flex;
-    flex-flow: column nowrap;
-
-    flex-grow: 1;
-
-    overflow-y: scroll;
-    width: 100%;
   }
 `;

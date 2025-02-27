@@ -64,7 +64,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.gap[12]};
 
-  height: 80vh;
+  height: 80%;
   padding: 0 0.9375rem;
   overflow: scroll;
 `;
