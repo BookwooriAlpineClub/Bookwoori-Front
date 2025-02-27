@@ -6,11 +6,12 @@ import { ReactComponent as SearchIcon } from '@src/assets/icons/md_outline_searc
 import { ReactComponent as BookmarkIcon } from '@src/assets/icons/md_collection_bookmark.svg';
 import { ReactComponent as StarIcon } from '@src/assets/icons/md_star.svg';
 import { useGetProfile } from '@src/hooks/query/member';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorPage from '@src/pages/fallback/ErrorPage';
 import { Mountains } from '@src/constants/constants';
+import useLoaderData from '@src/hooks/useRoaderData';
 
 const seasonalColors = {
   december: ['#228B22', '#E8F1F8', '#FFF'],
@@ -21,7 +22,7 @@ const seasonalColors = {
 };
 
 const LibraryHomePage = () => {
-  const { memberId: id } = useParams<{ memberId: string }>();
+  const { id } = useLoaderData<{ id: number }>();
   const memberId = id ? Number(id) : 'me';
   const { profileData } = useGetProfile(memberId);
   const navigate = useNavigate();

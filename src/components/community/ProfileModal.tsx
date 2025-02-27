@@ -10,6 +10,7 @@ import { ReactComponent as Hiking } from '@src/assets/icons/md_outline_auto_stor
 import { ReactComponent as Setting } from '@src/assets/icons/bi_user_plus.svg';
 import { useGetProfile } from '@src/hooks/query/member';
 import Spinner from '@src/components/common/Spinner';
+import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 
 const buttons = {
   hiking: {
@@ -30,6 +31,7 @@ const buttons = {
 };
 
 const ProfileModal = ({ memberId }: { memberId: number }) => {
+  const navigateEncode = useEncodedNavigation();
   const navigate = useNavigate();
   const { closeModal: closeDialog } = useModal(dialogState);
   const { closeModal: closeCommunityDrawer } = useModal(communityDrawerState);
@@ -40,7 +42,7 @@ const ProfileModal = ({ memberId }: { memberId: number }) => {
     closeCommunityDrawer();
     closeDialog();
     if (profileData.isMine) navigate(ROUTE_PATH.library);
-    else navigate(`${ROUTE_PATH.library}/${memberId}`);
+    else navigateEncode(ROUTE_PATH.library, memberId);
   };
 
   const handleClickMessage = () => {
@@ -48,7 +50,7 @@ const ProfileModal = ({ memberId }: { memberId: number }) => {
     closeDialog();
     if (profileData.isMine) {
       navigate(ROUTE_PATH.setting);
-    } else navigate(`${ROUTE_PATH.dmChat}/${memberId}`);
+    } else navigateEncode(ROUTE_PATH.dmChat, memberId);
   };
 
   return (
