@@ -77,8 +77,6 @@ const CheckInvitedCommunityPage = () => {
 export default CheckInvitedCommunityPage;
 
 const Main = styled.main`
-  background-color: ${({ theme }) => theme.colors.neutral50};
-
   .scroll-area {
     gap: ${({ theme }) => theme.gap['16']};
   }

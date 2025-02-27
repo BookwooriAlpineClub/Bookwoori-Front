@@ -121,8 +121,6 @@ const CreateNewCommunityPage = () => {
 export default CreateNewCommunityPage;
 
 const Main = styled.main`
-  background-color: ${({ theme }) => theme.colors.neutral50};
-
   .scroll-area {
     display: flex;
     flex-direction: column;
