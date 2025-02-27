@@ -43,7 +43,3 @@ const Img = styled.img`
   border-radius: 50%;
 `;
 const Name = styled.span``;
-const Level = styled.span`
-  ${({ theme }) => theme.fonts.caption}
-  color: ${({ theme }) => theme.colors.neutral400}
-`;
