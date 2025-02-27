@@ -1,9 +1,9 @@
-import type { ClimbingInfo } from '@src/types/climbing';
+import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
+import type { ClimbingInfo } from '@src/types/climbing';
 import useEncodedNavigation from '@src/hooks/useEncodedNavigate';
 import useModal from '@src/hooks/useModal';
 import { bottomsheetState } from '@src/states/atoms';
-import styled from 'styled-components';
 import RecruitClimbingBottomSheet from '@src/components/climbing/RecruitClimbingBottomSheet';
 import { ReactComponent as Next } from '@src/assets/images/channel/carousel_btn.svg';
 import { ReactComponent as More } from '@src/assets/images/channel/carousel_more_btn.svg';
@@ -17,7 +17,8 @@ const Carousel = ({
 }) => {
   const CAROUSEL_ITEM_WIDTH = 85;
   const ref = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState<number>(0);
+  const layoutRef = useRef<HTMLDivElement>(null);
+  const [_, setWidth] = useState<number>(0);
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
   const { openModal: openBottomsheet, closeModal: closeBottomsheet } =
@@ -35,13 +36,11 @@ const Carousel = ({
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
-  const getMoveItems = () => Math.floor(width / CAROUSEL_ITEM_WIDTH);
-
   const handleScroll = (direction: number) => {
     const item = ref.current;
     if (!item) return;
 
-    const moveItems = getMoveItems();
+    const moveItems = Math.floor(item.offsetWidth / CAROUSEL_ITEM_WIDTH);
 
     item.scrollTo({
       left: item.scrollLeft + direction * moveItems,
@@ -97,8 +96,6 @@ const Carousel = ({
   const handleClickNavigate = (climbingId: number) => {
     navigate('/climbing', climbingId);
   };
-
-  const layoutRef = useRef<HTMLDivElement>(null);
 
   return (
     <Layout ref={layoutRef}>

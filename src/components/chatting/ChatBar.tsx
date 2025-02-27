@@ -166,6 +166,7 @@ export default ChatBar;
 
 const Padding = styled.div<{ $height: number | null }>`
   width: 100%;
+  max-width: 23.4375rem;
   height: ${({ $height }) => ($height ? `${$height}px` : '0')};
   max-height: 11.375rem;
 `;
@@ -177,6 +178,7 @@ const Layout = styled.div`
   z-index: ${({ theme }) => theme.zIndex.header};
 
   width: 100%;
+  max-width: 23.4375rem;
 
   background-color: ${({ theme }) => theme.colors.neutral0};
 `;
