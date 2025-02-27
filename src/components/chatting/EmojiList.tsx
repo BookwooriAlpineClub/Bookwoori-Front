@@ -5,13 +5,7 @@ import { EmojiType } from '@src/constants/constants';
 import { reactHandler } from '@src/apis/chat';
 
 const EmojiList = ({ reactions, id }: { reactions: Reactions; id: string }) => {
-  const emojiMapping: Record<string, keyof typeof EmojiType> = {
-    thumbs_up: 'GOOD',
-    heart_hands: 'HEART',
-    smiling_face: 'SMILE',
-    crying_face: 'CRY',
-    thinking_face: 'THINK',
-  };
+  console.log('reactions', reactions);
 
   const handleEmojiClick = async (emoji: string) => {
     try {
@@ -27,19 +21,17 @@ const EmojiList = ({ reactions, id }: { reactions: Reactions; id: string }) => {
       console.error('Failed to remove reaction:', error);
     }
   };
-
   return (
     <ListContainer>
-      {Object.entries(reactions).map(([reactionKey, detail]) => {
-        const mappedEmoji = emojiMapping[reactionKey.toLowerCase()];
+      {Object.entries(reactions).map(([reaction, detail]) => {
         return (
           <>
             <EmojiItem
-              key={reactionKey}
+              key={reaction}
               initialIsSelected={false}
-              emoji={mappedEmoji}
+              emoji={reaction as keyof typeof EmojiType}
               count={detail.count}
-              onClick={() => handleEmojiClick(reactionKey)}
+              onClick={() => handleEmojiClick(reaction)}
             />
           </>
         );

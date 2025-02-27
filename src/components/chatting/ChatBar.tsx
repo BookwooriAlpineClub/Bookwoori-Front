@@ -85,7 +85,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
     };
 
     try {
-      await sendHandler(message, '/pub/direct/send');
+      await sendHandler(message, `/pub/direct/send`);
       console.log('Message sent successfully');
       setChat('');
     } catch (error) {
@@ -111,7 +111,7 @@ const ChatBar = ({ nickname }: { nickname: string }) => {
     };
 
     try {
-      await sendHandler(message, '/pub/direct/reply');
+      await sendHandler(message, `/pub/direct/reply`);
       console.log('Reply sent successfully');
       setChat('');
       setReplyChatItem(null);

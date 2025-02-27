@@ -33,7 +33,6 @@ const ChannelPage = () => {
   const setReplyChatItem = useSetRecoilState(replyChatState);
   const replyChatId = useRecoilValue(replyChatIdState);
 
-  // channelName 받아오기 (수정 필요)
   const {
     data: channelName,
     isLoading,
@@ -100,8 +99,6 @@ const ChannelPage = () => {
   }, [isInitial, data]);
 
   useEffect(() => {
-    console.log('inview', inView);
-    console.log('next', hasNextPage);
     if (!inView) return;
     if (!hasNextPage) return;
 
@@ -162,6 +159,7 @@ const ChannelPage = () => {
                   key={msg.id}
                   chatItem={msg}
                   createdAt={currentTime}
+                  pub='channel'
                 />
                 {showDateLine && <DateLine date={currentDate} />}
               </React.Fragment>
