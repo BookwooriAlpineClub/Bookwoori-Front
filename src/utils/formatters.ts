@@ -4,9 +4,9 @@ import { isBase64Encoded } from '@src/utils/validators'; // at decodedIdParam
 /**
  * input[type="date"] 태그는 "YYYY-MM-DD" 형식만 이해할 수 있습니다.
  * @param date new Date()로 생성한 객체
- * @returns "YYYY-MM-DD" 형식의 string
+ * @param format 반환 형식. YYYY는 $1로, MM은 $2로, DD는 $3으로 표기. (예: "YYYY-MM-DD" 형식을 얻고 싶다면, "$1-$2-$3" 입력)
  */
-export const formatDate = (date: Date): string => {
+export const formatDate = (date: Date, format: string): string => {
   return date
     .toLocaleDateString('ko-KR', {
       timeZone: undefined,
@@ -14,7 +14,7 @@ export const formatDate = (date: Date): string => {
       month: '2-digit',
       day: '2-digit',
     })
-    .replace(/(\d{4}). (\d{2}). (\d{2})./, '$1-$2-$3');
+    .replace(/(\d{4}). (\d{2}). (\d{2})./, format);
 };
 
 /**

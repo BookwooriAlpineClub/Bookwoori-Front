@@ -1,5 +1,6 @@
 import type BookType from '@src/types/book';
 import type RecordType from '@src/types/record';
+import { formatDate } from '@src/utils/formatters';
 import styled from 'styled-components';
 import { BookImg, TextEllipsis } from '@src/styles/mixins';
 import Tag from '@src/components/common/Tag';
@@ -9,7 +10,7 @@ import { ReactComponent as MdAutoStories } from '@src/assets/icons/md_auto_stori
 import { ReactComponent as Done } from '@src/assets/icons/done.svg';
 
 interface Props extends Omit<BookType, 'isbn13' | 'description'> {
-  record: RecordType;
+  record: RecordType | null;
   openBottomsheet: () => void;
 }
 
@@ -24,9 +25,11 @@ const BookDetail = ({
   openBottomsheet,
 }: Props) => {
   const TagConfigs: Record<RecordType['status'], React.ReactElement> = {
-    UNREAD: <Tag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />,
+    UNREAD: (
+      <STag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />
+    ),
     WISH: (
-      <Tag
+      <STag
         color='blue'
         Icon={MdBook}
         text='읽고 싶어요'
@@ -34,25 +37,25 @@ const BookDetail = ({
       />
     ),
     READING: (
-      <Tag
+      <STag
         color='blue'
         Icon={MdAutoStories}
         text='읽고 있어요'
         onClick={openBottomsheet}
       >
-        <Blue900Span>{record.startDate}</Blue900Span>
-        <Blue900Span>{`${record.currentPage}쪽/${itemPage}쪽`}</Blue900Span>
-      </Tag>
+        <Blue900Span>{record?.startDate}</Blue900Span>
+        <Blue900Span>{`${record?.currentPage}쪽/${itemPage}쪽`}</Blue900Span>
+      </STag>
     ),
     FINISHED: (
-      <Tag
+      <STag
         color='blue'
         Icon={Done}
         text='다 읽었어요'
         onClick={openBottomsheet}
       >
-        <Blue900Span>{`${record.startDate}-${record.endDate}`}</Blue900Span>
-      </Tag>
+        <Blue900Span>{`${formatDate(new Date(record?.startDate ?? ''), '$1.$2.$3.')}-${formatDate(new Date(record?.endDate ?? ''), '$1.$2.$3.')}`}</Blue900Span>
+      </STag>
     ),
   };
 
@@ -72,7 +75,7 @@ const BookDetail = ({
         {record ? (
           TagConfigs[record.status]
         ) : (
-          <Tag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />
+          <STag color='blue' Icon={HiOutlinePlus} onClick={openBottomsheet} />
         )}
       </InfoWrapper>
     </Container>
@@ -116,4 +119,9 @@ const Caption = styled.span`
 `;
 const Blue900Span = styled.span`
   color: ${({ theme }) => theme.colors.blue900};
+`;
+const STag = styled(Tag)`
+  justify-content: center;
+
+  width: 100%;
 `;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { formatDate } from '@src/utils/formatters';
 import { TextEllipsis } from '@src/styles/mixins';
 import StarReview from '@src/components/library/StarReview';
 
@@ -14,7 +15,7 @@ const Review = ({ star, content, createdAt, modifiedAt }: Props) => {
     <Container>
       <Wrapper>
         <StarReview starReview={star} />
-        <Time>{`${createdAt} 작성 (${modifiedAt} 수정)`}</Time>
+        <Time>{`${formatDate(new Date(createdAt), '$1.$2.$3')} 작성 (${formatDate(new Date(modifiedAt), '$1.$2.$3.')} 수정)`}</Time>
       </Wrapper>
       <Content $line={3}>{content}</Content>
     </Container>

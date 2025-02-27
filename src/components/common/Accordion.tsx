@@ -15,9 +15,6 @@ type AccordionProps = {
   onDragStart?: (e: React.DragEvent) => void;
   onDrop?: () => void;
   onDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
-  onTouchStart?: () => void;
-  onTouchEnd?: () => void;
-  onTouchMove?: (e: React.TouchEvent) => void;
 };
 
 const Accordion = ({
@@ -28,9 +25,6 @@ const Accordion = ({
   onDragStart = () => {},
   onDrop = () => {},
   onDragOver = () => {},
-  onTouchStart = () => {},
-  onTouchEnd = () => {},
-  onTouchMove = () => {},
 }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(!!children);
   const isTouchDevice = 'ontouchstart' in window;
@@ -50,9 +44,6 @@ const Accordion = ({
       onDragStart={onDragStart}
       onDrop={onDrop}
       onDragOver={onDragOver}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-      onTouchMove={onTouchMove}
     >
       <Container>
         {title}
@@ -76,8 +67,6 @@ const Layout = styled.div`
   width: 100%;
   border-radius: 0.9375rem;
   background-color: ${({ theme }) => theme.colors.neutral0};
-
-  touch-action: none;
 `;
 const Container = styled.div`
   display: flex;

@@ -1,5 +1,4 @@
 import CommunityInfoSection from '@src/components/community/CommunityInfoSection';
-import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import CommunitySettingSection from '@src/components/community/CommunitySettingSection';
 import useLoaderData from '@src/hooks/useRoaderData';
@@ -42,19 +41,15 @@ const CommunityInfoSettingPage = () => {
   return (
     <>
       <Header text={headerText} headerType='back' />
-      <Main>
+      <main>
         <CommunityInfoSection {...communityInfo} />
         <CommunitySettingSection
           isOwner={server.isOwner}
           setIsSpinning={setIsSpinning}
         />
-      </Main>
+      </main>
     </>
   );
 };
 
 export default CommunityInfoSettingPage;
-
-const Main = styled.main`
-  background-color: ${({ theme }) => theme.colors.neutral50};
-`;

@@ -78,7 +78,7 @@ export const onError = async (error: AxiosError): Promise<unknown> => {
   const result = await handleErrorByStatus({ status, data, config });
 
   if (result === null) {
-    return new Promise(() => {});
+    return Promise.resolve();
   }
 
   return result;

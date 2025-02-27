@@ -20,8 +20,8 @@ const DeleteConfirmDialog = ({
     <DialogLayout>
       <TextContainer>{text ?? NOTI_TEXT}</TextContainer>
       <ButtonContainer>
-        <SubButton label={deleteLabel} onClick={onClickDelete} width='39vw' />
-        <SubButton label='돌아가기' width='39vw' onClick={closeDialog} />
+        <SubButton label={deleteLabel} onClick={onClickDelete} />
+        <SubButton label='돌아가기' onClick={closeDialog} />
       </ButtonContainer>
     </DialogLayout>
   );
@@ -30,7 +30,16 @@ const DeleteConfirmDialog = ({
 export default DeleteConfirmDialog;
 
 const DialogLayout = styled.div`
-  width: 80vw;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: ${({ theme }) => theme.gap[16]};
+
+  @media (max-width: 375px) {
+    width: 80%;
+  }
+  @media (min-width: 375px) {
+    width: calc(375px * 0.8);
+  }
 `;
 const TextContainer = styled.p`
   display: flex;
@@ -46,7 +55,6 @@ const TextContainer = styled.p`
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-
-  margin-top: 0.9375rem;
+  flex-flow: row nowrap;
+  gap: ${({ theme }) => theme.gap[16]};
 `;

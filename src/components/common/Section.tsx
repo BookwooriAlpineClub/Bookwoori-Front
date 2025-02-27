@@ -13,7 +13,9 @@ const Container = styled.section`
   border-radius: ${({ theme }) => theme.rounded[12]};
   background-color: ${({ theme }) => theme.colors.neutral0};
 
-  &:not(:has(input:enabled, textarea:enabled, select:enabled)) {
+  &:has(input:disabled),
+  &:has(textarea:disabled),
+  &:has(select:disabled) {
     background-color: ${({ theme }) => theme.colors.neutral200};
   }
 `;

@@ -26,7 +26,7 @@ const useGetRecordList = (status: Record['status']) => {
 const useGetRecordDetail = (isbn13: Book['isbn13']) => {
   return useQuery<GetRecordDetailRes, AxiosError>({
     queryKey: ['getRecordDetail', isbn13],
-    queryFn: () => getRecordDetail(Number(isbn13)),
+    queryFn: () => getRecordDetail(isbn13),
     initialData: {
       isbn13: '',
       title: '',

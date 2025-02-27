@@ -1,5 +1,4 @@
 import Header from '@src/components/common/Header';
-import styled from 'styled-components';
 import Button from '@src/components/common/button/Button';
 import { useEffect, useState } from 'react';
 import IntroSection from '@src/components/addcommunity/IntroSection';
@@ -38,7 +37,7 @@ const EnterInvitationPage = () => {
   return (
     <>
       <Header text={headerText} headerType={headerType} />
-      <Main>
+      <main>
         <div className='scroll-area'>
           <IntroSection title={introTitleText} bodyLines={introBodyLines} />
           <Fieldset title='초대 코드'>
@@ -67,13 +66,9 @@ const EnterInvitationPage = () => {
         >
           공동체 찾기
         </Button>
-      </Main>
+      </main>
     </>
   );
 };
 
 export default EnterInvitationPage;
-
-const Main = styled.main`
-  background-color: ${({ theme }) => theme.colors.neutral50};
-`;

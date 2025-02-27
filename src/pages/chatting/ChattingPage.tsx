@@ -151,6 +151,7 @@ const ChattingPage = () => {
                   key={it.id}
                   chatItem={it}
                   createdAt={currentTime}
+                  pub='direct'
                 />
                 {showDateLine && <DateLine date={currentDate} />}
               </React.Fragment>

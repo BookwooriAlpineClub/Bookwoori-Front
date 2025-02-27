@@ -1,6 +1,7 @@
 import type { GetReviewListRes } from '@src/types/apis/review';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
+import { formatDate } from '@src/utils/formatters';
 import styled from 'styled-components';
 import { TextEllipsis } from '@src/styles/mixins';
 import BookListItem from '@src/components/library/BookListItem';
@@ -37,7 +38,7 @@ const ReviewListItem = ({
           <Li key={reviewId}>
             <ReviewInfoWrapper>
               <StarReview starReview={star} />
-              <Period>{`${createdAt} 작성 (${modifiedAt} 수정)`}</Period>
+              <Period>{`${formatDate(new Date(createdAt), '$1.$2.$3')} 작성 (${formatDate(new Date(modifiedAt), '$1.$2.$3.')} 수정)`}</Period>
             </ReviewInfoWrapper>
             <ReviewContent $line={3}>{content}</ReviewContent>
           </Li>
@@ -76,7 +77,7 @@ const ReviewInfoWrapper = styled.div`
   justify-content: space-between;
 `;
 const Period = styled.p`
-  ${({ theme }) => theme.fonts.mountain};
+  ${({ theme }) => theme.fonts.caption};
 `;
 const ReviewContent = styled.p<{ $line: number }>`
   ${({ theme }) => theme.fonts.body};

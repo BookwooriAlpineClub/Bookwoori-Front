@@ -1,4 +1,3 @@
-import type { GetBookListRes } from '@src/types/apis/book';
 import {
   Link,
   useNavigate,
@@ -8,6 +7,7 @@ import {
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { useGetBookList } from '@src/hooks/query/book';
 import styled from 'styled-components';
+import Spinner from '@src/components/common/Spinner';
 import BookListItem from '@src/components/library/BookListItem';
 import { ReactComponent as IcnSearch } from '@src/assets/icons/md_outline_search.svg';
 import { ReactComponent as IcnClose } from '@src/assets/icons/ck_close.svg';
@@ -18,8 +18,7 @@ const SearchPage = () => {
   const keyword: string = new URLSearchParams(location.search).get('keyword') ?? '';
 
   // API 요청
-  const { data: bookList } = useGetBookList(keyword);
-  const data: GetBookListRes = bookList ?? [];
+  const { data, isLoading, isSuccess } = useGetBookList(keyword);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // 새로고침 방지 (기본 기능 비활성화)
@@ -56,20 +55,26 @@ const SearchPage = () => {
       </Header>
       {keyword && (
         <main>
-          {data.length !== 0 ? (
-            <Ul>
-              {data.map((item) => (
-                <Link
-                  key={item.isbn13}
-                  to={`${ROUTE_PATH.libraryBookSearch}/${item.isbn13}`}
-                >
-                  <BookListItem {...item} />
-                </Link>
-              ))}
-            </Ul>
-          ) : (
-            <strong>검색 결과가 없어요.</strong>
+          {isLoading && (
+            <strong>
+              <Spinner />
+            </strong>
           )}
+          {isSuccess &&
+            (data.length > 0 ? (
+              <Ul>
+                {data.map((item) => (
+                  <Link
+                    key={item.isbn13}
+                    to={`${ROUTE_PATH.libraryBookSearch}/${item.isbn13}`}
+                  >
+                    <BookListItem {...item} />
+                  </Link>
+                ))}
+              </Ul>
+            ) : (
+              <strong>검색 결과가 없어요.</strong>
+            ))}
         </main>
       )}
     </>
@@ -79,6 +84,10 @@ const SearchPage = () => {
 export default SearchPage;
 
 const Header = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+
   display: flex;
   justify-content: center;
   align-items: center;

@@ -53,7 +53,6 @@ export default AddCommunityPage;
 
 const Main = styled.main`
   margin-top: 2rem;
-  background-color: ${({ theme }) => theme.colors.neutral50};
 `;
 const AddOptionContainer = styled.div`
   display: flex;

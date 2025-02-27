@@ -76,71 +76,61 @@ const useChatHandler = ({
 
       if (message.eventType === 'MODIFY') {
         setNewMessages((prevMessages) =>
-          prevMessages.map((msg) =>
-            msg.id === message.payload.id
-              ? { ...msg, content: message.payload.content }
-              : msg,
-          ),
-        );
-        setNewMessages((prevMessages) =>
-          prevMessages.map((msg) =>
-            msg.parentId === message.payload.id
-              ? { ...msg, parentContent: message.payload.content }
-              : msg,
-          ),
+          prevMessages.map((msg) => {
+            if (msg.id === message.payload.id) {
+              return { ...msg, content: message.payload.content };
+            }
+            if (msg.parentId === message.payload.id) {
+              return { ...msg, parentContent: message.payload.content };
+            }
+            return msg;
+          }),
         );
 
         if (!setMessages) return;
 
         setMessages((prevMessages) =>
-          prevMessages.map((msg) =>
-            msg.id === message.payload.id
-              ? { ...msg, content: message.payload.content }
-              : msg,
-          ),
-        );
-        setMessages((prevMessages) =>
-          prevMessages.map((msg) =>
-            msg.parentId === message.payload.id
-              ? { ...msg, parentContent: message.payload.content }
-              : msg,
-          ),
+          prevMessages.map((msg) => {
+            if (msg.id === message.payload.id) {
+              return { ...msg, content: message.payload.content };
+            }
+            if (msg.parentId === message.payload.id) {
+              return { ...msg, parentContent: message.payload.content };
+            }
+            return msg;
+          }),
         );
       }
 
       if (message.eventType === 'DELETE') {
         setNewMessages((prevMessages) =>
-          prevMessages.filter((msg) => msg.id !== message.payload),
-        );
-        setNewMessages((prevMessages) =>
-          prevMessages.map((msg) => {
-            if (msg.parentId === message.payload) {
-              return {
-                ...msg,
-                parentMemberId: -1,
-                parentContent: '삭제된 메시지입니다.',
-              };
-            }
-            return msg;
-          }),
+          prevMessages
+            .filter((msg) => msg.id !== message.payload)
+            .map((msg) =>
+              msg.parentId === message.payload
+                ? {
+                    ...msg,
+                    parentMemberId: -1,
+                    parentContent: '삭제된 메시지입니다.',
+                  }
+                : msg,
+            ),
         );
 
         if (!setMessages) return;
 
         setMessages((prevMessages) =>
-          prevMessages.filter((msg) => msg.id !== message.payload),
-        );
-        setMessages((prevMessages) =>
-          prevMessages.map((msg) => {
-            if (msg.parentId === message.payload) {
-              return {
-                ...msg,
-                parentMemberId: -1,
-                parentContent: '삭제된 메시지입니다.',
-              };
-            }
-            return msg;
-          }),
+          prevMessages
+            .filter((msg) => msg.id !== message.payload)
+            .map((msg) =>
+              msg.parentId === message.payload
+                ? {
+                    ...msg,
+                    parentMemberId: -1,
+                    parentContent: '삭제된 메시지입니다.',
+                  }
+                : msg,
+            ),
         );
       }
 

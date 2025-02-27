@@ -65,13 +65,13 @@ const ImageWrapper = styled.div<{ $isText: boolean }>`
   img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     font-family: ${({ theme }) => theme.fonts.caption};
     color: ${({ theme }) => theme.colors.neutral50};
   }
 
   span {
-    font-size: 16vw;
+    font-size: 3rem;
     color: ${({ theme }) => theme.colors.blue900};
   }
 `;
@@ -83,6 +83,12 @@ const ContentWrapper = styled.div`
   justify-content: center;
   gap: 0.62rem;
   width: 100%;
+
+  span {
+    width: 100%;
+    word-wrap: break-word;
+    text-align: center;
+  }
 `;
 
 const Name = styled.span`

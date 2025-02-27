@@ -8,7 +8,7 @@ export const ReadingStatus = {
 export type ReadingStatusType =
   (typeof ReadingStatus)[keyof typeof ReadingStatus];
 
-/* 클라이밍 상태 */
+/* 등반 상태 */
 export const ClimbingStatus = {
   READY: 'READY',
   RUNNING: 'RUNNING',
@@ -19,7 +19,7 @@ export const ClimbingStatus = {
 export type ClimbingStatusType =
   (typeof ClimbingStatus)[keyof typeof ClimbingStatus];
 
-/* 클라이밍 참여자 독서 상태 */
+/* 등반 참여자 독서 상태 */
 export const ClimbingReadingStatus = {
   UNREAD: 'UNREAD',
   READING: 'READING',
@@ -29,7 +29,7 @@ export const ClimbingReadingStatus = {
 export type ClimbingReadingStatusType =
   (typeof ClimbingReadingStatus)[keyof typeof ClimbingReadingStatus];
 
-/* 채널 유형 */
+/* 모임 유형 */
 export const ChannelType = {
   CHAT: 'CHAT',
   VOICE: 'VOICE',
@@ -48,11 +48,11 @@ export type NotificationTypeType =
 
 /* 이모지 유형 */
 export const EmojiType = {
-  GOOD: { key: 'GOOD', value: '👍' },
-  HEART: { key: 'HEART', value: '❤️' },
-  SMILE: { key: 'SMILE', value: '😊' },
-  CRY: { key: 'CRY', value: '😢' },
-  THINK: { key: 'THINK', value: '🤔' },
+  THUMBS_UP: { key: 'THUMBS_UP', value: '👍' },
+  HEART_HANDS: { key: 'HEART_HANDS', value: '❤️' },
+  SMILING_FACE: { key: 'SMILING_FACE', value: '😊' },
+  CRYING_FACE: { key: 'CRYING_FACE', value: '😢' },
+  THINKING_FACE: { key: 'THINKING_FACE', value: '🤔' },
 } as const;
 
 export type EmojiTypeType = (typeof EmojiType)[keyof typeof EmojiType];
@@ -191,50 +191,49 @@ export const ERROR_MESSAGES = {
   [ErrorCode.AUTH.EXPIRED_REFRESH_TOKEN]: '만료된 리프레쉬 토큰입니다.',
 
   [ErrorCode.RESOURCE.MEMBER_NOT_FOUND]: '사용자를 찾을 수 없습니다.',
-  [ErrorCode.RESOURCE.MEMBER_INACTIVE]: '이미 계정을 삭제한 멤버입니다.',
-  [ErrorCode.RESOURCE.SERVER_NOT_FOUND]: '서버를 찾을 수 없습니다.',
-  [ErrorCode.RESOURCE.ALREADY_JOINED_SERVER]: '이미 참여하고 있는 서버입니다.',
+  [ErrorCode.RESOURCE.MEMBER_INACTIVE]: '사용자가 계정을 삭제했습니다.',
+  [ErrorCode.RESOURCE.SERVER_NOT_FOUND]: '공동체를 찾을 수 없습니다.',
+  [ErrorCode.RESOURCE.ALREADY_JOINED_SERVER]: '이미 참여한 공동체입니다.',
   [ErrorCode.RESOURCE.DELEGATION_REQUIRED]:
-    '서버에 나가기 위해서는 \n서버장 권한을 위임해야 합니다.',
+    '공동체에서 나가기 위해서는 \n공동체장 권한을 위임해야 합니다.',
   [ErrorCode.RESOURCE.SERVER_MEMBER_NOT_FOUND]:
-    '해당 서버에 사용자가 존재하지 않습니다.',
-  [ErrorCode.RESOURCE.SERVER_OWNER_NOT_FOUND]: '서버 주인을 찾을 수 없습니다.',
+    '해당 공동체에 공동체원이 존재하지 않습니다.',
+  [ErrorCode.RESOURCE.SERVER_OWNER_NOT_FOUND]: '공동체장을 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.INVALID_INVITE_CODE]:
-    '유효하지 않은 초대코드입니다.\n다시 입력해주세요.',
-  [ErrorCode.RESOURCE.CATEGORY_NOT_FOUND]: '카테고리를 찾을 수 없습니다.',
+    '유효하지 않은 초대코드입니다.\n다시 입력해 주세요.',
+  [ErrorCode.RESOURCE.CATEGORY_NOT_FOUND]: '분류를 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.CATEGORY_LOCATE_EXCEPTION]:
-    '카테고리 위치를 변경할 수 없습니다.',
+    '분류 위치를 변경할 수 없습니다.',
   [ErrorCode.RESOURCE.DEFAULT_CATEGORY_EXCEPTION]:
-    '기본 카테고리는 수정 또는 삭제가 불가능합니다.',
-  [ErrorCode.RESOURCE.CHANNEL_NOT_FOUND]: '채널을 찾을 수 없습니다.',
-  [ErrorCode.RESOURCE.CLIMBING_NOT_FOUND]: '클라이밍 채널을 찾을 수 없습니다.',
-  [ErrorCode.RESOURCE.ALREADY_JOINED_CLIMBING]:
-    '이미 참여하고 있는 클라이밍 채널입니다.',
+    '기본 분류는 수정 또는 삭제가 불가능합니다.',
+  [ErrorCode.RESOURCE.CHANNEL_NOT_FOUND]: '모임을 찾을 수 없습니다.',
+  [ErrorCode.RESOURCE.CLIMBING_NOT_FOUND]: '등반 모임을 찾을 수 없습니다.',
+  [ErrorCode.RESOURCE.ALREADY_JOINED_CLIMBING]: '이미 참여한 등반 모임입니다.',
   [ErrorCode.RESOURCE.CLIMBING_NOT_READY]:
-    '모집 중인 클라이밍 채널만 편집할 수 있습니다.',
+    '모집 중인 등반 모임만 편집할 수 있습니다.',
   [ErrorCode.RESOURCE.OWNER_CANNOT_LEAVE]:
-    'OWNER는 클라이밍 채널을 떠날 수 없습니다.',
+    '모임장은 등반 모임을 떠날 수 없습니다.',
   [ErrorCode.RESOURCE.CLIMBING_MEMBER_NOT_FOUND]:
-    '클라이밍 멤버를 찾을 수 없습니다.',
-  [ErrorCode.RESOURCE.CLIMBING_NOT_RUNNING]: '진행 중인 클라이밍이 아닙니다.',
-  [ErrorCode.RESOURCE.BOOK_NOT_FOUND]: '책을 찾을 수 없습니다.',
+    '등반 모임원을 찾을 수 없습니다.',
+  [ErrorCode.RESOURCE.CLIMBING_NOT_RUNNING]: '진행 중인 등반이 아닙니다.',
+  [ErrorCode.RESOURCE.BOOK_NOT_FOUND]: '도서를 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.ALADIN_API_EXCEPTION]: '알라딘 API 호출에 실패했습니다.',
-  [ErrorCode.RESOURCE.RECORD_NOT_FOUND]: '레코드를 찾을 수 없습니다.',
+  [ErrorCode.RESOURCE.RECORD_NOT_FOUND]: '책 기록을 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.RECORD_NOT_FINISHED]: '다 읽은 책이 아닙니다.',
-  [ErrorCode.RESOURCE.ALREADY_EXIST_RECORD]: '이미 존재하는 레코드입니다.',
-  [ErrorCode.RESOURCE.REVIEW_NOT_FOUND]: '리뷰를 찾을 수 없습니다.',
+  [ErrorCode.RESOURCE.ALREADY_EXIST_RECORD]: '이미 존재하는 책 기록입니다.',
+  [ErrorCode.RESOURCE.REVIEW_NOT_FOUND]: '책 평가를 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.REVIEW_ALREADY_SHARED]:
-    '클라이밍 채널에 이미 공유된 리뷰입니다.',
+    '이미 등반 모임에 공유한 책 평가입니다.',
   [ErrorCode.RESOURCE.REVIEW_EMOJI_NOT_FOUND]:
-    '리뷰 이모지를 찾을 수 없습니다.',
+    '책 평가 이모지를 찾을 수 없습니다.',
   [ErrorCode.RESOURCE.ALREADY_EXIST_REVIEW]:
-    '이미 레코드에 대한 리뷰가 존재합니다.',
-  [ErrorCode.RESOURCE.MESSAGE_ROOM_NOT_FOUND]: '채팅방을 찾을 수 없습니다.',
+    '책 기록에 대한 책 평가가 이미 존재합니다.',
+  [ErrorCode.RESOURCE.MESSAGE_ROOM_NOT_FOUND]: '문자방을 찾을 수 없습니다.',
 
   [ErrorCode.CHATTING.DIRECT_MESSAGE_NOT_FOUND]:
-    '해당 다이렉트 메시지를 찾을 수 없습니다.',
+    '해당 문자의 메시지를 찾을 수 없습니다.',
   [ErrorCode.CHATTING.CHANNEL_MESSAGE_NOT_FOUND]:
-    '해당 채널 메시지를 찾을 수 없습니다.',
+    '해당 모임의 메시지를 찾을 수 없습니다.',
 } as const;
 
 type ErrorHandlingType = {

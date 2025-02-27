@@ -1,7 +1,6 @@
 import ClimbingBoard from '@src/components/climbing/ClimbingBoard';
 import Header from '@src/components/common/Header';
 import { useState } from 'react';
-import styled from 'styled-components';
 import ReviewBoard from '@src/components/climbing/ReviewBoard';
 import SegmentedControl from '@src/components/common/SegmentedControl';
 import CompleteCard from '@src/components/climbing/CompleteCard';
@@ -10,7 +9,7 @@ import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 export type ViewType = 'climbing' | 'review';
 
 const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
-  const [selectedView, setSelectedView] = useState<ViewType>('review');
+  const [selectedView, setSelectedView] = useState<ViewType>('climbing');
   const handleSegmentChange = (value: ViewType) => {
     setSelectedView(value);
   };
@@ -22,7 +21,7 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
   return (
     <>
       <Header text={headerText} headerType='back' />
-      <Main>
+      <main>
         <SegmentedControl
           config={SEGMENTED_BUTTON_CONFIG}
           onSegmentChange={handleSegmentChange}
@@ -40,13 +39,9 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
             <ReviewBoard />
           </>
         )}
-      </Main>
+      </main>
     </>
   );
 };
 
 export default ClimbingTerminatePage;
-
-const Main = styled.main`
-  background-color: ${({ theme }) => theme.colors.neutral50};
-`;

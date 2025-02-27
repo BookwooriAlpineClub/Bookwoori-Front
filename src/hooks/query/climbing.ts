@@ -215,29 +215,58 @@ export const usePutEmojiOnReview = (climbingId: number, reviewId: number) => {
               ...oldData,
               ClimbingMemberReviewList: oldData.ClimbingMemberReviewList.map(
                 (review) => {
+                  // 대상 reviewId에 해당하는 리뷰만 업데이트
+                  if (review.reviewId !== reviewId) return review;
+
+                  // 기존 reviewEmojiList에서 해당 이모지가 있는지 확인
                   const emojiItem = review.reviewEmojiList.find(
                     (item) => item.emoji === emoji,
                   );
                   let updatedReviewEmojiList;
+
                   if (emojiItem) {
-                    if (emojiItem.emojiCount === 1) {
-                      updatedReviewEmojiList = review.reviewEmojiList.filter(
-                        (item) => item.emoji !== emoji,
-                      );
+                    // 이미 이모지가 존재하는 경우, 사용자의 클릭 상태에 따라 분기 처리
+                    if (emojiItem.isClicked) {
+                      // 이미 클릭한 상태라면 해제(토글 OFF)
+                      if (emojiItem.emojiCount === 1) {
+                        // count가 1이면 해당 이모지를 리스트에서 제거
+                        updatedReviewEmojiList = review.reviewEmojiList.filter(
+                          (item) => item.emoji !== emoji,
+                        );
+                      } else {
+                        // 그 외에는 count를 줄이고, isClicked는 false로 업데이트
+                        updatedReviewEmojiList = review.reviewEmojiList.map(
+                          (item) =>
+                            item.emoji === emoji
+                              ? {
+                                  ...item,
+                                  emojiCount: item.emojiCount - 1,
+                                  isClicked: false,
+                                }
+                              : item,
+                        );
+                      }
                     } else {
+                      // 아직 클릭하지 않은 상태라면 추가
                       updatedReviewEmojiList = review.reviewEmojiList.map(
                         (item) =>
                           item.emoji === emoji
-                            ? { ...item, emojiCount: item.emojiCount - 1 }
+                            ? {
+                                ...item,
+                                emojiCount: item.emojiCount + 1,
+                                isClicked: true,
+                              }
                             : item,
                       );
                     }
                   } else {
+                    // 기존 리스트에 해당 이모지가 없다면 새로 추가
                     updatedReviewEmojiList = [
                       ...review.reviewEmojiList,
-                      { emoji, emojiCount: 1 },
+                      { emoji, emojiCount: 1, isClicked: true },
                     ];
                   }
+
                   return {
                     ...review,
                     reviewEmojiList: updatedReviewEmojiList,
@@ -250,5 +279,6 @@ export const usePutEmojiOnReview = (climbingId: number, reviewId: number) => {
       }
     },
   });
+
   return { putEmoji: putEmojiMutation };
 };

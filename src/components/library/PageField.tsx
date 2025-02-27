@@ -7,7 +7,7 @@ interface Props {
   readOnly?: boolean;
   value?: number;
   setValue?: React.Dispatch<React.SetStateAction<number>>;
-  currentPage: number;
+  defaultValue: number;
   itemPage: number;
 }
 
@@ -17,7 +17,7 @@ const PageField = ({
   readOnly,
   value,
   setValue,
-  currentPage,
+  defaultValue,
   itemPage,
 }: Props) => {
   const handleKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -45,7 +45,7 @@ const PageField = ({
       <Input
         type='tel'
         name={name}
-        placeholder={`${currentPage}쪽`}
+        placeholder={`${defaultValue}쪽`}
         required={required}
         readOnly={readOnly}
         value={`${value}쪽`}
