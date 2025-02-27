@@ -22,7 +22,10 @@ const Tag = ({ color, Icon, text, onClick, className, children }: Props) => {
 
 export default Tag;
 
-const Wrapper = styled.mark<{ $color: TagColor }>`
+const Wrapper = styled.mark<{
+  $color: TagColor;
+  onClick: (() => void) | undefined;
+}>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -32,7 +35,7 @@ const Wrapper = styled.mark<{ $color: TagColor }>`
   height: fit-content;
   padding: ${({ theme }) => `${theme.padding[4]} ${theme.padding[8]}`};
 
-  border-radius: 50%;
+  border-radius: 6.1875rem;
 
   ${({ theme }) => theme.fonts.caption};
 
@@ -56,4 +59,6 @@ const Wrapper = styled.mark<{ $color: TagColor }>`
         `;
     }
   }}
+
+  cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')}
 `;

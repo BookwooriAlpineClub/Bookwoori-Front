@@ -1,6 +1,4 @@
 import type { GetRecordListRes } from '@src/types/apis/record';
-import { ROUTE_PATH } from '@src/constants/routePath';
-import useEncodedNavigate from '@src/hooks/useEncodedNavigate';
 import styled from 'styled-components';
 import { TextEllipsis, BookImg } from '@src/styles/mixins';
 import Tag from '@src/components/common/Tag';
@@ -10,34 +8,31 @@ import { ReactComponent as IcnStar } from '@src/assets/icons/md_star.svg';
 type Props = ElementOfArray<GetRecordListRes>;
 
 const RecordListItem = ({
-  isbn13,
   title,
   author,
   cover,
-  itemPage,
+  itemPage = -1,
   record,
-  ReviewStarAve,
+  reviewStarAve,
 }: Props) => {
-  console.log(itemPage, record, ReviewStarAve);
-
-  const navigate = useEncodedNavigate();
   const tagConfig: { [key: string]: React.ReactElement | null } = {
     WISH: null,
-    READING: <STag color='blue' Icon={IcnBook} text='' />,
-    FINISHED: <STag color='blue' Icon={IcnStar} text='' />, // 추후 평균값으로 수정
-  };
-  console.log(tagConfig);
-
-  const handleItemClick = () => {
-    navigate(ROUTE_PATH.libraryRecord, Number(isbn13));
+    READING: (
+      <STag
+        color='blue'
+        Icon={IcnBook}
+        text={`${((record.currentPage ?? 0) / itemPage) * 100}%`}
+      />
+    ),
+    FINISHED: <STag color='blue' Icon={IcnStar} text={reviewStarAve} />,
   };
 
   return (
-    <Container onClick={handleItemClick}>
+    <Container>
       <Img src={cover} alt='책 표지' />
       <Title $line={1}>{title}</Title>
       <Author $line={1}>{author}</Author>
-      {/* {tagConfig[records[0].status]} */}
+      {tagConfig[record.status]}
     </Container>
   );
 };

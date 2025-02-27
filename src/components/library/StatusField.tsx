@@ -17,11 +17,12 @@ const radioConfigs: {
 
 interface Props {
   name: string;
+  defaultValue: Record['status'];
+  required?: boolean;
   setValue: React.Dispatch<React.SetStateAction<Record['status']>>;
-  status: Record['status'];
 }
 
-const StatusField = ({ name, setValue, status }: Props) => {
+const StatusField = ({ name, defaultValue, required, setValue }: Props) => {
   return (
     <Container>
       {radioConfigs.map(({ value, Icon, text }) => (
@@ -34,8 +35,8 @@ const StatusField = ({ name, setValue, status }: Props) => {
             name={name}
             type='radio'
             value={value}
-            required
-            defaultChecked={value === status}
+            defaultChecked={value === defaultValue}
+            required={required}
             onChange={(e) => {
               setValue(e.target.value as Record['status']);
             }}

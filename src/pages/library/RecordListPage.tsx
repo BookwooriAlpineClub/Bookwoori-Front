@@ -1,4 +1,6 @@
 import type Record from '@src/types/record';
+import { Link } from 'react-router-dom';
+import { ROUTE_PATH } from '@src/constants/routePath';
 import { useGetRecordList } from '@src/hooks/query/record';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -17,7 +19,6 @@ const segmentConfigs: {
 
 const RecordListPage = () => {
   const [status, setStatus] = useState<Record['status']>('READING');
-
   const { data: recordList } = useGetRecordList(status);
 
   return (
@@ -32,7 +33,12 @@ const RecordListPage = () => {
         {recordList.length > 0 ? (
           <Ul>
             {recordList.map((item) => (
-              <Li key={item.isbn13} {...item} />
+              <Link
+                key={item.isbn13}
+                to={`${ROUTE_PATH.libraryRecord}/${item.isbn13}`}
+              >
+                <Li {...item} />
+              </Link>
             ))}
           </Ul>
         ) : (
