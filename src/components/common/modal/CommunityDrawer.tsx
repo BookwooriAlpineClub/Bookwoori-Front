@@ -45,6 +45,7 @@ const CommunityDrawer = () => {
   };
 
   useEffect(() => {
+    if (!isOpen) return;
     window.history.pushState(null, '', window.location.href);
     window.addEventListener('popstate', () => {
       browserPreventEvent(closeCommunityDrawer);
@@ -54,7 +55,7 @@ const CommunityDrawer = () => {
         browserPreventEvent(closeCommunityDrawer);
       });
     };
-  }, []);
+  }, [isOpen]);
 
   const openProfileModal = (memberId: number) => {
     const ProfileModalComponent = <ProfileModal memberId={memberId} />;
