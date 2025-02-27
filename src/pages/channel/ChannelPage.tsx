@@ -115,8 +115,6 @@ const ChannelPage = () => {
     });
   }, [inView, hasNextPage]);
 
-  console.log('allMessages', allMessages);
-
   const prevMessageCount = useRef(newMessages.length);
 
   useEffect(() => {

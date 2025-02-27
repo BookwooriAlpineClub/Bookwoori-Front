@@ -48,12 +48,6 @@ const LibraryHomePage = () => {
   };
 
   const nextTier = Mountains[profileData.level + 1];
-  console.log(
-    'hello',
-    nextTier.level,
-    nextTier.mountainHeight,
-    nextTier.mountainName,
-  );
 
   const handleButton = (text: string) => {
     navigate(text);

@@ -5,8 +5,6 @@ import { EmojiType } from '@src/constants/constants';
 import { reactHandler } from '@src/apis/chat';
 
 const EmojiList = ({ reactions, id }: { reactions: Reactions; id: string }) => {
-  console.log('reactions', reactions);
-
   const handleEmojiClick = async (emoji: string) => {
     try {
       await reactHandler(
