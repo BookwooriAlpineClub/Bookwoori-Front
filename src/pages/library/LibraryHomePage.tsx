@@ -6,7 +6,7 @@ import { ReactComponent as SearchIcon } from '@src/assets/icons/md_outline_searc
 import { ReactComponent as BookmarkIcon } from '@src/assets/icons/md_collection_bookmark.svg';
 import { ReactComponent as StarIcon } from '@src/assets/icons/md_star.svg';
 import { useGetProfile } from '@src/hooks/query/member';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorPage from '@src/pages/fallback/ErrorPage';
@@ -22,8 +22,13 @@ const seasonalColors = {
 };
 
 const LibraryHomePage = () => {
-  const { id } = useLoaderData<{ id: number }>();
-  const memberId = id ? Number(id) : 'me';
+  const { memberId: tmp } = useParams();
+  let uriId;
+  if (tmp) {
+    const { id: tmpId } = useLoaderData<{ id: number }>();
+    uriId = tmpId;
+  }
+  const memberId = uriId ? Number(uriId) : 'me';
   const { profileData } = useGetProfile(memberId);
   const navigate = useNavigate();
 
