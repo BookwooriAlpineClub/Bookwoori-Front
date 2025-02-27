@@ -139,11 +139,13 @@ const CommunitySettingSection = ({
             />
           </>
         )}
-        <CommunityButton
-          type='leaveCommunity'
-          testId='leave-community-button'
-          onClick={() => ClickConfirmButton(leaveCommunity, true)}
-        />
+        {memberList?.length !== 1 && (
+          <CommunityButton
+            type='leaveCommunity'
+            testId='leave-community-button'
+            onClick={() => ClickConfirmButton(leaveCommunity, true)}
+          />
+        )}
       </div>
     </Fieldset>
   );

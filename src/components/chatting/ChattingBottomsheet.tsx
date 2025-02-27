@@ -13,6 +13,7 @@ type EmojiBottomsheetType = {
   isMine?: boolean;
   content: string;
   id: string;
+  pub: string;
   closeBottomsheet?: () => void;
 };
 
@@ -20,6 +21,7 @@ const ChattingBottomsheet = ({
   isMine,
   content,
   id,
+  pub,
   closeBottomsheet = () => {},
 }: EmojiBottomsheetType) => {
   const { handleCopy } = useCopyToClipboard();
@@ -29,9 +31,11 @@ const ChattingBottomsheet = ({
 
   const emojiList = Object.keys(EmojiType) as Array<keyof typeof EmojiType>;
 
+  const pubUrl = `/pub/${pub}`;
+
   const handleDeleteMessage = async () => {
     try {
-      await deleteHandler({ id }, '/pub/direct/delete');
+      await deleteHandler({ id }, `${pubUrl}/delete`);
       console.log('Message deleted successfully');
       closeModal();
       closeBottomsheet();
@@ -59,15 +63,8 @@ const ChattingBottomsheet = ({
   type EmojiKey = keyof typeof EmojiType;
 
   const handleEmojiClick = (key: EmojiKey) => {
-    const emojiMapping: Record<EmojiKey, string> = {
-      GOOD: 'thumbs_up',
-      HEART: 'heart_hands',
-      SMILE: 'smiling_face',
-      CRY: 'crying_face',
-      THINK: 'thinking_face',
-    };
     handleReaction({
-      emoji: emojiMapping[key].toUpperCase(),
+      emoji: EmojiType[key].key,
       action: 'add',
     });
   };
@@ -86,7 +83,7 @@ const ChattingBottomsheet = ({
           emoji,
           action,
         },
-        '/pub/direct/react',
+        `${pubUrl}/react`,
       );
       console.log('Reaction added successfully');
       closeBottomsheet();

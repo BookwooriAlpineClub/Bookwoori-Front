@@ -9,7 +9,7 @@ import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 export type ViewType = 'climbing' | 'review';
 
 const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
-  const [selectedView, setSelectedView] = useState<ViewType>('review');
+  const [selectedView, setSelectedView] = useState<ViewType>('climbing');
   const handleSegmentChange = (value: ViewType) => {
     setSelectedView(value);
   };

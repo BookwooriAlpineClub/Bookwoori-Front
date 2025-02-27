@@ -10,6 +10,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorPage from '@src/pages/fallback/ErrorPage';
+import { Mountains } from '@src/constants/constants';
+import useLoaderData from '@src/hooks/useRoaderData';
 
 const seasonalColors = {
   december: ['#228B22', '#E8F1F8', '#FFF'],
@@ -20,8 +22,13 @@ const seasonalColors = {
 };
 
 const LibraryHomePage = () => {
-  const { memberId: id } = useParams<{ memberId: string }>();
-  const memberId = id ? Number(id) : 'me';
+  const { memberId: tmp } = useParams();
+  let uriId;
+  if (tmp) {
+    const { id: tmpId } = useLoaderData<{ id: number }>();
+    uriId = tmpId;
+  }
+  const memberId = uriId ? Number(uriId) : 'me';
   const { profileData } = useGetProfile(memberId);
   const navigate = useNavigate();
 
@@ -40,7 +47,7 @@ const LibraryHomePage = () => {
     profileName: profileData.nickname,
   };
 
-  const tier = `⛰️ ${profileData.level}번째, ${profileData.mountain} ${`0`}m`;
+  const nextTier = Mountains[profileData.level + 1];
 
   const handleButton = (text: string) => {
     navigate(text);
@@ -50,7 +57,7 @@ const LibraryHomePage = () => {
     <>
       <Header text={`${profileData.nickname}의 서재`} headerType='hamburger' />
       <Main>
-        <TierContainer>{tier}</TierContainer>
+        <TierContainer>{`${nextTier.mountainName}까지 ${(nextTier.mountainHeight - profileData.totalHeight).toFixed()}m 🏃‍♀️`}</TierContainer>
         <MountainImage
           mountainData={
             mountainData as {
@@ -62,7 +69,7 @@ const LibraryHomePage = () => {
           }
           seasonalColor={seasonalColors[season]}
         />
-        <MountainMenu seasonalColor={seasonalColors[season][0]}>
+        <MountainMenu $seasonalColor={seasonalColors[season][0]}>
           <ButtonContainer>
             {profileData.isMine && (
               <>
@@ -107,8 +114,8 @@ const Main = styled.main`
   flex-direction: column;
   height: calc(100% - 4.375rem);
 `;
-const MountainMenu = styled.div<{ seasonalColor: string }>`
-  background-color: ${({ seasonalColor }) => seasonalColor};
+const MountainMenu = styled.div<{ $seasonalColor: string }>`
+  background-color: ${({ $seasonalColor }) => $seasonalColor};
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -143,6 +150,7 @@ const TypographyText = styled.span`
 const TierContainer = styled.div`
   position: absolute;
   background-color: ${({ theme }) => theme.colors.lime300};
+  color: ${({ theme }) => theme.colors.neutral600};
   border-radius: 6.1875rem;
   padding: 0.625rem;
   ${({ theme }) => theme.fonts.body};

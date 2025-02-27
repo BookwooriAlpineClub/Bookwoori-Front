@@ -4,7 +4,7 @@ import { EmojiType } from '@src/constants/constants';
 
 export interface EmojiItemProps {
   emoji: keyof typeof EmojiType | ReactElement;
-  initialIsSelected?: boolean;
+  initialIsSelected: boolean;
   count?: number;
   onClick: () => void;
   onLongPress?: () => void;
@@ -14,7 +14,7 @@ const LONG_PRESS_DURATION = 500;
 
 const EmojiItem = ({
   emoji,
-  initialIsSelected: isSelected = true,
+  initialIsSelected: isSelected,
   count = -1,
   onClick,
   onLongPress,
