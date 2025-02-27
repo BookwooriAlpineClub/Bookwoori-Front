@@ -16,7 +16,7 @@ import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
 import { formatChatItemTime } from '@src/utils/formatters';
 import { adjustHeight } from '@src/utils/helpers';
-import ChatMenu from '@src/components/common/emoji/ChattingBottomsheet';
+import ChatMenu from '@src/components/chatting/ChattingBottomsheet';
 import UserAvatar from '@src/components/common/UserAvatar';
 import EmojiList from '@src/components/chatting/EmojiList';
 import { ReactComponent as Response } from '@src/assets/icons/response.svg';

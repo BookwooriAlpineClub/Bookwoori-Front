@@ -59,15 +59,8 @@ const ChattingBottomsheet = ({
   type EmojiKey = keyof typeof EmojiType;
 
   const handleEmojiClick = (key: EmojiKey) => {
-    const emojiMapping: Record<EmojiKey, string> = {
-      GOOD: 'thumbs_up',
-      HEART: 'heart_hands',
-      SMILE: 'smiling_face',
-      CRY: 'crying_face',
-      THINK: 'thinking_face',
-    };
     handleReaction({
-      emoji: emojiMapping[key].toUpperCase(),
+      emoji: EmojiType[key].key,
       action: 'add',
     });
   };

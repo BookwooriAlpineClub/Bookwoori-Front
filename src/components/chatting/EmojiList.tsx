@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import EmojiItem from '@src/components/common/emoji/EmojiItem';
+import EmojiItem from '@src/components/common/EmojiItem';
 import { Reactions } from '@src/types/chat';
 import { EmojiType } from '@src/constants/constants';
 import { reactHandler } from '@src/apis/chat';
