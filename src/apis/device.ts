@@ -11,6 +11,7 @@ import { authClient } from '@src/apis/index';
  */
 export const getDevice = async <Res = GetDeviceRes>(): Promise<Res> => {
   const response = await authClient.get<Res>(`/notification/devices`);
+  console.log(response.data);
   return response.data;
 };
 /**
@@ -23,6 +24,7 @@ export const postDevice = async <Res = PostDeviceRes>(
   const response = await authClient.post<Res>(
     `/notification/devices/${platform}?token=${token}`,
   );
+  console.log(response.data);
   return response.data;
 };
 /**
@@ -30,5 +32,6 @@ export const postDevice = async <Res = PostDeviceRes>(
  */
 export const deleteDevice = async <Res = DeleteDeviceRes>(): Promise<Res> => {
   const response = await authClient.delete<Res>(`/notification/devices`);
+  console.log(response.data);
   return response.data;
 };

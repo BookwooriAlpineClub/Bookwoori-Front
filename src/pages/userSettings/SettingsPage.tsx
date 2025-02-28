@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
+// import { useQueryClient } from '@tanstack/react-query';
 import { ROUTE_PATH } from '@src/constants/routePath';
 import useModal from '@src/hooks/useModal';
 import usePermission from '@src/hooks/usePermission';
-import {
-  useGetDevice,
-  usePostDevice,
-  useDeleteDevice,
-} from '@src/hooks/query/device';
+// import {
+//   useGetDevice,
+//   usePostDevice,
+//   useDeleteDevice,
+// } from '@src/hooks/query/device';
 import { useDeleteAccount } from '@src/hooks/query/auth';
 import { dialogState } from '@src/states/atoms';
 import styled from 'styled-components';
@@ -17,39 +17,33 @@ import IconButton from '@src/components/common/button/IconButton';
 import DeleteConfirmDialog from '@src/components/common/modal/DeleteConfirmDialog';
 
 const SettingsPage = () => {
-  const queryClient = useQueryClient();
-  const device = useGetDevice();
-  
+  // const queryClient = useQueryClient();
+  // const { data: device } = useGetDevice();
+
   const navigate = useNavigate();
   const requestNotification = usePermission();
-  const createDevice = usePostDevice();
-  const deleteDevice = useDeleteDevice();
+  // const { mutate: createDevice } = usePostDevice();
+  // const { mutate: deleteDevice } = useDeleteDevice();
   const { delAccount } = useDeleteAccount();
-  const { openModal: openDialog, closeModal: closeDialog } = useModal(dialogState);
+  const { openModal: openDialog, closeModal: closeDialog } =
+    useModal(dialogState);
 
   const handleNotificationOn = async () => {
     const currentToken = await requestNotification();
-    createDevice.mutate(
-      {
-        body: {
-          platform: 'WEB',
-          token: currentToken,
-        },
-      },
-      {
-        onSuccess() {
-          queryClient.invalidateQueries({ queryKey: ['getDevice'] });
-        },
-      },
-    );
+    console.log(currentToken);
+    // createDevice(currentToken, {
+    //   onSuccess() {
+    //     queryClient.invalidateQueries({ queryKey: ['getDevice'] });
+    //   },
+    // });
   };
-  const handleNotificationOff = () => {
-    deleteDevice.mutate(undefined, {
-      onSuccess() {
-        queryClient.invalidateQueries({ queryKey: ['getDevice'] });
-      },
-    });
-  };
+  // const handleNotificationOff = () => {
+  //   deleteDevice(undefined, {
+  //     onSuccess() {
+  //       queryClient.invalidateQueries({ queryKey: ['getDevice'] });
+  //     },
+  //   });
+  // };
   const handleAccountDelete = () => {
     delAccount.mutate();
   };
@@ -64,17 +58,17 @@ const SettingsPage = () => {
             type='editUserInfo'
             onClick={() => navigate(ROUTE_PATH.settingProfile)}
           />
-          {device ? (
+          {/* {device.result.token ? (
             <IconButton
               type='notificationTurnOff'
               onClick={handleNotificationOff}
             />
-          ) : (
-            <IconButton
-              type='notificationTurnOn'
-              onClick={handleNotificationOn}
-            />
-          )}
+          ) : ( */}
+          <IconButton
+            type='notificationTurnOn'
+            onClick={handleNotificationOn}
+          />
+          {/* )} */}
           <IconButton
             type='navigateExp'
             onClick={() => navigate(ROUTE_PATH.settingExp)}

@@ -1,6 +1,5 @@
 import '@src/styles/reset.css';
-import '@src/firebase/messaging';
-import * as serviceWorkerRegistration from '@src/serviceWorkerRegistration';
+import '@src/firebase/firebase-messaging-sw';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
@@ -31,5 +30,3 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </RecoilRoot>
   </React.StrictMode>,
 );
-
-serviceWorkerRegistration.register();
