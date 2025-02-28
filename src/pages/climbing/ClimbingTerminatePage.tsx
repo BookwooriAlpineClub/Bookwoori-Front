@@ -49,4 +49,7 @@ export default ClimbingTerminatePage;
 
 const Main = styled.main`
   background-color: ${({ theme }) => theme.colors.neutral50};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.gap['16']};
 `;
