@@ -101,6 +101,7 @@ const Layout = styled.div`
 
   height: 100%;
   width: 100%;
+  min-width: 6.25rem;
 `;
 const Background = styled.div`
   display: flex;

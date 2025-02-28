@@ -30,11 +30,13 @@ const ClimbingBoard = () => {
 
   return (
     <Layout ref={containerRef}>
-      {participants
-        ?.sort((a, b) => b.currentPage - a.currentPage)
-        .map((it: ClimbingMember) => (
-          <ClimbingRope key={it.memberId} item={it} />
-        ))}
+      <Container>
+        {participants
+          ?.sort((a, b) => b.currentPage - a.currentPage)
+          .map((it: ClimbingMember) => (
+            <ClimbingRope key={it.memberId} item={it} />
+          ))}
+      </Container>
     </Layout>
   );
 };
@@ -42,10 +44,14 @@ const ClimbingBoard = () => {
 export default ClimbingBoard;
 
 const Layout = styled.div`
+  max-width: 23.4375rem;
+  height: 100%;
+
+  overflow-x: scroll;
+`;
+const Container = styled.div`
   display: flex;
   justify-content: space-around;
 
   height: 100%;
-
-  overflow-x: scroll;
 `;

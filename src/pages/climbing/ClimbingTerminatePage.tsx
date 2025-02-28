@@ -29,10 +29,10 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
           defaultValue='review'
         />
         {selectedView === 'climbing' && (
-          <>
+          <Container>
             <CompleteCard />
             <ClimbingBoard />
-          </>
+          </Container>
         )}
         {selectedView === 'review' && (
           <>
@@ -49,4 +49,9 @@ export default ClimbingTerminatePage;
 
 const Main = styled.main`
   background-color: ${({ theme }) => theme.colors.neutral50};
+`;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 4.375rem - 2.1875rem - 1rem);
 `;
