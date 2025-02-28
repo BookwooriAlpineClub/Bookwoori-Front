@@ -67,7 +67,11 @@ const ClimbingSummary = ({
         />
         {isOpen && (
           <PopoverWrapper ref={popoverRef}>
-            <Popover offset={4}>
+            <Popover
+              offset={4}
+              verticalPlacement='bottom'
+              horizontalPlacement='left'
+            >
               <ParticipantList climbingId={climbingId} />
             </Popover>
           </PopoverWrapper>
@@ -113,13 +117,12 @@ const StyledTag = styled(Tag)`
   color: ${({ theme }) => theme.colors.neutral600};
   border-radius: ${({ theme }) => theme.rounded['12']};
   padding: ${({ theme }) => theme.padding['4']}
-    ${({ theme }) => theme.padding['12']};
+    ${({ theme }) => theme.padding['8']};
   gap: ${({ theme }) => theme.gap['4']};
   cursor: pointer;
 `;
 
 const PopoverWrapper = styled.div`
   position: absolute;
-  border: solid 1px red;
-  right: 9rem;
+  margin-left: 3rem;
 `;
