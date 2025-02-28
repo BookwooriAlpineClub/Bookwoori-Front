@@ -9,24 +9,15 @@ import GlobalStyle from '@src/styles/global';
 import { RouterProvider } from 'react-router-dom';
 import router from '@src/router/Router';
 import Toast from '@src/components/common/Toast';
-import {
-  StyledEngineProvider,
-  ThemeProvider as MUIThemeProvider,
-} from '@mui/material/styles';
-import muiTheme from '@src/styles/muiTheme';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
-      <StyledEngineProvider injectFirst>
-        <MUIThemeProvider theme={muiTheme}>
-          <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <RouterProvider router={router} />
-            <Toast />
-          </ThemeProvider>
-        </MUIThemeProvider>
-      </StyledEngineProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <RouterProvider router={router} />
+        <Toast />
+      </ThemeProvider>
     </RecoilRoot>
   </React.StrictMode>,
 );
