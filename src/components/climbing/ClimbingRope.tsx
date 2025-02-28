@@ -101,6 +101,7 @@ const Layout = styled.div`
 
   height: 100%;
   width: 100%;
+  min-width: 6.25rem;
 `;
 const Background = styled.div`
   display: flex;
@@ -146,6 +147,12 @@ const Profile = styled.button`
   ${({ theme }) => theme.fonts.body};
 `;
 const Nickname = styled.span`
+  width: 90px;
+  height: 20px;
+  
   text-align: center;
   color: ${({ theme }) => theme.colors.neutral950};
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;

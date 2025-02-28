@@ -24,7 +24,7 @@ const Main = styled.main`
   flex-direction: column;
   gap: 0.9375rem;
 
-  height: 100%;
+  height: calc(100vh - 4.375rem - 1rem);
 `;
 const Wrapper = styled.div`
   padding: 0 0.625rem;
