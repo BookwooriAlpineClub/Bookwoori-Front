@@ -8,6 +8,7 @@ import { usePostChannel } from '@src/hooks/query/channel';
 import { usePostClimbing } from '@src/hooks/query/climbing';
 import { bottomsheetState } from '@src/states/atoms';
 import { formatDate, decodeIdParam } from '@src/utils/formatters';
+import { calcDate } from '@src/utils/helpers';
 import styled from 'styled-components';
 import Header from '@src/components/common/Header';
 import Fieldset from '@src/components/common/Fieldset';
@@ -46,11 +47,6 @@ const ChannelAddPage = () => {
   const navigate = useEncodedNavigate();
   const { openModal: openBottomsheet, closeModal: closeBottomsheet } =
     useModal(bottomsheetState);
-  const calcTomorrow = (): Date => {
-    const day = new Date();
-    day.setDate(day.getDate() + 1);
-    return day;
-  };
   const isBtnDisabled = (): boolean => {
     if (kind === 'chat' || kind === 'voice') return !(kind && category && name);
     if (kind === 'climb') return !(kind && name && book && date && description);
@@ -176,7 +172,8 @@ const ChannelAddPage = () => {
                   <Datepicker
                     type='period'
                     name='등반 기간'
-                    min={formatDate(calcTomorrow(), '$1-$2-$3')}
+                    min={formatDate(calcDate(new Date(), 1), '$1-$2-$3')}
+                    mustPeriod
                     required
                     value={date}
                     setValue={setDate}

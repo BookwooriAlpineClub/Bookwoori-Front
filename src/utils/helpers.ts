@@ -27,3 +27,8 @@ export const adjustHeight = (
     }
   }
 };
+
+export const calcDate = (date: Date, num: number): Date => {
+  date.setDate(date.getDate() + num);
+  return date;
+};
