@@ -16,7 +16,7 @@ import type { DM } from '@src/types/messageRoom';
 import type { ChannelMessage } from '@src/types/channel';
 import { formatChatItemTime } from '@src/utils/formatters';
 import { adjustHeight } from '@src/utils/helpers';
-import ChatMenu from '@src/components/common/emoji/ChattingBottomsheet';
+import ChatMenu from '@src/components/chatting/ChattingBottomsheet';
 import UserAvatar from '@src/components/common/UserAvatar';
 import EmojiList from '@src/components/chatting/EmojiList';
 import { ReactComponent as Response } from '@src/assets/icons/response.svg';
@@ -24,13 +24,14 @@ import { ReactComponent as ReplyLine } from '@src/assets/images/chat/reply_line.
 
 interface ChatItemProps {
   chatItem: DM | ChannelMessage;
+  pub: string;
   createdAt: string;
 }
 
 const MIN_HEIGHT = 32;
 
 const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
-  ({ chatItem, createdAt }: ChatItemProps, ref) => {
+  ({ chatItem, pub, createdAt }: ChatItemProps, ref) => {
     const { profileData: user } = useGetProfile(chatItem.memberId);
     const { profileData: other } = useGetProfile(chatItem.parentMemberId ?? -1);
     const [editChatId, setEditChatId] = useRecoilState(editChatIdState);
@@ -50,6 +51,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
             id={chatItem.id}
             content={chatItem.content}
             closeBottomsheet={closeBottomsheet}
+            pub={pub}
           />,
         ),
     });
@@ -86,7 +88,7 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
       try {
         await editHandler(
           { id: chatItem.id, content: editContent },
-          '/pub/direct/modify',
+          `/pub/${pub}/modify`,
         );
         console.log('Message edited successfully');
         setEditChatId(null);

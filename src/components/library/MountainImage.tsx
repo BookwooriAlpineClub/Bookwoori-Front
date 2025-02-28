@@ -27,21 +27,18 @@ const MountainImage = ({
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
 
   const profileCircleSize = remToPx(2.5);
-  // const formattedMountainLength =
-  //   mountainData.mountainLevel === 10
-  //     ? Mountains[mountainData.mountainLevel].mountainHeight
-  //     : Mountains[mountainData.mountainLevel + 1].mountainHeight -
-  //       Mountains[mountainData.mountainLevel].mountainHeight;
-  const formattedMountainLength = 100;
+  const formattedMountainLength =
+    mountainData.mountainLevel === 10
+      ? Mountains[mountainData.mountainLevel].mountainHeight
+      : Mountains[mountainData.mountainLevel + 1].mountainHeight -
+        Mountains[mountainData.mountainLevel].mountainHeight;
 
   const formattedMyHeight =
     mountainData.mountainLevel === 10
       ? mountainData.myHeight
       : mountainData.myHeight -
-        Mountains[mountainData.mountainLevel - 1].mountainHeight;
+        Mountains[mountainData.mountainLevel].mountainHeight;
   const expRatio = (formattedMyHeight / formattedMountainLength) * 100;
-  console.log(mountainData);
-  console.log(formattedMountainLength, formattedMyHeight, expRatio);
 
   useEffect(() => {
     setProgress(0);
@@ -79,7 +76,7 @@ const MountainImage = ({
   }, [pathLength]);
 
   return (
-    <MountainContainer seasonalColor={seasonalColor}>
+    <MountainContainer $seasonalColor={seasonalColor}>
       {/* 산 */}
       <Mountain>
         <Path>
@@ -124,15 +121,21 @@ const MountainImage = ({
               y={circlePosition.y - profileCircleSize / 2}
               width={profileCircleSize}
               height={profileCircleSize}
+              style={{ position: 'relative', zIndex: 1000 }}
             >
               <div
+                {...({ xmlns: 'http://www.w3.org/1999/xhtml' } as {
+                  xmlns: string;
+                })}
                 style={{
                   width: 'fit-content',
                   height: '100%',
                   transform: 'scale(0.3)',
+                  position: 'relative',
+                  zIndex: 1000,
                 }}
                 data-tooltip-id='avatar-tooltip'
-                data-tooltip-content={`현재 ${mountainData.myHeight}m`}
+                data-tooltip-content={`${Mountains[mountainData.mountainLevel].mountainName} ${mountainData.myHeight}m`}
               >
                 <Tooltip
                   id='avatar-tooltip'
@@ -154,23 +157,22 @@ const MountainImage = ({
 
 export default MountainImage;
 
-const MountainContainer = styled.div<{ seasonalColor: string[] }>`
+const MountainContainer = styled.div<{ $seasonalColor: string[] }>`
   position: relative;
   width: 100%;
-  height: 70%;
+  height: 80%;
 
   background: linear-gradient(
     to top,
-    ${({ seasonalColor }) => seasonalColor[0]},
-    ${({ seasonalColor }) => seasonalColor[1]}
+    ${({ $seasonalColor }) => $seasonalColor[0]},
+    ${({ $seasonalColor }) => $seasonalColor[1]}
   );
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
 
   .tooltip-style {
     background-color: ${({ theme }) => theme.colors.lime100};
     color: ${({ theme }) => theme.colors.neutral950};
-    padding: ${({ theme }) => theme.padding['2']}
-      ${({ theme }) => theme.padding['6']};
+    padding: ${({ theme }) => `${theme.padding['2']}  ${theme.padding['4']}`};
     font-size: 70%;
     opacity: 100%;
     border-radius: ${({ theme }) => theme.rounded['8']};
@@ -188,4 +190,6 @@ const Mountain = styled.div`
 
 const Path = styled.div`
   height: 100%;
+  position: relative;
+  z-index: 900;
 `;

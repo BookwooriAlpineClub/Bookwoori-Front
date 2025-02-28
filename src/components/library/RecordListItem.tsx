@@ -21,7 +21,7 @@ const RecordListItem = ({
       <STag
         color='blue'
         Icon={IcnBook}
-        text={`${((record.currentPage ?? 0) / itemPage) * 100}%`}
+        text={`${(((record.currentPage ?? 0) / itemPage) * 100).toFixed(1)}%`}
       />
     ),
     FINISHED: <STag color='blue' Icon={IcnStar} text={reviewStarAve} />,

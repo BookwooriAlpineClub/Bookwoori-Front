@@ -1,8 +1,8 @@
 import { Climbing, ClimbingMember } from '@src/types/climbing';
-import { EmojiType, EmojiTypeType } from '@src/constants/constants';
+import { ClimbingReadingStatusType, EmojiType } from '@src/constants/constants';
 import Book from '@src/types/book';
 
-export type postClimbingChannelReq = Pick<
+export type PostClimbingChannelReq = Pick<
   Climbing,
   'name' | 'description' | 'startDate' | 'endDate'
 > & {
@@ -10,31 +10,31 @@ export type postClimbingChannelReq = Pick<
   isbn: string;
 };
 
-export type patchClimbingChannelReq = Pick<
+export type PatchClimbingChannelReq = Pick<
   Climbing,
   'name' | 'description' | 'startDate' | 'endDate'
 > & {};
 
-export interface getClimbingRes extends Climbing {}
+export interface GetClimbingRes extends Climbing {}
 
 export interface ClimbingRecruitListRes {
   readyClimbingList: Climbing[];
 }
 
-export type getClimbingChannelMembersRes = {
+export type GetClimbingChannelMembersRes = {
   climbingMemberList: ClimbingMember[];
 };
 
-export type patchClimbingMemoReq = {
+export type PatchClimbingMemoReq = {
   memo: string | null;
 };
 
-export type getClimbingReviewRes =
-  | getClimbingReviewRes1
-  | getClimbingReviewRes2
-  | getClimbingReviewRes3;
+export type GetClimbingReviewRes =
+  | GetClimbingReviewRes1
+  | GetClimbingReviewRes2
+  | GetClimbingReviewRes3;
 
-type getClimbingReviewRes1 = {
+type GetClimbingReviewRes1 = {
   hasShared: true;
   isShareable: true;
   ClimbingMemberReviewList: {
@@ -44,17 +44,22 @@ type getClimbingReviewRes1 = {
     star: number;
     content: string;
     reviewId: number;
-    reviewEmojiList: { emoji: keyof typeof EmojiType; emojiCount: number }[];
+    readingStatus: ClimbingReadingStatusType;
+    reviewEmojiList: {
+      emoji: keyof typeof EmojiType;
+      emojiCount: number;
+      isClicked: boolean;
+    }[];
   }[];
 };
 
-type getClimbingReviewRes2 = {
+type GetClimbingReviewRes2 = {
   hasShared: false;
   isShareable: false;
   bookInfo: Book;
 };
 
-type getClimbingReviewRes3 = {
+type GetClimbingReviewRes3 = {
   hasShared: false;
   isShareable: true;
   bookInfo: Book;
@@ -67,7 +72,7 @@ type getClimbingReviewRes3 = {
   }[];
 };
 
-export type getClimbingReviewEmojiRes = {
+export type GetClimbingReviewEmojiRes = {
   reviewEmojiList: {
     emoji: string;
     reviewEmojiMemberList: Pick<

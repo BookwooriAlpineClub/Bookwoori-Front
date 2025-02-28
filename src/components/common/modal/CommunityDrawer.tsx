@@ -25,6 +25,7 @@ import {
 } from '@src/hooks/query/server';
 import ExpandableList from '@src/components/common/ExpandableList';
 import UserAvatar from '@src/components/common/UserAvatar';
+import { useEffect } from 'react';
 
 const CommunityDrawer = () => {
   const { isOpen, transition } = useRecoilValue(communityDrawerState);
@@ -37,6 +38,24 @@ const CommunityDrawer = () => {
   const { handleCopy } = useCopyToClipboard();
 
   const navigate = useNavigate();
+
+  const browserPreventEvent = (event: () => void) => {
+    window.history.pushState(null, '', window.location.href);
+    event();
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    window.history.pushState(null, '', window.location.href);
+    window.addEventListener('popstate', () => {
+      browserPreventEvent(closeCommunityDrawer);
+    });
+    return () => {
+      window.removeEventListener('popstate', () => {
+        browserPreventEvent(closeCommunityDrawer);
+      });
+    };
+  }, [isOpen]);
 
   const openProfileModal = (memberId: number) => {
     const ProfileModalComponent = <ProfileModal memberId={memberId} />;
@@ -56,9 +75,6 @@ const CommunityDrawer = () => {
     generateInviteCode(undefined, {
       onSuccess: (inviteCodeText) => {
         handleCopy(inviteCodeText);
-      },
-      onError: (err) => {
-        console.error('초대 코드 생성 실패:', err);
       },
     });
   };

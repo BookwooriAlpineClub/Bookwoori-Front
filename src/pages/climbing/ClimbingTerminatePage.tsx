@@ -10,7 +10,7 @@ import ClimbingDescription from '@src/components/climbing/ClimbingDescription';
 export type ViewType = 'climbing' | 'review';
 
 const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
-  const [selectedView, setSelectedView] = useState<ViewType>('review');
+  const [selectedView, setSelectedView] = useState<ViewType>('climbing');
   const handleSegmentChange = (value: ViewType) => {
     setSelectedView(value);
   };
@@ -26,7 +26,7 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
         <SegmentedControl
           config={SEGMENTED_BUTTON_CONFIG}
           onSegmentChange={handleSegmentChange}
-          defaultValue='review'
+          defaultValue={selectedView}
         />
         {selectedView === 'climbing' && (
           <Container>
@@ -49,6 +49,9 @@ export default ClimbingTerminatePage;
 
 const Main = styled.main`
   background-color: ${({ theme }) => theme.colors.neutral50};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.gap['16']};
 `;
 const Container = styled.div`
   display: flex;
