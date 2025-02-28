@@ -4,7 +4,7 @@ import { useState } from 'react';
 import useModal from '@src/hooks/useModal';
 import {
   usePostRecord,
-  usePatchRecord,
+  usePutRecord,
   useDeleteRecord,
 } from '@src/hooks/query/record';
 import { bottomsheetState, dialogState } from '@src/states/atoms';
@@ -21,8 +21,7 @@ import StatusField from '@src/components/library/StatusField';
 import PageField from '@src/components/library/PageField';
 
 type Props = Partial<Record> &
-  Pick<Book, 'itemPage'> &
-  Partial<Pick<Book, 'isbn13'>>;
+  Pick<Book, 'isbn13' |'itemPage'>;
 
 const RecordBottomsheet = ({
   isbn13,
@@ -44,7 +43,7 @@ const RecordBottomsheet = ({
   
   const { closeModal: closeBottomsheet } = useModal(bottomsheetState);
   const { mutate: createRecord } = usePostRecord();
-  const { mutate: updateRecord } = usePatchRecord(recordId ?? -1);
+  const { mutate: updateRecord } = usePutRecord(recordId ?? -1);
   const { mutate: deleteRecord } = useDeleteRecord(recordId ?? -1);
   const { openModal: openDialog, closeModal: closeDialog } =
     useModal(dialogState);
@@ -53,12 +52,18 @@ const RecordBottomsheet = ({
 
     if (recordId) {
       updateRecord({
-        body: { status, startDate: date.start, endDate: date.end, currentPage },
+        body: {
+          isbn13,
+          status,
+          startDate: date.start,
+          endDate: date.end,
+          currentPage
+        },
       });
     } else {
       createRecord({
         body: {
-          isbn13: isbn13 ?? '',
+          isbn13,
           status,
           startDate: date.start,
           endDate: date.end,

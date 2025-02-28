@@ -27,7 +27,7 @@ export type PostRecordReq = Pick<Book, 'isbn13'> & Omit<Record, 'recordId'>;
 /**
  * 책 기록 수정
  */
-export type PatchRecordReq = Omit<Record, 'recordId'>;
+export type PutRecordReq = Pick<Book, 'isbn13'> & Omit<Record, 'recordId'>;
 /**
  * 책 기록 삭제
  */
