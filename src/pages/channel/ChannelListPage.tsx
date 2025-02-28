@@ -18,6 +18,7 @@ import Carousel from '@src/components/channel/Carousel';
 import ChannelList from '@src/components/channel/ChannelList';
 import { ReactComponent as CategoryAdd } from '@src/assets/icons/bi_book_add.svg';
 import { ReactComponent as ChannelAdd } from '@src/assets/icons/md_outline_playlist_add.svg';
+import LoadingPage from '@src/pages/fallback/LoadingPage';
 
 const ChannelListPage = () => {
   const navigate = useNavigate();
@@ -49,6 +50,8 @@ const ChannelListPage = () => {
       );
     }
   }, [list, beforeIdx, categoryId]);
+
+  if (!serverInfo) return <LoadingPage />;
 
   return (
     <>
