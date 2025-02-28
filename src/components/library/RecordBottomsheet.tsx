@@ -41,20 +41,21 @@ const RecordBottomsheet = ({
   const [currentPage, setCurrentPage] = useState<number>(
     defaultCurrentPage ?? 0,
   );
-
+  
   const { closeModal: closeBottomsheet } = useModal(bottomsheetState);
+  const { mutate: createRecord } = usePostRecord();
+  const { mutate: updateRecord } = usePatchRecord(recordId ?? -1);
+  const { mutate: deleteRecord } = useDeleteRecord(recordId ?? -1);
   const { openModal: openDialog, closeModal: closeDialog } =
     useModal(dialogState);
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (recordId) {
-      const { mutate: updateRecord } = usePatchRecord(recordId);
       updateRecord({
         body: { status, startDate: date.start, endDate: date.end, currentPage },
       });
     } else {
-      const { mutate: createRecord } = usePostRecord();
       createRecord({
         body: {
           isbn13: isbn13 ?? '',
@@ -73,7 +74,6 @@ const RecordBottomsheet = ({
       <DeleteConfirmDialog
         onClickDelete={() => {
           if (recordId) {
-            const { mutate: deleteRecord } = useDeleteRecord(recordId);
             deleteRecord();
           }
         }}

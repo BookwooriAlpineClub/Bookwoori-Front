@@ -26,14 +26,14 @@ const ReviewBottomsheet = ({
   );
 
   const { closeModal: closeBottomsheet } = useModal(bottomsheetState);
+  const { mutate: createReview } = usePostReview();
+  const { mutate: updateReview } = usePatchReview(reviewId ?? -1);
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (reviewId) {
-      const { mutate: updateReview } = usePatchReview(reviewId);
       updateReview({ body: { recordId, star, content } });
     } else {
-      const { mutate: createReview } = usePostReview();
       createReview({ body: { recordId, star, content } });
     }
 
