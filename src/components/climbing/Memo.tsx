@@ -82,6 +82,7 @@ const TextBox = styled.div`
   ${({ theme }) => theme.fonts.caption};
   text-align: center;
   color: ${({ theme }) => theme.colors.blue500};
+  word-break: break-all;
 `;
 const Blank = styled.div`
   height: 2.725rem;
