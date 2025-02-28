@@ -1,13 +1,13 @@
 import { AxiosResponse } from 'axios';
 import { authClient } from '@src/apis/index';
 import {
-  getClimbingChannelMembersRes,
-  getClimbingRes,
-  getClimbingReviewEmojiRes,
-  getClimbingReviewRes,
-  patchClimbingChannelReq,
-  patchClimbingMemoReq,
-  postClimbingChannelReq,
+  GetClimbingChannelMembersRes,
+  GetClimbingRes,
+  GetClimbingReviewEmojiRes,
+  GetClimbingReviewRes,
+  PatchClimbingChannelReq,
+  PatchClimbingMemoReq,
+  PostClimbingChannelReq,
 } from '@src/types/apis/climbing';
 
 const CLIMB_BASE_URL = '/climbs';
@@ -15,12 +15,12 @@ const buildClimbUrl = (path: string = '') => `${CLIMB_BASE_URL}${path}`;
 
 /* 클라이밍 채널 생성 */
 export const postClimbing = async (
-  body: postClimbingChannelReq,
+  body: PostClimbingChannelReq,
 ): Promise<void> => {
   const response = await authClient.post<
     void,
     AxiosResponse<void>,
-    postClimbingChannelReq
+    PostClimbingChannelReq
   >(buildClimbUrl(), body, {
     headers: { 'Content-Type': 'application/json' },
   });
@@ -30,12 +30,12 @@ export const postClimbing = async (
 /* 클라이밍 채널 편집 */
 export const patchClimbing = async (
   climbingId: number,
-  body: patchClimbingChannelReq,
+  body: PatchClimbingChannelReq,
 ): Promise<void> => {
   const response = await authClient.patch<
     void,
     AxiosResponse<void>,
-    patchClimbingChannelReq
+    PatchClimbingChannelReq
   >(buildClimbUrl(`/${climbingId}`), body, {
     headers: { 'Content-Type': 'application/json' },
   });
@@ -45,10 +45,10 @@ export const patchClimbing = async (
 /* 클라이밍 상세 정보 */
 export const getClimbing = async (
   climbingId: number,
-): Promise<getClimbingRes> => {
+): Promise<GetClimbingRes> => {
   const response = await authClient.get<
-    getClimbingRes,
-    AxiosResponse<getClimbingRes>
+    GetClimbingRes,
+    AxiosResponse<GetClimbingRes>
   >(buildClimbUrl(`/${climbingId}`));
   return response.data;
 };
@@ -79,10 +79,10 @@ export const putClimbingReviewEmoji = async (
 /* 클라이밍 채널 참여자 조회 */
 export const getClimbingMembers = async (
   climbingId: number,
-): Promise<getClimbingChannelMembersRes> => {
+): Promise<GetClimbingChannelMembersRes> => {
   const response = await authClient.get<
-    getClimbingChannelMembersRes,
-    AxiosResponse<getClimbingChannelMembersRes>
+    GetClimbingChannelMembersRes,
+    AxiosResponse<GetClimbingChannelMembersRes>
   >(buildClimbUrl(`/${climbingId}/members`));
   return response.data;
 };
@@ -96,12 +96,12 @@ export const putParticipate = async (climbingId: number): Promise<void> => {
 /* 클라이밍 참여자 메모 수정 */
 export const patchClimbingMemberMemo = async (
   climbingId: number,
-  body: patchClimbingMemoReq,
+  body: PatchClimbingMemoReq,
 ): Promise<void> => {
   const response = await authClient.patch<
     void,
     AxiosResponse<void>,
-    patchClimbingMemoReq
+    PatchClimbingMemoReq
   >(buildClimbUrl(`/${climbingId}/members/memo`), body, {
     headers: { 'Content-Type': 'application/json' },
   });
@@ -111,10 +111,10 @@ export const patchClimbingMemberMemo = async (
 /* 클라이밍 채널 감상평 공유 가능 여부/ 리스트 조회 (수정 필요) */
 export const getClimbingReview = async (
   climbingId: number,
-): Promise<getClimbingReviewRes> => {
+): Promise<GetClimbingReviewRes> => {
   const response = await authClient.get<
-    getClimbingReviewRes,
-    AxiosResponse<getClimbingReviewRes>
+    GetClimbingReviewRes,
+    AxiosResponse<GetClimbingReviewRes>
   >(buildClimbUrl(`/${climbingId}/reviews`));
   return response.data;
 };
@@ -131,10 +131,10 @@ export const deleteClimbing = async (climbingId: number): Promise<void> => {
 export const getClimbingReviewEmojis = async (
   climbingId: number,
   reviewId: number,
-): Promise<getClimbingReviewEmojiRes> => {
+): Promise<GetClimbingReviewEmojiRes> => {
   const response = await authClient.get<
-    getClimbingReviewEmojiRes,
-    AxiosResponse<getClimbingReviewEmojiRes>
+    GetClimbingReviewEmojiRes,
+    AxiosResponse<GetClimbingReviewEmojiRes>
   >(buildClimbUrl(`/${climbingId}/reviews/${reviewId}/emojis`));
   return response.data;
 };

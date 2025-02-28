@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { ReactComponent as BookIcon } from '@src/assets/icons/md_book.svg';
 import { useState } from 'react';
-import { getClimbingRes } from '@src/types/apis/climbing';
+import { GetClimbingRes } from '@src/types/apis/climbing';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from '@src/constants/routePath';
 
-const ClimbingDetail = ({ data }: { data: getClimbingRes }) => {
+const ClimbingDetail = ({ data }: { data: GetClimbingRes }) => {
   const string = data.description ?? '클라이밍 설명 없음';
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
