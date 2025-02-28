@@ -60,8 +60,8 @@ const Container = styled.div`
 const Ul = styled.ul`
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
-  row-gap: ${({ theme }) => theme.gap[16]};
+  gap: ${({ theme }) => `${theme.gap[16]} ${theme.gap[12]}`};
 
+  padding: 0 0.55rem;
   margin-bottom: 1.25rem;
 `;
