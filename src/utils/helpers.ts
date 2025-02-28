@@ -6,8 +6,6 @@ export const delay = (ms: number): Promise<void> =>
     setTimeout(resolve, ms);
   });
 
-export const empty = {};
-
 export const handleImgError = (
   e: SyntheticEvent<HTMLImageElement>,
   altImg: string,
@@ -26,4 +24,9 @@ export const adjustHeight = (
       inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
     }
   }
+};
+
+export const calcDate = (date: Date, num: number): Date => {
+  date.setDate(date.getDate() + num);
+  return date;
 };

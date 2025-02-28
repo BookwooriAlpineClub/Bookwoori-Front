@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { NoSelect } from '@src/styles/mixins';
+import { formatDate } from '@src/utils/formatters';
+import { calcDate } from '@src/utils/helpers';
 
 interface Period {
   start: string;
@@ -10,6 +12,7 @@ interface Props {
   name: string;
   min?: string;
   max?: string;
+  mustPeriod?: boolean;
   required?: boolean;
   disabled?: true | 'start' | 'end';
   value: Period;
@@ -21,6 +24,7 @@ const Datepicker = ({
   name,
   min,
   max,
+  mustPeriod,
   required,
   disabled,
   value,
@@ -32,7 +36,11 @@ const Datepicker = ({
         name={name}
         value={value.start}
         min={min}
-        max={value.end}
+        max={
+          mustPeriod
+            ? formatDate(calcDate(new Date(value.end), -1), '$1-$2-$3')
+            : value.end
+        }
         pattern='\d{4}-\d{2}-\d{2}'
         required={required}
         disabled={disabled === true || disabled === 'start'}
@@ -46,7 +54,11 @@ const Datepicker = ({
           <Input
             name={name}
             value={value.end}
-            min={value.start}
+            min={
+              mustPeriod
+                ? formatDate(calcDate(new Date(value.start), 1), '$1-$2-$3')
+                : value.start
+            }
             max={max}
             pattern='\d{4}-\d{2}-\d{2}'
             required={required}
