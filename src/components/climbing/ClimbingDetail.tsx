@@ -2,18 +2,29 @@ import styled from 'styled-components';
 import { ReactComponent as BookIcon } from '@src/assets/icons/md_book.svg';
 import { useState } from 'react';
 import { getClimbingRes } from '@src/types/apis/climbing';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from '@src/constants/routePath';
 
 const ClimbingDetail = ({ data }: { data: getClimbingRes }) => {
   const string = data.description ?? '클라이밍 설명 없음';
+  const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleToggle = () => {
     setIsExpanded((prev) => !prev);
   };
 
+  const handleThumbnailClick = () => {
+    const path = ROUTE_PATH.libraryBookDetail.replace(
+      ':isbn13',
+      data.bookInfo.isbn13,
+    );
+    navigate(path);
+  };
+
   return (
     <DetailWrapper>
-      <Thumbnail>
+      <Thumbnail onClick={handleThumbnailClick}>
         <img alt={data.name} src={data.bookInfo.cover} />
       </Thumbnail>
       <ClimbingContent>
@@ -44,6 +55,7 @@ const Thumbnail = styled.div`
   height: auto;
   border-radius: 0.25rem;
   flex-shrink: 0;
+  cursor: pointer;
   img {
     width: 100%;
     height: 100%;
