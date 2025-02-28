@@ -93,43 +93,49 @@ const CommunitySettingSection = ({
         {isOwner && (
           <>
             <RelativeContainer>
+              {isOpen && (
+                <div ref={popoverRef}>
+                  <PopoverWrapper>
+                    <Popover
+                      verticalPlacement='top'
+                      horizontalPlacement='right'
+                      className='member-picker'
+                    >
+                      {memberList && (
+                        <ExpandableList
+                          items={memberList.filter(
+                            (member) => member.role === 'MEMBER',
+                          )}
+                          renderItem={(member) => (
+                            <MemberContent
+                              key={member.memberId}
+                              onClick={() =>
+                                ClickTransferAuthority(
+                                  member.memberId,
+                                  member.nickname,
+                                )
+                              }
+                            >
+                              <UserAvatar
+                                profileImg={member.profileImg}
+                                nickname={member.nickname}
+                                size='2rem'
+                              />
+                              <p>{member.nickname}</p>
+                            </MemberContent>
+                          )}
+                        />
+                      )}
+                    </Popover>
+                  </PopoverWrapper>
+                </div>
+              )}
               {memberList?.length !== 1 && (
                 <CommunityButton
                   type='transferAuthority'
                   testId='transfer-authority-button'
                   onClick={togglePopover}
                 />
-              )}
-              {isOpen && (
-                <div ref={popoverRef}>
-                  <Popover placement='top' className='member-picker'>
-                    {memberList && (
-                      <ExpandableList
-                        items={memberList.filter(
-                          (member) => member.role === 'MEMBER',
-                        )}
-                        renderItem={(member) => (
-                          <MemberContent
-                            key={member.memberId}
-                            onClick={() =>
-                              ClickTransferAuthority(
-                                member.memberId,
-                                member.nickname,
-                              )
-                            }
-                          >
-                            <UserAvatar
-                              profileImg={member.profileImg}
-                              nickname={member.nickname}
-                              size='2rem'
-                            />
-                            <p>{member.nickname}</p>
-                          </MemberContent>
-                        )}
-                      />
-                    )}
-                  </Popover>
-                </div>
               )}
             </RelativeContainer>
             <CommunityButton
@@ -168,5 +174,12 @@ const MemberContent = styled.button`
   p {
     ${({ theme }) => theme.fonts.body};
     color: ${({ theme }) => theme.colors.neutral950};
+    width: 4rem;
+    text-align: start;
   }
+`;
+
+const PopoverWrapper = styled.div`
+  position: absolute;
+  width: 1rem;
 `;

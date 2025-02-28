@@ -152,7 +152,9 @@ export default ChatBar;
 
 const Padding = styled.div<{ $height: number | null }>`
   width: 100%;
-  height: ${({ $height }) => ($height ? `${$height - 40}px` : '0')};
+  max-width: 23.4375rem;
+  height: ${({ $height }) => ($height ? `${$height}px` : '0')};
+  max-height: 11.375rem;
 `;
 const Layout = styled.div`
   display: flex;
@@ -162,6 +164,7 @@ const Layout = styled.div`
   z-index: ${({ theme }) => theme.zIndex.header};
 
   width: 100%;
+  max-width: 23.4375rem;
 
   background-color: ${({ theme }) => theme.colors.neutral0};
 `;
@@ -192,7 +195,7 @@ const ReplyContent = styled.p`
   white-space: pre-wrap;
 `;
 const Line = styled.line`
-  height: 0.0625rem;
+  height: 0.0313rem;
   width: 95%;
 
   background-color: ${({ theme }) => theme.colors.neutral200};
@@ -205,6 +208,7 @@ const Container = styled.div`
 const Textarea = styled.textarea`
   padding: 0.625rem;
   width: 100%;
+  max-height: 9.375rem;
 
   border-radius: 1.875rem;
 
@@ -212,7 +216,7 @@ const Textarea = styled.textarea`
   background-color: ${({ theme }) => theme.colors.neutral50};
 
   resize: none;
-  overflow-y: hidden;
+  overflow-y: scroll;
 `;
 const Button = styled.button`
   display: flex;

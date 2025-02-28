@@ -17,20 +17,20 @@ import {
 } from '@src/apis/climbing';
 import {
   ClimbingRecruitListRes,
-  getClimbingChannelMembersRes,
-  getClimbingRes,
-  getClimbingReviewEmojiRes,
-  getClimbingReviewRes,
-  patchClimbingChannelReq,
-  patchClimbingMemoReq,
-  postClimbingChannelReq,
+  GetClimbingChannelMembersRes,
+  GetClimbingRes,
+  GetClimbingReviewEmojiRes,
+  GetClimbingReviewRes,
+  PatchClimbingChannelReq,
+  PatchClimbingMemoReq,
+  PostClimbingChannelReq,
 } from '@src/types/apis/climbing';
 import { getServerClimbing } from '@src/apis/server';
 import { EmojiType } from '@src/constants/constants';
 
 export const useGetClimbing = (climbingId: number) => {
   const { data: climbingInfo, isLoading } = useQuery<
-    getClimbingRes,
+    GetClimbingRes,
     AxiosError
   >({
     queryKey: ['getClimbing', climbingId],
@@ -43,7 +43,7 @@ export const useGetClimbing = (climbingId: number) => {
 };
 
 export const useGetClimbingMembers = (climbingId: number) => {
-  const { data } = useQuery<getClimbingChannelMembersRes, AxiosError>({
+  const { data } = useQuery<GetClimbingChannelMembersRes, AxiosError>({
     queryKey: ['getClimbingMembers', climbingId],
     queryFn: () => getClimbingMembers(climbingId as number),
   });
@@ -101,7 +101,7 @@ export const usePatchClimbing = () => {
       body,
     }: {
       climbingId: number;
-      body: patchClimbingChannelReq;
+      body: PatchClimbingChannelReq;
     }) => patchClimbing(climbingId as number, body),
     onSuccess: () =>
       queryClient.invalidateQueries({
@@ -120,7 +120,7 @@ export const usePatchMemo = () => {
       body,
     }: {
       climbingId: number;
-      body: patchClimbingMemoReq;
+      body: PatchClimbingMemoReq;
     }) => patchClimbingMemberMemo(climbingId, body),
   });
 
@@ -131,7 +131,7 @@ export const usePatchMemo = () => {
 
 export const usePostClimbing = () => {
   const createClimbing = useMutation({
-    mutationFn: (body: postClimbingChannelReq) => postClimbing(body),
+    mutationFn: (body: PostClimbingChannelReq) => postClimbing(body),
   });
 
   return { createClimbing };
@@ -161,7 +161,7 @@ export const useDeleteClimbing = () => {
 
 export const useGetClimbingReview = (climbingId: number) => {
   const { data: getReviews, isLoading } = useQuery<
-    getClimbingReviewRes,
+    GetClimbingReviewRes,
     AxiosError
   >({
     queryKey: ['getClimbingReview', climbingId],
@@ -177,7 +177,7 @@ export const useGetReviewEmojis = ({
   climbingId: number;
   reviewId: number;
 }) => {
-  const getEmojis = useQuery<getClimbingReviewEmojiRes, AxiosError>({
+  const getEmojis = useQuery<GetClimbingReviewEmojiRes, AxiosError>({
     queryKey: ['getClimbingReviewEmojis', climbingId, reviewId],
     queryFn: () => getClimbingReviewEmojis(climbingId, reviewId),
   });
@@ -201,12 +201,12 @@ export const usePutEmojiOnReview = (climbingId: number, reviewId: number) => {
       await queryClient.cancelQueries({
         queryKey: ['getClimbingReview', climbingId],
       });
-      const previousData = queryClient.getQueryData<getClimbingReviewRes>([
+      const previousData = queryClient.getQueryData<GetClimbingReviewRes>([
         'getClimbingReview',
         climbingId,
       ]);
       if (previousData && 'ClimbingMemberReviewList' in previousData) {
-        queryClient.setQueryData<getClimbingReviewRes>(
+        queryClient.setQueryData<GetClimbingReviewRes>(
           ['getClimbingReview', climbingId],
           (oldData) => {
             if (!oldData || !('ClimbingMemberReviewList' in oldData))

@@ -60,12 +60,13 @@ const TextContent = styled.div`
   .p-container {
     display: flex;
     flex-direction: column;
+    ${({ theme }) => theme.fonts.body}
   }
 `;
 
 const Pictogram = styled.div`
   img {
-    width: 10rem;
+    width: 8rem;
     object-fit: contain;
   }
 `;

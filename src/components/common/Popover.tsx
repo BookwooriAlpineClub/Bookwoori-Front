@@ -3,20 +3,23 @@ import styled, { css, keyframes } from 'styled-components';
 interface PopoverProps {
   children: React.ReactNode;
   className?: string;
-  placement?: 'top' | 'bottom';
+  verticalPlacement?: 'top' | 'bottom';
+  horizontalPlacement?: 'left' | 'right';
   offset?: number;
 }
 
 const Popover = ({
   children,
   className,
-  placement = 'bottom',
+  verticalPlacement = 'bottom',
+  horizontalPlacement = 'right',
   offset = 8,
 }: PopoverProps) => {
   return (
     <PopoverContainer
       className={className}
-      placement={placement}
+      verticalPlacement={verticalPlacement}
+      horizontalPlacement={horizontalPlacement}
       offset={offset}
     >
       {children}
@@ -47,7 +50,9 @@ const slideUp = keyframes`
   }
 `;
 
-const PopoverContainer = styled.div<Pick<PopoverProps, 'placement' | 'offset'>>`
+const PopoverContainer = styled.div<
+  Pick<PopoverProps, 'verticalPlacement' | 'horizontalPlacement' | 'offset'>
+>`
   position: absolute;
   z-index: 300;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -66,8 +71,17 @@ const PopoverContainer = styled.div<Pick<PopoverProps, 'placement' | 'offset'>>`
     border-radius: 0.2rem;
   }
 
-  ${({ placement, offset }) =>
-    placement === 'top'
+  ${({ horizontalPlacement }) =>
+    horizontalPlacement === 'left'
+      ? css`
+          right: 100%;
+        `
+      : css`
+          left: 100%;
+        `};
+
+  ${({ verticalPlacement, offset }) =>
+    verticalPlacement === 'top'
       ? css`
           bottom: 100%;
           margin-bottom: ${offset}px;
