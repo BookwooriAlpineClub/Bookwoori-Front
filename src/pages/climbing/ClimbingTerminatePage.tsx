@@ -26,7 +26,7 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
         <SegmentedControl
           config={SEGMENTED_BUTTON_CONFIG}
           onSegmentChange={handleSegmentChange}
-          defaultValue='review'
+          defaultValue={selectedView}
         />
         {selectedView === 'climbing' && (
           <>
