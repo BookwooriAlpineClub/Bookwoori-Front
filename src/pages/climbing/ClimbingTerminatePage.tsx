@@ -23,22 +23,26 @@ const ClimbingTerminatePage = ({ name: headerText }: { name: string }) => {
     <>
       <Header text={headerText} headerType='back' />
       <Main>
-        <SegmentedControl
-          config={SEGMENTED_BUTTON_CONFIG}
-          onSegmentChange={handleSegmentChange}
-          defaultValue={selectedView}
-        />
+        <Wrapper>
+          <SegmentedControl
+            config={SEGMENTED_BUTTON_CONFIG}
+            onSegmentChange={handleSegmentChange}
+            defaultValue={selectedView}
+          />
+        </Wrapper>
         {selectedView === 'climbing' && (
           <Container>
-            <CompleteCard />
+            <Wrapper>
+              <CompleteCard />
+            </Wrapper>
             <ClimbingBoard />
           </Container>
         )}
         {selectedView === 'review' && (
-          <>
+          <Wrapper>
             <ClimbingDescription />
             <ReviewBoard />
-          </>
+          </Wrapper>
         )}
       </Main>
     </>
@@ -56,6 +60,9 @@ const Main = styled.main`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  
-  height: calc(100vh - 4.375rem - 3.1875rem - 1rem);
+
+  height: calc(100vh - 4.375rem - 3.1875rem);
+`;
+const Wrapper = styled.div`
+  padding: 0 0.625rem;
 `;
