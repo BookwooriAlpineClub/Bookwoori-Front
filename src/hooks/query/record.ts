@@ -5,14 +5,14 @@ import type {
   GetRecordListRes,
   GetRecordDetailRes,
   PostRecordReq,
-  PatchRecordReq,
+  PutRecordReq,
 } from '@src/types/apis/record';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import {
   getRecordList,
   getRecordDetail,
   postRecord,
-  patchRecord,
+  putRecord,
   deleteRecord,
 } from '@src/apis/record';
 
@@ -52,10 +52,10 @@ const usePostRecord = () => {
     mutationFn: ({ body }: { body: PostRecordReq }) => postRecord(body),
   });
 };
-const usePatchRecord = (recordId: Record['recordId']) => {
+const usePutRecord = (recordId: Record['recordId']) => {
   return useMutation({
-    mutationFn: ({ body }: { body: PatchRecordReq }) =>
-      patchRecord(recordId, body),
+    mutationFn: ({ body }: { body: PutRecordReq }) =>
+      putRecord(recordId, body),
   });
 };
 const useDeleteRecord = (recordId: Record['recordId']) => {
@@ -68,6 +68,6 @@ export {
   useGetRecordList,
   useGetRecordDetail,
   usePostRecord,
-  usePatchRecord,
+  usePutRecord,
   useDeleteRecord,
 };

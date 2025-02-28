@@ -6,7 +6,7 @@ import type {
   GetRecordListRes,
   GetRecordDetailRes,
   PostRecordReq,
-  PatchRecordReq,
+  PutRecordReq,
 } from '@src/types/apis/record';
 import { authClient } from '@src/apis/index';
 import { getBookDetail } from '@src/apis/book';
@@ -57,11 +57,11 @@ export const postRecord = async <Res = void, Req = PostRecordReq>(
 /**
  * 책 기록 수정
  */
-export const patchRecord = async <Res = void, Req = PatchRecordReq>(
+export const putRecord = async <Res = void, Req = PutRecordReq>(
   recordId: Record['recordId'],
   body: Req,
 ): Promise<Res> => {
-  const response = await authClient.patch<Res, AxiosResponse<Res>, Req>(
+  const response = await authClient.put<Res, AxiosResponse<Res>, Req>(
     `/records/${recordId}`,
     body,
     { headers: { 'Content-Type': 'application/json' } },
