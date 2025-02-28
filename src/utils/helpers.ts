@@ -6,8 +6,6 @@ export const delay = (ms: number): Promise<void> =>
     setTimeout(resolve, ms);
   });
 
-export const empty = {};
-
 export const handleImgError = (
   e: SyntheticEvent<HTMLImageElement>,
   altImg: string,
