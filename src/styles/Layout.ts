@@ -50,6 +50,9 @@ export const BottomButtonLayout = styled.div`
 
     overflow-y: scroll;
   }
+  main > button {
+    margin-bottom: 1.56rem;
+  }
 `;
 /**
  * @example
