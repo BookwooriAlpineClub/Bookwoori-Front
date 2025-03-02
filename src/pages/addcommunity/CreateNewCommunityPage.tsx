@@ -124,7 +124,7 @@ const Main = styled.main`
   .scroll-area {
     display: flex;
     flex-direction: column;
-    gap: ${({ theme }) => theme.gap['6']};
+    gap: ${({ theme }) => theme.gap['16']};
   }
 
   textarea {

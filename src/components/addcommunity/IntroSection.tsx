@@ -25,6 +25,7 @@ const IntroContainer = styled.section`
   flex-direction: column;
   align-items: center;
   gap: 0.62rem;
+  padding: 1.5rem 0;
 `;
 
 const IntroTitle = styled.h1`

@@ -33,7 +33,7 @@ const AddCommunityPage = () => {
   return (
     <>
       <Header text={headerText} headerType={headerType} />
-      <Main>
+      <main>
         <IntroSection title={introTitleText} bodyLines={introBodyLines} />
         <AddOptionContainer>
           {buttonConfig.map((button, idx) => (
@@ -44,16 +44,13 @@ const AddCommunityPage = () => {
             />
           ))}
         </AddOptionContainer>
-      </Main>
+      </main>
     </>
   );
 };
 
 export default AddCommunityPage;
 
-const Main = styled.main`
-  margin-top: 2rem;
-`;
 const AddOptionContainer = styled.div`
   display: flex;
   flex-direction: column;

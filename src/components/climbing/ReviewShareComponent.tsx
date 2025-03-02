@@ -58,7 +58,7 @@ const ReviewShareComponent = ({
   };
 
   return (
-    <>
+    <Main>
       <TextContainer>
         <Text>감상평을 공유해주세요!</Text>
         <SubText>나의 감상평을 공유하고 멤버들과 감상을 나눠보세요.</SubText>
@@ -93,21 +93,30 @@ const ReviewShareComponent = ({
             </div>
           ))}
         {!isShareable && (
-          <p className='no-data'>아직 감상평을 작성하지 않았어요.</p>
+          <div className='no-data'>아직 감상평을 작성하지 않았어요.</div>
         )}
       </ListWrapper>
-      <Button
+      <FixedButton
         type='submit'
         onClick={handleSubmit}
         disabled={isShareable && !selectedReviewId}
       >
         {isShareable ? '공유하기' : '감상평 작성하러 가기'}
-      </Button>
-    </>
+      </FixedButton>
+    </Main>
   );
 };
 
 export default ReviewShareComponent;
+
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${({ theme }) => theme.gap['16']};
+  position: relative;
+  width: 100%;
+`;
 
 const TextContainer = styled.div`
   display: flex;
@@ -115,6 +124,8 @@ const TextContainer = styled.div`
   align-items: flex-start;
   justify-content: center;
   width: 100%;
+  padding-top: ${({ theme }) => theme.padding['16']};
+  padding-left: ${({ theme }) => theme.padding['8']};
 `;
 
 const Text = styled.p`
@@ -138,7 +149,7 @@ const ListWrapper = styled.div`
     text-align: center;
     background-color: ${({ theme }) => theme.colors.neutral0};
     border-radius: ${({ theme }) => theme.rounded['8']};
-    padding: 4rem 0;
+    padding: 4.4rem;
   }
 
   .radio-wrapper {
@@ -167,4 +178,11 @@ const RadioButton = styled.button<{ $checked: boolean }>`
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+`;
+
+const FixedButton = styled(Button)`
+  position: fixed;
+  width: 343px;
+  bottom: 0;
+  margin-bottom: 1.56rem;
 `;
