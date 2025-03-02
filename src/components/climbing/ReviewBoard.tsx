@@ -14,7 +14,7 @@ const ReviewBoard = () => {
   if (!data) return null;
 
   return (
-    <Container className='scroll-area'>
+    <Container>
       {data.hasShared ? (
         <ExpandableList
           items={data.ClimbingMemberReviewList}

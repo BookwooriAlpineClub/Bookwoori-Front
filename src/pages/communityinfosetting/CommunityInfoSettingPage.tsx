@@ -5,6 +5,7 @@ import useLoaderData from '@src/hooks/useRoaderData';
 import { useGetServerOne } from '@src/hooks/query/server';
 import { useState } from 'react';
 import LoadingPage from '@src/pages/fallback/LoadingPage';
+import styled from 'styled-components';
 
 export interface CommunityInfoType {
   name: string;
@@ -41,15 +42,21 @@ const CommunityInfoSettingPage = () => {
   return (
     <>
       <Header text={headerText} headerType='back' />
-      <main>
+      <Main>
         <CommunityInfoSection {...communityInfo} />
         <CommunitySettingSection
           isOwner={server.isOwner}
           setIsSpinning={setIsSpinning}
         />
-      </main>
+      </Main>
     </>
   );
 };
 
 export default CommunityInfoSettingPage;
+
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.gap['16']};
+`;
