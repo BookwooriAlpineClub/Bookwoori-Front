@@ -18,7 +18,7 @@ const ExpList = ({ date, list }: ExpListProps) => {
           <Box key={it.expLogId}>
             <Wrapper>
               <Caption>{it.title}</Caption>
-              <Caption>{it.height}</Caption>
+              <Caption>{it.height}m</Caption>
             </Wrapper>
             <Wrapper>
               <Body $color={false}>{ExpType[it.expType]}</Body>
@@ -36,7 +36,7 @@ export default ExpList;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 0.4375rem;
 `;
 const Label = styled.label`
   color: ${({ theme }) => theme.colors.blue500};
@@ -49,6 +49,7 @@ const Box = styled.div`
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 0.625rem;
 `;
 const Caption = styled.label`
   ${({ theme }) => theme.fonts.caption};
