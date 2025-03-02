@@ -22,7 +22,7 @@ const ExpList = ({ date, list }: ExpListProps) => {
             </Wrapper>
             <Wrapper>
               <Body $color={false}>{ExpType[it.expType]}</Body>
-              <Body $color>{it.amount}m</Body>
+              <Body $color>{it.amount.toFixed(1)}m</Body>
             </Wrapper>
           </Box>
         )}
