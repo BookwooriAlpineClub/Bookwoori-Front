@@ -63,9 +63,10 @@ const ChatItem = forwardRef<HTMLDivElement, ChatItemProps>(
         inputRef.current.focus();
         const { length } = editContent;
         inputRef.current.setSelectionRange(length, length);
+
         adjustHeight(inputRef, MIN_HEIGHT);
       }
-    }, [editChatId, editContent]);
+    }, [editChatId]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setEditContent(e.target.value);

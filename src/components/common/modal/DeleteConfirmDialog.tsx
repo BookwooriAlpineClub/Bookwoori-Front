@@ -47,10 +47,11 @@ const TextContainer = styled.p`
   gap: 0.9375rem;
   padding: 2.5rem 1.5rem;
 
+  width: 100%;
   border-radius: 1.875rem;
   background-color: ${({ theme }) => theme.colors.neutral0};
 
-  white-space: pre;
+  white-space: pre-wrap;
   text-align: center;
 `;
 const ButtonContainer = styled.div`
