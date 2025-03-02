@@ -111,12 +111,6 @@ const router = createBrowserRouter([
             path: ROUTE_PATH.addServer,
             element: <AddCommunityPage />,
           },
-          /* climbing */
-          {
-            path: ROUTE_PATH.climbingEditOne,
-            element: <ClimbingEditPage />,
-            loader: (args) => isParamLoader(args, 'climbingId'),
-          },
           /* community-info-setting */
           {
             path: ROUTE_PATH.serverSetting,
@@ -162,6 +156,12 @@ const router = createBrowserRouter([
                 path: ROUTE_PATH.editChannelOne,
                 element: <ChannelEditPage />,
                 loader: (args) => isParamLoader(args, 'serverId'),
+              },
+              /* climbing */
+              {
+                path: ROUTE_PATH.climbingEditOne,
+                element: <ClimbingEditPage />,
+                loader: (args) => isParamLoader(args, 'climbingId'),
               },
             ],
           },
