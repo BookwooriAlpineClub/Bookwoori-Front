@@ -27,7 +27,6 @@ const Accordion = ({
   onDragOver = () => {},
 }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(!!children);
-  const isTouchDevice = 'ontouchstart' in window;
   const isInitialRender = useRef(true);
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const Accordion = ({
   return (
     <Layout
       data-idx={dataIdx}
-      draggable={!isTouchDevice && draggable}
+      draggable={draggable}
       onDragStart={onDragStart}
       onDrop={onDrop}
       onDragOver={onDragOver}
